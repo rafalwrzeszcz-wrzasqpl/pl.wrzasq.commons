@@ -35,11 +35,10 @@
     <inceptionYear>2014</inceptionYear>
 
     <scm>
-        <!-- TODO: this is just temporary -->
-        <connection><!-- TODO --></connection>
-        <developerConnection><!-- TODO --></developerConnection>
+        <connection>scm:git:https://github.com/chilloutdevelopment/pl.chilldev.commons.git</connection>
+        <developerConnection>scm:git:git@github.com:chilloutdevelopment/pl.chilldev.commons.git</developerConnection>
         <!-- TODO: is it needed? <tag>develop</tag> -->
-        <url><!-- TODO --></url>
+        <url>https://github.com/chilloutdevelopment/pl.chilldev.commons</url>
     </scm>
 
     <!-- plugins configuration -->
@@ -48,24 +47,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.4</version>
-                <configuration>
-                    <archive>
-                        <index>true</index>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                        </manifest>
-                        <manifestEntries>
-                            <url>${project.url}</url>
-                            <Specification-Title>${project.name}</Specification-Title>
-                            <Specification-Version>${project.version}</Specification-Version>
-                            <Specification-Vendor>Rafał Wrzeszcz - Wrzasq.pl; Chillout Development</Specification-Vendor>
-                            <Implementation-Title>${project.name}</Implementation-Title>
-                            <Implementation-Version>${project.version}</Implementation-Version>
-                            <Implementation-Vendor>Rafał Wrzeszcz - Wrzasq.pl; Chillout Development</Implementation-Vendor>
-                        </manifestEntries>
-                    </archive>
-                </configuration>
             </plugin>
 
             <plugin>

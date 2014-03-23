@@ -77,24 +77,21 @@
     </developers>
 
     <!-- development handling -->
-<!-- TODO: doesn't have one yet
     <issueManagement>
-        <system></system>
-        <url></url>
+        <system>GitHub</system>
+        <url>https://github.com/chilloutdevelopment/pl.chilldev.commons/issues</url>
     </issueManagement>
 
     <ciManagement>
-        <system></system>
-        <url></url>
+        <system>Travis CI</system>
+        <url>https://travis-ci.org/chilloutdevelopment/pl.chilldev.commons</url>
     </ciManagement>
--->
 
     <scm>
-        <!-- TODO: this is just temporary -->
-        <connection><!-- TODO --></connection>
-        <developerConnection><!-- TODO --><developerConnection>
+        <connection>scm:git:https://github.com/chilloutdevelopment/pl.chilldev.commons.git</connection>
+        <developerConnection>scm:git:git@github.com:chilloutdevelopment/pl.chilldev.commons.git</developerConnection>
         <!-- TODO: is it needed? <tag>develop</tag> -->
-        <url><!-- TODO --></url>
+        <url>https://github.com/chilloutdevelopment/pl.chilldev.commons</url>
     </scm>
 
     <!-- distribution handling -->
@@ -117,16 +114,31 @@
     <!-- plugins configuration -->
 <!-- TODO -->
     <build>
-        <extensions>
-            <extension>
-                <groupId>org.apache.maven.wagon</groupId>
-                <artifactId>wagon-ssh</artifactId>
-                <version>2.4</version>
-            </extension>
-        </extensions>
-
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.4</version>
+                    <configuration>
+                        <archive>
+                            <index>true</index>
+                            <manifest>
+                                <addClasspath>true</addClasspath>
+                            </manifest>
+                            <manifestEntries>
+                                <url>${project.url}</url>
+                                <Specification-Title>${project.name}</Specification-Title>
+                                <Specification-Version>${project.version}</Specification-Version>
+                                <Specification-Vendor>Rafał Wrzeszcz - Wrzasq.pl; Chillout Development</Specification-Vendor>
+                                <Implementation-Title>${project.name}</Implementation-Title>
+                                <Implementation-Version>${project.version}</Implementation-Version>
+                                <Implementation-Vendor>Rafał Wrzeszcz - Wrzasq.pl; Chillout Development</Implementation-Vendor>
+                            </manifestEntries>
+                        </archive>
+                    </configuration>
+                </plugin>
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
