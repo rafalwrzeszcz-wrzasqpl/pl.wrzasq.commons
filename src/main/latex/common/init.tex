@@ -1,0 +1,33 @@
+%%
+% This file is part of the ChillDev-Commons.
+%
+% @license http://mit-license.org/ The MIT license
+% @author Rafał Wrzeszcz <rafal.wrzeszcz@wrzasq.pl>
+% @copyright 2014 © by Rafał Wrzeszcz - Wrzasq.pl.
+% @version 0.0.1
+% @since 0.0.1
+% @category ChillDev-Commons
+%%
+
+%TODO: lines marked with `TODO' depends on texlive-latex-extra
+
+\usepackage[utf8]{inputenc}
+\usepackage{indentfirst}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+%TODO:\usepackage{fullpage}
+%TODO:\usepackage{lastpage}
+
+% Define header and footer for page layout.
+\pagestyle{fancy}
+\lhead{\chilldevTitle}
+\rhead{\rightmark}
+\lfoot{Rafał Wrzeszcz - Wrzasq.pl}
+\cfoot{\thepage}%TODO:\cfoot{\thepage\ of \pageref{LastPage}}
+\rfoot{version \chilldevVersion, \today}
+
+% Metainfo.
+\title{\chilldevTitle, version \chilldevVersion}
+\author{Rafał Wrzeszcz - Wrzasq.pl}
+
+%TODO: glosaries for acronyms

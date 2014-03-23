@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+# This file is part of the ChillDev-Commons.
+#
+# @license http://mit-license.org/ The MIT license
+# @author Rafał Wrzeszcz <rafal.wrzeszcz@wrzasq.pl>
+# @copyright 2014 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @version 0.0.1
+# @since 0.0.1
+# @category ChillDev-Commons
+-->
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd
+">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- core project settings -->
+    <groupId>pl.chilldev.commons</groupId>
+    <artifactId>commons</artifactId>
+    <packaging>pom</packaging>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <!-- project meta info -->
+    <name>ChillDev Commons</name>
+    <url><!-- TODO --></url>
+    <description>General-purpose library.</description>
+    <inceptionYear>2014</inceptionYear>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <!-- legal info -->
+    <licenses>
+        <license>
+            <name>The MIT license</name>
+            <url>http://mit-license.org/</url>
+            <distribution>repo</distribution>
+            <comments>MIT</comments>
+        </license>
+    </licenses>
+
+    <organization>
+        <name>Rafał Wrzeszcz - Wrzasq.pl</name>
+        <url>http://wrzasq.pl/</url>
+    </organization>
+<!-- TODO: POM can't have more then one
+    <organization>
+        <name>Chillout Development</name>
+        <url>http://chilldev.pl/</url>
+    </organization>
+-->
+
+    <!-- personal info -->
+    <developers>
+        <developer>
+            <id>rafal.wrzeszcz</id>
+            <name>Rafał Wrzeszcz</name>
+            <email>rafal.wrzeszcz@wrzasq.pl</email>
+            <url>http://wrzasq.pl/</url>
+            <organization>Rafał Wrzeszcz - Wrzasq.pl</organization>
+            <organizationUrl>http://wrzasq.pl/</organizationUrl>
+            <roles>
+                <role>creator</role>
+                <role>owner</role>
+                <role>manager</role>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+            <timezone>+1</timezone>
+            <properties>
+                <picUrl>http://www.gravatar.com/avatar/412a39726c1c9c96965d9db8f8c6787a.png</picUrl>
+            </properties>
+        </developer>
+    </developers>
+
+    <!-- development handling -->
+<!-- TODO: doesn't have one yet
+    <issueManagement>
+        <system></system>
+        <url></url>
+    </issueManagement>
+
+    <ciManagement>
+        <system></system>
+        <url></url>
+    </ciManagement>
+-->
+
+    <scm>
+        <!-- TODO: this is just temporary -->
+        <connection><!-- TODO --></connection>
+        <developerConnection><!-- TODO --><developerConnection>
+        <!-- TODO: is it needed? <tag>develop</tag> -->
+        <url><!-- TODO --></url>
+    </scm>
+
+    <!-- distribution handling -->
+    <distributionManagement>
+        <repository>
+            <!-- TODO: this is just temporary -->
+            <id>todo</id>
+            <name>Chillout Development Repsitory for Maven</name>
+            <url><!-- TODO --></url>
+        </repository>
+        <snapshotRepository>
+            <!-- TODO: this is just temporary -->
+            <id>todo</id>
+            <name>Chillout Development Repsitory for Maven</name>
+            <url><!-- TODO --></url>
+        </snapshotRepository>
+        <!-- TODO: <site> -->
+    </distributionManagement>
+
+    <!-- plugins configuration -->
+<!-- TODO -->
+    <build>
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ssh</artifactId>
+                <version>2.4</version>
+            </extension>
+        </extensions>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>2.10</version>
+                    <configuration>
+                        <configLocation>src/main/checkstyle/checkstyle.xml</configLocation>
+                        <propertyExpansion>checkstyle.project.basedir=${project.basedir}</propertyExpansion>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>resources</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                            <goal>cpd-check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.3</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-scm-plugin</artifactId>
+                <version>1.8.1</version>
+                <configuration>
+                    <tag>release-${project.version}</tag>
+                    <connectionType>developerConnection</connectionType>
+                    <message>Release ${project.version} tagged.</message>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>tag</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>latex-maven-plugin</artifactId>
+                <version>1.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>latex</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>latex/**</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources/latex</directory>
+                <targetPath>../latex</targetPath>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
+
+    <!-- reporting plugins -->
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>2.7</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <configuration>
+                    <show>private</show>
+                    <excludePackageNames>test.pl.chilldev.commons.*</excludePackageNames>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.0.1</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>2.16</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <formats>
+                        <format>html</format>
+                    </formats>
+                    <instrumentation>
+                        <excludes>
+                            <exclude>test/**/*.class</exclude>
+                        </excludes>
+                    </instrumentation>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
+
+    <!-- project dependencies -->
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <!-- environment profiles -->
+<!-- TODO: check how can we differ testing, development, staging and production environments
+    <profiles>
+    </profiles>
+-->
+
+    <!-- components of ChillDev-Commons project -->
+    <modules>
+        <module>commons-concurrent</module>
+        <module>commons-exception</module>
+    </modules>
+</project>

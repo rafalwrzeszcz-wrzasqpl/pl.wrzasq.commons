@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+# This file is part of the ChillDev-Commons.
+#
+# @license http://mit-license.org/ The MIT license
+# @author Rafał Wrzeszcz <rafal.wrzeszcz@wrzasq.pl>
+# @copyright 2014 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @version 0.0.1
+# @since 0.0.1
+# @category ChillDev-Commons
+-->
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd
+">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- core project settings -->
+    <groupId>pl.chilldev.commons</groupId>
+    <artifactId>commons-concurent</artifactId>
+    <packaging>jar</packaging>
+    <parent>
+        <groupId>pl.chilldev.commons</groupId>
+        <artifactId>commons</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../</relativePath>
+    </parent>
+
+    <!-- project meta info -->
+    <name>ChillDev Commons Concurrent</name>
+    <url><!-- TODO --></url>
+    <description>Asynchronous and concurrency utilities.</description>
+    <inceptionYear>2014</inceptionYear>
+
+    <scm>
+        <!-- TODO: this is just temporary -->
+        <connection><!-- TODO --></connection>
+        <developerConnection><!-- TODO --></developerConnection>
+        <!-- TODO: is it needed? <tag>develop</tag> -->
+        <url><!-- TODO --></url>
+    </scm>
+
+    <!-- plugins configuration -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <index>true</index>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                        </manifest>
+                        <manifestEntries>
+                            <url>${project.url}</url>
+                            <Specification-Title>${project.name}</Specification-Title>
+                            <Specification-Version>${project.version}</Specification-Version>
+                            <Specification-Vendor>Rafał Wrzeszcz - Wrzasq.pl; Chillout Development</Specification-Vendor>
+                            <Implementation-Title>${project.name}</Implementation-Title>
+                            <Implementation-Version>${project.version}</Implementation-Version>
+                            <Implementation-Vendor>Rafał Wrzeszcz - Wrzasq.pl; Chillout Development</Implementation-Vendor>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- reporting plugins -->
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.10</version>
+                <configuration>
+                    <configLocation>src/main/checkstyle/checkstyle.xml</configLocation>
+                    <propertyExpansion>checkstyle.project.basedir=${project.basedir}</propertyExpansion>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
+</project>
