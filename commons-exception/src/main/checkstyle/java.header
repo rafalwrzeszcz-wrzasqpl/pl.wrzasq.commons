@@ -10,4 +10,4 @@
 ^ \* @subcategory Exception$
 ^ \*/$
 
-^package pl\.chilldev\.commons\.exception\..*;$
+^package pl\.chilldev\.commons\.exception(\..+)?;$

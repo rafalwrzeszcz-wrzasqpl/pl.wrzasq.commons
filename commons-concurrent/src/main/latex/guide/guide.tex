@@ -1,0 +1,39 @@
+%%
+% This file is part of the ChillDev-Commons.
+%
+% @license http://mit-license.org/ The MIT license
+% @author Rafał Wrzeszcz <rafal.wrzeszcz@wrzasq.pl>
+% @copyright 2014 © by Rafał Wrzeszcz - Wrzasq.pl.
+% @version 0.0.1
+% @since 0.0.1
+% @category ChillDev-Commons
+% @subcategory Concurrent
+%%
+
+\documentclass{report}
+
+% Local definitions.
+\input{../package}
+\def \chilldevTitle {ChillDev-Commons - Concurrent}
+\input{./init}
+
+\usepackage{listings}
+
+%TODO: fix for UTF-8
+\lstset{
+    basicstyle=\ttfamily,
+    literate={ł}{{l}}1
+}
+
+\begin{document}
+
+% Header.
+\maketitle
+
+% Table of contents.
+\tableofcontents
+
+% Include all use indices.
+\input{./dev}
+
+\end{document}

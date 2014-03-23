@@ -10,4 +10,4 @@
 ^ \* @subcategory Concurrent$
 ^ \*/$
 
-^package pl\.chilldev\.commons\.concurrent\..*;$
+^package pl\.chilldev\.commons\.concurrent(\..+)?;$
