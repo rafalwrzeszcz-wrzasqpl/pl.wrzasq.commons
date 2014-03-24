@@ -1,0 +1,53 @@
+%%
+% This file is part of the ChillDev-Commons.
+%
+% @license http://mit-license.org/ The MIT license
+% @author Rafał Wrzeszcz <rafal.wrzeszcz@wrzasq.pl>
+% @copyright 2014 © by Rafał Wrzeszcz - Wrzasq.pl.
+% @version 0.0.1
+% @since 0.0.1
+% @category ChillDev-Commons
+%%
+
+% Section heading.
+\section{Introduction}
+
+ChillDev-Commons is common routines and data structures library for Java. It is written by Rafał Wrzeszcz - Wrzasq.pl (Chillout Development is not a legitimate company in meaning of law - it's a mark of Rafał Wrzeszcz - Wrzasq.pl. For details see \url{http://wrzasq.pl/} and \url{http://chilldev.pl/}).
+
+\subsection{Dependencies}
+
+To work with any ChillDev-Commons module you will need to have following dependencies installed:
+
+\begin{description}
+    \item[Git] \hfill \\
+    all project sources and additional resources are stored in Git SCM and this is so far the only distribution channel, so you will need Git at least to obtain sources;
+
+    \item[Maven] \hfill \\
+    is used for build process automation;
+
+    \item[TeX Live] \hfill \\
+    will be needed for processing \LaTeX\ documentation sources;
+
+    \item[Java7 JRE and JDK] \hfill \\
+    Java is essential for running ChillDev-Commons since this is the technology used for developing it - normaly you will need only JRE for running it, but in case of any source code modifications, you will need JDK to rebuild it;
+
+    \item[JUnit 4] \hfill \\
+    this is a unit testing framework used by ChillDev-Commons, you will only need it for development to run automated tests;
+
+    \item[Cobertura] \hfill \\
+    is a test code coverate tool that marks parts of code that are uncovered by tests yet, you will only need it for development.
+\end{description}
+
+\subsection{Abstract files}
+
+In your distribution there should also exist following files with basic abstract information about the project and product:
+
+\begin{description}
+    \item[LICENSE] \hfill \\
+    LGPLv3 license under which ChillDev-Commons is distributed;
+
+    \item[README.md] \hfill \\
+    brief description of project and usage (in \emph{Markdown} format).
+\end{description}
+
+Submodules can extend this list with files providing more detailed description of their purpose and usage.

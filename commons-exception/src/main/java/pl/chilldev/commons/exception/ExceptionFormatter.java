@@ -51,7 +51,6 @@ public interface ExceptionFormatter
      *
      * @param exception Exception to be displayed.
      * @return String representation.
-     * @version 0.0.1
      * @since 0.0.1
      */
     String format(Throwable exception);
