@@ -16,6 +16,8 @@ language: "java"
 jdk:
     - "openjdk7"
     - "oraclejdk7"
-    - "openjdk8"
+    - "oraclejdk8"
+
+before_install: "sudo apt-get install texlive-latex-base texlive-latex-recommended"
 
 script: "mvn test verify"
