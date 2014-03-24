@@ -21,3 +21,5 @@ jdk:
 before_install: "sudo apt-get install texlive-latex-base texlive-latex-recommended"
 
 script: "mvn test verify"
+
+after_script: "mvn site coveralls:cobertura"

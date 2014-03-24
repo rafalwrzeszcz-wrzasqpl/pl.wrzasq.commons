@@ -25,7 +25,7 @@
 
     <!-- project meta info -->
     <name>ChillDev Commons</name>
-    <url><!-- TODO --></url>
+    <url>http://chilloutdevelopment.github.io/pl.chilldev.commons</url>
     <description>General-purpose library.</description>
     <inceptionYear>2014</inceptionYear>
     <properties>
@@ -232,6 +232,12 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>org.eluder.coveralls</groupId>
+                <artifactId>coveralls-maven-plugin</artifactId>
+                <version>2.2.0</version>
+            </plugin>
         </plugins>
 
         <resources>
@@ -294,12 +300,14 @@
                 <configuration>
                     <formats>
                         <format>html</format>
+                        <format>xml</format>
                     </formats>
                     <instrumentation>
                         <excludes>
                             <exclude>test/**/*.class</exclude>
                         </excludes>
                     </instrumentation>
+                    <aggregate>true</aggregate>
                 </configuration>
             </plugin>
         </plugins>

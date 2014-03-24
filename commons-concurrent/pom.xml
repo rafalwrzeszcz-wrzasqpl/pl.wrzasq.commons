@@ -30,7 +30,7 @@
 
     <!-- project meta info -->
     <name>ChillDev Commons Concurrent</name>
-    <url><!-- TODO --></url>
+    <url>http://chilloutdevelopment.github.io/pl.chilldev.commons</url>
     <description>Asynchronous and concurrency utilities.</description>
     <inceptionYear>2014</inceptionYear>
 
