@@ -21,7 +21,7 @@
     <groupId>pl.chilldev.commons</groupId>
     <artifactId>commons</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
 
     <!-- project meta info -->
     <name>ChillDev Commons</name>
@@ -104,7 +104,6 @@
             <id>ossrh</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
-        <!-- TODO: <site> -->
     </distributionManagement>
 
     <!-- plugins configuration -->
@@ -319,25 +318,6 @@
                                 <phase>verify</phase>
                                 <goals>
                                     <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-scm-plugin</artifactId>
-                        <version>1.8.1</version>
-                        <configuration>
-                            <tag>release-${project.version}</tag>
-                            <connectionType>developerConnection</connectionType>
-                            <message>Release ${project.version} tagged.</message>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <phase>deploy</phase>
-                                <goals>
-                                    <goal>tag</goal>
                                 </goals>
                             </execution>
                         </executions>

@@ -25,7 +25,7 @@
     <parent>
         <groupId>pl.chilldev.commons</groupId>
         <artifactId>commons</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.1</version>
         <relativePath>../</relativePath>
     </parent>
 
@@ -79,15 +79,6 @@
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-scm-plugin</artifactId>
-                        <version>1.8.1</version>
-                        <configuration>
-                            <skip>true</skip>
-                        </configuration>
-                    </plugin>
-
-                    <plugin>
                         <groupId>com.github.github</groupId>
                         <artifactId>site-maven-plugin</artifactId>
                         <version>0.9</version>
@@ -95,8 +86,6 @@
                             <path>${project.artifactId}/</path>
                             <merge>true</merge>
                             <message>${project.version} Exception API doc.</message>
-                            <noJekyll>true</noJekyll>
-                            <server>github</server>
                         </configuration>
                         <executions>
                             <execution>
