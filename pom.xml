@@ -26,7 +26,7 @@
     <!-- project meta info -->
     <name>ChillDev Commons</name>
     <url>http://chilloutdevelopment.github.io/pl.chilldev.commons</url>
-    <description>General-purpose library.</description>
+    <description>ChillDev-Commons is general-purpose library for Java.</description>
     <inceptionYear>2014</inceptionYear>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -195,6 +195,13 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.3</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.doxia</groupId>
+                        <artifactId>doxia-module-markdown</artifactId>
+                        <version>1.5</version>
+                    </dependency>
+                </dependencies>
             </plugin>
 
             <plugin>
@@ -210,39 +217,11 @@
             </plugin>
 
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>latex-maven-plugin</artifactId>
-                <version>1.1</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>latex</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
                 <groupId>org.eluder.coveralls</groupId>
                 <artifactId>coveralls-maven-plugin</artifactId>
                 <version>2.2.0</version>
             </plugin>
         </plugins>
-
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-                <excludes>
-                    <exclude>latex/**</exclude>
-                </excludes>
-            </resource>
-            <resource>
-                <directory>src/main/resources/latex</directory>
-                <targetPath>../latex</targetPath>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
     </build>
 
     <!-- reporting plugins -->

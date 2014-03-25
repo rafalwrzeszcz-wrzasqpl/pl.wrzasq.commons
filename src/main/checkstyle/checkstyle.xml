@@ -23,8 +23,8 @@
         <property name="fileExtensions" value="java"/>
     </module>
     <module name="RegexpHeader">
-        <property name="headerFile" value="${checkstyle.project.basedir}/src/main/checkstyle/tex.header"/>
-        <property name="fileExtensions" value="tex"/>
+        <property name="headerFile" value="${checkstyle.project.basedir}/src/main/checkstyle/md.header"/>
+        <property name="fileExtensions" value="md"/>
     </module>
     <module name="RegexpHeader">
         <property name="headerFile" value="${checkstyle.project.basedir}/src/main/checkstyle/xml.header"/>

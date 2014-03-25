@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+# This file is part of the ChillDev-Commons.
+#
+# @license http://mit-license.org/ The MIT license
+# @author Rafał Wrzeszcz <rafal.wrzeszcz@wrzasq.pl>
+# @copyright 2014 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @version 0.0.1
+# @since 0.0.1
+# @category ChillDev-Commons
+# @subcategory Exception
+-->
+<project
+    xmlns="http://maven.apache.org/DECORATION/1.4.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://maven.apache.org/DECORATION/1.4.0 http://maven.apache.org/xsd/decoration-1.4.0.xsd
+">
+    <body>
+        <menu ref="parent"/>
+
+        <menu name="Guide">
+            <item name="Formatting" href="guide/formatting.html"/>
+        </menu>
+
+        <menu ref="reports"/>
+    </body>
+</project>

@@ -8,6 +8,7 @@
 # @version 0.0.1
 # @since 0.0.1
 # @category ChillDev-Commons
+# @subcategory Exception
 -->
 <project
     xmlns="http://maven.apache.org/POM/4.0.0"

@@ -17,6 +17,12 @@
 [![Coverage Status](https://coveralls.io/repos/chilloutdevelopment/pl.chilldev.commons/badge.png?branch=develop)](https://coveralls.io/r/chilloutdevelopment/pl.chilldev.commons)
 [![Dependency Status](https://www.versioneye.com/user/projects/5333e6977bae4bc32d000628/badge.png)](https://www.versioneye.com/user/projects/5333e6977bae4bc32d000628)
 
+# Requirements
+
+**Note:** These libraries require **Java 7**.
+
+Anything else? Well, you need *Git* and *Maven* to checkout snapshot sources if you want to work on the project. But if you want to use the library, then there are no other dependencies.
+
 # Installation
 
 You can use libraries in your `pom.xml` bu defining following dependencies:
@@ -36,8 +42,6 @@ You can use libraries in your `pom.xml` bu defining following dependencies:
 ```
 
 You can of course pick only those parts that you need directly.
-
-**Note:** These libraries requires **Java 7**.
 
 # Modules
 
