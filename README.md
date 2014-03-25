@@ -15,6 +15,7 @@
 
 [![Build Status](https://travis-ci.org/chilloutdevelopment/pl.chilldev.commons.svg)](https://travis-ci.org/chilloutdevelopment/pl.chilldev.commons)
 [![Coverage Status](https://coveralls.io/repos/chilloutdevelopment/pl.chilldev.commons/badge.png?branch=develop)](https://coveralls.io/r/chilloutdevelopment/pl.chilldev.commons)
+[![Dependency Status](https://www.versioneye.com/user/projects/5333e6977bae4bc32d000628/badge.png)](https://www.versioneye.com/user/projects/5333e6977bae4bc32d000628)
 
 # Installation
 
@@ -42,8 +43,8 @@ You can of course pick only those parts that you need directly.
 
 **ChillDev-Commons** consists of various sub-modules, each of which is a separate `.jar` library:
 
--   **Concurrent**: with concurrency and asynchronous goods,
--   **Exception**: with exceptions handling and processing routines.
+-   [**Concurrent**](http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-concurent/): with concurrency and asynchronous goods,
+-   [**Exception**](http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-exception/): with exceptions handling and processing routines.
 
 # Resources
 
