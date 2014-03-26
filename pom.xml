@@ -5,7 +5,7 @@
 # @license http://mit-license.org/ The MIT license
 # @author Rafał Wrzeszcz <rafal.wrzeszcz@wrzasq.pl>
 # @copyright 2014 © by Rafał Wrzeszcz - Wrzasq.pl.
-# @version 0.0.1
+# @version 0.0.2
 # @since 0.0.1
 # @category ChillDev-Commons
 -->
@@ -21,7 +21,7 @@
     <groupId>pl.chilldev.commons</groupId>
     <artifactId>commons</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.1</version>
+    <version>0.0.2-SNAPSHOT</version>
 
     <!-- project meta info -->
     <name>ChillDev Commons</name>
@@ -46,7 +46,7 @@
         <name>Rafał Wrzeszcz - Wrzasq.pl</name>
         <url>http://wrzasq.pl/</url>
     </organization>
-<!-- TODO: POM can't have more then one
+<!-- POM can't have more then one
     <organization>
         <name>Chillout Development</name>
         <url>http://chilldev.pl/</url>
@@ -90,7 +90,6 @@
     <scm>
         <connection>scm:git:https://github.com/chilloutdevelopment/pl.chilldev.commons.git</connection>
         <developerConnection>scm:git:git@github.com:chilloutdevelopment/pl.chilldev.commons.git</developerConnection>
-        <!-- TODO: is it needed? <tag>develop</tag> -->
         <url>https://github.com/chilloutdevelopment/pl.chilldev.commons</url>
     </scm>
 
@@ -349,6 +348,7 @@
     <!-- components of ChillDev-Commons project -->
     <modules>
         <module>commons-concurrent</module>
+        <module>commons-daemon</module>
         <module>commons-exception</module>
     </modules>
 </project>

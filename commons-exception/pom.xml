@@ -5,7 +5,7 @@
 # @license http://mit-license.org/ The MIT license
 # @author Rafał Wrzeszcz <rafal.wrzeszcz@wrzasq.pl>
 # @copyright 2014 © by Rafał Wrzeszcz - Wrzasq.pl.
-# @version 0.0.1
+# @version 0.0.2
 # @since 0.0.1
 # @category ChillDev-Commons
 # @subcategory Exception
@@ -25,22 +25,15 @@
     <parent>
         <groupId>pl.chilldev.commons</groupId>
         <artifactId>commons</artifactId>
-        <version>0.0.1</version>
+        <version>0.0.2-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
 
     <!-- project meta info -->
     <name>ChillDev Commons Exception</name>
-    <url>http://chilloutdevelopment.github.io/pl.chilldev.commons</url>
+    <url>http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-exception/</url>
     <description>Excpetions handling and processing utilities.</description>
     <inceptionYear>2014</inceptionYear>
-
-    <scm>
-        <connection>scm:git:https://github.com/chilloutdevelopment/pl.chilldev.commons.git</connection>
-        <developerConnection>scm:git:git@github.com:chilloutdevelopment/pl.chilldev.commons.git</developerConnection>
-        <!-- TODO: is it needed? <tag>develop</tag> -->
-        <url>https://github.com/chilloutdevelopment/pl.chilldev.commons</url>
-    </scm>
 
     <!-- plugins configuration -->
     <build>

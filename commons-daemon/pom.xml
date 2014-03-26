@@ -6,9 +6,9 @@
 # @author Rafał Wrzeszcz <rafal.wrzeszcz@wrzasq.pl>
 # @copyright 2014 © by Rafał Wrzeszcz - Wrzasq.pl.
 # @version 0.0.2
-# @since 0.0.1
+# @since 0.0.2
 # @category ChillDev-Commons
-# @subcategory Concurrent
+# @subcategory Daemon
 -->
 <project
     xmlns="http://maven.apache.org/POM/4.0.0"
@@ -20,7 +20,7 @@
 
     <!-- core project settings -->
     <groupId>pl.chilldev.commons</groupId>
-    <artifactId>commons-concurrent</artifactId>
+    <artifactId>commons-daemon</artifactId>
     <packaging>jar</packaging>
     <parent>
         <groupId>pl.chilldev.commons</groupId>
@@ -30,9 +30,9 @@
     </parent>
 
     <!-- project meta info -->
-    <name>ChillDev Commons Concurrent</name>
-    <url>http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-concurrent/</url>
-    <description>Asynchronous and concurrency utilities.</description>
+    <name>ChillDev Commons Daemon</name>
+    <url>http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-daemon/</url>
+    <description>Helper components for handling daemon services with Apache Commons Daemon.</description>
     <inceptionYear>2014</inceptionYear>
 
     <!-- plugins configuration -->
@@ -65,6 +65,41 @@
         </plugins>
     </reporting>
 
+    <!-- project dependencies -->
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>commons-exception</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-daemon</groupId>
+            <artifactId>commons-daemon</artifactId>
+            <version>1.0.15</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-nop</artifactId>
+            <version>1.7.6</version> 
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>  
+            <version>1.9.5</version> 
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
     <!-- build profiles -->
     <profiles>
         <profile>
@@ -78,7 +113,7 @@
                         <configuration>
                             <path>${project.artifactId}/</path>
                             <merge>true</merge>
-                            <message>${project.version} Concurrent API doc.</message>
+                            <message>${project.version} Daemon API doc.</message>
                         </configuration>
                         <executions>
                             <execution>
