@@ -1,2 +1,4 @@
 pl.chilldev.commons.concurrent
+pl.chilldev.commons.concurrent.collections
+pl.chilldev.commons.daemon.lifecycle
 pl.chilldev.commons.exception
