@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
+
+<coverage line-rate="1.0" branch-rate="1.0" lines-covered="14" lines-valid="14" branches-covered="0" branches-valid="0" complexity="1.3333333333333333" version="2.0.3" timestamp="1396652351543">
+	<sources>
+		<source>--source</source>
+		<source>/var/www/private/pl.chilldev.commons/commons-daemon/src/main/java</source>
+	</sources>
+	<packages>
+		<package name="pl.chilldev.commons.daemon.lifecycle" line-rate="1.0" branch-rate="1.0" complexity="1.3333333333333333">
+			<classes>
+				<class name="pl.chilldev.commons.daemon.lifecycle.Shutdown" filename="pl/chilldev/commons/daemon/lifecycle/Shutdown.java" line-rate="1.0" branch-rate="1.0" complexity="1.3333333333333333">
+					<methods>
+						<method name="&lt;init&gt;" signature="(Lorg/apache/commons/daemon/Daemon;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="34" hits="2" branch="false"/>
+								<line number="44" hits="2" branch="false"/>
+								<line number="53" hits="2" branch="false"/>
+								<line number="54" hits="2" branch="false"/>
+								<line number="55" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="run" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="77" hits="2" branch="false"/>
+								<line number="78" hits="1" branch="false"/>
+								<line number="79" hits="1" branch="false"/>
+								<line number="81" hits="1" branch="false"/>
+								<line number="83" hits="1" branch="false"/>
+								<line number="84" hits="1" branch="false"/>
+								<line number="85" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="setExceptionFormatter" signature="(Lpl/chilldev/commons/exception/ExceptionFormatter;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="65" hits="2" branch="false"/>
+								<line number="66" hits="2" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="34" hits="2" branch="false"/>
+						<line number="44" hits="2" branch="false"/>
+						<line number="53" hits="2" branch="false"/>
+						<line number="54" hits="2" branch="false"/>
+						<line number="55" hits="2" branch="false"/>
+						<line number="65" hits="2" branch="false"/>
+						<line number="66" hits="2" branch="false"/>
+						<line number="77" hits="2" branch="false"/>
+						<line number="78" hits="1" branch="false"/>
+						<line number="79" hits="1" branch="false"/>
+						<line number="81" hits="1" branch="false"/>
+						<line number="83" hits="1" branch="false"/>
+						<line number="84" hits="1" branch="false"/>
+						<line number="85" hits="2" branch="false"/>
+					</lines>
+				</class>
+			</classes>
+		</package>
+	</packages>
+</coverage>
