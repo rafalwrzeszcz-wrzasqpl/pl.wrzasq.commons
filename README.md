@@ -4,7 +4,7 @@
 # @license http://mit-license.org/ The MIT license
 # @author Rafał Wrzeszcz <rafal.wrzeszcz@wrzasq.pl>
 # @copyright 2014 © by Rafał Wrzeszcz - Wrzasq.pl.
-# @version 0.0.1
+# @version 0.0.2
 # @since 0.0.1
 # @category ChillDev-Commons
 -->
@@ -15,13 +15,13 @@
 
 [![Build Status](https://travis-ci.org/chilloutdevelopment/pl.chilldev.commons.svg)](https://travis-ci.org/chilloutdevelopment/pl.chilldev.commons)
 [![Coverage Status](https://coveralls.io/repos/chilloutdevelopment/pl.chilldev.commons/badge.png?branch=develop)](https://coveralls.io/r/chilloutdevelopment/pl.chilldev.commons)
-[![Dependency Status](https://www.versioneye.com/user/projects/5333e6977bae4bc32d000628/badge.png)](https://www.versioneye.com/user/projects/5333e6977bae4bc32d000628)
+[![Dependency Status](https://www.versioneye.com/user/projects/533c81027bae4b3fa50001f2/badge.png)](https://www.versioneye.com/user/projects/533c81027bae4b3fa50001f2)
 
 # Requirements
 
 **Note:** These libraries require **Java 7**.
 
-Whenever any of contained libraries need to do anything related with logging they rely on [*SLF4J*](<!--- TODO -->), so you need to include logging facility implementation in your project (we recommend [*Logback*](http://logback.qos.ch/)).
+Whenever any of contained libraries need to do anything related with logging they rely on [*SLF4J*](http://www.slf4j.org/), so you need to include logging facility implementation in your project (we recommend [*Logback*](http://logback.qos.ch/)).
 
 Anything else? Well, you need *Git* and *Maven* to checkout snapshot sources if you want to work on the project. But if you want to use the library, then there are no other dependencies.
 
@@ -68,6 +68,7 @@ You can of course pick only those parts that you need directly.
 -   [Maven packages](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22pl.chilldev.commons%22)
 -   [Chillout Development @ GitHub](https://github.com/chilloutdevelopment)
 -   [Chillout Development @ Facebook](http://www.facebook.com/chilldev)
+-   [Post on Wrzasq.pl](http://wrzasq.pl/blog/chilldev-commons-java-library.html)
 
 # Contributing
 

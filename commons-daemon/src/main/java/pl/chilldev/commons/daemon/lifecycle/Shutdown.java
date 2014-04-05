@@ -80,7 +80,7 @@ public class Shutdown extends Thread
         //CHECKSTYLE:OFF: IllegalCatchCheck
         } catch (Throwable error) {
         //CHECKSTYLE:ON: IllegalCatchCheck
-            this.logger.error("Error while stopping dameon {}.", this.exceptionFormatter.format(error));
+            this.logger.error("Error while stopping dameon {}.", this.exceptionFormatter.format(error), error);
         }
     }
 }
