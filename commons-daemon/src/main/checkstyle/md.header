@@ -2,10 +2,5 @@
 ^# This file is part of the ChillDev-Commons\.$
 ^#$
 ^# @license http://mit-license\.org/ The MIT license$
-^# @author [A-Z].*? <.*@.*>$
 ^# @copyright \d{4}[0-9, -]* © by Rafał Wrzeszcz - Wrzasq\.pl\.$
-^# @version .*$
-^# @since .*$
-^# @category ChillDev-Commons$
-^# @subcategory Daemon$
 ^-->$

@@ -3,11 +3,7 @@
 # This file is part of the ChillDev-Commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @author Rafał Wrzeszcz <rafal.wrzeszcz@wrzasq.pl>
 # @copyright 2014 © by Rafał Wrzeszcz - Wrzasq.pl.
-# @version 0.0.2
-# @since 0.0.1
-# @category ChillDev-Commons
 -->
 <project
     xmlns="http://maven.apache.org/POM/4.0.0"
@@ -21,7 +17,7 @@
     <groupId>pl.chilldev.commons</groupId>
     <artifactId>commons</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.2</version>
+    <version>0.0.3-SNAPSHOT</version>
 
     <!-- project meta info -->
     <name>ChillDev Commons</name>

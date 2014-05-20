@@ -2,12 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @author Rafał Wrzeszcz <rafal.wrzeszcz@wrzasq.pl>
  * @copyright 2014 © by Rafał Wrzeszcz - Wrzasq.pl.
- * @version 0.0.1
- * @since 0.0.1
- * @category ChillDev-Commons
- * @subcategory Concurrent
  */
 
 package pl.chilldev.commons.concurrent;

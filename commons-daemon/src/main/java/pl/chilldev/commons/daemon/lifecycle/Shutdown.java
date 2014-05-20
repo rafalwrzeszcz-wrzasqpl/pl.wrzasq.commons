@@ -2,12 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @author Rafał Wrzeszcz <rafal.wrzeszcz@wrzasq.pl>
  * @copyright 2014 © by Rafał Wrzeszcz - Wrzasq.pl.
- * @version 0.0.2
- * @since 0.0.2
- * @category ChillDev-Commons
- * @subcategory Daemon
  */
 
 package pl.chilldev.commons.daemon.lifecycle;
