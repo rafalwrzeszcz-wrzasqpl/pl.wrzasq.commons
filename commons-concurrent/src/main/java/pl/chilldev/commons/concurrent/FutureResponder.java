@@ -14,7 +14,7 @@ import java.util.concurrent.FutureTask;
  * Generic future objects wrapper.
  *
  * @param <ResponseType> Any type that is expected to be return for your listener.
- * @version 0.0.1
+ * @version 0.0.3
  * @since 0.0.1
  */
 public class FutureResponder<ResponseType> implements Callable<ResponseType>
@@ -53,7 +53,10 @@ public class FutureResponder<ResponseType> implements Callable<ResponseType>
     public FutureResponder<ResponseType> setResponse(ResponseType response)
     {
         this.response = response;
-        this.future.run();
+        // check if there is anything to run
+        if (this.future != null) {
+            this.future.run();
+        }
 
         return this;
     }

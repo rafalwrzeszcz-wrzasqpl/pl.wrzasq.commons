@@ -12,7 +12,7 @@ import java.text.MessageFormat;
 /**
  * Exception dumper signature.
  *
- * @version 0.0.1
+ * @version 0.0.3
  * @since 0.0.1
  */
 public interface ExceptionFormatter
@@ -24,7 +24,7 @@ public interface ExceptionFormatter
         /**
          * Messages formatter.
          */
-        protected MessageFormat formatter = new MessageFormat("{0}: {1}");
+        private MessageFormat formatter = new MessageFormat("{0}: {1}");
 
         /**
          * {@inheritDoc}

@@ -26,7 +26,7 @@ import java.util.Map;
  * Note that after any cleanup types keys are left in the container, just with empty messages lists.
  * </p>
  *
- * @version 0.0.2
+ * @version 0.0.4
  * @since 0.0.2
  */
 public class MessageBag
@@ -34,15 +34,25 @@ public class MessageBag
         Serializable
 {
     /**
+     * Serializable class ID.
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
      * Internal message abstraction.
      *
-     * @version 0.0.2
+     * @version 0.0.4
      * @since 0.0.2
      */
     public static class Message
         implements
             Serializable
     {
+        /**
+         * Serializable class ID.
+         */
+        private static final long serialVersionUID = 1L;
+
         /**
          * Message content.
          */
@@ -83,7 +93,7 @@ public class MessageBag
          */
         public Date getCreatedAt()
         {
-            return this.createdAt;
+            return (Date) this.createdAt.clone();
         }
     }
 
