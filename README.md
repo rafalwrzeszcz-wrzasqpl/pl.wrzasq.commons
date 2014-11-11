@@ -25,7 +25,7 @@ Only one exception is `commons-daemon` library which depends on [*Apache Commons
 
 # Installation
 
-You can use libraries in your `pom.xml` bu defining following dependencies:
+You can use libraries in your `pom.xml` by defining following dependencies:
 
 ```
 <dependency>

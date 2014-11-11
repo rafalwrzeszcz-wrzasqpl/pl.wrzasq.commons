@@ -26,7 +26,7 @@ import java.util.Map;
  * Note that after any cleanup types keys are left in the container, just with empty messages lists.
  * </p>
  *
- * @version 0.0.4
+ * @version 0.0.3
  * @since 0.0.2
  */
 public class MessageBag
@@ -41,7 +41,7 @@ public class MessageBag
     /**
      * Internal message abstraction.
      *
-     * @version 0.0.4
+     * @version 0.0.3
      * @since 0.0.2
      */
     public static class Message

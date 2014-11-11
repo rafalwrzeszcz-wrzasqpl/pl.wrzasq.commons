@@ -5,6 +5,8 @@
 # @copyright 2014 © by Rafał Wrzeszcz - Wrzasq.pl.
 ##
 
+/.project
+/.settings
 /target
 /commons-concurrent/target
 /commons-daemon/target
