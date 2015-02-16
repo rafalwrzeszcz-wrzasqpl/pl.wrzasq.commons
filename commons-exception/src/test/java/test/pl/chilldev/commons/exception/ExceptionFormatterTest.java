@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2014 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2014 - 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.chilldev.commons.exception;
