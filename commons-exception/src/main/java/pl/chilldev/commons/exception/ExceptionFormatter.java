@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2014 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2014 - 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.chilldev.commons.exception;
@@ -11,9 +11,6 @@ import java.text.MessageFormat;
 
 /**
  * Exception dumper signature.
- *
- * @version 0.0.3
- * @since 0.0.1
  */
 public interface ExceptionFormatter
 {
@@ -28,8 +25,6 @@ public interface ExceptionFormatter
 
         /**
          * {@inheritDoc}
-         * @version 0.0.1
-         * @since 0.0.1
          */
         @Override
         public String format(Throwable exception)
@@ -46,7 +41,6 @@ public interface ExceptionFormatter
      *
      * @param exception Exception to be displayed.
      * @return String representation.
-     * @since 0.0.1
      */
     String format(Throwable exception);
 }

@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2014 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2014 - 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.chilldev.commons.daemon.lifecycle;
@@ -17,9 +17,6 @@ import pl.chilldev.commons.exception.ExceptionFormatter;
 
 /**
  * Handles application shutdown.
- *
- * @version 0.0.2
- * @since 0.0.2
  */
 public class Shutdown extends Thread
 {
@@ -42,7 +39,6 @@ public class Shutdown extends Thread
      * Initializes reference.
      *
      * @param daemon Running application.
-     * @since 0.0.2
      */
     public Shutdown(Daemon daemon)
     {
@@ -53,7 +49,6 @@ public class Shutdown extends Thread
      * Sets exception formatter.
      *
      * @param exceptionFormatter New exception message formatter.
-     * @since 0.0.2
      */
     public void setExceptionFormatter(ExceptionFormatter exceptionFormatter)
     {
@@ -62,8 +57,6 @@ public class Shutdown extends Thread
 
     /**
      * Shut application down.
-     *
-     * @since 0.0.2
      */
     @Override
     public void run()

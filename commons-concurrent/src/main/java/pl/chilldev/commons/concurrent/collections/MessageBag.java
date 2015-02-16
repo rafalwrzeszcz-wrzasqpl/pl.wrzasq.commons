@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2014 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2014 - 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.chilldev.commons.concurrent.collections;
@@ -25,9 +25,6 @@ import java.util.Map;
  * <p>
  * Note that after any cleanup types keys are left in the container, just with empty messages lists.
  * </p>
- *
- * @version 0.0.3
- * @since 0.0.2
  */
 public class MessageBag
     implements
@@ -40,9 +37,6 @@ public class MessageBag
 
     /**
      * Internal message abstraction.
-     *
-     * @version 0.0.3
-     * @since 0.0.2
      */
     public static class Message
         implements
@@ -67,7 +61,6 @@ public class MessageBag
          * Initializes message.
          *
          * @param content Message content.
-         * @since 0.0.2
          */
         public Message(String content)
         {
@@ -78,7 +71,6 @@ public class MessageBag
          * Returns message content.
          *
          * @return Message content.
-         * @since 0.0.2
          */
         public String getContent()
         {
@@ -89,7 +81,6 @@ public class MessageBag
          * Returns message creation date.
          *
          * @return Message creation date.
-         * @since 0.0.2
          */
         public Date getCreatedAt()
         {
@@ -111,7 +102,6 @@ public class MessageBag
      *
      * @param type Message type.
      * @param message Message content.
-     * @since 0.0.2
      */
     public synchronized void addMessage(String type, String message)
     {
@@ -124,7 +114,6 @@ public class MessageBag
      * Checks if container has any messages.
      *
      * @return Whether there are any messages in the container.
-     * @since 0.0.2
      */
     public synchronized boolean hasMessages()
     {
@@ -142,7 +131,6 @@ public class MessageBag
      *
      * @param type Messages type.
      * @return Whether there are any messages of given type in the container.
-     * @since 0.0.2
      */
     public synchronized boolean hasMessages(String type)
     {
@@ -156,7 +144,6 @@ public class MessageBag
      *
      * @param type Messages type.
      * @return All messages of given type. Always returns the lest, at least empty.
-     * @since 0.0.2
      */
     public synchronized List<MessageBag.Message> getMessages(String type)
     {
@@ -173,7 +160,6 @@ public class MessageBag
      * Returns all messages and clears the container.
      *
      * @return All messages groupped by type. Always returns the map, at least empty.
-     * @since 0.0.2
      */
     public synchronized Map<String, List<MessageBag.Message>> getAllMessages()
     {
@@ -195,7 +181,6 @@ public class MessageBag
      * Ensures that given sub-list exists.
      *
      * @param type Message type.
-     * @since 0.0.2
      */
     protected void ensureExists(String type)
     {

@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2014 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2014 - 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.chilldev.commons.concurrent;
@@ -14,8 +14,6 @@ import java.util.concurrent.FutureTask;
  * Generic future objects wrapper.
  *
  * @param <ResponseType> Any type that is expected to be return for your listener.
- * @version 0.0.3
- * @since 0.0.1
  */
 public class FutureResponder<ResponseType> implements Callable<ResponseType>
 {
@@ -34,7 +32,6 @@ public class FutureResponder<ResponseType> implements Callable<ResponseType>
      *
      * @param future Target future.
      * @return Self instance.
-     * @since 0.0.1
      */
     public FutureResponder<ResponseType> setFuture(FutureTask future)
     {
@@ -48,7 +45,6 @@ public class FutureResponder<ResponseType> implements Callable<ResponseType>
      *
      * @param response Response to return.
      * @return Self instance.
-     * @since 0.0.1
      */
     public FutureResponder<ResponseType> setResponse(ResponseType response)
     {
@@ -65,7 +61,6 @@ public class FutureResponder<ResponseType> implements Callable<ResponseType>
      * Returns previously-sasigned response.
      *
      * @return Pre-defined response.
-     * @since 0.0.1
      */
     public ResponseType call()
     {
