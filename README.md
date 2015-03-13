@@ -2,7 +2,7 @@
 # This file is part of the ChillDev-Commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2014 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2014 - 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
 # ChillDev-Commons
@@ -45,6 +45,12 @@ You can use libraries in your `pom.xml` by defining following dependencies:
     <artifactId>commons-exception</artifactId>
     <version>${pl.chilldev.commons.version}</version>
 </dependency>
+
+<dependency>
+    <groupId>pl.chilldev.commons</groupId>
+    <artifactId>commons-text</artifactId>
+    <version>${pl.chilldev.commons.version}</version>
+</dependency>
 ```
 
 You can of course pick only those parts that you need directly.
@@ -56,6 +62,7 @@ You can of course pick only those parts that you need directly.
 -   [**Concurrent**](http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-concurrent/): with concurrency and asynchronous goods,
 -   [**Daemon**](http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-daemon/): helper routines for handling *Apache Commons Daemon* services,
 -   [**Exception**](http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-exception/): with exceptions handling and processing routines.
+-   [**Text**](http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-text/): various text processing utilities.
 
 # Resources
 

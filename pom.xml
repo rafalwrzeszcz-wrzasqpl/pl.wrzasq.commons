@@ -386,5 +386,6 @@
         <module>commons-concurrent</module>
         <module>commons-daemon</module>
         <module>commons-exception</module>
+        <module>commons-text</module>
     </modules>
 </project>
