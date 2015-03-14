@@ -53,7 +53,7 @@ public class FutureResponderTest
         String response = "Chillout";
         FutureResponder<String> responder = new FutureResponder<>();
         FutureTask<String> future = new FutureTask<>(responder);
-        responder.setFuture(future);
+        responder.setFuture(null);
         responder.setResponse(response);
         assertSame(
             "FutureResponder.call() should return previously calculated response.",

@@ -11,4 +11,5 @@
 /commons-concurrent/target
 /commons-daemon/target
 /commons-exception/target
+/commons-jsonrpc/target
 /commons-text/target

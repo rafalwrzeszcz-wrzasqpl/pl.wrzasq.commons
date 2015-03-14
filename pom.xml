@@ -386,6 +386,7 @@
         <module>commons-concurrent</module>
         <module>commons-daemon</module>
         <module>commons-exception</module>
+        <module>commons-jsonrpc</module>
         <module>commons-text</module>
     </modules>
 </project>

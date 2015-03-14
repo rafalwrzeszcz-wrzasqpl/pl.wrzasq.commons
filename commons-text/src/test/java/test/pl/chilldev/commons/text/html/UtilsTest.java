@@ -17,6 +17,9 @@ public class UtilsTest
     @Test
     public void firstParagraph()
     {
+        // just for code coverage
+        new Utils();
+
         String value = "foo <span>bar</span>\n<em>baz</em>";
         String html = "<p>" + value + "</p> <p>\nquux</p>";
 
