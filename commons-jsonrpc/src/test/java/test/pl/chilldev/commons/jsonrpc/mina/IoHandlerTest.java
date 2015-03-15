@@ -24,6 +24,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import static org.mockito.Mockito.*;
 
+import org.skyscreamer.jsonassert.JSONAssert;
+
 import pl.chilldev.commons.jsonrpc.daemon.ContextInterface;
 import pl.chilldev.commons.jsonrpc.mina.IoHandler;
 import pl.chilldev.commons.jsonrpc.rpc.Dispatcher;
@@ -71,7 +73,7 @@ public class IoHandlerTest
         assertFalse("IoHandler.exceptionCaught() should close connection for session that caused exception.", session.isConnected());
 
         verify(this.handler).messageSent(same(session), this.captor.capture());
-        assertEquals("IoHandler.exceptionCaught() should produce JSON response with code -32603 (internal server error).", "{\"id\":null,\"error\":{\"message\":\"Internal error\",\"code\":-32603},\"jsonrpc\":\"2.0\"}", this.captor.getValue().toString());
+        JSONAssert.assertEquals("{\"id\":null,\"error\":{\"message\":\"Internal error\",\"code\":-32603},\"jsonrpc\":\"2.0\"}", this.captor.getValue().toString(), true);
     }
 
     @Test
@@ -95,7 +97,7 @@ public class IoHandlerTest
         handler.messageReceived(session, "{\"jsonrpc\":\"2.0\",\"id\":\"test\",\"method\":\"version\"}");
 
         verify(this.handler).messageSent(same(session), this.captor.capture());
-        assertEquals("IoHandler.messageReceived() should forward handling request to JSON-RPC dispatcher.", "{\"id\":\"" + id + "\",\"result\":\"" + version + "\",\"jsonrpc\":\"2.0\"}", this.captor.getValue().toString());
+        JSONAssert.assertEquals("{\"id\":\"" + id + "\",\"result\":\"" + version + "\",\"jsonrpc\":\"2.0\"}", this.captor.getValue().toString(), true);
     }
 
     @Test
@@ -111,6 +113,6 @@ public class IoHandlerTest
         handler.messageReceived(session, "invalid JSON");
 
         verify(this.handler).messageSent(same(session), this.captor.capture());
-        assertEquals("IoHandler.messageReceived() should produce JSON response with code -32700 (JSON parse error) when malformed JSON request is received.", "{\"id\":null,\"error\":{\"message\":\"JSON parse error\",\"code\":-32700},\"jsonrpc\":\"2.0\"}", this.captor.getValue().toString());
+        JSONAssert.assertEquals("{\"id\":null,\"error\":{\"message\":\"JSON parse error\",\"code\":-32700},\"jsonrpc\":\"2.0\"}", this.captor.getValue().toString(), true);
     }
 }
