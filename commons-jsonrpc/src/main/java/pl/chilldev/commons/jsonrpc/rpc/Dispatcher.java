@@ -46,7 +46,7 @@ public class Dispatcher<ContextType extends ContextInterface>
     /**
      * Registered RPC method handlers.
      */
-    protected Map<String, RequestHandler<ContextType>> handlers = new HashMap<>();
+    protected Map<String, RequestHandler<? super ContextType>> handlers = new HashMap<>();
 
     /**
      * Registers RPC handler.
@@ -54,7 +54,7 @@ public class Dispatcher<ContextType extends ContextInterface>
      * @param method RPC method.
      * @param handler Request handler for RPC method.
      */
-    public void register(String method, RequestHandler<ContextType> handler)
+    public void register(String method, RequestHandler<? super ContextType> handler)
     {
         this.handlers.put(method, handler);
     }
