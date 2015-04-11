@@ -31,7 +31,7 @@ public class Dispatcher<ContextType extends ContextInterface>
     public interface RequestHandler<ContextType extends ContextInterface>
     {
         /**
-         *  Handles request.
+         * Handles request.
          *
          * @param request Request call.
          * @param context Execution context.
@@ -57,6 +57,28 @@ public class Dispatcher<ContextType extends ContextInterface>
     public void register(String method, RequestHandler<? super ContextType> handler)
     {
         this.handlers.put(method, handler);
+    }
+
+    /**
+     * Registers result-returning method for RPC call.
+     *
+     * @param method RPC method.
+     * @param rpcMethod RPC method.
+     */
+    public void register(String method, ReturningMethod<? super ContextType> rpcMethod)
+    {
+        this.register(method, new ReturningMethod.RequestHandler<ContextType>(rpcMethod));
+    }
+
+    /**
+     * Registers no-result method for RPC call.
+     *
+     * @param method RPC method.
+     * @param rpcMethod RPC method.
+     */
+    public void register(String method, VoidMethod<? super ContextType> rpcMethod)
+    {
+        this.register(method, new VoidMethod.RequestHandler<ContextType>(rpcMethod));
     }
 
     /**
