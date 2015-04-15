@@ -18,6 +18,7 @@
             <item name="JSON-RPC dispatcher" href="guide/rpc.html"/>
             <item name="Mina I/O" href="guide/mina.html"/>
             <item name="Building listener" href="guide/listener.html"/>
+            <item name="JSON extras" href="guide/json.html"/>
         </menu>
 
         <menu ref="reports"/>
