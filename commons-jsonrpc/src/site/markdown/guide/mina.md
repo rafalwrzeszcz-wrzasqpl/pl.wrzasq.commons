@@ -7,12 +7,12 @@
 
 # Apache MINA I/O
 
-[**Apache MINA**](https://mina.apache.org) is perfect for building **JSON-RPC** services as it brings asynchronous network I/O stack without footprint of enclosing protocol (like **HTTP**) - you can use it to build plain **TCP** service. There are two classes that will help you bind your RPC `Dispatcher` with MINA socket. First is `pl.chilldev.commons.jsonrpc.mina.IoHandler` which binds to MINA socket and handles requests using JSON-RPC dispatcher provided by you; second is `pl.chilldev.commons.jsonrpc.mina.IoServiceUtils`, which is a simple utility class that configures the socket parameters.
+[**Apache MINA**](https://mina.apache.org) is perfect for building **JSON-RPC** services as it brings asynchronous network I/O stack without footprint of enclosing protocol (like **HTTP**) - you can use it to build plain **TCP** service. There are two classes that will help you bind your RPC `Dispatcher` with MINA socket. First is `pl.chilldev.commons.jsonrpc.mina.DispatcherIoHandler` which binds to MINA socket and handles requests using JSON-RPC dispatcher provided by you; second is `pl.chilldev.commons.jsonrpc.mina.IoServiceUtils`, which is a simple utility class that configures the socket parameters.
 
 ```java
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
-import pl.chilldev.commons.jsonrpc.mina.IoHandler;
+import pl.chilldev.commons.jsonrpc.mina.DispatcherIoHandler;
 import pl.chilldev.commons.jsonrpc.mina.IoServiceUtils;
 import pl.chilldev.commons.jsonrpc.rpc.Dispatcher;
 
@@ -40,7 +40,7 @@ public class NetworkService
                 acceptor,
                 // this is the most important line
                 // it registers our IoHandler that will dispatch requests from MINA socket using given dispatcher
-                new IoHandler<YourContextType>(context, dispatcher),
+                new DispatcherIoHandler<YourContextType>(context, dispatcher),
                 // about this argument read the next paragraph
                 this
             );

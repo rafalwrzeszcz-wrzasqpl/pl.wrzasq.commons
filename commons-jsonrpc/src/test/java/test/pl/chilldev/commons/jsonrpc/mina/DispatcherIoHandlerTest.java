@@ -27,11 +27,11 @@ import static org.mockito.Mockito.*;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 import pl.chilldev.commons.jsonrpc.daemon.ContextInterface;
-import pl.chilldev.commons.jsonrpc.mina.IoHandler;
+import pl.chilldev.commons.jsonrpc.mina.DispatcherIoHandler;
 import pl.chilldev.commons.jsonrpc.rpc.Dispatcher;
 
 @RunWith(MockitoJUnitRunner.class)
-public class IoHandlerTest
+public class DispatcherIoHandlerTest
 {
     @Mock
     private Dispatcher.RequestHandler<ContextInterface> versionHandler;
@@ -46,38 +46,38 @@ public class IoHandlerTest
     private ArgumentCaptor<Object> captor;
 
     @Test
-    public void test_IoHandler_sessionIdle()
+    public void sessionIdle()
     {
         ProtocolCodecSession session = new ProtocolCodecSession();
-        IoHandler<ContextInterface> handler = new IoHandler<>(null, null);
+        DispatcherIoHandler<ContextInterface> handler = new DispatcherIoHandler<>(null, null);
 
         // this is just to mark test coverage
         handler.sessionOpened(session);
 
         handler.sessionIdle(session, null);
 
-        assertFalse("IoHandler.sessionIdle() should close connection for non-active session.", session.isConnected());
+        assertFalse("DispatcherIoHandler.sessionIdle() should close connection for non-active session.", session.isConnected());
     }
 
     @Test
-    public void test_IoHandler_exceptionCaught()
+    public void exceptionCaught()
         throws
             Exception
     {
-        IoHandler<ContextInterface> handler = new IoHandler<>(null, null);
+        DispatcherIoHandler<ContextInterface> handler = new DispatcherIoHandler<>(null, null);
 
         ProtocolCodecSession session = new ProtocolCodecSession();
         session.setHandler(this.handler);
 
         handler.exceptionCaught(session, new Exception("test"));
-        assertFalse("IoHandler.exceptionCaught() should close connection for session that caused exception.", session.isConnected());
+        assertFalse("DispatcherIoHandler.exceptionCaught() should close connection for session that caused exception.", session.isConnected());
 
         verify(this.handler).messageSent(same(session), this.captor.capture());
         JSONAssert.assertEquals("{\"id\":null,\"error\":{\"message\":\"Internal error\",\"code\":-32603},\"jsonrpc\":\"2.0\"}", this.captor.getValue().toString(), true);
     }
 
     @Test
-    public void test_IoHandler_messageReceived()
+    public void messageReceived()
         throws
             Exception
     {
@@ -89,7 +89,7 @@ public class IoHandlerTest
         Dispatcher<ContextInterface> dispatcher = new Dispatcher<>();
         dispatcher.register("version", this.versionHandler);
 
-        IoHandler<ContextInterface> handler = new IoHandler<>(this.context, dispatcher);
+        DispatcherIoHandler<ContextInterface> handler = new DispatcherIoHandler<>(this.context, dispatcher);
 
         ProtocolCodecSession session = new ProtocolCodecSession();
         session.setHandler(this.handler);
@@ -101,11 +101,11 @@ public class IoHandlerTest
     }
 
     @Test
-    public void test_IoHandler_messageReceived_JSONRPC2ParseException()
+    public void messageReceived_JSONRPC2ParseException()
         throws
             Exception
     {
-        IoHandler<ContextInterface> handler = new IoHandler<>(null, null);
+        DispatcherIoHandler<ContextInterface> handler = new DispatcherIoHandler<>(null, null);
 
         ProtocolCodecSession session = new ProtocolCodecSession();
         session.setHandler(this.handler);

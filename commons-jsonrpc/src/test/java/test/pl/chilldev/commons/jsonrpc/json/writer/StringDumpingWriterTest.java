@@ -43,7 +43,7 @@ public class StringDumpingWriterTest
 
         doReturn(dump).when(this.value).toString();
 
-        JsonWriterI writer = new StringDumpingWriter();
+        JsonWriterI<Object> writer = new StringDumpingWriter();
         writer.writeJSONString(this.value, this.out, this.compression);
 
         verify(this.compression).writeString(this.out, dump);

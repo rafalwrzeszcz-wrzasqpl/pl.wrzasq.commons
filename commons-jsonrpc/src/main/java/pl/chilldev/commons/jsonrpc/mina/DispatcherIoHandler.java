@@ -27,12 +27,12 @@ import pl.chilldev.commons.jsonrpc.rpc.Dispatcher;
  *
  * @param <ContextType> Service request context type (will be used as context for request handlers).
  */
-public class IoHandler<ContextType extends ContextInterface> extends IoHandlerAdapter
+public class DispatcherIoHandler<ContextType extends ContextInterface> extends IoHandlerAdapter
 {
     /**
      * Logger.
      */
-    protected Logger logger = LoggerFactory.getLogger(IoHandler.class);
+    protected Logger logger = LoggerFactory.getLogger(DispatcherIoHandler.class);
 
     /**
      * Execution context.
@@ -42,7 +42,7 @@ public class IoHandler<ContextType extends ContextInterface> extends IoHandlerAd
     /**
      * JSON-RPC dispatcher.
      */
-    protected Dispatcher<ContextType> dispatcher;
+    protected Dispatcher<? super ContextType> dispatcher;
 
     /**
      * Initializes JSON-RPC binding.
@@ -50,7 +50,7 @@ public class IoHandler<ContextType extends ContextInterface> extends IoHandlerAd
      * @param context Execution context.
      * @param dispatcher JSON-RPC dispatcher.
      */
-    public IoHandler(ContextType context, Dispatcher<ContextType> dispatcher)
+    public DispatcherIoHandler(ContextType context, Dispatcher<? super ContextType> dispatcher)
     {
         super();
         this.context = context;
