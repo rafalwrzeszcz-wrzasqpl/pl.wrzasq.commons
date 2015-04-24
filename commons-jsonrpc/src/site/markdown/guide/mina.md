@@ -61,6 +61,8 @@ public class NetworkService
 }
 ```
 
+**Note:** the snippet above is the standard implementation available out of the box with <a href="./listener.html">listener</a>.
+
 ## `IoServiceUtils.Configuration`
 
 The example is rather straightforward, despite some boilerplate code. But one thing may not be clear - the third parameter of `IoServiceUtils.initialize()`, the `IoServiceUtils.Configuration` interface implementation and `getMaxPacketSize()` method (yes, in fact it's just one thing!). One of the parameters `IoServiceUtils.initialize()` method set is maximum packet size. It does that based on configuration object passed as a thord argument, which has to implement `IoServiceUtils.Configuration` interface. All you need to do is simply implement the `getMaxPacketSize()` that will return your desired packet size limit.
