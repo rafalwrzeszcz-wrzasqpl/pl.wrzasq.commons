@@ -5,7 +5,7 @@
 # @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
-# Client connector
+# Client handler
 
 Although `commons-jsonrpc` package mainly focuses on building services, it provides also base classes for building clients for those services. It's especially helpful because uses the same networking library - [**Apache MINA**](https://mina.apache.org). First of all it allows you to minimize dependencies and secondly - it brings asynchronicity to your client out of the box.
 
@@ -25,3 +25,29 @@ FutureTask<JSONRPC2Response> future = handler.execute("getVersion");
 // get the response
 JSONRPC2Response response = future.get();
 ```
+
+## Connector
+
+`RequestIoHandler` class is responsible for JSON-RPC requests handling. But if your case is not a specific there is also additional wrapper `pl.chilldev.commons.jsonrpc.client.Connector` class that provides a convenient API for building full TPC JSON-RPC clients out of the box - all you need to do is to specify service address (host and port).
+
+**Note:** Right now this class has a major disadvantage, as it synchronizes response flow (which means you loose JSON-RPC big advantage which is asynchronicity).
+
+It provides `execute(String method)` method which executes method on RPC service and returns response results (there is also overloaded signature with method parameters map).
+
+```java
+// constructor is quite verbose
+Connector connector = new Connector(
+    yourMinaNioSocketConnectorInstance,
+    yourRequestIoHandlerInstance,
+    new InetSocketAddress("api.domain.com", 1234)
+);
+
+// but there is factory method
+// as in most cases you don't need to interact with MINA socket and request handler directly
+// factory method creates default instances for you
+Connector connector = Connector.create(new InetSocketAddress("api.domain.com", 1234));
+
+Object result = connector.execute("methodName");
+```
+
+**Note:** Client connector is un-aware of any response type, it always return instance of `java.lang.Object`. You need to cast this object afterwards on your own.

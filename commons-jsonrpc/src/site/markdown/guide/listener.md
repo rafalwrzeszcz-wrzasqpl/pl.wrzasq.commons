@@ -34,8 +34,8 @@ public class App
 
 You can tune server settings with:
 
-    - `Listener.setSleepTick(int sleepTick)` - to change sleep interval for release checks (defaults to **0.5s**);
-    - `Listener.setMaxPacketSize(int maxPacketSize)` - to change maximum JSON-RPC packet size (defaults to **32MiB**).
+-   `Listener.setSleepTick(int sleepTick)` - to change sleep interval for release checks (defaults to **0.5s**);
+-   `Listener.setMaxPacketSize(int maxPacketSize)` - to change maximum JSON-RPC packet size (defaults to **32MiB**).
 
 ## Execution context
 
