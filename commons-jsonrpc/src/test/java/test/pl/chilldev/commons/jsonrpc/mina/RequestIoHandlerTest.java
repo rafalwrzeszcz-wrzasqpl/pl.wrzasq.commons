@@ -74,9 +74,9 @@ public class RequestIoHandlerTest
 
         session.setHandler(this.handler);
 
-        FutureTask<JSONRPC2Response> future = handler.execute("test");
-
         handler.sessionOpened(session);
+
+        FutureTask<JSONRPC2Response> future = handler.execute("test");
 
         verify(this.handler).messageSent(same(session), this.captor.capture());
 
@@ -104,11 +104,11 @@ public class RequestIoHandlerTest
 
         session.setHandler(this.handler);
 
+        handler.sessionOpened(session);
+
         Map<String, Object> params = new HashMap<>();
         params.put("id", 123);
         FutureTask<JSONRPC2Response> future = handler.execute("test", params);
-
-        handler.sessionOpened(session);
 
         verify(this.handler).messageSent(same(session), this.captor.capture());
 
@@ -124,6 +124,16 @@ public class RequestIoHandlerTest
             "foo",
             future.get().getResult()
         );
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void executeNotConnected()
+        throws
+            JSONRPC2ParseException
+    {
+        RequestIoHandler handler = new RequestIoHandler();
+
+        handler.execute("test");
     }
 
     @Test(expected = JSONRPC2ParseException.class)

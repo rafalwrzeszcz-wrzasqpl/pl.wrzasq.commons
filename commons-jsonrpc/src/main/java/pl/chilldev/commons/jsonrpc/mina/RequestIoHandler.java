@@ -9,8 +9,6 @@ package pl.chilldev.commons.jsonrpc.mina;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeoutException;
 
@@ -48,9 +46,9 @@ public class RequestIoHandler extends IoHandlerAdapter
     protected Map<Object, FutureResponder<JSONRPC2Response>> responses = new HashMap<>();
 
     /**
-     * Pending requests.
+     * Current connection session.
      */
-    protected Queue<JSONRPC2Request> requests = new ConcurrentLinkedQueue<>();
+    protected IoSession session;
 
     /**
      * Generates new request ID.
@@ -72,9 +70,7 @@ public class RequestIoHandler extends IoHandlerAdapter
     {
         long id = RequestIoHandler.generateRequestId();
 
-        this.requests.add(new JSONRPC2Request(method, id));
-
-        return this.execute(id);
+        return this.execute(new JSONRPC2Request(method, id));
     }
 
     /**
@@ -88,23 +84,31 @@ public class RequestIoHandler extends IoHandlerAdapter
     {
         long id = RequestIoHandler.generateRequestId();
 
-        this.requests.add(new JSONRPC2Request(method, params, id));
-
-        return this.execute(id);
+        return this.execute(new JSONRPC2Request(method, params, id));
     }
 
     /**
      * Generates response future.
      *
-     * @param id Request ID.
+     * @param request JSON-RPC request.
      * @return Response future.
      */
-    protected FutureTask<JSONRPC2Response> execute(long id)
+    protected FutureTask<JSONRPC2Response> execute(JSONRPC2Request request)
     {
+        if (this.session == null) {
+            throw new IllegalStateException("Could not execute JSON-RPC request - client is not yet connected.");
+        }
+
+        // prepares response handling future
         FutureResponder<JSONRPC2Response> responder = new FutureResponder<>();
         FutureTask<JSONRPC2Response> future = new FutureTask<>(responder);
         responder.setFuture(future);
-        this.responses.put(id, responder);
+        this.responses.put(request.getID(), responder);
+
+        // send request to server
+        this.logger.debug("Session ID {}: JSON request: {}.", this.session.getId(), request);
+        this.session.write(request);
+
         return future;
     }
 
@@ -118,11 +122,7 @@ public class RequestIoHandler extends IoHandlerAdapter
     {
         this.logger.info("New connection to {}, connection ID: {}.", session.getRemoteAddress(), session.getId());
 
-        JSONRPC2Request request;
-        while ((request = this.requests.poll()) != null) {
-            this.logger.debug("Session ID {}: JSON request: {}.", session.getId(), request);
-            session.write(request);
-        }
+        this.session = session;
     }
 
     /**

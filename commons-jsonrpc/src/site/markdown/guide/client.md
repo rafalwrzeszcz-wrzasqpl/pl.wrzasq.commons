@@ -28,7 +28,7 @@ JSONRPC2Response response = future.get();
 
 ## Connector
 
-`RequestIoHandler` class is responsible for JSON-RPC requests handling. But if your case is not a specific there is also additional wrapper `pl.chilldev.commons.jsonrpc.client.Connector` class that provides a convenient API for building full TPC JSON-RPC clients out of the box - all you need to do is to specify service address (host and port).
+`RequestIoHandler` class is responsible for JSON-RPC requests handling. But if your case is not a specific there is also additional wrapper `pl.chilldev.commons.jsonrpc.client.Connector` class that provides a convenient API for building full TCP JSON-RPC clients out of the box - all you need to do is to specify service address (host and port).
 
 **Note:** Right now this class has a major disadvantage, as it synchronizes response flow (which means you loose JSON-RPC big advantage which is asynchronicity).
 
@@ -46,6 +46,11 @@ Connector connector = new Connector(
 // as in most cases you don't need to interact with MINA socket and request handler directly
 // factory method creates default instances for you
 Connector connector = Connector.create(new InetSocketAddress("api.domain.com", 1234));
+
+// you need to connect before any method can be executed
+// connector.connect() returns connection future
+// it will be fulfilled once connection is established
+connector.connect().join();
 
 Object result = connector.execute("methodName");
 ```

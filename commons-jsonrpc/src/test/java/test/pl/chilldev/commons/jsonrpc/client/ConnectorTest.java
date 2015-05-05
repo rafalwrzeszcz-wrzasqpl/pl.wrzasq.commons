@@ -58,6 +58,7 @@ public class ConnectorTest
         );
 
         // just for code coverage
+        connector.connect();
         connector.dispose();
     }
 

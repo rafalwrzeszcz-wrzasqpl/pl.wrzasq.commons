@@ -16,6 +16,7 @@ import java.util.concurrent.FutureTask;
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Error;
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Response;
 
+import org.apache.mina.core.future.ConnectFuture;
 import org.apache.mina.transport.socket.nio.NioSocketConnector;
 
 import org.slf4j.Logger;
@@ -142,9 +143,6 @@ public class Connector
             ExecutionException,
             JSONRPC2Error
     {
-        IoServiceUtils.initialize(this.connector, this.handler, this);
-        this.connector.connect(this.address);
-
         try {
             JSONRPC2Response response = future.get();
 
@@ -169,6 +167,17 @@ public class Connector
             this.logger.error("Error while executing asynchronous response handler: {}.", error.getMessage());
             throw error;
         }
+    }
+
+    /**
+     * Connects to server.
+     *
+     * @return Connection establishing future.
+     */
+    public ConnectFuture connect()
+    {
+        IoServiceUtils.initialize(this.connector, this.handler, this);
+        return this.connector.connect(this.address);
     }
 
     /**
