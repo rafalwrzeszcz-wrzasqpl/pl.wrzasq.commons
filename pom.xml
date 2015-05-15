@@ -17,7 +17,7 @@
     <groupId>pl.chilldev.commons</groupId>
     <artifactId>commons</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>0.0.3</version>
 
     <!-- project meta info -->
     <name>ChillDev Commons</name>
