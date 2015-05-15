@@ -1,0 +1,221 @@
+<?xml version="1.0"?>
+<!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
+
+<coverage line-rate="1.0" branch-rate="1.0" lines-covered="40" lines-valid="40" branches-covered="12" branches-valid="12" complexity="1.5" version="2.0.3" timestamp="1431718478619">
+	<sources>
+		<source>--source</source>
+		<source>/home/rafal.wrzeszcz/workspaces/chillout-development/pl.chilldev.commons/commons-concurrent/src/main/java</source>
+	</sources>
+	<packages>
+		<package name="pl.chilldev.commons.concurrent" line-rate="1.0" branch-rate="1.0" complexity="1.3333333333333333">
+			<classes>
+				<class name="pl.chilldev.commons.concurrent.FutureResponder" filename="pl/chilldev/commons/concurrent/FutureResponder.java" line-rate="1.0" branch-rate="1.0" complexity="1.3333333333333333">
+					<methods>
+						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="18" hits="3" branch="false"/>
+							</lines>
+						</method>
+						<method name="call" signature="()Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="67" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="setFuture" signature="(Ljava/util/concurrent/FutureTask;)Lpl/chilldev/commons/concurrent/FutureResponder;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="38" hits="3" branch="false"/>
+								<line number="40" hits="3" branch="false"/>
+							</lines>
+						</method>
+						<method name="setResponse" signature="(Ljava/lang/Object;)Lpl/chilldev/commons/concurrent/FutureResponder;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="51" hits="2" branch="false"/>
+								<line number="53" hits="2" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="54" hits="1" branch="false"/>
+								<line number="57" hits="2" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="18" hits="3" branch="false"/>
+						<line number="38" hits="3" branch="false"/>
+						<line number="40" hits="3" branch="false"/>
+						<line number="51" hits="2" branch="false"/>
+						<line number="53" hits="2" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="54" hits="1" branch="false"/>
+						<line number="57" hits="2" branch="false"/>
+						<line number="67" hits="2" branch="false"/>
+					</lines>
+				</class>
+			</classes>
+		</package>
+		<package name="pl.chilldev.commons.concurrent.collections" line-rate="1.0" branch-rate="1.0" complexity="1.5555555555555556">
+			<classes>
+				<class name="pl.chilldev.commons.concurrent.collections.MessageBag" filename="pl/chilldev/commons/concurrent/collections/MessageBag.java" line-rate="1.0" branch-rate="1.0" complexity="1.5555555555555556">
+					<methods>
+						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="29" hits="7" branch="false"/>
+								<line number="98" hits="7" branch="false"/>
+							</lines>
+						</method>
+						<method name="addMessage" signature="(Ljava/lang/String;Ljava/lang/String;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="108" hits="5" branch="false"/>
+								<line number="110" hits="5" branch="false"/>
+								<line number="111" hits="5" branch="false"/>
+							</lines>
+						</method>
+						<method name="ensureExists" signature="(Ljava/lang/String;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="187" hits="13" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="188" hits="7" branch="false"/>
+								<line number="190" hits="13" branch="false"/>
+							</lines>
+						</method>
+						<method name="getAllMessages" signature="()Ljava/util/Map;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="166" hits="2" branch="false"/>
+								<line number="168" hits="2" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="170" hits="1" branch="false"/>
+								<line number="171" hits="1" branch="false"/>
+								<line number="174" hits="1" branch="false"/>
+								<line number="175" hits="1" branch="false"/>
+								<line number="177" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="getMessages" signature="(Ljava/lang/String;)Ljava/util/List;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="150" hits="4" branch="false"/>
+								<line number="153" hits="4" branch="false"/>
+								<line number="154" hits="4" branch="false"/>
+								<line number="156" hits="4" branch="false"/>
+							</lines>
+						</method>
+						<method name="hasMessages" signature="()Z" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="120" hits="3" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="121" hits="2" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="122" hits="1" branch="false"/>
+								<line number="124" hits="1" branch="false"/>
+								<line number="126" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="hasMessages" signature="(Ljava/lang/String;)Z" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="137" hits="4" branch="false"/>
+								<line number="139" hits="4" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="29" hits="7" branch="false"/>
+						<line number="98" hits="7" branch="false"/>
+						<line number="108" hits="5" branch="false"/>
+						<line number="110" hits="5" branch="false"/>
+						<line number="111" hits="5" branch="false"/>
+						<line number="120" hits="3" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="121" hits="2" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="122" hits="1" branch="false"/>
+						<line number="124" hits="1" branch="false"/>
+						<line number="126" hits="2" branch="false"/>
+						<line number="137" hits="4" branch="false"/>
+						<line number="139" hits="4" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="150" hits="4" branch="false"/>
+						<line number="153" hits="4" branch="false"/>
+						<line number="154" hits="4" branch="false"/>
+						<line number="156" hits="4" branch="false"/>
+						<line number="166" hits="2" branch="false"/>
+						<line number="168" hits="2" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="170" hits="1" branch="false"/>
+						<line number="171" hits="1" branch="false"/>
+						<line number="174" hits="1" branch="false"/>
+						<line number="175" hits="1" branch="false"/>
+						<line number="177" hits="2" branch="false"/>
+						<line number="187" hits="13" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="188" hits="7" branch="false"/>
+						<line number="190" hits="13" branch="false"/>
+					</lines>
+				</class>
+				<class name="pl.chilldev.commons.concurrent.collections.MessageBag$Message" filename="pl/chilldev/commons/concurrent/collections/MessageBag.java" line-rate="1.0" branch-rate="1.0" complexity="1.5555555555555556">
+					<methods>
+						<method name="&lt;init&gt;" signature="(Ljava/lang/String;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="58" hits="5" branch="false"/>
+								<line number="66" hits="5" branch="false"/>
+								<line number="67" hits="5" branch="false"/>
+								<line number="68" hits="5" branch="false"/>
+							</lines>
+						</method>
+						<method name="getContent" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="77" hits="3" branch="false"/>
+							</lines>
+						</method>
+						<method name="getCreatedAt" signature="()Ljava/util/Date;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="87" hits="1" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="58" hits="5" branch="false"/>
+						<line number="66" hits="5" branch="false"/>
+						<line number="67" hits="5" branch="false"/>
+						<line number="68" hits="5" branch="false"/>
+						<line number="77" hits="3" branch="false"/>
+						<line number="87" hits="1" branch="false"/>
+					</lines>
+				</class>
+			</classes>
+		</package>
+	</packages>
+</coverage>
