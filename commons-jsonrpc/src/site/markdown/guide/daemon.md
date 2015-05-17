@@ -120,7 +120,7 @@ In order to use Spring-based application class you need to add additional two de
 
 ### Implementing
 
-When using Spring IoC container, you are expected to not set up listener threads objects on your own, but let Spring do that. Instead of implementing `buildListeners()` method you need to register `protected String getPackageToScan()` method that specifies base package to scan for container configuration: 
+When using Spring IoC container, you are expected to not set up listener threads objects on your own, but let Spring do that. Instead of implementing `buildListeners()` method you need to register `protected String getPackageToScan()` method that specifies base package to scan for container configuration:
 
 ```java
 import pl.chilldev.commons.jsonrpc.daemon.AbstractSpringApplication;
