@@ -3,7 +3,7 @@
 # This file is part of the ChillDev-Commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2014 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2014 - 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 <project
     xmlns="http://maven.apache.org/DECORATION/1.4.0"
@@ -21,4 +21,15 @@
 
         <menu ref="reports"/>
     </body>
+
+    <custom>
+        <reflowSkin>
+            <bottomNav maxSpan="12">
+                <column>Main</column>
+                <column>parent</column>
+                <column>Guide</column>
+                <column>reports</column>
+            </bottomNav>
+        </reflowSkin>
+    </custom>
 </project>

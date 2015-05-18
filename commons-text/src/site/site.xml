@@ -20,4 +20,15 @@
 
         <menu ref="reports"/>
     </body>
+
+    <custom>
+        <reflowSkin>
+            <bottomNav maxSpan="12">
+                <column>Main</column>
+                <column>parent</column>
+                <column>Guide</column>
+                <column>reports</column>
+            </bottomNav>
+        </reflowSkin>
+    </custom>
 </project>
