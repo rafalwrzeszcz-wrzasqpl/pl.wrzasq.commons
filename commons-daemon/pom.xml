@@ -26,7 +26,7 @@
 
     <!-- project meta info -->
     <name>ChillDev Commons Daemon</name>
-    <url>http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-daemon/</url>
+    <url>https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-daemon/</url>
     <description>Helper components for handling daemon services with Apache Commons Daemon.</description>
     <inceptionYear>2014</inceptionYear>
 
@@ -66,13 +66,6 @@
             <version>1.7.7</version>
             <scope>test</scope>
         </dependency>
-
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>1.9.5</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <!-- build profiles -->
@@ -84,20 +77,10 @@
                     <plugin>
                         <groupId>com.github.github</groupId>
                         <artifactId>site-maven-plugin</artifactId>
-                        <version>0.9</version>
                         <configuration>
                             <path>${project.artifactId}/</path>
                             <merge>true</merge>
-                            <message>${project.version} Daemon API doc.</message>
                         </configuration>
-                        <executions>
-                            <execution>
-                                <phase>site</phase>
-                                <goals>
-                                    <goal>site</goal>
-                                </goals>
-                            </execution>
-                        </executions>
                     </plugin>
                 </plugins>
             </build>

@@ -26,7 +26,7 @@
 
     <!-- project meta info -->
     <name>ChillDev Commons Text</name>
-    <url>http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-text/</url>
+    <url>https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-text/</url>
     <description>Text processing utilities.</description>
     <inceptionYear>2015</inceptionYear>
 
@@ -49,20 +49,10 @@
                     <plugin>
                         <groupId>com.github.github</groupId>
                         <artifactId>site-maven-plugin</artifactId>
-                        <version>0.9</version>
                         <configuration>
                             <path>${project.artifactId}/</path>
                             <merge>true</merge>
-                            <message>${project.version} Text API doc.</message>
                         </configuration>
-                        <executions>
-                            <execution>
-                                <phase>site</phase>
-                                <goals>
-                                    <goal>site</goal>
-                                </goals>
-                            </execution>
-                        </executions>
                     </plugin>
                 </plugins>
             </build>

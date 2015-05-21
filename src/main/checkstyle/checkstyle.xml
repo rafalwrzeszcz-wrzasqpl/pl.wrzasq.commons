@@ -3,7 +3,7 @@
 # This file is part of the ChillDev-Commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2014 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2014 - 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 <!DOCTYPE module PUBLIC "-//Puppy Crawl//DTD Check Configuration 1.2//EN" "http://www.puppycrawl.com/dtds/configuration_1_2.dtd">
 <module name="Checker">
@@ -12,19 +12,12 @@
     <!-- code formatting -->
     <module name="FileTabCharacter"/>
     <module name="NewlineAtEndOfFile"/>
+    <module name="FileLength"/>
 
     <!-- file headers -->
     <module name="RegexpHeader">
         <property name="headerFile" value="${checkstyle.project.basedir}/src/main/checkstyle/java.header"/>
         <property name="fileExtensions" value="java"/>
-    </module>
-    <module name="RegexpHeader">
-        <property name="headerFile" value="src/main/checkstyle/md.header"/>
-        <property name="fileExtensions" value="md"/>
-    </module>
-    <module name="RegexpHeader">
-        <property name="headerFile" value="src/main/checkstyle/xml.header"/>
-        <property name="fileExtensions" value="xml"/>
     </module>
 
     <module name="TreeWalker">
@@ -43,13 +36,18 @@
         <module name="MethodTypeParameterName">
             <property name="format" value="^[A-Z][a-zA-Z0-9]*$"/>
         </module>
+        <module name="InterfaceTypeParameterName">
+            <property name="format" value="^[A-Z][a-zA-Z0-9]*$"/>
+        </module>
         <module name="PackageName"/>
         <module name="ParameterName"/>
         <module name="StaticVariableName"/>
         <module name="TypeName"/>
+        <module name="AbbreviationAsWordInName"/>
 
         <!-- code formatting -->
         <module name="AnnotationUseStyle"/>
+        <module name="ArrayTrailingComma"/>
         <module name="ArrayTypeStyle"/>
         <module name="AvoidNestedBlocks"/>
         <module name="EmptyForInitializerPad"/>
@@ -81,15 +79,19 @@
         <module name="NoWhitespaceBefore"/>
         <module name="OneStatementPerLine"/>
         <module name="OperatorWrap"/>
+        <module name="OverloadMethodsDeclarationOrder"/>
         <module name="ParenPad"/>
         <module name="RightCurly"/>
         <module name="TypecastParenPad"/>
         <module name="UnnecessaryParentheses"/>
         <module name="WhitespaceAfter"/>
         <module name="WhitespaceAround"/>
+        <module name="EmptyLineSeparator"/>
+        <module name="UpperEll"/>
 
         <!-- code organisation -->
         <module name="AvoidStarImport"/>
+        <module name="AvoidStaticImport"/>
         <module name="DeclarationOrder"/>
         <module name="EmptyBlock">
             <property name="option" value="text"/>
@@ -100,33 +102,48 @@
         <module name="IllegalThrows"/>
         <module name="MagicNumber"/>
         <module name="MultipleStringLiterals"/>
+        <module name="OneTopLevelClass"/>
         <module name="OuterTypeFilename"/>
         <module name="OuterTypeNumber"/>
         <module name="PackageDeclaration"/>
         <module name="RedundantModifier"/>
-        <module name="RedundantThrows"/>
         <module name="RequireThis"/>
+        <module name="SimplifyBooleanExpression"/>
+        <module name="SimplifyBooleanReturn"/>
         <module name="UnusedImports"/>
         <module name="VisibilityModifier">
+            <property name="packageAllowed" value="true"/>
             <property name="protectedAllowed" value="true"/>
         </module>
+
+        <!-- code size and metrics -->
+        <module name="ExecutableStatementCount"/>
+        <module name="MethodLength"/>
+        <module name="AnonInnerLength"/>
+        <module name="ParameterNumber"/>
+        <module name="MethodCount"/>
+        <module name="ClassFanOutComplexity"/>
+        <module name="CyclomaticComplexity"/>
+        <module name="NPathComplexity"/>
+        <module name="JavaNCSS"/>
 
         <!-- documentation -->
         <module name="JavadocMethod"/>
         <module name="JavadocStyle"/>
-        <module name="JavadocType">
-            <property name="allowUnknownTags" value="true"/>
-        </module>
+        <module name="JavadocType"/>
         <module name="JavadocVariable"/>
+        <module name="NonEmptyAtclauseDescription"/>
+        <module name="JavadocTagContinuationIndentation"/>
+        <module name="AtclauseOrder"/>
+        <module name="JavadocParagraph"/>
+        <module name="SingleLineJavadoc"/>
 
         <!-- early detected flawns -->
         <module name="CovariantEquals"/>
         <module name="EqualsHashCode"/>
         <module name="FallThrough"/>
         <module name="MissingDeprecated"/>
-<!-- we don't use {@inheritDoc}
         <module name="MissingOverride"/>
--->
         <module name="MutableException"/>
         <module name="StringLiteralEquality"/>
         <module name="SuperClone"/>

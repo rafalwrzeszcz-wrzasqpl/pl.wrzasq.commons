@@ -31,7 +31,7 @@ public interface ExceptionFormatter
         {
             return this.formatter.format(new Object[] {
                     exception.getClass().getName(),
-                    exception.getMessage()
+                    exception.getMessage(),
             });
         }
     };

@@ -11,7 +11,7 @@
 
 [![Build Status](https://travis-ci.org/chilloutdevelopment/pl.chilldev.commons.svg)](https://travis-ci.org/chilloutdevelopment/pl.chilldev.commons)
 [![Coverage Status](https://coveralls.io/repos/chilloutdevelopment/pl.chilldev.commons/badge.png?branch=develop)](https://coveralls.io/r/chilloutdevelopment/pl.chilldev.commons)
-[![Dependency Status](https://www.versioneye.com/user/projects/533c81027bae4b3fa50001f2/badge.png)](https://www.versioneye.com/user/projects/533c81027bae4b3fa50001f2)
+[![Dependency Status](https://www.versioneye.com/user/projects/533c81027bae4b3fa50001f2/badge.svg?style=flat)](https://www.versioneye.com/user/projects/533c81027bae4b3fa50001f2)
 
 # Requirements
 
@@ -27,7 +27,7 @@ Only one exception is `commons-daemon` library which depends on [*Apache Commons
 
 You can use libraries in your `pom.xml` by defining following dependencies:
 
-```
+```xml
 <dependency>
     <groupId>pl.chilldev.commons</groupId>
     <artifactId>commons-concurrent</artifactId>
