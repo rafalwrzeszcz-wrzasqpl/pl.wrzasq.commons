@@ -12,6 +12,7 @@ import java.text.MessageFormat;
 /**
  * Exception dumper signature.
  */
+@FunctionalInterface
 public interface ExceptionFormatter
 {
     /**

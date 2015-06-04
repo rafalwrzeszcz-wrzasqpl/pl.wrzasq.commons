@@ -18,6 +18,7 @@ import pl.chilldev.commons.jsonrpc.daemon.ContextInterface;
  *
  * @param <ContextType> Service request context type (will be used as context for request handlers).
  */
+@FunctionalInterface
 public interface ReturningMethod<ContextType extends ContextInterface>
 {
     /**

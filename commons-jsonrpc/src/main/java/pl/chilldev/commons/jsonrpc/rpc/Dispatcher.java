@@ -28,6 +28,7 @@ public class Dispatcher<ContextType extends ContextInterface>
      *
      * @param <ContextType> Service request context type.
      */
+    @FunctionalInterface
     public interface RequestHandler<ContextType extends ContextInterface>
     {
         /**
