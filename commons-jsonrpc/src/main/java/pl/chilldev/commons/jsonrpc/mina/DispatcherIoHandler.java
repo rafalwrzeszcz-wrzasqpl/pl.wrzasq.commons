@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 
 import pl.chilldev.commons.jsonrpc.daemon.ContextInterface;
 import pl.chilldev.commons.jsonrpc.rpc.Dispatcher;
+import pl.chilldev.commons.jsonrpc.rpc.ErrorCodes;
 
 /**
  * Single connection handler.
@@ -92,7 +93,19 @@ public class DispatcherIoHandler<ContextType extends ContextInterface> extends I
             this.logger.debug("Session ID {}: JSON request: {}.", session.getId(), request);
 
             // dispatch it
-            response = this.dispatcher.dispatch(request, this.context);
+            try {
+                response = this.dispatcher.dispatch(request, this.context);
+            //CHECKSTYLE:OFF: IllegalCatchCheck
+            } catch (Throwable error) {
+            //CHECKSTYLE:ON: IllegalCatchCheck
+                // we DO WANT to catch all exceptions to avoid listener thread to die
+                this.logger.error("Internal error.", error);
+                response = new JSONRPC2Response(
+                    ErrorCodes.ERROR_INTERNAL.appendMessage(": " + error.getMessage() + "."),
+                    request.getID()
+                );
+            }
+
             this.logger.debug("JSON response: {}.", response);
         } catch (JSONRPC2ParseException error) {
             response = new JSONRPC2Response(JSONRPC2Error.PARSE_ERROR, null);
