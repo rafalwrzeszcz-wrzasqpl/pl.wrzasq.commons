@@ -129,3 +129,11 @@ class MyVoidMethod
     }
 }
 ```
+
+## Error codes
+
+Additionally, to unify some aspects of errors handling `pl.chilldev.commons.jsonrpc.rpc.ErrorCodes` class provides standard error codes:
+
+Error code | Error code | Exception property | Scenario
+--- | --- | --- | ---
+`-1` | `CODE_CONNECTION` | `ERROR_CONNECTION` | This error is returned in case of connection error while waiting for the response. It's in fact not returned by the server, but rendered internally to unify error handling strategy against network protocol.

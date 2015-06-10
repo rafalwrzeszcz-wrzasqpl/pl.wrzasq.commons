@@ -32,6 +32,8 @@ JSONRPC2Response response = future.get();
 
 **Note:** Right now this class has a major disadvantage, as it synchronizes response flow (which means you loose JSON-RPC big advantage which is asynchronicity).
 
+**Note:** Client will connect automatically on first request and reconnect everytime it's needed (like after connection is lost).
+
 It provides `execute(String method)` method which executes method on RPC service and returns response results (there is also overloaded signature with method parameters map).
 
 ```java
@@ -47,10 +49,12 @@ Connector connector = new Connector(
 // factory method creates default instances for you
 Connector connector = Connector.create(new InetSocketAddress("api.domain.com", 1234));
 
-// you need to connect before any method can be executed
-// connector.connect() returns connection future
-// it will be fulfilled once connection is established
-connector.connect().join();
+// if you want to connect manually you need to combine two methods:
+// - connector.connect() returns connection future
+//      it will be fulfilled once connection is established (or fails)
+// - connector.reconnect(future) waits for session from connection future
+//      it will wait until connection future is fulfilled and grab session from it
+connector.reconnect(connector.connect());
 
 Object result = connector.execute("methodName");
 ```

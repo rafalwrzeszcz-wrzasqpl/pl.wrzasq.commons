@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
 
 import pl.chilldev.commons.jsonrpc.daemon.ContextInterface;
 import pl.chilldev.commons.jsonrpc.rpc.Dispatcher;
-import pl.chilldev.commons.jsonrpc.rpc.ErrorCodes;
 
 /**
  * Single connection handler.
@@ -101,7 +100,7 @@ public class DispatcherIoHandler<ContextType extends ContextInterface> extends I
                 // we DO WANT to catch all exceptions to avoid listener thread to die
                 this.logger.error("Internal error.", error);
                 response = new JSONRPC2Response(
-                    ErrorCodes.ERROR_INTERNAL.appendMessage(": " + error.getMessage() + "."),
+                    JSONRPC2Error.INTERNAL_ERROR.appendMessage(": " + error.getMessage() + "."),
                     request.getID()
                 );
             }
@@ -139,5 +138,16 @@ public class DispatcherIoHandler<ContextType extends ContextInterface> extends I
     public void sessionOpened(IoSession session)
     {
         this.logger.info("New connection from {}, connection ID: {}.", session.getRemoteAddress(), session.getId());
+    }
+
+    /**
+     * Handles session closing.
+     *
+     * @param session Closed connection session.
+     */
+    @Override
+    public void sessionClosed(IoSession session)
+    {
+        this.logger.debug("Connection from {} closed, connection ID: {}.", session.getRemoteAddress(), session.getId());
     }
 }

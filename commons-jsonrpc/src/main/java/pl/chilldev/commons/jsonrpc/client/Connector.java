@@ -14,9 +14,11 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Error;
+import com.thetransactioncompany.jsonrpc2.JSONRPC2Request;
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Response;
 
 import org.apache.mina.core.future.ConnectFuture;
+import org.apache.mina.core.session.IoSession;
 import org.apache.mina.transport.socket.nio.NioSocketConnector;
 
 import org.slf4j.Logger;
@@ -36,6 +38,11 @@ public class Connector
      * Default packet size limit.
      */
     public static final int DEFAULT_PACKET_LIMIT = 33554432;
+
+    /**
+     * Request ID seed.
+     */
+    private static long id;
 
     /**
      * Logger.
@@ -63,6 +70,11 @@ public class Connector
     protected RequestIoHandler handler;
 
     /**
+     * Current connection session.
+     */
+    protected IoSession session;
+
+    /**
      * Initializes connector with given configuration.
      *
      * @param connector Socket connector.
@@ -74,6 +86,8 @@ public class Connector
         this.connector = connector;
         this.handler = handler;
         this.address = address;
+
+        IoServiceUtils.initialize(this.connector, this.handler, this);
     }
 
     /**
@@ -110,7 +124,9 @@ public class Connector
             ExecutionException,
             JSONRPC2Error
     {
-        return this.execute(this.handler.execute(method));
+        long id = Connector.generateRequestId();
+
+        return this.execute(new JSONRPC2Request(method, id));
     }
 
     /**
@@ -127,23 +143,36 @@ public class Connector
             ExecutionException,
             JSONRPC2Error
     {
-        return this.execute(this.handler.execute(method, params));
+        long id = Connector.generateRequestId();
+
+        return this.execute(new JSONRPC2Request(method, params, id));
     }
 
     /**
      * Executes queued RPC call.
      *
-     * @param future Response fetcher future.
+     * @param request JSON-RPC request.
      * @return Method result.
      * @throws ExecutionException When execution fails on client side or due to a connection.
      * @throws JSONRPC2Error When execution fails on server side.
      */
-    protected Object execute(FutureTask<JSONRPC2Response> future)
+    protected Object execute(JSONRPC2Request request)
         throws
             ExecutionException,
             JSONRPC2Error
     {
+        // (re-)connect if needed
+        if (this.session == null || !this.session.isConnected()) {
+            this.reconnect(this.connect());
+        }
+
         try {
+            // first register request to listen for the response
+            FutureTask<JSONRPC2Response> future = this.handler.execute(request);
+
+            // send request to server
+            this.session.write(request);
+
             JSONRPC2Response response = future.get();
 
             // server-side error
@@ -176,8 +205,17 @@ public class Connector
      */
     public ConnectFuture connect()
     {
-        IoServiceUtils.initialize(this.connector, this.handler, this);
         return this.connector.connect(this.address);
+    }
+
+    /**
+     * Enforces connection to server.
+     *
+     * @param future Connection establishing future.
+     */
+    public void reconnect(ConnectFuture future)
+    {
+        this.session = future.awaitUninterruptibly().getSession();
     }
 
     /**
@@ -197,5 +235,15 @@ public class Connector
     public static Connector create(InetSocketAddress address)
     {
         return new Connector(new NioSocketConnector(), new RequestIoHandler(), address);
+    }
+
+    /**
+     * Generates new request ID.
+     *
+     * @return Request ID.
+     */
+    protected static long generateRequestId()
+    {
+        return Connector.id++;
     }
 }

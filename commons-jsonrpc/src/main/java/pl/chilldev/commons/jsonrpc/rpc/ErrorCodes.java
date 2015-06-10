@@ -15,15 +15,15 @@ import com.thetransactioncompany.jsonrpc2.JSONRPC2Error;
 public class ErrorCodes
 {
     /**
-     * General unknown exception unhandled by an application.
+     * Network connection error.
      */
-    public static final int CODE_INTERNAL = -1;
+    public static final int CODE_CONNECTION = -1;
 
     /**
-     * Internal error stub.
+     * Connection error stub.
      */
-    public static final JSONRPC2Error ERROR_INTERNAL = new JSONRPC2Error(
-        ErrorCodes.CODE_INTERNAL,
-        "Internal error"
+    public static final JSONRPC2Error ERROR_CONNECTION = new JSONRPC2Error(
+        ErrorCodes.CODE_CONNECTION,
+        "Connection error"
     );
 }

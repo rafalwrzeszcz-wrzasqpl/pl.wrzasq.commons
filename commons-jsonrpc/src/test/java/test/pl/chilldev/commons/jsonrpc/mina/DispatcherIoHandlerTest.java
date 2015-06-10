@@ -53,6 +53,7 @@ public class DispatcherIoHandlerTest
 
         // this is just to mark test coverage
         handler.sessionOpened(session);
+        handler.sessionClosed(session);
 
         handler.sessionIdle(session, null);
 
@@ -120,7 +121,7 @@ public class DispatcherIoHandlerTest
         handler.messageReceived(session, "{\"jsonrpc\":\"2.0\",\"id\":\"" + id + "\",\"method\":\"version\"}");
 
         verify(this.handler).messageSent(same(session), this.captor.capture());
-        JSONAssert.assertEquals("{\"id\":\"" + id + "\",\"error\":{\"code\":-1,\"message\":\"Internal error: bar.\"},\"jsonrpc\":\"2.0\"}", this.captor.getValue().toString(), true);
+        JSONAssert.assertEquals("{\"id\":\"" + id + "\",\"error\":{\"code\":-32603,\"message\":\"Internal error: bar.\"},\"jsonrpc\":\"2.0\"}", this.captor.getValue().toString(), true);
     }
 
     @Test

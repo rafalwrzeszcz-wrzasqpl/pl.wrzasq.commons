@@ -25,16 +25,13 @@ import org.slf4j.LoggerFactory;
 
 import pl.chilldev.commons.concurrent.FutureResponder;
 
+import pl.chilldev.commons.jsonrpc.rpc.ErrorCodes;
+
 /**
  * JSON-RPC handler for TCP client session.
  */
 public class RequestIoHandler extends IoHandlerAdapter
 {
-    /**
-     * Request ID seed.
-     */
-    private static long id;
-
     /**
      * Logger.
      */
@@ -46,68 +43,18 @@ public class RequestIoHandler extends IoHandlerAdapter
     protected Map<Object, FutureResponder<JSONRPC2Response>> responses = new HashMap<>();
 
     /**
-     * Current connection session.
-     */
-    protected IoSession session;
-
-    /**
-     * Generates new request ID.
-     *
-     * @return Request ID.
-     */
-    protected static long generateRequestId()
-    {
-        return RequestIoHandler.id++;
-    }
-
-    /**
-     * Queues request without parameters.
-     *
-     * @param method RPC method name.
-     * @return Response future.
-     */
-    public FutureTask<JSONRPC2Response> execute(String method)
-    {
-        long id = RequestIoHandler.generateRequestId();
-
-        return this.execute(new JSONRPC2Request(method, id));
-    }
-
-    /**
-     * Queues request without parameters.
-     *
-     * @param method RPC method name.
-     * @param params Method params.
-     * @return Response future.
-     */
-    public FutureTask<JSONRPC2Response> execute(String method, Map<String, Object> params)
-    {
-        long id = RequestIoHandler.generateRequestId();
-
-        return this.execute(new JSONRPC2Request(method, params, id));
-    }
-
-    /**
      * Generates response future.
      *
      * @param request JSON-RPC request.
      * @return Response future.
      */
-    protected FutureTask<JSONRPC2Response> execute(JSONRPC2Request request)
+    public FutureTask<JSONRPC2Response> execute(JSONRPC2Request request)
     {
-        if (this.session == null) {
-            throw new IllegalStateException("Could not execute JSON-RPC request - client is not yet connected.");
-        }
-
         // prepares response handling future
         FutureResponder<JSONRPC2Response> responder = new FutureResponder<>();
         FutureTask<JSONRPC2Response> future = new FutureTask<>(responder);
         responder.setFuture(future);
         this.responses.put(request.getID(), responder);
-
-        // send request to server
-        this.logger.debug("Session ID {}: JSON request: {}.", this.session.getId(), request);
-        this.session.write(request);
 
         return future;
     }
@@ -121,8 +68,43 @@ public class RequestIoHandler extends IoHandlerAdapter
     public void sessionOpened(IoSession session)
     {
         this.logger.info("New connection to {}, connection ID: {}.", session.getRemoteAddress(), session.getId());
+    }
 
-        this.session = session;
+    /**
+     * Handles session closing.
+     *
+     * @param session Closed connection session.
+     */
+    @Override
+    public void sessionClosed(IoSession session)
+    {
+        this.logger.debug("Connection to {} closed, connection ID: {}.", session.getRemoteAddress(), session.getId());
+
+        // fail all pending requests
+        synchronized (this.responses) {
+            for (Map.Entry<Object, FutureResponder<JSONRPC2Response>> entry : this.responses.entrySet()) {
+                this.logger.error("Terminating request ID {}: lost connection.", entry.getKey());
+                entry.getValue().setResponse(
+                    new JSONRPC2Response(
+                        ErrorCodes.ERROR_CONNECTION.appendMessage(": lost connection."),
+                        entry.getKey()
+                    )
+                );
+            }
+            this.responses.clear();
+        }
+    }
+
+    /**
+     * Handles outgoing message.
+     *
+     * @param session Current connection session.
+     * @param message Incomming message.
+     */
+    @Override
+    public void messageSent(IoSession session, Object message)
+    {
+        this.logger.debug("Session ID {}: JSON request: {}.", session.getId(), message);
     }
 
     /**
@@ -142,9 +124,14 @@ public class RequestIoHandler extends IoHandlerAdapter
             JSONRPC2Response response = JSONRPC2Response.parse(message.toString());
             this.logger.debug("Session ID {}: JSON response: {}.", session.getId(), response);
 
-            // dispatch it
-            this.responses.get(response.getID()).setResponse(response);
-            this.responses.remove(response.getID());
+            Object id = response.getID();
+            if (this.responses.containsKey(id)) {
+                // dispatch it
+                this.responses.get(id).setResponse(response);
+                this.responses.remove(id);
+            } else {
+                this.logger.warn("Session ID {}: response for unknown request ID {}.", session.getId(), id);
+            }
         } catch (JSONRPC2ParseException error) {
             this.logger.error("Could not parse JSON-RPC response.");
             this.logger.debug("Session ID {}: malformed JSON response: {}.", session.getId(), message);

@@ -23,25 +23,11 @@ import com.thetransactioncompany.jsonrpc2.JSONRPC2Response;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.filter.codec.ProtocolCodecSession;
 
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-import static org.mockito.Mockito.*;
-
-import org.skyscreamer.jsonassert.JSONAssert;
-
 import pl.chilldev.commons.jsonrpc.mina.RequestIoHandler;
+import pl.chilldev.commons.jsonrpc.rpc.ErrorCodes;
 
-@RunWith(MockitoJUnitRunner.class)
 public class RequestIoHandlerTest
 {
-    @Mock
-    private IoHandlerAdapter handler;
-
-    @Captor
-    private ArgumentCaptor<Object> captor;
-
     @Test(expected = TimeoutException.class)
     public void sessionIdle()
         throws
@@ -49,6 +35,10 @@ public class RequestIoHandlerTest
     {
         ProtocolCodecSession session = new ProtocolCodecSession();
         RequestIoHandler handler = new RequestIoHandler();
+
+        // just for code coverage
+        handler.sessionOpened(session);
+        handler.messageSent(session, null);
 
         handler.sessionIdle(session, null);
     }
@@ -65,27 +55,39 @@ public class RequestIoHandlerTest
     }
 
     @Test
-    public void execute()
+    public void sessionClosed()
         throws
             Exception
     {
         ProtocolCodecSession session = new ProtocolCodecSession();
         RequestIoHandler handler = new RequestIoHandler();
 
-        session.setHandler(this.handler);
+        FutureTask<JSONRPC2Response> future = handler.execute(new JSONRPC2Request("test", 1L));
 
-        handler.sessionOpened(session);
+        handler.sessionClosed(session);
 
-        FutureTask<JSONRPC2Response> future = handler.execute("test");
+        assertFalse(
+            "RequestIoHandler.sessionClosed() should terminate all pending requests.",
+            future.get().indicatesSuccess()
+        );
+        assertEquals(
+            "RequestIoHandler.sessionClosed() should terminate all pending requests.",
+            ErrorCodes.CODE_CONNECTION,
+            future.get().getError().getCode()
+        );
+    }
 
-        verify(this.handler).messageSent(same(session), this.captor.capture());
+    @Test
+    public void messageReceived()
+        throws
+            Exception
+    {
+        ProtocolCodecSession session = new ProtocolCodecSession();
+        RequestIoHandler handler = new RequestIoHandler();
 
-        String json = this.captor.getValue().toString();
-        JSONRPC2Request request = JSONRPC2Request.parse(json);
-        String id = request.getID().toString();
-        JSONAssert.assertEquals("{\"id\":" + id + ",\"method\":\"test\",\"jsonrpc\":\"2.0\"}", json, true);
+        FutureTask<JSONRPC2Response> future = handler.execute(new JSONRPC2Request("test", 1L));
 
-        handler.messageReceived(session, "{\"jsonrpc\":\"2.0\",\"id\":" + id + ",\"result\":\"foo\"}");
+        handler.messageReceived(session, "{\"jsonrpc\":\"2.0\",\"id\":1,\"result\":\"foo\"}");
 
         assertEquals(
             "RequestIoHandler.messageReceived() should dispatch result to associated pending request future.",
@@ -95,45 +97,14 @@ public class RequestIoHandlerTest
     }
 
     @Test
-    public void executeWithParams()
+    public void messageReceivedUnknownId()
         throws
-            Exception
+            JSONRPC2ParseException
     {
         ProtocolCodecSession session = new ProtocolCodecSession();
         RequestIoHandler handler = new RequestIoHandler();
 
-        session.setHandler(this.handler);
-
-        handler.sessionOpened(session);
-
-        Map<String, Object> params = new HashMap<>();
-        params.put("id", 123);
-        FutureTask<JSONRPC2Response> future = handler.execute("test", params);
-
-        verify(this.handler).messageSent(same(session), this.captor.capture());
-
-        String json = this.captor.getValue().toString();
-        JSONRPC2Request request = JSONRPC2Request.parse(json);
-        String id = request.getID().toString();
-        JSONAssert.assertEquals("{\"id\":" + id + ",\"method\":\"test\",\"params\":{\"id\":123},\"jsonrpc\":\"2.0\"}", json, true);
-
-        handler.messageReceived(session, "{\"jsonrpc\":\"2.0\",\"id\":" + id + ",\"result\":\"foo\"}");
-
-        assertEquals(
-            "RequestIoHandler.messageReceived() should dispatch result to associated pending request future.",
-            "foo",
-            future.get().getResult()
-        );
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void executeNotConnected()
-        throws
-            JSONRPC2ParseException
-    {
-        RequestIoHandler handler = new RequestIoHandler();
-
-        handler.execute("test");
+        handler.messageReceived(session, "{\"jsonrpc\":\"2.0\",\"id\":1,\"result\":\"foo\"}");
     }
 
     @Test(expected = JSONRPC2ParseException.class)

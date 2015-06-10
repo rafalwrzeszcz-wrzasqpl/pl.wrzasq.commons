@@ -61,7 +61,9 @@ public class NetworkService
 }
 ```
 
-**Note:** the snippet above is the standard implementation available out of the box with <a href="./listener.html">listener</a>.
+**Note:** The snippet above is the standard implementation available out of the box with <a href="./listener.html">listener</a>.
+
+**Note:** `DispatcherIoHandler` handles all exceptions thrown during request processing (if not reported properly as error responses) and reports them as internal error to the client to avoid listener thread to die. Returned error has error code `-1` (see <a href="./rpc.html">error codes</a>).
 
 ## `IoServiceUtils.Configuration`
 

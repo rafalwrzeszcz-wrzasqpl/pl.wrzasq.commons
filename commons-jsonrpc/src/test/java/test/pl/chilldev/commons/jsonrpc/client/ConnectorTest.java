@@ -15,8 +15,11 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Error;
+import com.thetransactioncompany.jsonrpc2.JSONRPC2Request;
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Response;
 
+import org.apache.mina.core.future.ConnectFuture;
+import org.apache.mina.core.session.IoSession;
 import org.apache.mina.transport.socket.nio.NioSocketConnector;
 
 import org.junit.Test;
@@ -42,6 +45,12 @@ public class ConnectorTest
 
     @Mock
     protected FutureTask<JSONRPC2Response> future;
+
+    @Mock
+    protected ConnectFuture connectFuture;
+
+    @Mock
+    protected IoSession session;
 
     @Test
     public void setMaxPacketSize()
@@ -71,16 +80,79 @@ public class ConnectorTest
     {
         Connector connector = new Connector(this.connector, this.handler, this.address);
 
+        when(this.connectFuture.awaitUninterruptibly()).thenReturn(this.connectFuture);
+        when(this.connectFuture.getSession()).thenReturn(this.session);
+        when(this.session.isConnected()).thenReturn(true);
+
+        connector.reconnect(this.connectFuture);
+
         String result = "OK";
         JSONRPC2Response response = new JSONRPC2Response(result, "id");
 
-        when(this.handler.execute("test")).thenReturn(this.future);
+        when(this.handler.execute(isA(JSONRPC2Request.class))).thenReturn(this.future);
         when(this.future.get()).thenReturn(response);
 
         assertSame(
             "Connector.execute() should return executed method result.",
             result,
             connector.execute("test")
+        );
+    }
+
+    @Test
+    public void executeNewConnect()
+        throws
+            InterruptedException,
+            ExecutionException,
+            JSONRPC2Error
+    {
+        Connector connector = new Connector(this.connector, this.handler, this.address);
+        Connector spy = spy(connector);
+
+        when(this.connectFuture.awaitUninterruptibly()).thenReturn(this.connectFuture);
+        when(this.connectFuture.getSession()).thenReturn(this.session);
+
+        String result = "OK";
+        JSONRPC2Response response = new JSONRPC2Response(result, "id");
+
+        when(this.handler.execute(isA(JSONRPC2Request.class))).thenReturn(this.future);
+        when(this.future.get()).thenReturn(response);
+        doReturn(this.connectFuture).when(spy).connect();
+
+        assertSame(
+            "Connector.execute() should return executed method result.",
+            result,
+            spy.execute("test")
+        );
+    }
+
+    @Test
+    public void executeReconnect()
+        throws
+            InterruptedException,
+            ExecutionException,
+            JSONRPC2Error
+    {
+        Connector connector = new Connector(this.connector, this.handler, this.address);
+        Connector spy = spy(connector);
+
+        when(this.connectFuture.awaitUninterruptibly()).thenReturn(this.connectFuture);
+        when(this.connectFuture.getSession()).thenReturn(this.session);
+        when(this.session.isConnected()).thenReturn(false);
+
+        spy.reconnect(this.connectFuture);
+
+        String result = "OK";
+        JSONRPC2Response response = new JSONRPC2Response(result, "id");
+
+        when(this.handler.execute(isA(JSONRPC2Request.class))).thenReturn(this.future);
+        when(this.future.get()).thenReturn(response);
+        doReturn(this.connectFuture).when(spy).connect();
+
+        assertSame(
+            "Connector.execute() should return executed method result.",
+            result,
+            spy.execute("test")
         );
     }
 
@@ -93,12 +165,18 @@ public class ConnectorTest
     {
         Connector connector = new Connector(this.connector, this.handler, this.address);
 
+        when(this.connectFuture.awaitUninterruptibly()).thenReturn(this.connectFuture);
+        when(this.connectFuture.getSession()).thenReturn(this.session);
+        when(this.session.isConnected()).thenReturn(true);
+
+        connector.reconnect(this.connectFuture);
+
         String result = "OK";
         JSONRPC2Response response = new JSONRPC2Response(result, "id");
 
         Map<String, Object> params = new HashMap<>();
 
-        when(this.handler.execute("test", params)).thenReturn(this.future);
+        when(this.handler.execute(isA(JSONRPC2Request.class))).thenReturn(this.future);
         when(this.future.get()).thenReturn(response);
 
         assertSame(
@@ -117,10 +195,16 @@ public class ConnectorTest
     {
         Connector connector = new Connector(this.connector, this.handler, this.address);
 
+        when(this.connectFuture.awaitUninterruptibly()).thenReturn(this.connectFuture);
+        when(this.connectFuture.getSession()).thenReturn(this.session);
+        when(this.session.isConnected()).thenReturn(true);
+
+        connector.reconnect(this.connectFuture);
+
         JSONRPC2Error error = new JSONRPC2Error(1, "error");
         JSONRPC2Response response = new JSONRPC2Response(error, "id");
 
-        when(this.handler.execute("test")).thenReturn(this.future);
+        when(this.handler.execute(isA(JSONRPC2Request.class))).thenReturn(this.future);
         when(this.future.get()).thenReturn(response);
 
         connector.execute("test");
@@ -135,7 +219,13 @@ public class ConnectorTest
     {
         Connector connector = new Connector(this.connector, this.handler, this.address);
 
-        when(this.handler.execute("test")).thenReturn(this.future);
+        when(this.connectFuture.awaitUninterruptibly()).thenReturn(this.connectFuture);
+        when(this.connectFuture.getSession()).thenReturn(this.session);
+        when(this.session.isConnected()).thenReturn(true);
+
+        connector.reconnect(this.connectFuture);
+
+        when(this.handler.execute(isA(JSONRPC2Request.class))).thenReturn(this.future);
         when(this.future.get()).thenThrow(new InterruptedException());
 
         connector.execute("test");
@@ -150,9 +240,26 @@ public class ConnectorTest
     {
         Connector connector = new Connector(this.connector, this.handler, this.address);
 
-        when(this.handler.execute("test")).thenReturn(this.future);
+        when(this.connectFuture.awaitUninterruptibly()).thenReturn(this.connectFuture);
+        when(this.connectFuture.getSession()).thenReturn(this.session);
+        when(this.session.isConnected()).thenReturn(true);
+
+        connector.reconnect(this.connectFuture);
+
+        when(this.handler.execute(isA(JSONRPC2Request.class))).thenReturn(this.future);
         when(this.future.get()).thenThrow(new ExecutionException(new Exception()));
 
         connector.execute("test");
+    }
+
+    @Test
+    public void reconnect()
+    {
+        Connector connector = new Connector(this.connector, this.handler, this.address);
+
+        when(this.connectFuture.awaitUninterruptibly()).thenReturn(this.connectFuture);
+        when(this.connectFuture.getSession()).thenReturn(this.session);
+
+        connector.reconnect(this.connectFuture);
     }
 }
