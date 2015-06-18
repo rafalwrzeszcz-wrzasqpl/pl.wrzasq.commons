@@ -72,9 +72,7 @@ public abstract class AbstractApplication
         this.logger.info("Stopping…");
 
         // stop all threads
-        for (Listener thread : this.threads) {
-            thread.release();
-        }
+        this.threads.forEach(Listener::release);
 
         // wait for all threads
         for (Thread thread : this.threads) {
@@ -105,7 +103,7 @@ public abstract class AbstractApplication
     }
 
     /**
-     * Daemon resoures initialization.
+     * Daemon resources initialization.
      *
      * @param context Runtime context for daemon.
      */
@@ -128,7 +126,7 @@ public abstract class AbstractApplication
     }
 
     /**
-     * Daemon resoures freeing.
+     * Daemon resources freeing.
      */
     @Override
     public void destroy()
@@ -153,7 +151,7 @@ public abstract class AbstractApplication
     /**
      * Retruns collection of listeners (not started, but instantiated).
      *
-     * @return Collection of listeners to be sterted by the daemon.
+     * @return Collection of listeners to be started by the daemon.
      */
     protected abstract Collection<Listener> buildListeners();
 }

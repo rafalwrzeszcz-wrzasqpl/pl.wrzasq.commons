@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Grupped messages container.
+ * Grouped messages container.
  *
  * <p>
  * All operations done on objects of this class are synchronized.
@@ -105,9 +105,7 @@ public class MessageBag
      */
     public synchronized void addMessage(String type, String message)
     {
-        this.ensureExists(type);
-
-        this.messages.get(type).add(new MessageBag.Message(message));
+        this.ensureExists(type).add(new MessageBag.Message(message));
     }
 
     /**
@@ -134,9 +132,7 @@ public class MessageBag
      */
     public synchronized boolean hasMessages(String type)
     {
-        this.ensureExists(type);
-
-        return !this.messages.get(type).isEmpty();
+        return !this.ensureExists(type).isEmpty();
     }
 
     /**
@@ -147,11 +143,11 @@ public class MessageBag
      */
     public synchronized List<MessageBag.Message> getMessages(String type)
     {
-        this.ensureExists(type);
+        List<MessageBag.Message> container = this.ensureExists(type);
 
         // move all the messages to new list and clear internal container
-        List<MessageBag.Message> messages = new ArrayList<MessageBag.Message>(this.messages.get(type));
-        this.messages.get(type).clear();
+        List<MessageBag.Message> messages = new ArrayList<MessageBag.Message>(container);
+        container.clear();
 
         return messages;
     }
@@ -159,7 +155,7 @@ public class MessageBag
     /**
      * Returns all messages and clears the container.
      *
-     * @return All messages groupped by type. Always returns the map, at least empty.
+     * @return All messages grouped by type. Always returns the map, at least empty.
      */
     public synchronized Map<String, List<MessageBag.Message>> getAllMessages()
     {
@@ -181,11 +177,10 @@ public class MessageBag
      * Ensures that given sub-list exists.
      *
      * @param type Message type.
+     * @return Messages list for given type.
      */
-    protected void ensureExists(String type)
+    protected List<MessageBag.Message> ensureExists(String type)
     {
-        if (!this.messages.containsKey(type)) {
-            this.messages.put(type, new ArrayList<MessageBag.Message>());
-        }
+        return this.messages.computeIfAbsent(type, (String key) -> new ArrayList<MessageBag.Message>());
     }
 }

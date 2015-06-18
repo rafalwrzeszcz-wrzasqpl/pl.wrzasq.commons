@@ -5,11 +5,32 @@
 # @copyright 2014 - 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
 ##
 
+/.classpath
 /.project
 /.settings
 /target
+
+/commons-concurrent/.classpath
+/commons-concurrent/.project
+/commons-concurrent/.settings
 /commons-concurrent/target
+
+/commons-daemon/.classpath
+/commons-daemon/.project
+/commons-daemon/.settings
 /commons-daemon/target
+
+/commons-exception/.classpath
+/commons-exception/.project
+/commons-exception/.settings
 /commons-exception/target
+
+/commons-jsonrpc/.classpath
+/commons-jsonrpc/.project
+/commons-jsonrpc/.settings
 /commons-jsonrpc/target
+
+/commons-text/.classpath
+/commons-text/.project
+/commons-text/.settings
 /commons-text/target

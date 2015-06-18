@@ -20,7 +20,7 @@ public class FutureResponder<ResponseType> implements Callable<ResponseType>
     /**
      * Bound future.
      */
-    protected FutureTask future;
+    protected FutureTask<?> future;
 
     /**
      * Response to return.
@@ -33,7 +33,7 @@ public class FutureResponder<ResponseType> implements Callable<ResponseType>
      * @param future Target future.
      * @return Self instance.
      */
-    public FutureResponder<ResponseType> setFuture(FutureTask future)
+    public FutureResponder<ResponseType> setFuture(FutureTask<?> future)
     {
         this.future = future;
 
@@ -58,7 +58,7 @@ public class FutureResponder<ResponseType> implements Callable<ResponseType>
     }
 
     /**
-     * Returns previously-sasigned response.
+     * Returns previously-assigned response.
      *
      * @return Pre-defined response.
      */
