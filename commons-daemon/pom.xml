@@ -14,7 +14,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- core project settings -->
-    <groupId>pl.chilldev.commons</groupId>
     <artifactId>commons-daemon</artifactId>
     <packaging>jar</packaging>
     <parent>
