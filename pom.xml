@@ -17,11 +17,11 @@
     <groupId>pl.chilldev.commons</groupId>
     <artifactId>commons</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.4-SNAPSHOT</version>
+    <version>0.0.4</version>
     <parent>
         <groupId>pl.chilldev.parent</groupId>
         <artifactId>parent-opensource</artifactId>
-        <version>0.0.3</version>
+        <version>0.0.4</version>
     </parent>
 
     <!-- project meta info -->
