@@ -1,0 +1,1247 @@
+<?xml version="1.0"?>
+<!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
+
+<coverage line-rate="1.0" branch-rate="1.0" lines-covered="301" lines-valid="301" branches-covered="34" branches-valid="34" complexity="0.0" version="2.0.3" timestamp="1439362098442">
+	<sources>
+		<source>/usr/src/maven-project/src/main/java</source>
+		<source>--source</source>
+	</sources>
+	<packages>
+		<package name="pl.chilldev.commons.concurrent" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+			<classes>
+				<class name="pl.chilldev.commons.concurrent.FutureResponder" filename="pl/chilldev/commons/concurrent/FutureResponder.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="18" hits="6" branch="false"/>
+							</lines>
+						</method>
+						<method name="call" signature="()Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="67" hits="4" branch="false"/>
+							</lines>
+						</method>
+						<method name="setFuture" signature="(Ljava/util/concurrent/FutureTask;)Lpl/chilldev/commons/concurrent/FutureResponder;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="38" hits="6" branch="false"/>
+								<line number="40" hits="6" branch="false"/>
+							</lines>
+						</method>
+						<method name="setResponse" signature="(Ljava/lang/Object;)Lpl/chilldev/commons/concurrent/FutureResponder;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="51" hits="4" branch="false"/>
+								<line number="53" hits="4" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="54" hits="2" branch="false"/>
+								<line number="57" hits="4" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="18" hits="6" branch="false"/>
+						<line number="38" hits="6" branch="false"/>
+						<line number="40" hits="6" branch="false"/>
+						<line number="51" hits="4" branch="false"/>
+						<line number="53" hits="4" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="54" hits="2" branch="false"/>
+						<line number="57" hits="4" branch="false"/>
+						<line number="67" hits="4" branch="false"/>
+					</lines>
+				</class>
+			</classes>
+		</package>
+		<package name="pl.chilldev.commons.concurrent.collections" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+			<classes>
+				<class name="pl.chilldev.commons.concurrent.collections.MessageBag" filename="pl/chilldev/commons/concurrent/collections/MessageBag.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="29" hits="14" branch="false"/>
+								<line number="98" hits="14" branch="false"/>
+							</lines>
+						</method>
+						<method name="addMessage" signature="(Ljava/lang/String;Ljava/lang/String;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="108" hits="10" branch="false"/>
+								<line number="109" hits="10" branch="false"/>
+							</lines>
+						</method>
+						<method name="ensureExists" signature="(Ljava/lang/String;)Ljava/util/List;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+							</lines>
+						</method>
+						<method name="getAllMessages" signature="()Ljava/util/Map;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="162" hits="4" branch="false"/>
+								<line number="164" hits="4" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="166" hits="2" branch="false"/>
+								<line number="167" hits="2" branch="false"/>
+								<line number="170" hits="2" branch="false"/>
+								<line number="171" hits="2" branch="false"/>
+								<line number="173" hits="4" branch="false"/>
+							</lines>
+						</method>
+						<method name="getMessages" signature="(Ljava/lang/String;)Ljava/util/List;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="146" hits="8" branch="false"/>
+								<line number="149" hits="8" branch="false"/>
+								<line number="150" hits="8" branch="false"/>
+								<line number="152" hits="8" branch="false"/>
+							</lines>
+						</method>
+						<method name="hasMessages" signature="()Z" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="118" hits="6" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="119" hits="4" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="120" hits="2" branch="false"/>
+								<line number="122" hits="2" branch="false"/>
+								<line number="124" hits="4" branch="false"/>
+							</lines>
+						</method>
+						<method name="hasMessages" signature="(Ljava/lang/String;)Z" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="135" hits="8" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+							</lines>
+						</method>
+						<method name="lambda$ensureExists$0" signature="(Ljava/lang/String;)Ljava/util/List;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="184" hits="40" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="29" hits="14" branch="false"/>
+						<line number="98" hits="14" branch="false"/>
+						<line number="108" hits="10" branch="false"/>
+						<line number="109" hits="10" branch="false"/>
+						<line number="118" hits="6" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="119" hits="4" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="120" hits="2" branch="false"/>
+						<line number="122" hits="2" branch="false"/>
+						<line number="124" hits="4" branch="false"/>
+						<line number="135" hits="8" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="146" hits="8" branch="false"/>
+						<line number="149" hits="8" branch="false"/>
+						<line number="150" hits="8" branch="false"/>
+						<line number="152" hits="8" branch="false"/>
+						<line number="162" hits="4" branch="false"/>
+						<line number="164" hits="4" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="166" hits="2" branch="false"/>
+						<line number="167" hits="2" branch="false"/>
+						<line number="170" hits="2" branch="false"/>
+						<line number="171" hits="2" branch="false"/>
+						<line number="173" hits="4" branch="false"/>
+						<line number="184" hits="40" branch="false"/>
+					</lines>
+				</class>
+				<class name="pl.chilldev.commons.concurrent.collections.MessageBag$Message" filename="pl/chilldev/commons/concurrent/collections/MessageBag.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+						<method name="&lt;init&gt;" signature="(Ljava/lang/String;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="58" hits="10" branch="false"/>
+								<line number="66" hits="10" branch="false"/>
+								<line number="67" hits="10" branch="false"/>
+								<line number="68" hits="10" branch="false"/>
+							</lines>
+						</method>
+						<method name="getContent" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="77" hits="6" branch="false"/>
+							</lines>
+						</method>
+						<method name="getCreatedAt" signature="()Ljava/util/Date;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="87" hits="2" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="58" hits="10" branch="false"/>
+						<line number="66" hits="10" branch="false"/>
+						<line number="67" hits="10" branch="false"/>
+						<line number="68" hits="10" branch="false"/>
+						<line number="77" hits="6" branch="false"/>
+						<line number="87" hits="2" branch="false"/>
+					</lines>
+				</class>
+			</classes>
+		</package>
+		<package name="pl.chilldev.commons.daemon.lifecycle" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+			<classes>
+				<class name="pl.chilldev.commons.daemon.lifecycle.Shutdown" filename="pl/chilldev/commons/daemon/lifecycle/Shutdown.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+						<method name="&lt;init&gt;" signature="(Lorg/apache/commons/daemon/Daemon;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="26" hits="4" branch="false"/>
+								<line number="36" hits="4" branch="false"/>
+								<line number="44" hits="4" branch="false"/>
+								<line number="45" hits="4" branch="false"/>
+								<line number="46" hits="4" branch="false"/>
+							</lines>
+						</method>
+						<method name="run" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="65" hits="4" branch="false"/>
+								<line number="66" hits="2" branch="false"/>
+								<line number="67" hits="2" branch="false"/>
+								<line number="69" hits="2" branch="false"/>
+								<line number="71" hits="2" branch="false"/>
+								<line number="72" hits="2" branch="false"/>
+								<line number="73" hits="4" branch="false"/>
+							</lines>
+						</method>
+						<method name="setExceptionFormatter" signature="(Lpl/chilldev/commons/exception/ExceptionFormatter;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="55" hits="4" branch="false"/>
+								<line number="56" hits="4" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="26" hits="4" branch="false"/>
+						<line number="36" hits="4" branch="false"/>
+						<line number="44" hits="4" branch="false"/>
+						<line number="45" hits="4" branch="false"/>
+						<line number="46" hits="4" branch="false"/>
+						<line number="55" hits="4" branch="false"/>
+						<line number="56" hits="4" branch="false"/>
+						<line number="65" hits="4" branch="false"/>
+						<line number="66" hits="2" branch="false"/>
+						<line number="67" hits="2" branch="false"/>
+						<line number="69" hits="2" branch="false"/>
+						<line number="71" hits="2" branch="false"/>
+						<line number="72" hits="2" branch="false"/>
+						<line number="73" hits="4" branch="false"/>
+					</lines>
+				</class>
+			</classes>
+		</package>
+		<package name="pl.chilldev.commons.exception" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+			<classes>
+				<class name="pl.chilldev.commons.exception.ExceptionFormatter" filename="pl/chilldev/commons/exception/ExceptionFormatter.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+					</methods>
+					<lines>
+					</lines>
+				</class>
+				<class name="pl.chilldev.commons.exception.ExceptionFormatter$1" filename="pl/chilldev/commons/exception/ExceptionFormatter.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="21" hits="2" branch="false"/>
+								<line number="25" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="format" signature="(Ljava/lang/Throwable;)Ljava/lang/String;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="33" hits="4" branch="false"/>
+								<line number="34" hits="2" branch="false"/>
+								<line number="35" hits="2" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="21" hits="2" branch="false"/>
+						<line number="25" hits="2" branch="false"/>
+						<line number="33" hits="4" branch="false"/>
+						<line number="34" hits="2" branch="false"/>
+						<line number="35" hits="2" branch="false"/>
+					</lines>
+				</class>
+			</classes>
+		</package>
+		<package name="pl.chilldev.commons.jsonrpc.client" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+			<classes>
+				<class name="pl.chilldev.commons.jsonrpc.client.Connector" filename="pl/chilldev/commons/jsonrpc/client/Connector.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+						<method name="&lt;init&gt;" signature="(Lorg/apache/mina/transport/socket/nio/NioSocketConnector;Lpl/chilldev/commons/jsonrpc/mina/RequestIoHandler;Ljava/net/InetSocketAddress;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="50" hits="18" branch="false"/>
+								<line number="60" hits="18" branch="false"/>
+								<line number="85" hits="18" branch="false"/>
+								<line number="86" hits="18" branch="false"/>
+								<line number="87" hits="18" branch="false"/>
+								<line number="88" hits="18" branch="false"/>
+								<line number="90" hits="18" branch="false"/>
+								<line number="91" hits="18" branch="false"/>
+							</lines>
+						</method>
+						<method name="connect" signature="()Lorg/apache/mina/core/future/ConnectFuture;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="208" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="create" signature="(Ljava/net/InetSocketAddress;)Lpl/chilldev/commons/jsonrpc/client/Connector;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="237" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="dispose" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="226" hits="2" branch="false"/>
+								<line number="227" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="execute" signature="(Lcom/thetransactioncompany/jsonrpc2/JSONRPC2Request;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="165" hits="14" branch="true" condition-coverage="100% (4/4)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+										<condition number="1" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="166" hits="4" branch="false"/>
+								<line number="171" hits="14" branch="false"/>
+								<line number="174" hits="14" branch="false"/>
+								<line number="176" hits="14" branch="false"/>
+								<line number="179" hits="10" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="180" hits="2" branch="false"/>
+								<line number="182" hits="4" branch="false"/>
+								<line number="184" hits="2" branch="false"/>
+								<line number="185" hits="2" branch="false"/>
+								<line number="186" hits="2" branch="false"/>
+								<line number="188" hits="2" branch="false"/>
+								<line number="191" hits="8" branch="false"/>
+								<line number="192" hits="2" branch="false"/>
+								<line number="193" hits="2" branch="false"/>
+								<line number="194" hits="2" branch="false"/>
+								<line number="195" hits="2" branch="false"/>
+								<line number="196" hits="2" branch="false"/>
+								<line number="197" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="execute" signature="(Ljava/lang/String;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="127" hits="12" branch="false"/>
+								<line number="129" hits="12" branch="false"/>
+							</lines>
+						</method>
+						<method name="execute" signature="(Ljava/lang/String;Ljava/util/Map;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="146" hits="2" branch="false"/>
+								<line number="148" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="generateRequestId" signature="()J" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="247" hits="14" branch="false"/>
+							</lines>
+						</method>
+						<method name="getMaxPacketSize" signature="()I" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="111" hits="38" branch="false"/>
+							</lines>
+						</method>
+						<method name="reconnect" signature="(Lorg/apache/mina/core/future/ConnectFuture;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="218" hits="18" branch="false"/>
+								<line number="219" hits="18" branch="false"/>
+							</lines>
+						</method>
+						<method name="setMaxPacketSize" signature="(I)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="100" hits="2" branch="false"/>
+								<line number="101" hits="2" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="50" hits="18" branch="false"/>
+						<line number="60" hits="18" branch="false"/>
+						<line number="85" hits="18" branch="false"/>
+						<line number="86" hits="18" branch="false"/>
+						<line number="87" hits="18" branch="false"/>
+						<line number="88" hits="18" branch="false"/>
+						<line number="90" hits="18" branch="false"/>
+						<line number="91" hits="18" branch="false"/>
+						<line number="100" hits="2" branch="false"/>
+						<line number="101" hits="2" branch="false"/>
+						<line number="111" hits="38" branch="false"/>
+						<line number="127" hits="12" branch="false"/>
+						<line number="129" hits="12" branch="false"/>
+						<line number="146" hits="2" branch="false"/>
+						<line number="148" hits="2" branch="false"/>
+						<line number="165" hits="14" branch="true" condition-coverage="100% (4/4)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+								<condition number="1" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="166" hits="4" branch="false"/>
+						<line number="171" hits="14" branch="false"/>
+						<line number="174" hits="14" branch="false"/>
+						<line number="176" hits="14" branch="false"/>
+						<line number="179" hits="10" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="180" hits="2" branch="false"/>
+						<line number="182" hits="4" branch="false"/>
+						<line number="184" hits="2" branch="false"/>
+						<line number="185" hits="2" branch="false"/>
+						<line number="186" hits="2" branch="false"/>
+						<line number="188" hits="2" branch="false"/>
+						<line number="191" hits="8" branch="false"/>
+						<line number="192" hits="2" branch="false"/>
+						<line number="193" hits="2" branch="false"/>
+						<line number="194" hits="2" branch="false"/>
+						<line number="195" hits="2" branch="false"/>
+						<line number="196" hits="2" branch="false"/>
+						<line number="197" hits="2" branch="false"/>
+						<line number="208" hits="2" branch="false"/>
+						<line number="218" hits="18" branch="false"/>
+						<line number="219" hits="18" branch="false"/>
+						<line number="226" hits="2" branch="false"/>
+						<line number="227" hits="2" branch="false"/>
+						<line number="237" hits="2" branch="false"/>
+						<line number="247" hits="14" branch="false"/>
+					</lines>
+				</class>
+			</classes>
+		</package>
+		<package name="pl.chilldev.commons.jsonrpc.daemon" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+			<classes>
+				<class name="pl.chilldev.commons.jsonrpc.daemon.AbstractApplication" filename="pl/chilldev/commons/jsonrpc/daemon/AbstractApplication.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="25" hits="16" branch="false"/>
+								<line number="33" hits="16" branch="false"/>
+								<line number="38" hits="16" branch="false"/>
+							</lines>
+						</method>
+						<method name="destroy" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="135" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="init" signature="(Lorg/apache/commons/daemon/DaemonContext;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="114" hits="4" branch="false"/>
+								<line number="117" hits="2" branch="false"/>
+								<line number="118" hits="2" branch="false"/>
+								<line number="119" hits="2" branch="false"/>
+								<line number="120" hits="2" branch="false"/>
+								<line number="121" hits="2" branch="false"/>
+								<line number="122" hits="2" branch="false"/>
+								<line number="123" hits="2" branch="false"/>
+								<line number="126" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="signal" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="97" hits="2" branch="false"/>
+								<line number="101" hits="2" branch="false"/>
+								<line number="102" hits="2" branch="false"/>
+								<line number="103" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="start" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="47" hits="16" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="49" hits="12" branch="false"/>
+								<line number="50" hits="10" branch="false"/>
+								<line number="52" hits="2" branch="false"/>
+								<line number="54" hits="4" branch="false"/>
+								<line number="56" hits="2" branch="false"/>
+								<line number="57" hits="2" branch="false"/>
+								<line number="60" hits="10" branch="false"/>
+								<line number="61" hits="12" branch="false"/>
+								<line number="63" hits="16" branch="false"/>
+								<line number="64" hits="16" branch="false"/>
+							</lines>
+						</method>
+						<method name="stop" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="72" hits="10" branch="false"/>
+								<line number="75" hits="10" branch="false"/>
+								<line number="78" hits="10" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="81" hits="6" branch="false"/>
+								<line number="82" hits="6" branch="false"/>
+								<line number="83" hits="2" branch="false"/>
+								<line number="84" hits="2" branch="false"/>
+								<line number="85" hits="4" branch="false"/>
+								<line number="86" hits="6" branch="false"/>
+								<line number="88" hits="10" branch="false"/>
+								<line number="89" hits="10" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="25" hits="16" branch="false"/>
+						<line number="33" hits="16" branch="false"/>
+						<line number="38" hits="16" branch="false"/>
+						<line number="47" hits="16" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="49" hits="12" branch="false"/>
+						<line number="50" hits="10" branch="false"/>
+						<line number="52" hits="2" branch="false"/>
+						<line number="54" hits="4" branch="false"/>
+						<line number="56" hits="2" branch="false"/>
+						<line number="57" hits="2" branch="false"/>
+						<line number="60" hits="10" branch="false"/>
+						<line number="61" hits="12" branch="false"/>
+						<line number="63" hits="16" branch="false"/>
+						<line number="64" hits="16" branch="false"/>
+						<line number="72" hits="10" branch="false"/>
+						<line number="75" hits="10" branch="false"/>
+						<line number="78" hits="10" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="81" hits="6" branch="false"/>
+						<line number="82" hits="6" branch="false"/>
+						<line number="83" hits="2" branch="false"/>
+						<line number="84" hits="2" branch="false"/>
+						<line number="85" hits="4" branch="false"/>
+						<line number="86" hits="6" branch="false"/>
+						<line number="88" hits="10" branch="false"/>
+						<line number="89" hits="10" branch="false"/>
+						<line number="97" hits="2" branch="false"/>
+						<line number="101" hits="2" branch="false"/>
+						<line number="102" hits="2" branch="false"/>
+						<line number="103" hits="2" branch="false"/>
+						<line number="114" hits="4" branch="false"/>
+						<line number="117" hits="2" branch="false"/>
+						<line number="118" hits="2" branch="false"/>
+						<line number="119" hits="2" branch="false"/>
+						<line number="120" hits="2" branch="false"/>
+						<line number="121" hits="2" branch="false"/>
+						<line number="122" hits="2" branch="false"/>
+						<line number="123" hits="2" branch="false"/>
+						<line number="126" hits="2" branch="false"/>
+						<line number="135" hits="2" branch="false"/>
+					</lines>
+				</class>
+				<class name="pl.chilldev.commons.jsonrpc.daemon.AbstractSpringApplication" filename="pl/chilldev/commons/jsonrpc/daemon/AbstractSpringApplication.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="19" hits="6" branch="false"/>
+							</lines>
+						</method>
+						<method name="buildListeners" signature="()Ljava/util/Collection;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="61" hits="4" branch="false"/>
+								<line number="64" hits="4" branch="false"/>
+							</lines>
+						</method>
+						<method name="start" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="33" hits="4" branch="false"/>
+								<line number="34" hits="4" branch="false"/>
+								<line number="35" hits="4" branch="false"/>
+								<line number="36" hits="4" branch="false"/>
+								<line number="38" hits="4" branch="false"/>
+								<line number="39" hits="4" branch="false"/>
+							</lines>
+						</method>
+						<method name="stop" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="47" hits="4" branch="false"/>
+								<line number="50" hits="4" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="51" hits="2" branch="false"/>
+								<line number="53" hits="4" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="19" hits="6" branch="false"/>
+						<line number="33" hits="4" branch="false"/>
+						<line number="34" hits="4" branch="false"/>
+						<line number="35" hits="4" branch="false"/>
+						<line number="36" hits="4" branch="false"/>
+						<line number="38" hits="4" branch="false"/>
+						<line number="39" hits="4" branch="false"/>
+						<line number="47" hits="4" branch="false"/>
+						<line number="50" hits="4" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="51" hits="2" branch="false"/>
+						<line number="53" hits="4" branch="false"/>
+						<line number="61" hits="4" branch="false"/>
+						<line number="64" hits="4" branch="false"/>
+					</lines>
+				</class>
+				<class name="pl.chilldev.commons.jsonrpc.daemon.ContextInterface" filename="pl/chilldev/commons/jsonrpc/daemon/ContextInterface.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+					</methods>
+					<lines>
+					</lines>
+				</class>
+				<class name="pl.chilldev.commons.jsonrpc.daemon.Listener" filename="pl/chilldev/commons/jsonrpc/daemon/Listener.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+						<method name="&lt;init&gt;" signature="(Ljava/lang/String;Lpl/chilldev/commons/jsonrpc/daemon/ContextInterface;Lpl/chilldev/commons/jsonrpc/rpc/Dispatcher;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="45" hits="16" branch="false"/>
+								<line number="60" hits="16" branch="false"/>
+								<line number="70" hits="16" branch="false"/>
+								<line number="75" hits="16" branch="false"/>
+								<line number="86" hits="16" branch="false"/>
+								<line number="87" hits="16" branch="false"/>
+								<line number="88" hits="16" branch="false"/>
+								<line number="89" hits="16" branch="false"/>
+							</lines>
+						</method>
+						<method name="getMaxPacketSize" signature="()I" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="129" hits="18" branch="false"/>
+							</lines>
+						</method>
+						<method name="release" signature="()Lpl/chilldev/commons/jsonrpc/daemon/Listener;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="139" hits="4" branch="false"/>
+								<line number="141" hits="4" branch="false"/>
+							</lines>
+						</method>
+						<method name="run" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="151" hits="10" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="152" hits="2" branch="false"/>
+								<line number="153" hits="2" branch="false"/>
+								<line number="156" hits="8" branch="false"/>
+								<line number="160" hits="8" branch="false"/>
+								<line number="165" hits="8" branch="false"/>
+								<line number="166" hits="8" branch="false"/>
+								<line number="168" hits="6" branch="false"/>
+								<line number="171" hits="10" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="172" hits="8" branch="false"/>
+								<line number="174" hits="4" branch="false"/>
+								<line number="176" hits="2" branch="false"/>
+								<line number="177" hits="2" branch="false"/>
+								<line number="178" hits="2" branch="false"/>
+								<line number="181" hits="8" branch="false"/>
+								<line number="182" hits="8" branch="false"/>
+								<line number="183" hits="8" branch="false"/>
+								<line number="184" hits="8" branch="false"/>
+							</lines>
+						</method>
+						<method name="setAddress" signature="(Ljava/net/InetSocketAddress;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="108" hits="8" branch="false"/>
+								<line number="109" hits="8" branch="false"/>
+							</lines>
+						</method>
+						<method name="setMaxPacketSize" signature="(I)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="118" hits="2" branch="false"/>
+								<line number="119" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="setSleepTick" signature="(I)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="98" hits="2" branch="false"/>
+								<line number="99" hits="2" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="45" hits="16" branch="false"/>
+						<line number="60" hits="16" branch="false"/>
+						<line number="70" hits="16" branch="false"/>
+						<line number="75" hits="16" branch="false"/>
+						<line number="86" hits="16" branch="false"/>
+						<line number="87" hits="16" branch="false"/>
+						<line number="88" hits="16" branch="false"/>
+						<line number="89" hits="16" branch="false"/>
+						<line number="98" hits="2" branch="false"/>
+						<line number="99" hits="2" branch="false"/>
+						<line number="108" hits="8" branch="false"/>
+						<line number="109" hits="8" branch="false"/>
+						<line number="118" hits="2" branch="false"/>
+						<line number="119" hits="2" branch="false"/>
+						<line number="129" hits="18" branch="false"/>
+						<line number="139" hits="4" branch="false"/>
+						<line number="141" hits="4" branch="false"/>
+						<line number="151" hits="10" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="152" hits="2" branch="false"/>
+						<line number="153" hits="2" branch="false"/>
+						<line number="156" hits="8" branch="false"/>
+						<line number="160" hits="8" branch="false"/>
+						<line number="165" hits="8" branch="false"/>
+						<line number="166" hits="8" branch="false"/>
+						<line number="168" hits="6" branch="false"/>
+						<line number="171" hits="10" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="172" hits="8" branch="false"/>
+						<line number="174" hits="4" branch="false"/>
+						<line number="176" hits="2" branch="false"/>
+						<line number="177" hits="2" branch="false"/>
+						<line number="178" hits="2" branch="false"/>
+						<line number="181" hits="8" branch="false"/>
+						<line number="182" hits="8" branch="false"/>
+						<line number="183" hits="8" branch="false"/>
+						<line number="184" hits="8" branch="false"/>
+					</lines>
+				</class>
+			</classes>
+		</package>
+		<package name="pl.chilldev.commons.jsonrpc.json.writer" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+			<classes>
+				<class name="pl.chilldev.commons.jsonrpc.json.writer.StringDumpingWriter" filename="pl/chilldev/commons/jsonrpc/json/writer/StringDumpingWriter.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="18" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="writeJSONString" signature="(Ljava/lang/Object;Ljava/lang/Appendable;Lnet/minidev/json/JSONStyle;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="35" hits="2" branch="false"/>
+								<line number="36" hits="2" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="18" hits="2" branch="false"/>
+						<line number="35" hits="2" branch="false"/>
+						<line number="36" hits="2" branch="false"/>
+					</lines>
+				</class>
+			</classes>
+		</package>
+		<package name="pl.chilldev.commons.jsonrpc.mina" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+			<classes>
+				<class name="pl.chilldev.commons.jsonrpc.mina.DispatcherIoHandler" filename="pl/chilldev/commons/jsonrpc/mina/DispatcherIoHandler.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+						<method name="&lt;init&gt;" signature="(Lpl/chilldev/commons/jsonrpc/daemon/ContextInterface;Lpl/chilldev/commons/jsonrpc/rpc/Dispatcher;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="35" hits="18" branch="false"/>
+								<line number="55" hits="18" branch="false"/>
+								<line number="56" hits="18" branch="false"/>
+								<line number="57" hits="18" branch="false"/>
+								<line number="58" hits="18" branch="false"/>
+							</lines>
+						</method>
+						<method name="exceptionCaught" signature="(Lorg/apache/mina/core/session/IoSession;Ljava/lang/Throwable;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="69" hits="4" branch="false"/>
+								<line number="71" hits="2" branch="false"/>
+								<line number="74" hits="2" branch="false"/>
+								<line number="75" hits="2" branch="false"/>
+								<line number="76" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="messageReceived" signature="(Lorg/apache/mina/core/session/IoSession;Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="87" hits="6" branch="false"/>
+								<line number="91" hits="6" branch="false"/>
+								<line number="92" hits="4" branch="false"/>
+								<line number="96" hits="4" branch="false"/>
+								<line number="98" hits="2" branch="false"/>
+								<line number="101" hits="2" branch="false"/>
+								<line number="102" hits="2" branch="false"/>
+								<line number="103" hits="2" branch="false"/>
+								<line number="104" hits="2" branch="false"/>
+								<line number="106" hits="2" branch="false"/>
+								<line number="108" hits="4" branch="false"/>
+								<line number="109" hits="2" branch="false"/>
+								<line number="110" hits="2" branch="false"/>
+								<line number="111" hits="2" branch="false"/>
+								<line number="112" hits="2" branch="false"/>
+								<line number="113" hits="4" branch="false"/>
+								<line number="116" hits="6" branch="false"/>
+								<line number="117" hits="6" branch="false"/>
+							</lines>
+						</method>
+						<method name="sessionClosed" signature="(Lorg/apache/mina/core/session/IoSession;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="151" hits="2" branch="false"/>
+								<line number="152" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="sessionIdle" signature="(Lorg/apache/mina/core/session/IoSession;Lorg/apache/mina/core/session/IdleStatus;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="128" hits="2" branch="false"/>
+								<line number="129" hits="2" branch="false"/>
+								<line number="130" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="sessionOpened" signature="(Lorg/apache/mina/core/session/IoSession;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="140" hits="2" branch="false"/>
+								<line number="141" hits="2" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="35" hits="18" branch="false"/>
+						<line number="55" hits="18" branch="false"/>
+						<line number="56" hits="18" branch="false"/>
+						<line number="57" hits="18" branch="false"/>
+						<line number="58" hits="18" branch="false"/>
+						<line number="69" hits="4" branch="false"/>
+						<line number="71" hits="2" branch="false"/>
+						<line number="74" hits="2" branch="false"/>
+						<line number="75" hits="2" branch="false"/>
+						<line number="76" hits="2" branch="false"/>
+						<line number="87" hits="6" branch="false"/>
+						<line number="91" hits="6" branch="false"/>
+						<line number="92" hits="4" branch="false"/>
+						<line number="96" hits="4" branch="false"/>
+						<line number="98" hits="2" branch="false"/>
+						<line number="101" hits="2" branch="false"/>
+						<line number="102" hits="2" branch="false"/>
+						<line number="103" hits="2" branch="false"/>
+						<line number="104" hits="2" branch="false"/>
+						<line number="106" hits="2" branch="false"/>
+						<line number="108" hits="4" branch="false"/>
+						<line number="109" hits="2" branch="false"/>
+						<line number="110" hits="2" branch="false"/>
+						<line number="111" hits="2" branch="false"/>
+						<line number="112" hits="2" branch="false"/>
+						<line number="113" hits="4" branch="false"/>
+						<line number="116" hits="6" branch="false"/>
+						<line number="117" hits="6" branch="false"/>
+						<line number="128" hits="2" branch="false"/>
+						<line number="129" hits="2" branch="false"/>
+						<line number="130" hits="2" branch="false"/>
+						<line number="140" hits="2" branch="false"/>
+						<line number="141" hits="2" branch="false"/>
+						<line number="151" hits="2" branch="false"/>
+						<line number="152" hits="2" branch="false"/>
+					</lines>
+				</class>
+				<class name="pl.chilldev.commons.jsonrpc.mina.IoServiceUtils" filename="pl/chilldev/commons/jsonrpc/mina/IoServiceUtils.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="20" hits="2" branch="false"/>
+								<line number="25" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="initialize" signature="(Lorg/apache/mina/core/service/IoService;Lorg/apache/mina/core/service/IoHandler;Lpl/chilldev/commons/jsonrpc/mina/IoServiceUtils$Configuration;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="50" hits="28" branch="false"/>
+								<line number="51" hits="28" branch="false"/>
+								<line number="52" hits="28" branch="false"/>
+								<line number="55" hits="28" branch="false"/>
+								<line number="56" hits="28" branch="false"/>
+								<line number="57" hits="28" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="20" hits="2" branch="false"/>
+						<line number="25" hits="2" branch="false"/>
+						<line number="50" hits="28" branch="false"/>
+						<line number="51" hits="28" branch="false"/>
+						<line number="52" hits="28" branch="false"/>
+						<line number="55" hits="28" branch="false"/>
+						<line number="56" hits="28" branch="false"/>
+						<line number="57" hits="28" branch="false"/>
+					</lines>
+				</class>
+				<class name="pl.chilldev.commons.jsonrpc.mina.IoServiceUtils$Configuration" filename="pl/chilldev/commons/jsonrpc/mina/IoServiceUtils.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+					</methods>
+					<lines>
+					</lines>
+				</class>
+				<class name="pl.chilldev.commons.jsonrpc.mina.RequestIoHandler" filename="pl/chilldev/commons/jsonrpc/mina/RequestIoHandler.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="33" hits="14" branch="false"/>
+								<line number="38" hits="14" branch="false"/>
+								<line number="43" hits="14" branch="false"/>
+							</lines>
+						</method>
+						<method name="exceptionCaught" signature="(Lorg/apache/mina/core/session/IoSession;Ljava/lang/Throwable;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="154" hits="4" branch="false"/>
+								<line number="156" hits="2" branch="false"/>
+								<line number="159" hits="2" branch="false"/>
+								<line number="160" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="execute" signature="(Lcom/thetransactioncompany/jsonrpc2/JSONRPC2Request;)Ljava/util/concurrent/FutureTask;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="54" hits="4" branch="false"/>
+								<line number="55" hits="4" branch="false"/>
+								<line number="56" hits="4" branch="false"/>
+								<line number="57" hits="4" branch="false"/>
+								<line number="59" hits="4" branch="false"/>
+							</lines>
+						</method>
+						<method name="messageReceived" signature="(Lorg/apache/mina/core/session/IoSession;Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="124" hits="6" branch="false"/>
+								<line number="125" hits="4" branch="false"/>
+								<line number="127" hits="4" branch="false"/>
+								<line number="128" hits="4" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="130" hits="2" branch="false"/>
+								<line number="131" hits="2" branch="false"/>
+								<line number="133" hits="2" branch="false"/>
+								<line number="135" hits="2" branch="false"/>
+								<line number="136" hits="2" branch="false"/>
+								<line number="137" hits="2" branch="false"/>
+								<line number="138" hits="2" branch="false"/>
+								<line number="139" hits="4" branch="false"/>
+								<line number="140" hits="4" branch="false"/>
+							</lines>
+						</method>
+						<method name="messageSent" signature="(Lorg/apache/mina/core/session/IoSession;Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="107" hits="2" branch="false"/>
+								<line number="108" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="sessionClosed" signature="(Lorg/apache/mina/core/session/IoSession;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="81" hits="2" branch="false"/>
+								<line number="84" hits="2" branch="false"/>
+								<line number="85" hits="2" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="86" hits="2" branch="false"/>
+								<line number="87" hits="4" branch="false"/>
+								<line number="89" hits="2" branch="false"/>
+								<line number="90" hits="2" branch="false"/>
+								<line number="93" hits="2" branch="false"/>
+								<line number="94" hits="2" branch="false"/>
+								<line number="95" hits="2" branch="false"/>
+								<line number="96" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="sessionIdle" signature="(Lorg/apache/mina/core/session/IoSession;Lorg/apache/mina/core/session/IdleStatus;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="175" hits="2" branch="false"/>
+								<line number="176" hits="2" branch="false"/>
+								<line number="177" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="sessionOpened" signature="(Lorg/apache/mina/core/session/IoSession;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="70" hits="2" branch="false"/>
+								<line number="71" hits="2" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="33" hits="14" branch="false"/>
+						<line number="38" hits="14" branch="false"/>
+						<line number="43" hits="14" branch="false"/>
+						<line number="54" hits="4" branch="false"/>
+						<line number="55" hits="4" branch="false"/>
+						<line number="56" hits="4" branch="false"/>
+						<line number="57" hits="4" branch="false"/>
+						<line number="59" hits="4" branch="false"/>
+						<line number="70" hits="2" branch="false"/>
+						<line number="71" hits="2" branch="false"/>
+						<line number="81" hits="2" branch="false"/>
+						<line number="84" hits="2" branch="false"/>
+						<line number="85" hits="2" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="86" hits="2" branch="false"/>
+						<line number="87" hits="4" branch="false"/>
+						<line number="89" hits="2" branch="false"/>
+						<line number="90" hits="2" branch="false"/>
+						<line number="93" hits="2" branch="false"/>
+						<line number="94" hits="2" branch="false"/>
+						<line number="95" hits="2" branch="false"/>
+						<line number="96" hits="2" branch="false"/>
+						<line number="107" hits="2" branch="false"/>
+						<line number="108" hits="2" branch="false"/>
+						<line number="124" hits="6" branch="false"/>
+						<line number="125" hits="4" branch="false"/>
+						<line number="127" hits="4" branch="false"/>
+						<line number="128" hits="4" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="130" hits="2" branch="false"/>
+						<line number="131" hits="2" branch="false"/>
+						<line number="133" hits="2" branch="false"/>
+						<line number="135" hits="2" branch="false"/>
+						<line number="136" hits="2" branch="false"/>
+						<line number="137" hits="2" branch="false"/>
+						<line number="138" hits="2" branch="false"/>
+						<line number="139" hits="4" branch="false"/>
+						<line number="140" hits="4" branch="false"/>
+						<line number="154" hits="4" branch="false"/>
+						<line number="156" hits="2" branch="false"/>
+						<line number="159" hits="2" branch="false"/>
+						<line number="160" hits="2" branch="false"/>
+						<line number="175" hits="2" branch="false"/>
+						<line number="176" hits="2" branch="false"/>
+						<line number="177" hits="2" branch="false"/>
+					</lines>
+				</class>
+			</classes>
+		</package>
+		<package name="pl.chilldev.commons.jsonrpc.rpc" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+			<classes>
+				<class name="pl.chilldev.commons.jsonrpc.rpc.Dispatcher" filename="pl/chilldev/commons/jsonrpc/rpc/Dispatcher.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="24" hits="26" branch="false"/>
+								<line number="50" hits="26" branch="false"/>
+							</lines>
+						</method>
+						<method name="dispatch" signature="(Lcom/thetransactioncompany/jsonrpc2/JSONRPC2Request;Lpl/chilldev/commons/jsonrpc/daemon/ContextInterface;)Lcom/thetransactioncompany/jsonrpc2/JSONRPC2Response;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="94" hits="14" branch="false"/>
+								<line number="95" hits="14" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="97" hits="12" branch="false"/>
+								<line number="98" hits="2" branch="false"/>
+								<line number="99" hits="2" branch="false"/>
+								<line number="102" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="register" signature="(Ljava/lang/String;Lpl/chilldev/commons/jsonrpc/rpc/Dispatcher$RequestHandler;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="60" hits="12" branch="false"/>
+								<line number="61" hits="12" branch="false"/>
+							</lines>
+						</method>
+						<method name="register" signature="(Ljava/lang/String;Lpl/chilldev/commons/jsonrpc/rpc/ReturningMethod;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="71" hits="2" branch="false"/>
+								<line number="72" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="register" signature="(Ljava/lang/String;Lpl/chilldev/commons/jsonrpc/rpc/VoidMethod;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="82" hits="2" branch="false"/>
+								<line number="83" hits="2" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="24" hits="26" branch="false"/>
+						<line number="50" hits="26" branch="false"/>
+						<line number="60" hits="12" branch="false"/>
+						<line number="61" hits="12" branch="false"/>
+						<line number="71" hits="2" branch="false"/>
+						<line number="72" hits="2" branch="false"/>
+						<line number="82" hits="2" branch="false"/>
+						<line number="83" hits="2" branch="false"/>
+						<line number="94" hits="14" branch="false"/>
+						<line number="95" hits="14" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="97" hits="12" branch="false"/>
+						<line number="98" hits="2" branch="false"/>
+						<line number="99" hits="2" branch="false"/>
+						<line number="102" hits="2" branch="false"/>
+					</lines>
+				</class>
+				<class name="pl.chilldev.commons.jsonrpc.rpc.Dispatcher$RequestHandler" filename="pl/chilldev/commons/jsonrpc/rpc/Dispatcher.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+					</methods>
+					<lines>
+					</lines>
+				</class>
+				<class name="pl.chilldev.commons.jsonrpc.rpc.ErrorCodes" filename="pl/chilldev/commons/jsonrpc/rpc/ErrorCodes.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+						<method name="&lt;clinit&gt;" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="25" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="15" hits="2" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="15" hits="2" branch="false"/>
+						<line number="25" hits="2" branch="false"/>
+					</lines>
+				</class>
+				<class name="pl.chilldev.commons.jsonrpc.rpc.ReturningMethod" filename="pl/chilldev/commons/jsonrpc/rpc/ReturningMethod.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+					</methods>
+					<lines>
+					</lines>
+				</class>
+				<class name="pl.chilldev.commons.jsonrpc.rpc.ReturningMethod$RequestHandler" filename="pl/chilldev/commons/jsonrpc/rpc/ReturningMethod.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+						<method name="&lt;init&gt;" signature="(Lpl/chilldev/commons/jsonrpc/rpc/ReturningMethod;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="44" hits="4" branch="false"/>
+								<line number="45" hits="4" branch="false"/>
+								<line number="46" hits="4" branch="false"/>
+							</lines>
+						</method>
+						<method name="process" signature="(Lcom/thetransactioncompany/jsonrpc2/JSONRPC2Request;Lpl/chilldev/commons/jsonrpc/daemon/ContextInterface;)Lcom/thetransactioncompany/jsonrpc2/JSONRPC2Response;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="56" hits="4" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="44" hits="4" branch="false"/>
+						<line number="45" hits="4" branch="false"/>
+						<line number="46" hits="4" branch="false"/>
+						<line number="56" hits="4" branch="false"/>
+					</lines>
+				</class>
+				<class name="pl.chilldev.commons.jsonrpc.rpc.VoidMethod" filename="pl/chilldev/commons/jsonrpc/rpc/VoidMethod.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+					</methods>
+					<lines>
+					</lines>
+				</class>
+				<class name="pl.chilldev.commons.jsonrpc.rpc.VoidMethod$RequestHandler" filename="pl/chilldev/commons/jsonrpc/rpc/VoidMethod.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+						<method name="&lt;init&gt;" signature="(Lpl/chilldev/commons/jsonrpc/rpc/VoidMethod;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="44" hits="4" branch="false"/>
+								<line number="45" hits="4" branch="false"/>
+								<line number="46" hits="4" branch="false"/>
+							</lines>
+						</method>
+						<method name="process" signature="(Lcom/thetransactioncompany/jsonrpc2/JSONRPC2Request;Lpl/chilldev/commons/jsonrpc/daemon/ContextInterface;)Lcom/thetransactioncompany/jsonrpc2/JSONRPC2Response;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="56" hits="4" branch="false"/>
+								<line number="57" hits="4" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="44" hits="4" branch="false"/>
+						<line number="45" hits="4" branch="false"/>
+						<line number="46" hits="4" branch="false"/>
+						<line number="56" hits="4" branch="false"/>
+						<line number="57" hits="4" branch="false"/>
+					</lines>
+				</class>
+			</classes>
+		</package>
+		<package name="pl.chilldev.commons.text.html" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+			<classes>
+				<class name="pl.chilldev.commons.text.html.Utils" filename="pl/chilldev/commons/text/html/Utils.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+						<method name="&lt;clinit&gt;" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="21" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="16" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="firstParagraph" signature="(Ljava/lang/String;)Ljava/lang/String;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="34" hits="4" branch="false"/>
+								<line number="36" hits="4" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="16" hits="2" branch="false"/>
+						<line number="21" hits="2" branch="false"/>
+						<line number="34" hits="4" branch="false"/>
+						<line number="36" hits="4" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+					</lines>
+				</class>
+			</classes>
+		</package>
+	</packages>
+</coverage>
