@@ -13,8 +13,6 @@ import org.apache.commons.daemon.Daemon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pl.chilldev.commons.exception.ExceptionFormatter;
-
 /**
  * Handles application shutdown.
  */
@@ -31,11 +29,6 @@ public class Shutdown extends Thread
     protected Daemon daemon;
 
     /**
-     * Exception message formatter.
-     */
-    protected ExceptionFormatter exceptionFormatter = ExceptionFormatter.SIMPLE_FORMAT;
-
-    /**
      * Initializes reference.
      *
      * @param daemon Running application.
@@ -43,16 +36,6 @@ public class Shutdown extends Thread
     public Shutdown(Daemon daemon)
     {
         this.daemon = daemon;
-    }
-
-    /**
-     * Sets exception formatter.
-     *
-     * @param exceptionFormatter New exception message formatter.
-     */
-    public void setExceptionFormatter(ExceptionFormatter exceptionFormatter)
-    {
-        this.exceptionFormatter = exceptionFormatter;
     }
 
     /**
@@ -68,7 +51,7 @@ public class Shutdown extends Thread
         //CHECKSTYLE:OFF: IllegalCatchCheck
         } catch (Throwable error) {
         //CHECKSTYLE:ON: IllegalCatchCheck
-            this.logger.error("Error while stopping dameon {}.", this.exceptionFormatter.format(error), error);
+            this.logger.error("Error while stopping dameon {}.", error.getMessage(), error);
         }
     }
 }

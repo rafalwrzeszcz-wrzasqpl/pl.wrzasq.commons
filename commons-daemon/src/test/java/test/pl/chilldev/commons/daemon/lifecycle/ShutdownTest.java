@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2014 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2014 - 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.chilldev.commons.daemon.lifecycle;
@@ -19,7 +19,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import static org.mockito.Mockito.*;
 
 import pl.chilldev.commons.daemon.lifecycle.Shutdown;
-import pl.chilldev.commons.exception.ExceptionFormatter;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ShutdownTest
@@ -27,26 +26,15 @@ public class ShutdownTest
     @Mock
     private Daemon daemon;
 
-    @Mock
-    private ExceptionFormatter exceptionFormatter;
-
-    private Shutdown shutdown;
-
-    @Before
-    public void setUp()
-    {
-        this.shutdown = new Shutdown(this.daemon);
-        this.shutdown.setExceptionFormatter(this.exceptionFormatter);
-    }
-
     @Test
     public void run()
         throws
             Exception
     {
-        this.shutdown.run();
+        Shutdown shutdown = new Shutdown(this.daemon);
 
-        verify(this.exceptionFormatter, never()).format(any(Throwable.class));
+        shutdown.run();
+
         verify(this.daemon).stop();
         verify(this.daemon).destroy();
     }
@@ -60,9 +48,10 @@ public class ShutdownTest
 
         doThrow(error).when(this.daemon).stop();
 
-        this.shutdown.run();
+        Shutdown shutdown = new Shutdown(this.daemon);
 
-        verify(this.exceptionFormatter).format(error);
+        shutdown.run();
+
         verify(this.daemon).stop();
         verify(this.daemon, never()).destroy();
     }

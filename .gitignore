@@ -20,11 +20,6 @@
 /commons-daemon/.settings
 /commons-daemon/target
 
-/commons-exception/.classpath
-/commons-exception/.project
-/commons-exception/.settings
-/commons-exception/target
-
 /commons-jsonrpc/.classpath
 /commons-jsonrpc/.project
 /commons-jsonrpc/.settings

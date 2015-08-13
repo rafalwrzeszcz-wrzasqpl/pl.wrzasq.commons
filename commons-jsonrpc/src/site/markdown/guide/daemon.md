@@ -17,19 +17,13 @@ Daemon application, by default (you can simply override any of the daemon method
 
 ### Maven dependenies
 
-In order to use base implementation of daemon application you will have to add additional dependencies to your project (to save space and time for people who don't want to use JSON-RPC package without full application these packages are marked as optional in our library `pom.xml`):
+In order to use base implementation of daemon application you will have to add additional dependency to your project (to save space and time for people who don't want to use JSON-RPC package without full application this package is marked as optional in our library `pom.xml`):
 
 ```xml
 <dependency>
     <groupId>commons-daemon</groupId>
     <artifactId>commons-daemon</artifactId>
     <version>${apache.commons.daemon.version}</version>
-</dependency>
-
-<dependency>
-    <groupId>pl.chilldev.commons</groupId>
-    <artifactId>commons-exception</artifactId>
-    <version>${pl.chilldev.commons.version}</version>
 </dependency>
 ```
 

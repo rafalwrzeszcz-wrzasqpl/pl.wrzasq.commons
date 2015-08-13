@@ -17,8 +17,6 @@ import org.apache.commons.daemon.DaemonUserSignal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pl.chilldev.commons.exception.ExceptionFormatter;
-
 /**
  * Base daemon application class.
  */
@@ -54,7 +52,7 @@ public abstract class AbstractApplication
                 this.logger.error(
                     "Not starting \"{}\" because of {}.",
                     thread.getName(),
-                    ExceptionFormatter.SIMPLE_FORMAT.format(error),
+                    error.getMessage(),
                     error
                 );
             }
