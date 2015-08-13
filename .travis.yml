@@ -17,3 +17,8 @@ jdk:
 script: "mvn test verify"
 
 after_script: "mvn site coveralls:report"
+
+notifications:
+    webhooks:
+        urls:
+            - "https://webhooks.gitter.im/e/54252a58453d00b848db"

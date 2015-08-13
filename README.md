@@ -12,6 +12,7 @@
 [![Build Status](https://travis-ci.org/chilloutdevelopment/pl.chilldev.commons.svg)](https://travis-ci.org/chilloutdevelopment/pl.chilldev.commons)
 [![Coverage Status](https://coveralls.io/repos/chilloutdevelopment/pl.chilldev.commons/badge.png?branch=develop)](https://coveralls.io/r/chilloutdevelopment/pl.chilldev.commons)
 [![Dependency Status](https://www.versioneye.com/user/projects/533c81027bae4b3fa50001f2/badge.svg?style=flat)](https://www.versioneye.com/user/projects/533c81027bae4b3fa50001f2)
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/chilloutdevelopment/pl.chilldev.commons)
 
 # Requirements
 
