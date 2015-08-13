@@ -112,9 +112,11 @@
                     <plugin>
                         <groupId>com.github.github</groupId>
                         <artifactId>site-maven-plugin</artifactId>
-                        <configuration>
-                            <path></path>
+                        <configuration combine.self="override">
                             <merge>false</merge>
+                            <message>${project.version} ${project.artifactId} API doc.</message>
+                            <noJekyll>true</noJekyll>
+                            <server>github</server>
                         </configuration>
                     </plugin>
                 </plugins>
