@@ -3,6 +3,8 @@
 #
 # @license http://mit-license.org/ The MIT license
 # @copyright 2014 - 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+
+[![Join the chat at https://gitter.im/chilloutdevelopment/pl.chilldev.commons](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/chilloutdevelopment/pl.chilldev.commons?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 -->
 
 # ChillDev-Commons
