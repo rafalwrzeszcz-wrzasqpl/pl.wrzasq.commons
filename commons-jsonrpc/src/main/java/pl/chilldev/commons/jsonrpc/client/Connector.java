@@ -116,13 +116,11 @@ public class Connector
      *
      * @param method Method name.
      * @return Response.
-     * @throws ExecutionException When execution fails on client side or due to a connection.
-     * @throws JSONRPC2Error When execution fails on server side.
+     * @throws RpcCallException When execution fails.
      */
     public Object execute(String method)
         throws
-            ExecutionException,
-            JSONRPC2Error
+            RpcCallException
     {
         long id = Connector.generateRequestId();
 
@@ -135,13 +133,11 @@ public class Connector
      * @param method Method name.
      * @param params RPC params.
      * @return Response.
-     * @throws ExecutionException When execution fails on client side or due to a connection.
-     * @throws JSONRPC2Error When execution fails on server side.
+     * @throws RpcCallException When execution fails.
      */
     public Object execute(String method, Map<String, Object> params)
         throws
-            ExecutionException,
-            JSONRPC2Error
+            RpcCallException
     {
         long id = Connector.generateRequestId();
 
@@ -153,13 +149,11 @@ public class Connector
      *
      * @param request JSON-RPC request.
      * @return Method result.
-     * @throws ExecutionException When execution fails on client side or due to a connection.
-     * @throws JSONRPC2Error When execution fails on server side.
+     * @throws RpcCallException When execution fails.
      */
     protected Object execute(JSONRPC2Request request)
         throws
-            ExecutionException,
-            JSONRPC2Error
+            RpcCallException
     {
         // (re-)connect if needed
         if (this.session == null || !this.session.isConnected()) {
@@ -191,10 +185,13 @@ public class Connector
             return response.getResult();
         } catch (InterruptedException error) {
             this.logger.error("Error while waiting for asynchronous response: {}.", error.getMessage());
-            throw new ExecutionException(error);
+            throw new RpcCallException(error);
         } catch (ExecutionException error) {
             this.logger.error("Error while executing asynchronous response handler: {}.", error.getMessage());
-            throw error;
+            throw new RpcCallException(error);
+        } catch (JSONRPC2Error error) {
+            this.logger.error("Server returned error response: {}.", error.getMessage());
+            throw new RpcCallException(error);
         }
     }
 

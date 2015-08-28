@@ -31,6 +31,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import static org.mockito.Mockito.*;
 
 import pl.chilldev.commons.jsonrpc.client.Connector;
+import pl.chilldev.commons.jsonrpc.client.RpcCallException;
 import pl.chilldev.commons.jsonrpc.mina.RequestIoHandler;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -76,7 +77,8 @@ public class ConnectorTest
         throws
             InterruptedException,
             ExecutionException,
-            JSONRPC2Error
+            JSONRPC2Error,
+            RpcCallException
     {
         Connector connector = new Connector(this.connector, this.handler, this.address);
 
@@ -104,7 +106,8 @@ public class ConnectorTest
         throws
             InterruptedException,
             ExecutionException,
-            JSONRPC2Error
+            JSONRPC2Error,
+            RpcCallException
     {
         Connector connector = new Connector(this.connector, this.handler, this.address);
         Connector spy = spy(connector);
@@ -131,7 +134,8 @@ public class ConnectorTest
         throws
             InterruptedException,
             ExecutionException,
-            JSONRPC2Error
+            JSONRPC2Error,
+            RpcCallException
     {
         Connector connector = new Connector(this.connector, this.handler, this.address);
         Connector spy = spy(connector);
@@ -161,7 +165,8 @@ public class ConnectorTest
         throws
             InterruptedException,
             ExecutionException,
-            JSONRPC2Error
+            JSONRPC2Error,
+            RpcCallException
     {
         Connector connector = new Connector(this.connector, this.handler, this.address);
 
@@ -186,12 +191,13 @@ public class ConnectorTest
         );
     }
 
-    @Test(expected = JSONRPC2Error.class)
+    @Test(expected = RpcCallException.class)
     public void executeThrowsJSONRPC2Error()
         throws
             InterruptedException,
             ExecutionException,
-            JSONRPC2Error
+            JSONRPC2Error,
+            RpcCallException
     {
         Connector connector = new Connector(this.connector, this.handler, this.address);
 
@@ -210,12 +216,13 @@ public class ConnectorTest
         connector.execute("test");
     }
 
-    @Test(expected = ExecutionException.class)
+    @Test(expected = RpcCallException.class)
     public void executeThrowsInterruptedException()
         throws
             InterruptedException,
             ExecutionException,
-            JSONRPC2Error
+            JSONRPC2Error,
+            RpcCallException
     {
         Connector connector = new Connector(this.connector, this.handler, this.address);
 
@@ -231,12 +238,13 @@ public class ConnectorTest
         connector.execute("test");
     }
 
-    @Test(expected = ExecutionException.class)
+    @Test(expected = RpcCallException.class)
     public void executeThrowsExecutionException()
         throws
             InterruptedException,
             ExecutionException,
-            JSONRPC2Error
+            JSONRPC2Error,
+            RpcCallException
     {
         Connector connector = new Connector(this.connector, this.handler, this.address);
 
