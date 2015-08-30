@@ -11,7 +11,7 @@
 
 [![Build Status](https://travis-ci.org/chilloutdevelopment/pl.chilldev.commons.svg)](https://travis-ci.org/chilloutdevelopment/pl.chilldev.commons)
 [![Coverage Status](https://coveralls.io/repos/chilloutdevelopment/pl.chilldev.commons/badge.png?branch=develop)](https://coveralls.io/r/chilloutdevelopment/pl.chilldev.commons)
-[![Dependency Status](https://www.versioneye.com/user/projects/533c81027bae4b3fa50001f2/badge.svg?style=flat)](https://www.versioneye.com/user/projects/533c81027bae4b3fa50001f2)
+[![Dependency Status](https://www.versioneye.com/user/projects/55e2bf35c6d8f2001d000332/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55e2bf35c6d8f2001d000332)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/chilloutdevelopment/pl.chilldev.commons)
 
 # Requirements
@@ -43,6 +43,12 @@ You can use libraries in your `pom.xml` by defining following dependencies:
 
 <dependency>
     <groupId>pl.chilldev.commons</groupId>
+    <artifactId>commons-db</artifactId>
+    <version>${pl.chilldev.commons.version}</version>
+</dependency>
+
+<dependency>
+    <groupId>pl.chilldev.commons</groupId>
     <artifactId>commons-jsonrpc</artifactId>
     <version>${pl.chilldev.commons.version}</version>
 </dependency>
@@ -62,6 +68,7 @@ You can of course pick only those parts that you need directly.
 
 -   [**Concurrent**](http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-concurrent/): with concurrency and asynchronous goods,
 -   [**Daemon**](http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-daemon/): helper routines for handling *Apache Commons Daemon* services,
+-   [**DB**](http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-db/): base database and model-related structures and routines,
 -   [**JSON-RPC**](http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-jsonrpc/): a bridge library that binds [**Apache MINA**](https://mina.apache.org/) with [**JSON-RPC 2.0 Base**](http://software.dzhuvinov.com/json-rpc-2.0-base.html).
 -   [**Text**](http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-text/): various text processing utilities.
 

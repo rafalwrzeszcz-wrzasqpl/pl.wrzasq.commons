@@ -20,6 +20,11 @@
 /commons-daemon/.settings
 /commons-daemon/target
 
+/commons-db/.classpath
+/commons-db/.project
+/commons-db/.settings
+/commons-db/target
+
 /commons-jsonrpc/.classpath
 /commons-jsonrpc/.project
 /commons-jsonrpc/.settings
