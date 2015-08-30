@@ -31,3 +31,40 @@ public class App
     }
 }
 ```
+
+## Enhanced params retriever
+
+`pl.chilldev.commons.jsonrpc.json.ParamsRetriever` is an extension of `com.thetransactioncompany.jsonrpc2.util.NamedParamsRetriever` (we only support named parameters!) which provides extraction methods for some additional common types:
+
+-   `java.util.UUID` via `.getUuid()` and `.getOptUuid()`;
+-   `org.springframework.data.domain.Sort` via `getSort()`: it extracts list of order criteria (of form `[["field1","ASC|DESC"], ["field2","ASC|DESC"], ["fieldN","ASC|DESC"]]`) into `spring-data-core` object;
+-   `org.springframework.data.domain.Pageable` via `getPageable()`: it extracts page request specification by composing it from page number, page limit and sort parameters.
+
+**Note:** Even though `ParamsRetriever` class provides methods for `Sort`, `Pageable` etc., `spring-data-core` is marked as optional dependency to reduce footprint.
+
+### Beans
+
+Our extended parameters retriever class also provides `.getBean()` method which allows for unserializing properties as a bean object.
+
+```java
+import pl.chilldev.commons.jsonrpc.json.ParamsRetriever;
+
+// …somewhere in the code
+ParamsRetriever params = new ParamsRetriever(request); // can also be constructed by passing a map directly
+
+/*
+assume the request:
+{"id":1,"name":"Chillout Development"}
+*/
+MyBean myBean = params.getBean(MyBean.class);
+
+// you can also fetch bean from the parameter sub-scope
+
+/*
+assume the request:
+{"data":{"id":1,"name":"Chillout Development"}}
+*/
+MyBean myBean = params.getBean("data", MyBean.class);
+```
+
+**Note:** We use [**Jackson**](http://wiki.fasterxml.com/JacksonHome) for data binding.

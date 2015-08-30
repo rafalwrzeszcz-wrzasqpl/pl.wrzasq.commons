@@ -14,7 +14,6 @@ import net.minidev.json.reader.JsonWriterI;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.junit.Assert.*;
 
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
