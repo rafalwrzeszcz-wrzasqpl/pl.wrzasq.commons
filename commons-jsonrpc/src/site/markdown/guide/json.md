@@ -14,11 +14,33 @@ As the name says, [**JSON-RPC**](http://www.jsonrpc.org/specification) utilizes 
 `pl.chilldev.commons.jsonrpc.json.writer.StringDumpingWriter` allows to register serializer for any type that should be dumped into JSON using it's string representation - for example `java.util.UUID`:
 
 ```java
-import java.util.UUID;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 
 import net.minidev.json.JSONValue;
 
-import org.joda.time.DateTime;
+import pl.chilldev.commons.jsonrpc.json.writer.DateTimeWriter;
+
+public class App
+{
+    public static void main(String[] args)
+    {
+        JSONValue.defaultWriter.registerWriter(
+            new DateTimeWriter(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
+            OffsetDateTime.class
+        );
+    }
+}
+```
+
+## DateTime writer
+
+`pl.chilldev.commons.jsonrpc.json.writer.DateTimeWriter` allows for setting default formatter for Java8 Time API objects by specifying `DateTimeFormatter`:
+
+```java
+import java.util.UUID;
+
+import net.minidev.json.JSONValue;
 
 import pl.chilldev.commons.jsonrpc.json.writer.StringDumpingWriter;
 
@@ -27,7 +49,6 @@ public class App
     public static void main(String[] args)
     {
         JSONValue.defaultWriter.registerWriter(new StringDumpingWriter(), UUID.class);
-        JSONValue.defaultWriter.registerWriter(new StringDumpingWriter(), DateTime.class);
     }
 }
 ```
