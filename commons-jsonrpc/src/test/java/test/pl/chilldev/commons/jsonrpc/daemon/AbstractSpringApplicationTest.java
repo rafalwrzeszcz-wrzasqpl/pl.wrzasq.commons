@@ -8,7 +8,6 @@
 package test.pl.chilldev.commons.jsonrpc.daemon;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 import pl.chilldev.commons.jsonrpc.daemon.AbstractSpringApplication;
 import pl.chilldev.commons.jsonrpc.daemon.Listener;
@@ -27,12 +26,6 @@ public class AbstractSpringApplicationTest
         protected String getDaemonVersion()
         {
             return "0.0.0";
-        }
-
-        @Override
-        protected String getPackageToScan()
-        {
-            return "test.pl.chilldev.commons.jsonrpc.daemon";
         }
     }
 

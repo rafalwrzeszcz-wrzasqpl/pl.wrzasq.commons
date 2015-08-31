@@ -69,5 +69,8 @@ public abstract class AbstractSpringApplication extends AbstractApplication
      *
      * @return Package name that contains any Spring configuration.
      */
-    protected abstract String getPackageToScan();
+    protected String getPackageToScan()
+    {
+        return this.getClass().getPackage().getName();
+    }
 }
