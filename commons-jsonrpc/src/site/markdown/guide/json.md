@@ -53,6 +53,39 @@ public class App
 }
 ```
 
+## Sort writer
+
+`pl.chilldev.commons.jsonrpc.json.writer.SortWriter` is capable of dumping **Spring Data** `Sort` objects into JSON. They are dumped as a list of two-element arrays, where first element is property name and second one is sorting direction:
+
+```java
+Sort value = new Sort(
+    new Sort.Order(Sort.Direction.ASC, "id"),
+    new Sort.Order(Sort.Direction.DESC, "name")
+);
+
+// will become
+//[["id","ASC"],["name","DESC"]]
+// this is the format that our ParamsRetriver recognizes when parsing the params from JSON
+```
+
+Usage is analogical to other writers:
+
+```java
+import net.minidev.json.JSONValue;
+
+import org.springframework.data.domain.Sort;
+
+import pl.chilldev.commons.jsonrpc.json.writer.SortWriter;
+
+public class App
+{
+    public static void main(String[] args)
+    {
+        JSONValue.defaultWriter.registerWriter(new SortWriter(), Sort.class);
+    }
+}
+```
+
 ## Enhanced params retriever
 
 `pl.chilldev.commons.jsonrpc.json.ParamsRetriever` is an extension of `com.thetransactioncompany.jsonrpc2.util.NamedParamsRetriever` (we only support named parameters!) which provides extraction methods for some additional common types:
