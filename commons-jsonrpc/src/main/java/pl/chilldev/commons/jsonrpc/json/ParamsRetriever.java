@@ -46,9 +46,19 @@ public class ParamsRetriever extends NamedParamsRetriever
     public static final String DEFAULTPARAM_SORT = "sort";
 
     /**
+     * Default page records parameter name.
+     */
+    public static final String DEFAULTPARAM_RECORDS = "records";
+
+    /**
+     * Default result set size parameter name.
+     */
+    public static final String DEFAULTPARAM_COUNT = "count";
+
+    /**
      * Jackson data binder.
      */
-    protected static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     /**
      * Initializes retriever with given parameters set.

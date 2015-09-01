@@ -9,7 +9,9 @@
 
 As the name says, [**JSON-RPC**](http://www.jsonrpc.org/specification) utilizes [**JSON**](http://json.org/) for data representation. By analogy, [**JSON-RPC 2.0 Base**](http://software.dzhuvinov.com/json-rpc-2.0-base.html) librar which handles RPC layer utilizes [**json-smart**](https://github.com/netplex/json-smart-v2) library for JSON serialization. Unfortunately it is very limited. It's not simple to fill all the gaps and refactor it from outside, but some improvements can be done. This package contains so additional extras that can be used out of the box.
 
-## String-dumping writer
+## JSON writers
+
+### String-dumping
 
 `pl.chilldev.commons.jsonrpc.json.writer.StringDumpingWriter` allows to register serializer for any type that should be dumped into JSON using it's string representation - for example `java.util.UUID`:
 
@@ -33,7 +35,7 @@ public class App
 }
 ```
 
-## DateTime writer
+### DateTime
 
 `pl.chilldev.commons.jsonrpc.json.writer.DateTimeWriter` allows for setting default formatter for Java8 Time API objects by specifying `DateTimeFormatter`:
 
@@ -53,7 +55,7 @@ public class App
 }
 ```
 
-## Sort writer
+### Sort
 
 `pl.chilldev.commons.jsonrpc.json.writer.SortWriter` is capable of dumping **Spring Data** `Sort` objects into JSON. They are dumped as a list of two-element arrays, where first element is property name and second one is sorting direction:
 
@@ -122,3 +124,9 @@ MyBean myBean = params.getBean("data", MyBean.class);
 ```
 
 **Note:** We use [**Jackson**](http://wiki.fasterxml.com/JacksonHome) for data binding.
+
+**Note:** Jackson `ObjectMapper` instance that is used internally by `ParamsRetriever` and `ConvertUtils` is exposed as `ParamsRetriever.OBJECT_MAPPER` static property. It is `final`, so you can't override it, but you can use it and register custom modules.
+
+## Additional utilities
+
+Apart from extensions to existing libraries, there is also `pl.chilldev.commons.jsonrpc.json.ConvertUtils` class which provides additional routines for converting data from and into raw POJO structures. Particularly there is `buildPage()` method which builds **Spring Data** `Page<>` object from JSON response.
