@@ -63,15 +63,28 @@ public class Package
         this.version = "devel";
 
         if (url != null) {
-            Properties properties = new Properties();
             try (InputStream stream = url.openStream()) {
-                properties.load(stream);
-                this.version = properties.getProperty(Package.PROPERTY_VERSION);
+                this.init(stream);
             } catch (IOException error) {
                 // it's not a critical problem in our case, just report it
                 this.version = "error";
             }
         }
+    }
+
+    /**
+     * Initialize properties from given resource.
+     *
+     * @param stream Properties stream.
+     * @throws IOException When I/O error occurs while loading properties from stream.
+     */
+    protected void init(InputStream stream)
+        throws
+            IOException
+    {
+        Properties properties = new Properties();
+        properties.load(stream);
+        this.version = properties.getProperty(Package.PROPERTY_VERSION);
     }
 
     /**

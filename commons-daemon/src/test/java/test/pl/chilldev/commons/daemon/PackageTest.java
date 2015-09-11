@@ -8,6 +8,8 @@
 package test.pl.chilldev.commons.daemon;
 
 import java.io.IOException;
+import java.io.InputStream;
+
 import java.net.URL;
 
 import org.junit.Assert;
@@ -31,12 +33,36 @@ public class PackageTest
     }
 
     @Test
-    public void initError()
+    public void initOpenError()
         throws
             IOException
     {
         Package meta = new Package();
         meta.init(new URL("file:///unexisting/"));
+
+        Assert.assertEquals(
+            "Package.init() should set version string to \"error\" when properties loading fails on I/O.",
+            "error",
+            meta.getVersion()
+        );
+    }
+
+    @Test
+    public void initReadError()
+        throws
+            IOException
+    {
+        Package meta = new Package()
+        {
+            @Override
+            public void init(InputStream stream)
+                throws
+                    IOException
+            {
+                throw new IOException();
+            }
+        };
+        meta.init(Package.class.getResource(Package.DEFAULT_RESOURCE));
 
         Assert.assertEquals(
             "Package.init() should set version string to \"error\" when properties loading fails on I/O.",

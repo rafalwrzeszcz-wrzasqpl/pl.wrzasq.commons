@@ -24,6 +24,9 @@ public class ConvertUtilsTest
     @Test
     public void buildPage()
     {
+        // just for code coverage
+        new ConvertUtils();
+
         List<Object> list = new ArrayList<>();
 
         Map<String, Object> record = new HashMap<>();
