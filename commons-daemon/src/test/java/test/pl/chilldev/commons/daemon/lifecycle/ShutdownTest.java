@@ -7,16 +7,14 @@
 
 package test.pl.chilldev.commons.daemon.lifecycle;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.junit.Assert.*;
 
 import org.apache.commons.daemon.Daemon;
 
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import static org.mockito.Mockito.*;
 
 import pl.chilldev.commons.daemon.lifecycle.Shutdown;
 
@@ -35,8 +33,8 @@ public class ShutdownTest
 
         shutdown.run();
 
-        verify(this.daemon).stop();
-        verify(this.daemon).destroy();
+        Mockito.verify(this.daemon).stop();
+        Mockito.verify(this.daemon).destroy();
     }
 
     @Test
@@ -46,13 +44,13 @@ public class ShutdownTest
     {
         Exception error = new Exception("error");
 
-        doThrow(error).when(this.daemon).stop();
+        Mockito.doThrow(error).when(this.daemon).stop();
 
         Shutdown shutdown = new Shutdown(this.daemon);
 
         shutdown.run();
 
-        verify(this.daemon).stop();
-        verify(this.daemon, never()).destroy();
+        Mockito.verify(this.daemon).stop();
+        Mockito.verify(this.daemon, Mockito.never()).destroy();
     }
 }
