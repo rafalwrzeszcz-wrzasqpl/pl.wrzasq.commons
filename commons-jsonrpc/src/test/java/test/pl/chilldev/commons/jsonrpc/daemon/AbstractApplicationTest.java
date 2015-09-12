@@ -12,11 +12,10 @@ import java.util.HashSet;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.junit.Assert.*;
 
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import static org.mockito.Mockito.*;
 
 import pl.chilldev.commons.jsonrpc.daemon.AbstractApplication;
 import pl.chilldev.commons.jsonrpc.daemon.ContextInterface;
@@ -43,7 +42,7 @@ public class AbstractApplicationTest
         @Override
         public void start()
         {
-            if (fail) {
+            if (this.fail) {
                 throw new IllegalThreadStateException("error");
             }
             super.start();
@@ -67,7 +66,7 @@ public class AbstractApplicationTest
                 InterruptedException
         {
             while (true) {
-                this.sleep(500);
+                Thread.sleep(500);
             }
         }
     }
@@ -112,7 +111,7 @@ public class AbstractApplicationTest
 
         app.start();
 
-        verify(this.listener).start();
+        Mockito.verify(this.listener).start();
 
         // just for code coverage
         app.init(null);
@@ -139,7 +138,7 @@ public class AbstractApplicationTest
         app.start();
         app.stop();
 
-        verify(this.listener).release();
+        Mockito.verify(this.listener).release();
     }
 
     @Test
@@ -181,7 +180,7 @@ public class AbstractApplicationTest
         app.start();
         app.signal();
 
-        verify(this.listener, times(2)).start();
-        verify(this.listener).release();
+        Mockito.verify(this.listener, Mockito.times(2)).start();
+        Mockito.verify(this.listener).release();
     }
 }

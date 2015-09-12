@@ -1,0 +1,59 @@
+/**
+ * This file is part of the ChillDev-Commons.
+ *
+ * @license http://mit-license.org/ The MIT license
+ * @copyright 2014 - 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+ */
+
+package pl.chilldev.commons.daemon.lifecycle;
+
+// dependencies and sub-modules
+import org.apache.commons.daemon.Daemon;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * Handles application shutdown.
+ */
+public class Runner extends Thread
+{
+    /**
+     * Logger.
+     */
+    protected Logger logger = LoggerFactory.getLogger(Runner.class);
+
+    /**
+     * Runs application.
+     *
+     * <p>
+     * This method runs application directly by invoking Apache Commons Daemon flow.
+     * </p>
+     *
+     * <p>
+     * Standard usage is just `System.exit((new Runner()).run(new ChillDevApplication("your.daemon")))`.
+     * </p>
+     *
+     * @param daemon Daemon application.
+     * @return Exit code.
+     */
+    public int run(Daemon daemon)
+    {
+        try {
+            // perform initialization and start daemon
+            daemon.init(null);
+            daemon.start();
+
+            // schedule shutdown hook for daemon cleanup
+            Runtime.getRuntime().addShutdownHook(new Shutdown(daemon));
+
+            return 0;
+        //CHECKSTYLE:OFF: IllegalCatchCheck
+        } catch (Throwable error) {
+        //CHECKSTYLE:ON: IllegalCatchCheck
+            this.logger.error("Fatal error {}.", error.getMessage(), error);
+
+            return -1;
+        }
+    }
+}
