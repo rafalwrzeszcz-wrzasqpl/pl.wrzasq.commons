@@ -31,13 +31,12 @@ public class Runner extends Thread
      * </p>
      *
      * <p>
-     * Standard usage is just `System.exit((new Runner()).run(new ChillDevApplication("your.daemon")))`.
+     * Standard usage is just `(new Runner()).run(new ChillDevApplication("your.daemon"))`.
      * </p>
      *
      * @param daemon Daemon application.
-     * @return Exit code.
      */
-    public int run(Daemon daemon)
+    public void run(Daemon daemon)
     {
         try {
             // perform initialization and start daemon
@@ -46,14 +45,15 @@ public class Runner extends Thread
 
             // schedule shutdown hook for daemon cleanup
             Runtime.getRuntime().addShutdownHook(new Shutdown(daemon));
-
-            return 0;
         //CHECKSTYLE:OFF: IllegalCatchCheck
         } catch (Throwable error) {
         //CHECKSTYLE:ON: IllegalCatchCheck
             this.logger.error("Fatal error {}.", error.getMessage(), error);
 
-            return -1;
+            throw new RuntimeException(
+                String.format("Fatal error: %s", error.getMessage()),
+                error
+            );
         }
     }
 }

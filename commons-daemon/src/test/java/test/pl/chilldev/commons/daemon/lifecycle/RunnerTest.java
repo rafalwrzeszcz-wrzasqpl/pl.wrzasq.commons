@@ -7,7 +7,6 @@
 
 package test.pl.chilldev.commons.daemon.lifecycle;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -29,29 +28,19 @@ public class RunnerTest
         throws
             Exception
     {
-        Assert.assertEquals(
-            "ChillDevApplication.run() should return 0 if application finish successfully.",
-            0,
-            new Runner().run(this.daemon)
-        );
+        new Runner().run(this.daemon);
 
         Mockito.verify(this.daemon).init(null);
         Mockito.verify(this.daemon).start();
     }
 
-    @Test
+    @Test(expected = RuntimeException.class)
     public void runWithException()
         throws
             Exception
     {
         Mockito.doThrow(new RuntimeException("test")).when(this.daemon).init(null);
 
-        Assert.assertEquals(
-            "ChillDevApplication.run() should return -1 if error occured during application run.",
-            -1,
-            new Runner().run(this.daemon)
-        );
-
-        Mockito.verify(this.daemon, Mockito.never()).start();
+        new Runner().run(this.daemon);
     }
 }
