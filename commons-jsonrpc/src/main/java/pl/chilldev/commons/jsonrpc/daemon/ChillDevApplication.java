@@ -15,27 +15,12 @@ import pl.chilldev.commons.daemon.Package;
 public class ChillDevApplication extends AbstractSpringApplication
 {
     /**
-     * Daemon name.
-     */
-    protected String daemonName;
-
-    /**
-     * Initializes application for given daemon.
-     *
-     * @param daemonName Daemon name.
-     */
-    public ChillDevApplication(String daemonName)
-    {
-        this.daemonName = daemonName;
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
     protected String getDaemonName()
     {
-        return this.daemonName;
+        return this.getPackageToScan();
     }
 
     /**

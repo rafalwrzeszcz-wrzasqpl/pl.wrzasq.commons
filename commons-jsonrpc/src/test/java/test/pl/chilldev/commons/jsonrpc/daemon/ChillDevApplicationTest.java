@@ -18,11 +18,6 @@ public class ChillDevApplicationTest
 {
     public class TestApplication extends ChillDevApplication
     {
-        public TestApplication(String daemonName)
-        {
-            super(daemonName);
-        }
-
         @Override
         public String getDaemonName()
         {
@@ -39,11 +34,11 @@ public class ChillDevApplicationTest
     @Test
     public void getDaemonName()
     {
-        ChillDevApplicationTest.TestApplication app = new ChillDevApplicationTest.TestApplication("test");
+        ChillDevApplicationTest.TestApplication app = new ChillDevApplicationTest.TestApplication();
 
         Assert.assertEquals(
             "ChillDevApplication.getDaemonName() should return specified daemon name.",
-            "test",
+            this.getClass().getPackage().getName(),
             app.getDaemonName()
         );
     }
@@ -51,7 +46,7 @@ public class ChillDevApplicationTest
     @Test
     public void getDaemonVersion()
     {
-        ChillDevApplicationTest.TestApplication app = new ChillDevApplicationTest.TestApplication("test");
+        ChillDevApplicationTest.TestApplication app = new ChillDevApplicationTest.TestApplication();
 
         Assert.assertEquals(
             "ChillDevApplication.getDaemonVersion() should return default package version.",

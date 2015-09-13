@@ -31,7 +31,7 @@ public class Runner extends Thread
      * </p>
      *
      * <p>
-     * Standard usage is just `(new Runner()).run(new ChillDevApplication("your.daemon"))`.
+     * Standard usage is just `(new Runner()).run(new ChillDevApplication())`.
      * </p>
      *
      * @param daemon Daemon application.

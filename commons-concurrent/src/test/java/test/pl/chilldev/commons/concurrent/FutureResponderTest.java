@@ -7,8 +7,8 @@
 
 package test.pl.chilldev.commons.concurrent;
 
+import org.junit.Assert;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
@@ -22,7 +22,7 @@ public class FutureResponderTest
     {
         FutureResponder<Object> responder = new FutureResponder<>();
         FutureTask<Object> future = new FutureTask<>(responder);
-        assertSame(
+        Assert.assertSame(
             "FutureResponder.setFuture() should return reference to itself.",
             responder,
             responder.setFuture(future)
@@ -40,7 +40,7 @@ public class FutureResponderTest
         FutureTask<String> future = new FutureTask<>(responder);
         responder.setFuture(future);
         responder.setResponse(response);
-        assertSame(
+        Assert.assertSame(
             "FutureResponder.setResponse() should mark future as executed.",
             response,
             future.get()
@@ -52,10 +52,9 @@ public class FutureResponderTest
     {
         String response = "Chillout";
         FutureResponder<String> responder = new FutureResponder<>();
-        FutureTask<String> future = new FutureTask<>(responder);
         responder.setFuture(null);
         responder.setResponse(response);
-        assertSame(
+        Assert.assertSame(
             "FutureResponder.call() should return previously calculated response.",
             response,
             responder.call()
