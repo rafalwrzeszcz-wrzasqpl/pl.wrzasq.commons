@@ -16,6 +16,7 @@
 
         <menu name="Guide">
             <item name="Entities" href="guide/entities.html"/>
+            <item name="Slugable" href="guide/slugable.html"/>
         </menu>
 
         <menu ref="reports"/>
