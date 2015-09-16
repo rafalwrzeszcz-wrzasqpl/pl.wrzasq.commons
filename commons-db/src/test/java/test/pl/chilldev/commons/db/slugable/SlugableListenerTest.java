@@ -29,56 +29,6 @@ public class SlugableListenerTest
 
         @Slug(value = {"name", "value"}, prefix = "chilldev-", suffix = ".xhtml")
         protected String combined;
-
-        public String getName()
-        {
-            return this.name;
-        }
-
-        public void setName(String value)
-        {
-            this.name = value;
-        }
-
-        public Integer getValue()
-        {
-            return this.value;
-        }
-
-        public void setValue(Integer value)
-        {
-            this.value = value;
-        }
-
-        public String getUpdatable()
-        {
-            return this.updatable;
-        }
-
-        public void setUpdatable(String value)
-        {
-            this.updatable = value;
-        }
-
-        public String getInitial()
-        {
-            return this.initial;
-        }
-
-        public void setInitial(String value)
-        {
-            this.initial = value;
-        }
-
-        public String getCombined()
-        {
-            return this.combined;
-        }
-
-        public void setCombined(String value)
-        {
-            this.combined = value;
-        }
     }
 
     @Test

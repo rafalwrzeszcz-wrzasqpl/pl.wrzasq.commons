@@ -16,7 +16,8 @@
 
         <menu name="Guide">
             <item name="Entities" href="guide/entities.html"/>
-            <item name="Slugable" href="guide/slugable.html"/>
+            <item name="Slugable (@Slug)" href="guide/slugable.html"/>
+            <item name="Timestampable (@Timestamp)" href="guide/timestampable.html"/>
         </menu>
 
         <menu ref="reports"/>
