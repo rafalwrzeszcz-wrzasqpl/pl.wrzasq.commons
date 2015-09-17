@@ -20,12 +20,12 @@ import pl.chilldev.commons.jsonrpc.rpc.ReturningMethod;
  *
  * <p>
  * Request params:
- *  <tt>none</tt>
+ *  <code>none</code>
  * </p>
  *
  * <p>
  * Response:
- *  <tt>string</tt> (version)
+ *  <code>string</code> (version)
  * </p>
  */
 public class VersionHandler
