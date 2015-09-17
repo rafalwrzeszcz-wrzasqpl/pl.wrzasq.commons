@@ -130,3 +130,5 @@ MyBean myBean = params.getBean("data", MyBean.class);
 ## Additional utilities
 
 Apart from extensions to existing libraries, there is also `pl.chilldev.commons.jsonrpc.json.ConvertUtils` class which provides additional routines for converting data from and into raw POJO structures. Particularly there is `buildPage()` method which builds **Spring Data** `Page<>` object from JSON response.
+
+It also provides a `NULL`-safe wrapper for **Spring** converters via `dump()` method.

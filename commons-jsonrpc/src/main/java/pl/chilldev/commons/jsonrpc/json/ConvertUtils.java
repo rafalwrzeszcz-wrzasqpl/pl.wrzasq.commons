@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.core.convert.converter.Converter;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -92,5 +94,27 @@ public class ConvertUtils
             ParamsRetriever.DEFAULTPARAM_RECORDS,
             ParamsRetriever.DEFAULTPARAM_COUNT
         );
+    }
+
+    /**
+     * Dumps entity into transfer POJO.
+     *
+     * @param entity Source entity.
+     * @param strategy Dumping strategy that defines structure of destination object.
+     * @param <LocalType> Local persistent type (eg. database entity).
+     * @param <TransferType> JSON-able transfer object type (in bast case a POJO class).
+     * @return Transfer POJO (NULL if entity is also NULL).
+     */
+    public static <LocalType, TransferType> TransferType dump(
+        LocalType entity,
+        Converter<LocalType, TransferType> strategy
+    )
+    {
+        // handle null case, so the strategies are sure to receive non-null instance
+        if (entity == null) {
+            return null;
+        }
+
+        return strategy.convert(entity);
     }
 }

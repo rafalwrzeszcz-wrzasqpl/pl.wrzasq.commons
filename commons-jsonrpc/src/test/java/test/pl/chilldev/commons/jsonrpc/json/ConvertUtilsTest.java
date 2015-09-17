@@ -14,13 +14,25 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
+
+import org.springframework.core.convert.converter.Converter;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+
 import pl.chilldev.commons.jsonrpc.json.ConvertUtils;
 
+@RunWith(MockitoJUnitRunner.class)
 public class ConvertUtilsTest
 {
+    @Mock
+    protected Converter<Object, Object> strategy;
+
     @Test
     public void buildPage()
     {
@@ -126,6 +138,30 @@ public class ConvertUtilsTest
             "ConvertUtils.buildPage() should pick default parameter names if not specified.",
             5,
             page.getTotalElements()
+        );
+    }
+
+    @Test
+    public void dumpStrategy()
+    {
+        Object entity = new Object();
+        Object transfer = new Object();
+
+        Mockito.doReturn(transfer).when(this.strategy).convert(entity);
+
+        Assert.assertSame(
+            "ConvertUtils.dump() should return POJO model built by convert strategy.",
+            transfer,
+            ConvertUtils.dump(entity, this.strategy)
+        );
+    }
+
+    @Test
+    public void dumpNull()
+    {
+        Assert.assertNull(
+            "ConvertUtils.dump() should return NULL if parameter is NULL.",
+            ConvertUtils.dump(null, this.strategy)
         );
     }
 }

@@ -71,7 +71,7 @@ public class SlugableListener
      * @param update Whether it's first save of slugs need to be only re-created.
      * @throws IllegalAccessException When accessing source field is impossible.
      */
-    public void fillSlugs(Object slugable, boolean update)
+    protected void fillSlugs(Object slugable, boolean update)
         throws
             IllegalAccessException
     {
