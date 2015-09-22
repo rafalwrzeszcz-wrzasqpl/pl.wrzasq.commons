@@ -22,13 +22,14 @@ import org.apache.mina.core.future.ConnectFuture;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.transport.socket.nio.NioSocketConnector;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.junit.Assert.*;
 
+import org.mockito.Matchers;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import static org.mockito.Mockito.*;
 
 import pl.chilldev.commons.jsonrpc.client.Connector;
 import pl.chilldev.commons.jsonrpc.client.RpcCallException;
@@ -56,12 +57,12 @@ public class ConnectorTest
     @Test
     public void setMaxPacketSize()
     {
-        Connector connector = Connector.create(this.address);
+        Connector connector = Connector.create("127.0.0.1", 1234);
 
         int maxPacketSize = 123;
         connector.setMaxPacketSize(maxPacketSize);
 
-        assertEquals(
+        Assert.assertEquals(
             "Connector.setMaxPacketSize() should change maximum allowed packet size.",
             maxPacketSize,
             connector.getMaxPacketSize()
@@ -82,19 +83,19 @@ public class ConnectorTest
     {
         Connector connector = new Connector(this.connector, this.handler, this.address);
 
-        when(this.connectFuture.awaitUninterruptibly()).thenReturn(this.connectFuture);
-        when(this.connectFuture.getSession()).thenReturn(this.session);
-        when(this.session.isConnected()).thenReturn(true);
+        Mockito.when(this.connectFuture.awaitUninterruptibly()).thenReturn(this.connectFuture);
+        Mockito.when(this.connectFuture.getSession()).thenReturn(this.session);
+        Mockito.when(this.session.isConnected()).thenReturn(true);
 
         connector.reconnect(this.connectFuture);
 
         String result = "OK";
         JSONRPC2Response response = new JSONRPC2Response(result, "id");
 
-        when(this.handler.execute(isA(JSONRPC2Request.class))).thenReturn(this.future);
-        when(this.future.get()).thenReturn(response);
+        Mockito.when(this.handler.execute(Matchers.isA(JSONRPC2Request.class))).thenReturn(this.future);
+        Mockito.when(this.future.get()).thenReturn(response);
 
-        assertSame(
+        Assert.assertSame(
             "Connector.execute() should return executed method result.",
             result,
             connector.execute("test")
@@ -110,19 +111,19 @@ public class ConnectorTest
             RpcCallException
     {
         Connector connector = new Connector(this.connector, this.handler, this.address);
-        Connector spy = spy(connector);
+        Connector spy = Mockito.spy(connector);
 
-        when(this.connectFuture.awaitUninterruptibly()).thenReturn(this.connectFuture);
-        when(this.connectFuture.getSession()).thenReturn(this.session);
+        Mockito.when(this.connectFuture.awaitUninterruptibly()).thenReturn(this.connectFuture);
+        Mockito.when(this.connectFuture.getSession()).thenReturn(this.session);
 
         String result = "OK";
         JSONRPC2Response response = new JSONRPC2Response(result, "id");
 
-        when(this.handler.execute(isA(JSONRPC2Request.class))).thenReturn(this.future);
-        when(this.future.get()).thenReturn(response);
-        doReturn(this.connectFuture).when(spy).connect();
+        Mockito.when(this.handler.execute(Matchers.isA(JSONRPC2Request.class))).thenReturn(this.future);
+        Mockito.when(this.future.get()).thenReturn(response);
+        Mockito.doReturn(this.connectFuture).when(spy).connect();
 
-        assertSame(
+        Assert.assertSame(
             "Connector.execute() should return executed method result.",
             result,
             spy.execute("test")
@@ -138,22 +139,22 @@ public class ConnectorTest
             RpcCallException
     {
         Connector connector = new Connector(this.connector, this.handler, this.address);
-        Connector spy = spy(connector);
+        Connector spy = Mockito.spy(connector);
 
-        when(this.connectFuture.awaitUninterruptibly()).thenReturn(this.connectFuture);
-        when(this.connectFuture.getSession()).thenReturn(this.session);
-        when(this.session.isConnected()).thenReturn(false);
+        Mockito.when(this.connectFuture.awaitUninterruptibly()).thenReturn(this.connectFuture);
+        Mockito.when(this.connectFuture.getSession()).thenReturn(this.session);
+        Mockito.when(this.session.isConnected()).thenReturn(false);
 
         spy.reconnect(this.connectFuture);
 
         String result = "OK";
         JSONRPC2Response response = new JSONRPC2Response(result, "id");
 
-        when(this.handler.execute(isA(JSONRPC2Request.class))).thenReturn(this.future);
-        when(this.future.get()).thenReturn(response);
-        doReturn(this.connectFuture).when(spy).connect();
+        Mockito.when(this.handler.execute(Matchers.isA(JSONRPC2Request.class))).thenReturn(this.future);
+        Mockito.when(this.future.get()).thenReturn(response);
+        Mockito.doReturn(this.connectFuture).when(spy).connect();
 
-        assertSame(
+        Assert.assertSame(
             "Connector.execute() should return executed method result.",
             result,
             spy.execute("test")
@@ -170,9 +171,9 @@ public class ConnectorTest
     {
         Connector connector = new Connector(this.connector, this.handler, this.address);
 
-        when(this.connectFuture.awaitUninterruptibly()).thenReturn(this.connectFuture);
-        when(this.connectFuture.getSession()).thenReturn(this.session);
-        when(this.session.isConnected()).thenReturn(true);
+        Mockito.when(this.connectFuture.awaitUninterruptibly()).thenReturn(this.connectFuture);
+        Mockito.when(this.connectFuture.getSession()).thenReturn(this.session);
+        Mockito.when(this.session.isConnected()).thenReturn(true);
 
         connector.reconnect(this.connectFuture);
 
@@ -181,10 +182,10 @@ public class ConnectorTest
 
         Map<String, Object> params = new HashMap<>();
 
-        when(this.handler.execute(isA(JSONRPC2Request.class))).thenReturn(this.future);
-        when(this.future.get()).thenReturn(response);
+        Mockito.when(this.handler.execute(Matchers.isA(JSONRPC2Request.class))).thenReturn(this.future);
+        Mockito.when(this.future.get()).thenReturn(response);
 
-        assertSame(
+        Assert.assertSame(
             "Connector.execute() should return executed method result.",
             result,
             connector.execute("test", params)
@@ -201,17 +202,17 @@ public class ConnectorTest
     {
         Connector connector = new Connector(this.connector, this.handler, this.address);
 
-        when(this.connectFuture.awaitUninterruptibly()).thenReturn(this.connectFuture);
-        when(this.connectFuture.getSession()).thenReturn(this.session);
-        when(this.session.isConnected()).thenReturn(true);
+        Mockito.when(this.connectFuture.awaitUninterruptibly()).thenReturn(this.connectFuture);
+        Mockito.when(this.connectFuture.getSession()).thenReturn(this.session);
+        Mockito.when(this.session.isConnected()).thenReturn(true);
 
         connector.reconnect(this.connectFuture);
 
         JSONRPC2Error error = new JSONRPC2Error(1, "error");
         JSONRPC2Response response = new JSONRPC2Response(error, "id");
 
-        when(this.handler.execute(isA(JSONRPC2Request.class))).thenReturn(this.future);
-        when(this.future.get()).thenReturn(response);
+        Mockito.when(this.handler.execute(Matchers.isA(JSONRPC2Request.class))).thenReturn(this.future);
+        Mockito.when(this.future.get()).thenReturn(response);
 
         connector.execute("test");
     }
@@ -226,14 +227,14 @@ public class ConnectorTest
     {
         Connector connector = new Connector(this.connector, this.handler, this.address);
 
-        when(this.connectFuture.awaitUninterruptibly()).thenReturn(this.connectFuture);
-        when(this.connectFuture.getSession()).thenReturn(this.session);
-        when(this.session.isConnected()).thenReturn(true);
+        Mockito.when(this.connectFuture.awaitUninterruptibly()).thenReturn(this.connectFuture);
+        Mockito.when(this.connectFuture.getSession()).thenReturn(this.session);
+        Mockito.when(this.session.isConnected()).thenReturn(true);
 
         connector.reconnect(this.connectFuture);
 
-        when(this.handler.execute(isA(JSONRPC2Request.class))).thenReturn(this.future);
-        when(this.future.get()).thenThrow(new InterruptedException());
+        Mockito.when(this.handler.execute(Matchers.isA(JSONRPC2Request.class))).thenReturn(this.future);
+        Mockito.when(this.future.get()).thenThrow(new InterruptedException());
 
         connector.execute("test");
     }
@@ -248,14 +249,14 @@ public class ConnectorTest
     {
         Connector connector = new Connector(this.connector, this.handler, this.address);
 
-        when(this.connectFuture.awaitUninterruptibly()).thenReturn(this.connectFuture);
-        when(this.connectFuture.getSession()).thenReturn(this.session);
-        when(this.session.isConnected()).thenReturn(true);
+        Mockito.when(this.connectFuture.awaitUninterruptibly()).thenReturn(this.connectFuture);
+        Mockito.when(this.connectFuture.getSession()).thenReturn(this.session);
+        Mockito.when(this.session.isConnected()).thenReturn(true);
 
         connector.reconnect(this.connectFuture);
 
-        when(this.handler.execute(isA(JSONRPC2Request.class))).thenReturn(this.future);
-        when(this.future.get()).thenThrow(new ExecutionException(new Exception()));
+        Mockito.when(this.handler.execute(Matchers.isA(JSONRPC2Request.class))).thenReturn(this.future);
+        Mockito.when(this.future.get()).thenThrow(new ExecutionException(new Exception()));
 
         connector.execute("test");
     }
@@ -265,8 +266,8 @@ public class ConnectorTest
     {
         Connector connector = new Connector(this.connector, this.handler, this.address);
 
-        when(this.connectFuture.awaitUninterruptibly()).thenReturn(this.connectFuture);
-        when(this.connectFuture.getSession()).thenReturn(this.session);
+        Mockito.when(this.connectFuture.awaitUninterruptibly()).thenReturn(this.connectFuture);
+        Mockito.when(this.connectFuture.getSession()).thenReturn(this.session);
 
         connector.reconnect(this.connectFuture);
     }

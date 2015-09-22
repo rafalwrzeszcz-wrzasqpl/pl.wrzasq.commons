@@ -235,6 +235,18 @@ public class Connector
     }
 
     /**
+     * Creates connector instance with default resources.
+     *
+     * @param host Listen host.
+     * @param port Listen port.
+     * @return Client connector.
+     */
+    public static Connector create(String host, int port)
+    {
+        return Connector.create(new InetSocketAddress(host, port));
+    }
+
+    /**
      * Generates new request ID.
      *
      * @return Request ID.
