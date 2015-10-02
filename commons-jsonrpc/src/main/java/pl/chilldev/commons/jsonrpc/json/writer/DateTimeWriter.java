@@ -9,8 +9,8 @@ package pl.chilldev.commons.jsonrpc.json.writer;
 
 import java.io.IOException;
 
-import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 
 import net.minidev.json.JSONStyle;
 import net.minidev.json.reader.JsonWriterI;
@@ -20,7 +20,7 @@ import net.minidev.json.reader.JsonWriterI;
  */
 public class DateTimeWriter
     implements
-        JsonWriterI<OffsetDateTime>
+        JsonWriterI<TemporalAccessor>
 {
     /**
      * Assigned formatter.
@@ -46,10 +46,10 @@ public class DateTimeWriter
      * @throws IOException When write to output stream fails.
      */
     @Override
-    public void writeJSONString(OffsetDateTime value, Appendable out, JSONStyle compression)
+    public void writeJSONString(TemporalAccessor value, Appendable out, JSONStyle compression)
         throws
             IOException
     {
-        compression.writeString(out, value.format(this.formatter));
+        compression.writeString(out, this.formatter.format(value));
     }
 }
