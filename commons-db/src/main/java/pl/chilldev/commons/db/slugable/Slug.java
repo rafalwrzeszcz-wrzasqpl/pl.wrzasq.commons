@@ -21,21 +21,29 @@ public @interface Slug
 {
     /**
      * Fields to generate slug from.
+     *
+     * @return Fields names.
      */
     String[] value();
 
     /**
      * Whether update slug or not.
+     *
+     * @return Update flag.
      */
     boolean updatable() default true;
 
     /**
      * Prefix for the generated slugs.
+     *
+     * @return Prefix.
      */
     String prefix() default "";
 
     /**
      * Suffix for the generated slugs.
+     *
+     * @return Suffix.
      */
     String suffix() default "";
 }

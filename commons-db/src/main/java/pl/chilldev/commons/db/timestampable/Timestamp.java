@@ -21,6 +21,8 @@ public @interface Timestamp
 {
     /**
      * Last operation type timestamp.
+     *
+     * @return Operation type.
      */
     TimestampType[] value();
 }

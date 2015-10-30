@@ -19,7 +19,7 @@
     <parent>
         <groupId>pl.chilldev.commons</groupId>
         <artifactId>commons</artifactId>
-        <version>0.1.0-SNAPSHOT</version>
+        <version>0.1.0</version>
         <relativePath>../</relativePath>
     </parent>
 
@@ -32,6 +32,16 @@
     <!-- plugins configuration -->
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <configuration>
+                    <ignoredDependencies combine.children="append">
+                        <ignoredDependency>org.slf4j:jcl-over-slf4j::</ignoredDependency>
+                    </ignoredDependencies>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
