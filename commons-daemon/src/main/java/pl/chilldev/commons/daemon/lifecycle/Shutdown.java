@@ -48,9 +48,9 @@ public class Shutdown extends Thread
             this.daemon.stop();
             this.daemon.destroy();
             this.logger.trace("Good bye!");
-        //CHECKSTYLE:OFF: IllegalCatchCheck
+            //CHECKSTYLE:OFF: IllegalCatchCheck
         } catch (Throwable error) {
-        //CHECKSTYLE:ON: IllegalCatchCheck
+            //CHECKSTYLE:ON: IllegalCatchCheck
             this.logger.error("Error while stopping dameon {}.", error.getMessage(), error);
         }
     }

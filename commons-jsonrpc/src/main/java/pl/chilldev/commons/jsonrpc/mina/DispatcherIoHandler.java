@@ -94,9 +94,9 @@ public class DispatcherIoHandler<ContextType extends ContextInterface> extends I
             // dispatch it
             try {
                 response = this.dispatcher.dispatch(request, this.context);
-            //CHECKSTYLE:OFF: IllegalCatchCheck
+                //CHECKSTYLE:OFF: IllegalCatchCheck
             } catch (Throwable error) {
-            //CHECKSTYLE:ON: IllegalCatchCheck
+                //CHECKSTYLE:ON: IllegalCatchCheck
                 // we DO WANT to catch all exceptions to avoid listener thread to die
                 this.logger.error("Internal error.", error);
                 response = new JSONRPC2Response(

@@ -58,6 +58,7 @@
             <property name="separated" value="true"/>
         </module>
         <module name="Indentation"/>
+        <module name="CommentsIndentation"/>
         <module name="LeftCurly">
             <property name="maxLineLength" value="120"/>
             <property name="option" value="nl"/>

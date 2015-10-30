@@ -46,9 +46,9 @@ public abstract class AbstractApplication
             try {
                 thread.start();
                 this.threads.add(thread);
-            //CHECKSTYLE:OFF: IllegalCatchCheck
+                //CHECKSTYLE:OFF: IllegalCatchCheck
             } catch (Throwable error) {
-            //CHECKSTYLE:ON: IllegalCatchCheck
+                //CHECKSTYLE:ON: IllegalCatchCheck
                 this.logger.error(
                     "Not starting \"{}\" because of {}.",
                     thread.getName(),
