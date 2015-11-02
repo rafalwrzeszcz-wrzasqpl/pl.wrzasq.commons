@@ -29,16 +29,6 @@
     <description>Text processing utilities.</description>
     <inceptionYear>2015</inceptionYear>
 
-    <!-- plugins configuration -->
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
-
     <!-- build profiles -->
     <profiles>
         <profile>

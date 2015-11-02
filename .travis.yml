@@ -14,7 +14,7 @@ sudo: false
 jdk:
     - "oraclejdk8"
 
-script: "mvn test verify"
+script: "mvn verify"
 
 after_script: "mvn site coveralls:report"
 

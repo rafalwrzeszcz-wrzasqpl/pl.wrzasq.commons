@@ -29,16 +29,6 @@
     <description>Helper components for handling daemon services with Apache Commons Daemon.</description>
     <inceptionYear>2014</inceptionYear>
 
-    <!-- plugins configuration -->
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
-
     <!-- project dependencies -->
     <dependencies>
         <dependency>
