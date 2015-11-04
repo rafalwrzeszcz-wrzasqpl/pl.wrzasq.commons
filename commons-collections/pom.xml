@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+# This file is part of the ChillDev-Commons.
+#
+# @license http://mit-license.org/ The MIT license
+# @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+-->
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd
+">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- core project settings -->
+    <artifactId>commons-collections</artifactId>
+    <packaging>jar</packaging>
+    <parent>
+        <groupId>pl.chilldev.commons</groupId>
+        <artifactId>commons</artifactId>
+        <version>0.1.1-SNAPSHOT</version>
+        <relativePath>../</relativePath>
+    </parent>
+
+    <!-- project meta info -->
+    <name>ChillDev Commons Collections</name>
+    <url>https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-collections/</url>
+    <description>Collections-related utilities and data structures.</description>
+    <inceptionYear>2015</inceptionYear>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-commons</artifactId>
+            <version>1.11.0.RELEASE</version>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
+    <!-- build profiles -->
+    <profiles>
+        <profile>
+            <id>deploy</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.github</groupId>
+                        <artifactId>site-maven-plugin</artifactId>
+                        <configuration>
+                            <path>${project.artifactId}/</path>
+                            <merge>true</merge>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

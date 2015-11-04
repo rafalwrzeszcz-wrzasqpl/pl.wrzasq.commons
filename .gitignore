@@ -10,6 +10,11 @@
 /.settings
 /target
 
+/commons-collections/.classpath
+/commons-collections/.project
+/commons-collections/.settings
+/commons-collections/target
+
 /commons-concurrent/.classpath
 /commons-concurrent/.project
 /commons-concurrent/.settings

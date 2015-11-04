@@ -126,6 +126,7 @@
 
     <!-- components of ChillDev-Commons project -->
     <modules>
+        <module>commons-collections</module>
         <module>commons-concurrent</module>
         <module>commons-daemon</module>
         <module>commons-db</module>
