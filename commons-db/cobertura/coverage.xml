@@ -1,0 +1,322 @@
+<?xml version="1.0"?>
+<!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
+
+<coverage line-rate="1.0" branch-rate="1.0" lines-covered="46" lines-valid="46" branches-covered="28" branches-valid="28" complexity="2.3333333333333335" version="2.0.3" timestamp="1446560169375">
+	<sources>
+		<source>/usr/src/maven-project/commons-db/target/generated-sources/annotations</source>
+		<source>--source</source>
+		<source>/usr/src/maven-project/commons-db/src/main/java</source>
+	</sources>
+	<packages>
+		<package name="pl.chilldev.commons.db" line-rate="1.0" branch-rate="1.0" complexity="2.75">
+			<classes>
+				<class name="pl.chilldev.commons.db.AbstractEntity" filename="pl/chilldev/commons/db/AbstractEntity.java" line-rate="1.0" branch-rate="1.0" complexity="2.75">
+					<methods>
+						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="23" hits="12" branch="false"/>
+							</lines>
+						</method>
+						<method name="equals" signature="(Ljava/lang/Object;)Z" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="90" hits="6" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="91" hits="1" branch="false"/>
+								<line number="93" hits="5" branch="true" condition-coverage="100% (6/6)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+										<condition number="1" type="jump" coverage="100%"/>
+										<condition number="2" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="94" hits="3" branch="false"/>
+								<line number="96" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="getId" signature="()Ljava/util/UUID;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="61" hits="4" branch="false"/>
+							</lines>
+						</method>
+						<method name="hashCode" signature="()I" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="107" hits="2" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+							</lines>
+						</method>
+						<method name="setId" signature="(Ljava/util/UUID;)Lpl/chilldev/commons/db/AbstractEntity;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="76" hits="5" branch="false"/>
+								<line number="78" hits="5" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="23" hits="12" branch="false"/>
+						<line number="61" hits="4" branch="false"/>
+						<line number="76" hits="5" branch="false"/>
+						<line number="78" hits="5" branch="false"/>
+						<line number="90" hits="6" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="91" hits="1" branch="false"/>
+						<line number="93" hits="5" branch="true" condition-coverage="100% (6/6)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+								<condition number="1" type="jump" coverage="100%"/>
+								<condition number="2" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="94" hits="3" branch="false"/>
+						<line number="96" hits="2" branch="false"/>
+						<line number="107" hits="2" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+					</lines>
+				</class>
+			</classes>
+		</package>
+		<package name="pl.chilldev.commons.db.slugable" line-rate="1.0" branch-rate="1.0" complexity="2.2">
+			<classes>
+				<class name="pl.chilldev.commons.db.slugable.Slug" filename="pl/chilldev/commons/db/slugable/Slug.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+					</methods>
+					<lines>
+					</lines>
+				</class>
+				<class name="pl.chilldev.commons.db.slugable.SlugableListener" filename="pl/chilldev/commons/db/slugable/SlugableListener.java" line-rate="1.0" branch-rate="1.0" complexity="2.2">
+					<methods>
+						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="25" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="createSlugs" signature="(Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="113" hits="2" branch="false"/>
+								<line number="114" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="fillSlugs" signature="(Ljava/lang/Object;Z)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="78" hits="3" branch="false"/>
+								<line number="81" hits="21" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="82" hits="18" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="84" hits="9" branch="false"/>
+								<line number="87" hits="9" branch="true" condition-coverage="100% (4/4)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+										<condition number="1" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="89" hits="8" branch="false"/>
+								<line number="90" hits="8" branch="false"/>
+								<line number="91" hits="19" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="92" hits="11" branch="false"/>
+								<line number="96" hits="8" branch="false"/>
+								<line number="100" hits="3" branch="false"/>
+							</lines>
+						</method>
+						<method name="generateSlug" signature="([Ljava/lang/String;Lpl/chilldev/commons/db/slugable/Slug;)Ljava/lang/String;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="62" hits="8" branch="false"/>
+								<line number="64" hits="8" branch="false"/>
+							</lines>
+						</method>
+						<method name="getSlugifier" signature="()Lpl/chilldev/commons/text/slugifier/Slugifier;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="45" hits="8" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="46" hits="2" branch="false"/>
+								<line number="49" hits="8" branch="false"/>
+							</lines>
+						</method>
+						<method name="updateSlugs" signature="(Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="127" hits="1" branch="false"/>
+								<line number="128" hits="1" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="25" hits="2" branch="false"/>
+						<line number="45" hits="8" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="46" hits="2" branch="false"/>
+						<line number="49" hits="8" branch="false"/>
+						<line number="62" hits="8" branch="false"/>
+						<line number="64" hits="8" branch="false"/>
+						<line number="78" hits="3" branch="false"/>
+						<line number="81" hits="21" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="82" hits="18" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="84" hits="9" branch="false"/>
+						<line number="87" hits="9" branch="true" condition-coverage="100% (4/4)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+								<condition number="1" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="89" hits="8" branch="false"/>
+						<line number="90" hits="8" branch="false"/>
+						<line number="91" hits="19" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="92" hits="11" branch="false"/>
+						<line number="96" hits="8" branch="false"/>
+						<line number="100" hits="3" branch="false"/>
+						<line number="113" hits="2" branch="false"/>
+						<line number="114" hits="2" branch="false"/>
+						<line number="127" hits="1" branch="false"/>
+						<line number="128" hits="1" branch="false"/>
+					</lines>
+				</class>
+			</classes>
+		</package>
+		<package name="pl.chilldev.commons.db.timestampable" line-rate="1.0" branch-rate="1.0" complexity="2.0">
+			<classes>
+				<class name="pl.chilldev.commons.db.timestampable.Timestamp" filename="pl/chilldev/commons/db/timestampable/Timestamp.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+					</methods>
+					<lines>
+					</lines>
+				</class>
+				<class name="pl.chilldev.commons.db.timestampable.TimestampType" filename="pl/chilldev/commons/db/timestampable/TimestampType.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+						<method name="&lt;clinit&gt;" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="13" hits="4" branch="false"/>
+								<line number="18" hits="1" branch="false"/>
+								<line number="22" hits="1" branch="false"/>
+							</lines>
+						</method>
+						<method name="&lt;init&gt;" signature="(Ljava/lang/String;I)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+							</lines>
+						</method>
+						<method name="valueOf" signature="(Ljava/lang/String;)Lpl/chilldev/commons/db/timestampable/TimestampType;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+							</lines>
+						</method>
+						<method name="values" signature="()[Lpl/chilldev/commons/db/timestampable/TimestampType;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="13" hits="4" branch="false"/>
+						<line number="18" hits="1" branch="false"/>
+						<line number="22" hits="1" branch="false"/>
+					</lines>
+				</class>
+				<class name="pl.chilldev.commons.db.timestampable.TimestampableListener" filename="pl/chilldev/commons/db/timestampable/TimestampableListener.java" line-rate="1.0" branch-rate="1.0" complexity="2.0">
+					<methods>
+						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="23" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="createTimestamps" signature="(Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="63" hits="1" branch="false"/>
+								<line number="64" hits="1" branch="false"/>
+							</lines>
+						</method>
+						<method name="generateTimestamps" signature="(Ljava/lang/Object;Lpl/chilldev/commons/db/timestampable/TimestampType;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="36" hits="2" branch="false"/>
+								<line number="38" hits="10" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="39" hits="8" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="41" hits="6" branch="false"/>
+								<line number="44" hits="6" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="46" hits="4" branch="false"/>
+								<line number="50" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="updateTimestamps" signature="(Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="77" hits="1" branch="false"/>
+								<line number="78" hits="1" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="23" hits="2" branch="false"/>
+						<line number="36" hits="2" branch="false"/>
+						<line number="38" hits="10" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="39" hits="8" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="41" hits="6" branch="false"/>
+						<line number="44" hits="6" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="46" hits="4" branch="false"/>
+						<line number="50" hits="2" branch="false"/>
+						<line number="63" hits="1" branch="false"/>
+						<line number="64" hits="1" branch="false"/>
+						<line number="77" hits="1" branch="false"/>
+						<line number="78" hits="1" branch="false"/>
+					</lines>
+				</class>
+			</classes>
+		</package>
+	</packages>
+</coverage>
