@@ -7,10 +7,8 @@
 
 package test.pl.chilldev.commons.jsonrpc.mina;
 
-// JUnit includes
+import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import static org.junit.Assert.*;
 
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
@@ -29,6 +27,7 @@ public class IoServiceUtilsTest
 
         // simple configuration
         IoServiceUtils.Configuration configuration = new IoServiceUtils.Configuration() {
+            @Override
             public int getMaxPacketSize()
             {
                 return size;
@@ -39,6 +38,6 @@ public class IoServiceUtilsTest
         NioSocketAcceptor service = new NioSocketAcceptor();
         IoServiceUtils.initialize(service, handler, configuration);
 
-        assertSame("IoServiceUtils.initialize() should set request handler on given socket.", handler, service.getHandler());
+        Assert.assertSame("IoServiceUtils.initialize() should set request handler on given socket.", handler, service.getHandler());
     }
 }

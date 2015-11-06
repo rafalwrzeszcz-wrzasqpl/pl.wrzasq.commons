@@ -7,20 +7,16 @@
 
 package test.pl.chilldev.commons.jsonrpc.mina;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeoutException;
 
+import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import static org.junit.Assert.*;
 
 import com.thetransactioncompany.jsonrpc2.JSONRPC2ParseException;
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Request;
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Response;
 
-import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.filter.codec.ProtocolCodecSession;
 
 import pl.chilldev.commons.jsonrpc.mina.RequestIoHandler;
@@ -66,11 +62,11 @@ public class RequestIoHandlerTest
 
         handler.sessionClosed(session);
 
-        assertFalse(
+        Assert.assertFalse(
             "RequestIoHandler.sessionClosed() should terminate all pending requests.",
             future.get().indicatesSuccess()
         );
-        assertEquals(
+        Assert.assertEquals(
             "RequestIoHandler.sessionClosed() should terminate all pending requests.",
             ErrorCodes.CODE_CONNECTION,
             future.get().getError().getCode()
@@ -89,7 +85,7 @@ public class RequestIoHandlerTest
 
         handler.messageReceived(session, "{\"jsonrpc\":\"2.0\",\"id\":1,\"result\":\"foo\"}");
 
-        assertEquals(
+        Assert.assertEquals(
             "RequestIoHandler.messageReceived() should dispatch result to associated pending request future.",
             "foo",
             future.get().getResult()

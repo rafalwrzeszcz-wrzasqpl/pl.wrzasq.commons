@@ -7,6 +7,7 @@
 
 package pl.chilldev.commons.jsonrpc.daemon;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.BeanFactoryUtils;
@@ -56,12 +57,20 @@ public abstract class AbstractSpringApplication extends AbstractApplication
      * {@inheritDoc}
      */
     @Override
-    protected Collection<Listener> buildListeners()
+    protected Collection<Listener<?>> buildListeners()
     {
-        return BeanFactoryUtils.beansOfTypeIncludingAncestors(
+        Collection<Listener<?>> listeners = new ArrayList<>();
+
+        // this is to cast raw types into generics
+        for (Listener<?> listener : BeanFactoryUtils.beansOfTypeIncludingAncestors(
             this.context,
             Listener.class
-        ).values();
+        ).values())
+        {
+            listeners.add(listener);
+        }
+
+        return listeners;
     }
 
     /**

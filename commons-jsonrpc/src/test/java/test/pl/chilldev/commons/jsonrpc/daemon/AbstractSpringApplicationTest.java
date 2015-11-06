@@ -10,7 +10,6 @@ package test.pl.chilldev.commons.jsonrpc.daemon;
 import org.junit.Test;
 
 import pl.chilldev.commons.jsonrpc.daemon.AbstractSpringApplication;
-import pl.chilldev.commons.jsonrpc.daemon.Listener;
 
 public class AbstractSpringApplicationTest
 {

@@ -33,7 +33,7 @@ public abstract class AbstractApplication
     /**
      * List of children threads.
      */
-    protected Collection<Listener> threads = new HashSet<>();
+    protected Collection<Listener<?>> threads = new HashSet<>();
 
     /**
      * Runs all listeners.
@@ -42,7 +42,7 @@ public abstract class AbstractApplication
     public void start()
     {
         // running threads
-        for (Listener thread : this.buildListeners()) {
+        for (Listener<?> thread : this.buildListeners()) {
             try {
                 thread.start();
                 this.threads.add(thread);
@@ -147,9 +147,9 @@ public abstract class AbstractApplication
     protected abstract String getDaemonVersion();
 
     /**
-     * Retruns collection of listeners (not started, but instantiated).
+     * Returns collection of listeners (not started, but instantiated).
      *
      * @return Collection of listeners to be started by the daemon.
      */
-    protected abstract Collection<Listener> buildListeners();
+    protected abstract Collection<Listener<?>> buildListeners();
 }

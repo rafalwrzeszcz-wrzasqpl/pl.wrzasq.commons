@@ -73,9 +73,9 @@ public class AbstractApplicationTest
 
     public class Application extends AbstractApplication
     {
-        protected Listener thread;
+        protected Listener<?> thread;
 
-        public Application(Listener thread)
+        public Application(Listener<?> thread)
         {
             this.thread = thread;
         }
@@ -93,16 +93,16 @@ public class AbstractApplicationTest
         }
 
         @Override
-        protected Collection<Listener> buildListeners()
+        protected Collection<Listener<?>> buildListeners()
         {
-            Collection<Listener> threads = new HashSet<>();
+            Collection<Listener<?>> threads = new HashSet<>();
             threads.add(this.thread);
             return threads;
         }
     }
 
     @Mock
-    protected Listener listener;
+    protected Listener<?> listener;
 
     @Test
     public void start()

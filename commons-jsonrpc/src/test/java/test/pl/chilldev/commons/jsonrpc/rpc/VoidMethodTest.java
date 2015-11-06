@@ -7,18 +7,18 @@
 
 package test.pl.chilldev.commons.jsonrpc.rpc;
 
-// JUnit includes
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.junit.Assert.*;
 
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Error;
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Request;
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Response;
 
+import org.mockito.Matchers;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import static org.mockito.Mockito.*;
 
 import pl.chilldev.commons.jsonrpc.daemon.ContextInterface;
 import pl.chilldev.commons.jsonrpc.rpc.VoidMethod;
@@ -42,15 +42,14 @@ public class VoidMethodTest
         // create request
         JSONRPC2Request request = new JSONRPC2Request("version", "test");
 
-        Object expected = "foo";
         JSONRPC2Response response = handler.process(request, this.context);
 
-        assertEquals(
+        Assert.assertEquals(
             "Dispatcher should generate response with same ID that request has.",
             request.getID(),
             response.getID()
         );
 
-        verify(this.method).process(same(request), isA(ContextInterface.class));
+        Mockito.verify(this.method).process(Matchers.same(request), Matchers.isA(ContextInterface.class));
     }
 }

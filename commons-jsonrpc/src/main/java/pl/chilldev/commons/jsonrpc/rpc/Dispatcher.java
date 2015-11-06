@@ -83,7 +83,7 @@ public class Dispatcher<ContextType extends ContextInterface>
     }
 
     /**
-     *  Handles request.
+     * Handles request.
      *
      * @param request Request call.
      * @param context Execution context.

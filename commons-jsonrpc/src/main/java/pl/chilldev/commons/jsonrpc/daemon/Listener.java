@@ -134,7 +134,7 @@ public class Listener<ContextType extends ContextInterface> extends Thread
      *
      * @return Self instance.
      */
-    public Listener release()
+    public Listener<ContextType> release()
     {
         this.running = false;
 
@@ -169,7 +169,7 @@ public class Listener<ContextType extends ContextInterface> extends Thread
 
             try {
                 while (this.running) {
-                    this.sleep(this.sleepTick);
+                    Thread.sleep(this.sleepTick);
                 }
             } catch (InterruptedException error) {
                 // don't worry - it's what we want in fact

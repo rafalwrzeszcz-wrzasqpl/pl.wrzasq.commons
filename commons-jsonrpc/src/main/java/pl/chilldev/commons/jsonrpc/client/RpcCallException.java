@@ -13,6 +13,11 @@ package pl.chilldev.commons.jsonrpc.client;
 public class RpcCallException extends Exception
 {
     /**
+     * Serializable class ID.
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
      * Initializes error data.
      *
      * @param cause Root cause.
