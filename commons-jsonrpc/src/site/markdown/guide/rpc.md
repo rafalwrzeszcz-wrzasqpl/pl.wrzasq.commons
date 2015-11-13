@@ -59,7 +59,7 @@ That's all you need to do with the dispatcher object. It's usage is quite simple
 
 ## Method wrappers
 
-But yet, ususally you don't need such low-level respnse control - response ID must always match current request ID and returned value is usually simply your method call result. So most likely generating response from based on your method call is a straight-forward task and there is not reason why you should need to handle it manually every time. For that there are two interfaces with dedicated request handlers - one for methods that generate response result (`pl.chilldev.commons.jsonrpc.rpc.ReturningMethod`) and one for void methods (`pl.chilldev.commons.jsonrpc.rpc.VoidMethod`).
+But yet, ususally you don't need such low-level response control - response ID must always match current request ID and returned value is usually simply your method call result. So most likely generating response based on your method call is a straight-forward task and there is no reason why you should need to handle it manually every time. For that there are two interfaces with dedicated request handlers - one for methods that generate response result (`pl.chilldev.commons.jsonrpc.rpc.ReturningMethod`) and one for void methods (`pl.chilldev.commons.jsonrpc.rpc.VoidMethod`).
 
 **Note:** If you want to return `NULL` value it's a return value so you should use returning method interface - void-method indicated no response result at all (JSON-RPC response has no `result` property in such case).
 

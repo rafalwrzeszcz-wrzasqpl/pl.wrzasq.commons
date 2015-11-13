@@ -14,9 +14,9 @@ sudo: false
 jdk:
     - "oraclejdk8"
 
-script: "mvn verify"
+script: "mvn verify site"
 
-after_script: "mvn site coveralls:report"
+after_script: "mvn coveralls:report"
 
 notifications:
     webhooks:

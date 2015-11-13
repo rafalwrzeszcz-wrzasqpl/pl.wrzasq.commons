@@ -15,7 +15,8 @@
         <menu ref="parent"/>
 
         <menu name="Guide">
-            <item name="JSON-RPC dispatcher" href="guide/rpc.html"/>
+            <item name="JSON-RPC - dispatcher" href="guide/rpc.html"/>
+            <item name="JSON-RPC - introspector" href="guide/introspector.html"/>
             <item name="Mina I/O" href="guide/mina.html"/>
             <item name="Building listener" href="guide/listener.html"/>
             <item name="Building daemon" href="guide/daemon.html"/>

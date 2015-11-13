@@ -62,13 +62,10 @@ public abstract class AbstractSpringApplication extends AbstractApplication
         Collection<Listener<?>> listeners = new ArrayList<>();
 
         // this is to cast raw types into generics
-        for (Listener<?> listener : BeanFactoryUtils.beansOfTypeIncludingAncestors(
+        BeanFactoryUtils.beansOfTypeIncludingAncestors(
             this.context,
             Listener.class
-        ).values())
-        {
-            listeners.add(listener);
-        }
+        ).values().forEach(listeners::add);
 
         return listeners;
     }

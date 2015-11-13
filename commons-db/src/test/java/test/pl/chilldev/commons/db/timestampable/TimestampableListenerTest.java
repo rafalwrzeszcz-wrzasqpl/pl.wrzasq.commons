@@ -35,6 +35,9 @@ public class TimestampableListenerTest
         throws
             IllegalAccessException
     {
+        // just for code coverage
+        TimestampType.valueOf("CREATE");
+
         // build entity
         TimestampableListenerTest.TestEntity entity = new TimestampableListenerTest.TestEntity();
 
