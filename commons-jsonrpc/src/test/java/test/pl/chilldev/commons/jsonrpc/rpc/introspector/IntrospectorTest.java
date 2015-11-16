@@ -78,7 +78,7 @@ public class IntrospectorTest
     @Test
     public void register()
     {
-        Dispatcher<IntrospectorTest.TestService> dispatcher = this.createDispatcher();
+        Dispatcher<IntrospectorTest.TestService> dispatcher = this.buildDispatcher();
 
         Map<String, Object> params = new HashMap<>();
         params.put("bool", true);
@@ -105,7 +105,7 @@ public class IntrospectorTest
     @Test
     public void registerOptionals()
     {
-        Dispatcher<IntrospectorTest.TestService> dispatcher = this.createDispatcher();
+        Dispatcher<IntrospectorTest.TestService> dispatcher = this.buildDispatcher();
 
         String result = "bar";
         Map<String, Object> params = new HashMap<>();
@@ -139,7 +139,7 @@ public class IntrospectorTest
     @Test
     public void registerMapping()
     {
-        Dispatcher<IntrospectorTest.TestService> dispatcher = this.createDispatcher();
+        Dispatcher<IntrospectorTest.TestService> dispatcher = this.buildDispatcher();
 
         List<String> data = new ArrayList<>();
         data.add("Grześ");
@@ -208,7 +208,7 @@ public class IntrospectorTest
         throws
             JSONRPC2Error
     {
-        Dispatcher<IntrospectorTest.TestService> dispatcher = this.createDispatcher();
+        Dispatcher<IntrospectorTest.TestService> dispatcher = this.buildDispatcher();
 
         Map<String, Object> params = new HashMap<>();
         params.put("bool", true);
@@ -249,7 +249,7 @@ public class IntrospectorTest
         throws
             JSONRPC2Error
     {
-        Dispatcher<IntrospectorTest.TestService> dispatcher = this.createDispatcher();
+        Dispatcher<IntrospectorTest.TestService> dispatcher = this.buildDispatcher();
 
         Map<String, Object> params = new HashMap<>();
         params.put("bool", true);
@@ -292,7 +292,37 @@ public class IntrospectorTest
         introspector.register(IntrospectorTest.TestService.class, null);
     }
 
-    protected Dispatcher<IntrospectorTest.TestService> createDispatcher()
+    @Test
+    public void createDispatcher()
+    {
+        Introspector introspector = Introspector.createDefault();
+        Dispatcher<IntrospectorTest.TestService> dispatcher = introspector.createDispatcher(
+            IntrospectorTest.TestService.class
+        );
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("bool", true);
+        params.put("integer", 123);
+        params.put("longint", 123456789L);
+        params.put("string", "test");
+        params.put("uuid", UUID.randomUUID().toString());
+        params.put("limit", 4);
+        params.put("list", new ArrayList<String>());
+
+        JSONRPC2Request request = new JSONRPC2Request(
+            "test",
+            params,
+            1
+        );
+
+        JSONRPC2Response response = dispatcher.dispatch(request, this.context);
+        Assert.assertNull(
+            "Introspector.createDispatcher() should create dispatcher for provided facade class.",
+            response.getResult()
+        );
+    }
+
+    protected Dispatcher<IntrospectorTest.TestService> buildDispatcher()
     {
         Introspector introspector = Introspector.createDefault();
         Dispatcher<IntrospectorTest.TestService> dispatcher = new Dispatcher<>();

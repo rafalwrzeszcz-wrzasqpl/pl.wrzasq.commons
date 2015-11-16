@@ -32,6 +32,7 @@ import org.springframework.data.domain.Pageable;
 import pl.chilldev.commons.jsonrpc.daemon.ContextInterface;
 import pl.chilldev.commons.jsonrpc.json.ParamsRetriever;
 import pl.chilldev.commons.jsonrpc.rpc.Dispatcher;
+import pl.chilldev.commons.jsonrpc.rpc.handler.VersionHandler;
 
 /**
  * Introspector for facade classes to automatically map method to JSON calls.
@@ -323,6 +324,27 @@ public class Introspector
     )
     {
         return (ParamsRetriever params) -> provider.getParam(name, params, optional, defaultValue);
+    }
+
+    /**
+     * Creates dispatcher for given facade type.
+     *
+     * <p>
+     * Created dispatcher contains additional <tt>version</tt> method handler.
+     * </p>
+     *
+     * @param type Class to be used as a facade.
+     * @param <ContextType> Service request context type (will be used for execution context).
+     * @return Dispatcher.
+     */
+    public <ContextType extends ContextInterface> Dispatcher<ContextType> createDispatcher(Class<ContextType> type)
+    {
+        Dispatcher<ContextType> dispatcher = new Dispatcher<>();
+        dispatcher.register("version", new VersionHandler());
+
+        this.register(type, dispatcher);
+
+        return dispatcher;
     }
 
     /**
