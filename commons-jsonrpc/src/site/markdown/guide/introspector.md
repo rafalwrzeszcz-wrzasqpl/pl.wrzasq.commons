@@ -5,7 +5,7 @@
 # @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
-# JSON-RPC introspector
+# Service introspector
 
 With all the knowledge about how the dispatcher work, we can go step further and cover all of that with the introspection mechanism that will compose the dispatcher for us. For that we will have to use `pl.chilldev.commons.jsonrpc.rpc.introspector.Introspector` class. It takes the class, looks for all it's methods that are annotated with `pl.chilldev.commons.jsonrpc.rpc.introspector.JsonRpcCall` annotation and registers request handler for every such method. The logic here is as follows:
 
@@ -134,3 +134,102 @@ introspector.registerResultMapper(
 ```
 
 **Note:** You have to register results mapper before using introspector on your facade.
+
+# Client introspector
+
+Similar mechanism exists for the client-side classes. All you have to do is to define an interface (can be also an abstract class) the maps to service methods (you even use same annotations):
+
+```java
+import java.util.List;
+import java.util.UUID;
+
+import pl.chilldev.commons.jsonrpc.rpc.introspector.JsonRpcCall;
+import pl.chilldev.commons.jsonrpc.rpc.introspector.JsonRpcParam;
+
+public interface MyClient
+{
+    @JsonRpcCall
+    String getName(UUID id);
+
+    @JsonRpcCall(name = "getNameByEmail");
+    String getName(String email);
+
+    @JsonRpcCall
+    List<String> getNames(@JsonRpcParam(name = "ids") List<UUID> list);
+}
+```
+
+`@JsonRpcCall` annotation plays similar role that in the service introspector - it marks the method to be handled by the proxy interceptor and invoke the service method. It's additional `name` attribute allows you to change the actual invoked RPC method (by default it's same as method name).
+
+Arguments are mapped by their names and it can also be changed by using `name` attribute of `@JsonRpcParam` annotation.
+
+**Note:** As all **JSON-RPC** mechanisms are handled internally, you don't need to worry about connector anymore - you simply don't need it.
+
+**Note:** Currently only public methods are handled, however it doesn't matter if they are defined directly in a class or inherited.
+
+Not only interfaces are allowed, but also classes, so you can define additional methods that are not mapped to RPC calls. It's especially useful for handling custom, more complicated data types. For instance paged response results need requested page, so this is how we commonly solve the issue:
+
+```java
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import pl.chilldev.commons.jsonrpc.json.ConvertUtils;
+import pl.chilldev.commons.jsonrpc.rpc.introspector.JsonRpcCall;
+
+public abstract class MyClient
+{
+    @JsonRpcCall(name = "getPage")
+    public abstract List<Object> doGetPage(Pageable request);
+
+    public Page<MyEntity> getPage(Pageable request)
+    {
+        return ConvertUtils.buildPage(
+            this.doGetPage(request),
+            request,
+            MyEntity.class
+        );
+    }
+}
+```
+
+## Instantiating the client
+
+Ok, so we don't need to define the logic, all the errorneus and tedious work is done for us. But how to get the actual client instance? That's what you need `pl.chilldev.commons.jsonrpc.client.introspector.Introspector` for (note the different package name than for the service introspector).
+
+```java
+import pl.chilldev.commons.jsonrpc.client.introspector.Introspector;
+
+Introspector introspector = Introspector.createDefault();
+// connector is an instance of pl.chilldev.commons.jsonrpc.client.Connector
+MyClient client = introspector.createClient(MyClient.class, connector);
+
+System.out.println(client.getName("test@localhost"));
+```
+
+## Parameters mappers
+
+By default all parameters are passed as-they-are to the JSON dumper and they dumped into JSON structure (all non-standard JSON types are dumped by using their `.toString()` method). Instances created with `Introspector.createDefault()` are also capable of handling `org.springframework.data.domain.Pageable` objects (they are dumped as three parameters for page number, page size and sorting criteria, the standard format supported by `commons-jsonrpc` stack. If you want to handle custom parameters in a different way, you can register own parameter mappers. A parameter mapper takes method parameter name, parameter value and current state of request params and is responsible for putting new parameter into the parameter map.
+
+```java
+introspector.registerParameterMapper(
+    UUID.class,
+    (String name, UUID value, Map<String, Object> params) -> {
+        params.put(name, value.toString());
+    }
+);
+```
+
+**Note:** Such mapper is not needed as all objects are dumped with `.toString()` by default.
+
+## Response type handlers
+
+It's also possible to handle custom response types. For example introspectors created with `Introspector.createDefault()` are capable of returning (apart of standard JSON types) also instances of `java.util.UUID` parsed with `UUID.fromString()` method. You can register your own function for handling custom types:
+
+```java
+introspector.registerResultHandler(
+    MyEntity.class,
+    (Object response) -> ParamsRetriever.OBJECT_MAPPER.convertValue(response, MyEntity.class)
+);
+```

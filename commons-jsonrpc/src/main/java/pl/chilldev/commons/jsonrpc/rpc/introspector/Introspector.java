@@ -195,7 +195,7 @@ public class Introspector
     }
 
     /**
-     * Registers parameter resolver for given class.
+     * Registers return type handler for given class.
      *
      * @param type Response type.
      * @param mapper Response mapper.
@@ -356,7 +356,7 @@ public class Introspector
     {
         Introspector introspector = new Introspector();
 
-        // parameters retriever
+        // parameters retrievers
 
         // boolean retriever
         introspector.registerParameterProvider(
