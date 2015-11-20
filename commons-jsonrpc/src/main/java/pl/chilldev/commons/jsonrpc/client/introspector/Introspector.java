@@ -65,17 +65,17 @@ public class Introspector
         /**
          * RPC method name.
          */
-        protected String name;
+        private String name;
 
         /**
          * Parameters mappers.
          */
-        protected List<Introspector.ParameterMapperWrapper<Object>> params;
+        private List<Introspector.ParameterMapperWrapper<Object>> params;
 
         /**
          * Response handler.
          */
-        protected Function<Object, ?> handler;
+        private Function<Object, ?> handler;
 
         /**
          * Initializes RPC call handler.
@@ -128,12 +128,12 @@ public class Introspector
         /**
          * TCP connector.
          */
-        protected Connector connector;
+        private Connector connector;
 
         /**
          * RPC calls.
          */
-        protected Map<Method, Introspector.Call> calls = new HashMap<>();
+        private Map<Method, Introspector.Call> calls = new HashMap<>();
 
         /**
          * Initializes service over given client.
@@ -176,28 +176,28 @@ public class Introspector
     /**
      * Default parameter mapper.
      */
-    protected static final ParameterMapper<Object> DEFAULT_MAPPER
+    private static final ParameterMapper<Object> DEFAULT_MAPPER
         = (String name, Object value, Map<String, Object> params) -> params.put(name, value);
 
     /**
      * Transparent response handler.
      */
-    protected static final Function<Object, Object> IDENTITY_HANDLER = (Object value) -> value;
+    private static final Function<Object, Object> IDENTITY_HANDLER = (Object value) -> value;
 
     /**
      * Logger.
      */
-    protected Logger logger = LoggerFactory.getLogger(Introspector.class);
+    private Logger logger = LoggerFactory.getLogger(Introspector.class);
 
     /**
      * Parameters mappers.
      */
-    protected Map<Class<?>, ParameterMapper<Object>> mappers = new HashMap<>();
+    private Map<Class<?>, ParameterMapper<Object>> mappers = new HashMap<>();
 
     /**
      * Results handlers.
      */
-    protected Map<Class<?>, Function<Object, ?>> handlers = new HashMap<>();
+    private Map<Class<?>, Function<Object, ?>> handlers = new HashMap<>();
 
     /**
      * Registers parameter mapper for given class.
@@ -262,7 +262,7 @@ public class Introspector
      * @param connector TPC connector to use for the calls.
      * @return RPC client.
      */
-    protected Introspector.Client buildClient(Class<?> type, Connector connector)
+    private Introspector.Client buildClient(Class<?> type, Connector connector)
     {
         Introspector.Client client = new Introspector.Client(connector);
 
@@ -309,7 +309,7 @@ public class Introspector
      * @param parameter Method parameter.
      * @return Parameter provider.
      */
-    protected Introspector.ParameterMapperWrapper<Object> createParameterMapper(Parameter parameter)
+    private Introspector.ParameterMapperWrapper<Object> createParameterMapper(Parameter parameter)
     {
         // try to fetch provider by parameter type
         Class<?> type = parameter.getType();
@@ -336,7 +336,7 @@ public class Introspector
      * @param <Type> Parameter type.
      * @return Wrapped parameter mapper.
      */
-    protected <Type> Introspector.ParameterMapperWrapper<Type> createParameterMapperWrapper(
+    private <Type> Introspector.ParameterMapperWrapper<Type> createParameterMapperWrapper(
         ParameterMapper<? super Type> mapper,
         String name
     )

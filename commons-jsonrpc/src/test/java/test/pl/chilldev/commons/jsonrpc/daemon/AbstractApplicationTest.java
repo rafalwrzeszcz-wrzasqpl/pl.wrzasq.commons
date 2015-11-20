@@ -26,7 +26,7 @@ public class AbstractApplicationTest
 {
     public class TestListener extends Listener<ContextInterface>
     {
-        protected boolean fail;
+        private boolean fail;
 
         public TestListener(String name, boolean fail)
         {
@@ -73,7 +73,7 @@ public class AbstractApplicationTest
 
     public class Application extends AbstractApplication
     {
-        protected Listener<?> thread;
+        private Listener<?> thread;
 
         public Application(Listener<?> thread)
         {
@@ -102,7 +102,7 @@ public class AbstractApplicationTest
     }
 
     @Mock
-    protected Listener<?> listener;
+    private Listener<?> listener;
 
     @Test
     public void start()

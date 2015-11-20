@@ -24,7 +24,7 @@ public class SimpleSlugifier implements Slugifier
     /**
      * Separator for URL parts.
      */
-    protected String delimiter = SimpleSlugifier.DEFAULT_DELIMITER;
+    private String delimiter = SimpleSlugifier.DEFAULT_DELIMITER;
 
     /**
      * Changes words delimiter.

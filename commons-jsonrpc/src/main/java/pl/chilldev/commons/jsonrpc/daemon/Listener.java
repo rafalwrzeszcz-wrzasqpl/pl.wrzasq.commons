@@ -42,37 +42,37 @@ public class Listener<ContextType extends ContextInterface> extends Thread
     /**
      * Logger.
      */
-    protected Logger logger = LoggerFactory.getLogger(Listener.class);
+    private Logger logger = LoggerFactory.getLogger(Listener.class);
 
     /**
      * API context.
      */
-    protected ContextType context;
+    private ContextType context;
 
     /**
      * JSON-RPC dispatcher.
      */
-    protected Dispatcher<? super ContextType> dispatcher;
+    private Dispatcher<? super ContextType> dispatcher;
 
     /**
      * Execution interval.
      */
-    protected int sleepTick = Listener.SLEEP_TICK;
+    private int sleepTick = Listener.SLEEP_TICK;
 
     /**
      * Listening address.
      */
-    protected InetSocketAddress address;
+    private InetSocketAddress address;
 
     /**
      * Maximum size of JSON-RPC packet.
      */
-    protected int maxPacketSize = Listener.DEFAULT_PACKET_LIMIT;
+    private int maxPacketSize = Listener.DEFAULT_PACKET_LIMIT;
 
     /**
      * Thread running flag.
      */
-    protected boolean running = true;
+    private boolean running = true;
 
     /**
      * Initializes listener thread.

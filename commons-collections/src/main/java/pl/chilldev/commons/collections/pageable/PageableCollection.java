@@ -23,12 +23,12 @@ public class PageableCollection<Type> implements Iterable<Type>
     /**
      * Initial page request.
      */
-    protected Pageable request;
+    private Pageable request;
 
     /**
      * Data source for paged results.
      */
-    protected Function<Pageable, Slice<? extends Type>> source;
+    private Function<Pageable, Slice<? extends Type>> source;
 
     /**
      * Initializes collection for given starting point.

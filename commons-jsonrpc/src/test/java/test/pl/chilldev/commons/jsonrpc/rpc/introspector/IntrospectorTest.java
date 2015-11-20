@@ -322,7 +322,7 @@ public class IntrospectorTest
         );
     }
 
-    protected Dispatcher<IntrospectorTest.TestService> buildDispatcher()
+    private Dispatcher<IntrospectorTest.TestService> buildDispatcher()
     {
         Introspector introspector = Introspector.createDefault();
         Dispatcher<IntrospectorTest.TestService> dispatcher = new Dispatcher<>();

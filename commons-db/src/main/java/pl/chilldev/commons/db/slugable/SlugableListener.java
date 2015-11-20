@@ -28,7 +28,7 @@ public class SlugableListener
      * Slugifier to be used to generate slugs.
      */
     @Inject
-    protected Slugifier slugifier;
+    private Slugifier slugifier;
 
     /**
      * Returns initializer.
@@ -40,7 +40,7 @@ public class SlugableListener
      *
      * @return Slugifier.
      */
-    protected Slugifier getSlugifier()
+    private Slugifier getSlugifier()
     {
         if (this.slugifier == null) {
             this.slugifier = new SimpleSlugifier();
@@ -56,7 +56,7 @@ public class SlugableListener
      * @param options Slug generation configuration.
      * @return Generated slug.
      */
-    protected String generateSlug(String[] texts, Slug options)
+    private String generateSlug(String[] texts, Slug options)
     {
         // acquire slugs generator
         Slugifier slugifier = this.getSlugifier();
@@ -71,7 +71,7 @@ public class SlugableListener
      * @param update Whether it's first save of slugs need to be only re-created.
      * @throws IllegalAccessException When accessing source field is impossible.
      */
-    protected void fillSlugs(Object slugable, boolean update)
+    private void fillSlugs(Object slugable, boolean update)
         throws
             IllegalAccessException
     {

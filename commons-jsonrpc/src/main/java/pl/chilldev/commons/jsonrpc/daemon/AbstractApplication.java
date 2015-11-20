@@ -33,7 +33,7 @@ public abstract class AbstractApplication
     /**
      * List of children threads.
      */
-    protected Collection<Listener<?>> threads = new HashSet<>();
+    private Collection<Listener<?>> threads = new HashSet<>();
 
     /**
      * Runs all listeners.

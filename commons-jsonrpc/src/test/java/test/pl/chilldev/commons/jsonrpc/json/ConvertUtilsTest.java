@@ -31,7 +31,7 @@ import pl.chilldev.commons.jsonrpc.json.ConvertUtils;
 public class ConvertUtilsTest
 {
     @Mock
-    protected Converter<Object, Object> strategy;
+    private Converter<Object, Object> strategy;
 
     @Test
     public void buildPage()
@@ -168,7 +168,7 @@ public class ConvertUtilsTest
 
 class TestBean
 {
-    protected String foo;
+    private String foo;
 
     public String getFoo()
     {

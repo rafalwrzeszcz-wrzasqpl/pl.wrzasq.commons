@@ -23,17 +23,17 @@ public class PageableIterator<Type> implements Iterator<Type>
     /**
      * Current result page.
      */
-    protected Slice<? extends Type> page;
+    private Slice<? extends Type> page;
 
     /**
      * Current page data.
      */
-    protected Iterator<? extends Type> data;
+    private Iterator<? extends Type> data;
 
     /**
      * Data source for paged results.
      */
-    protected Function<Pageable, Slice<? extends Type>> source;
+    private Function<Pageable, Slice<? extends Type>> source;
 
     /**
      * Initializes iterator with given starting point.
@@ -53,7 +53,7 @@ public class PageableIterator<Type> implements Iterator<Type>
      *
      * @param page Current page.
      */
-    protected void handlePage(Slice<? extends Type> page)
+    private void handlePage(Slice<? extends Type> page)
     {
         this.page = page;
         this.data = page.getContent().iterator();

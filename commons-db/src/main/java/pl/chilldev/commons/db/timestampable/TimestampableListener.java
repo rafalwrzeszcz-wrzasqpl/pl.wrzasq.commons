@@ -29,7 +29,7 @@ public class TimestampableListener
      * @param timestampType Type of operation to handler.
      * @throws IllegalAccessException When accessing source field is impossible.
      */
-    protected void generateTimestamps(Object timestampable, TimestampType timestampType)
+    private void generateTimestamps(Object timestampable, TimestampType timestampType)
         throws
             IllegalAccessException
     {

@@ -32,17 +32,17 @@ public class DispatcherIoHandler<ContextType extends ContextInterface> extends I
     /**
      * Logger.
      */
-    protected Logger logger = LoggerFactory.getLogger(DispatcherIoHandler.class);
+    private Logger logger = LoggerFactory.getLogger(DispatcherIoHandler.class);
 
     /**
      * Execution context.
      */
-    protected ContextType context;
+    private ContextType context;
 
     /**
      * JSON-RPC dispatcher.
      */
-    protected Dispatcher<? super ContextType> dispatcher;
+    private Dispatcher<? super ContextType> dispatcher;
 
     /**
      * Initializes JSON-RPC binding.

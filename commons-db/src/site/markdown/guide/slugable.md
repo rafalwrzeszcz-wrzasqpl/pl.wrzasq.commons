@@ -25,11 +25,11 @@ public class Entity
 {
     // your entity title
     @Column(nullable = false)
-    protected String name;
+    private String name;
 
     @Column(nullable = false)
     @Slug("name")
-    protected String slug;
+    private String slug;
 }
 ```
 
@@ -54,14 +54,14 @@ public class Entity
 {
     // your entity title
     @Column(nullable = false)
-    protected String name;
+    private String name;
 
     @Column(nullable = false)
-    protected Integer page;
+    private Integer page;
 
     @Column(nullable = false)
     @Slug({"name", "page"})
-    protected String slug;
+    private String slug;
 }
 ```
 
@@ -74,11 +74,11 @@ public class Entity
 {
     // your entity title
     @Column(nullable = false)
-    protected String name;
+    private String name;
 
     @Column(nullable = false)
     @Slug(value = "name", prefix = "pages/", suffix = ".xhtml")
-    protected String slug;
+    private String slug;
 }
 ```
 
@@ -91,11 +91,11 @@ public class Entity
 {
     // your entity title
     @Column(nullable = false)
-    protected String name;
+    private String name;
 
     @Column(nullable = false)
     @Slug(value = "name", updateable = false)
-    protected String slug;
+    private String slug;
 }
 ```
 

@@ -159,7 +159,7 @@ public class ParamsRetriever extends NamedParamsRetriever
      * @return Parsed UUID identifier.
      * @throws JSONRPC2Error On bad format or null value (JSONRPC2Error.INVALID_PARAMS).
      */
-    protected static UUID parseUuid(String param, String value, boolean allowNull)
+    private static UUID parseUuid(String param, String value, boolean allowNull)
         throws
             JSONRPC2Error
     {

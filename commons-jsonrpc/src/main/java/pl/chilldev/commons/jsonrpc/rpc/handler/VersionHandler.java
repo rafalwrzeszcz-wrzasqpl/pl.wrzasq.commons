@@ -35,7 +35,7 @@ public class VersionHandler
     /**
      * Application package data.
      */
-    protected Package metadata;
+    private Package metadata;
 
     /**
      * Default version initialization.

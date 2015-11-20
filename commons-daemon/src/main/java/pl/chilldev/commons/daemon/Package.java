@@ -42,7 +42,7 @@ public class Package
     /**
      * Package version.
      */
-    protected String version;
+    private String version;
 
     /**
      * Initialize with default properties resource.

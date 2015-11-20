@@ -71,22 +71,22 @@ public class Introspector
         /**
          * Target method.
          */
-        protected String method;
+        private String method;
 
         /**
          * Parameters types.
          */
-        protected Class<?>[] types;
+        private Class<?>[] types;
 
         /**
          * Parameters providers.
          */
-        protected Introspector.ParameterProviderWrapper<?>[] params;
+        private Introspector.ParameterProviderWrapper<?>[] params;
 
         /**
          * Response mapper.
          */
-        protected Function<Object, Object> mapper;
+        private Function<Object, Object> mapper;
 
         /**
          * Initializes handler for given method.
@@ -162,22 +162,22 @@ public class Introspector
     /**
      * Transparent response mapper.
      */
-    protected static final Function<Object, Object> IDENTITY_MAPPER = (Object value) -> value;
+    private static final Function<Object, Object> IDENTITY_MAPPER = (Object value) -> value;
 
     /**
      * Logger.
      */
-    protected Logger logger = LoggerFactory.getLogger(Introspector.class);
+    private Logger logger = LoggerFactory.getLogger(Introspector.class);
 
     /**
      * Parameters resolvers.
      */
-    protected Map<Class<?>, ParameterProvider<?>> resolvers = new HashMap<>();
+    private Map<Class<?>, ParameterProvider<?>> resolvers = new HashMap<>();
 
     /**
      * Results mappers.
      */
-    protected Map<Class<?>, Function<Object, Object>> mappers = new HashMap<>();
+    private Map<Class<?>, Function<Object, Object>> mappers = new HashMap<>();
 
     /**
      * Registers parameter resolver for given class.
@@ -275,7 +275,7 @@ public class Introspector
      * @return Parameter provider.
      * @throws IllegalArgumentException When a parameter cann't be resolved from JSON-RPC request.
      */
-    protected Introspector.ParameterProviderWrapper<?> createParameterProvider(Parameter parameter)
+    private Introspector.ParameterProviderWrapper<?> createParameterProvider(Parameter parameter)
     {
         // try to fetch provider by parameter type
         ParameterProvider<?> provider = this.resolvers.get(parameter.getType());
@@ -316,7 +316,7 @@ public class Introspector
      * @param <Type> Parameter type.
      * @return Wrapped parameter provider.
      */
-    protected <Type> Introspector.ParameterProviderWrapper<Type> createParameterProviderWrapper(
+    private <Type> Introspector.ParameterProviderWrapper<Type> createParameterProviderWrapper(
         ParameterProvider<? extends Type> provider,
         String name,
         boolean optional,

@@ -21,12 +21,12 @@ public class Shutdown extends Thread
     /**
      * Logger.
      */
-    protected Logger logger = LoggerFactory.getLogger(Shutdown.class);
+    private Logger logger = LoggerFactory.getLogger(Shutdown.class);
 
     /**
      * Application service.
      */
-    protected Daemon daemon;
+    private Daemon daemon;
 
     /**
      * Initializes reference.

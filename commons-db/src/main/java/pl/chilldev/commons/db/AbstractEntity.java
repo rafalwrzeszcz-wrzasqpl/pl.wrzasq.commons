@@ -49,7 +49,7 @@ public abstract class AbstractEntity
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
     @Column(length = AbstractEntity.LENGTH_UUID)
-    protected UUID id;
+    private UUID id;
 
     /**
      * Returns record identifier.

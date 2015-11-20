@@ -17,18 +17,18 @@ public class SlugableListenerTest
 {
     public class TestEntity
     {
-        protected String name;
+        private String name;
 
-        protected Integer value;
+        private Integer value;
 
         @Slug("name")
-        protected String updatable;
+        private String updatable;
 
         @Slug(value = "name", updatable = false)
-        protected String initial;
+        private String initial;
 
         @Slug(value = {"name", "value"}, prefix = "chilldev-", suffix = ".xhtml")
-        protected String combined;
+        private String combined;
     }
 
     @Test

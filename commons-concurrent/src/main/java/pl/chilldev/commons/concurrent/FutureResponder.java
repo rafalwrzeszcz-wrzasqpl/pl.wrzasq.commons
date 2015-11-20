@@ -20,12 +20,12 @@ public class FutureResponder<ResponseType> implements Callable<ResponseType>
     /**
      * Bound future.
      */
-    protected FutureTask<?> future;
+    private FutureTask<?> future;
 
     /**
      * Response to return.
      */
-    protected ResponseType response;
+    private ResponseType response;
 
     /**
      * Sets future to notify.

@@ -33,7 +33,7 @@ public interface VoidMethod<ContextType extends ContextInterface>
         /**
          * RPC method handler.
          */
-        protected VoidMethod<? super ContextType> method;
+        private VoidMethod<? super ContextType> method;
 
         /**
          * Initializes method wrapper.

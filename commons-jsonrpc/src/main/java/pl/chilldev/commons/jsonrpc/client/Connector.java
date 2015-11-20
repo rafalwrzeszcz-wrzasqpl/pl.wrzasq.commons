@@ -47,32 +47,32 @@ public class Connector
     /**
      * Logger.
      */
-    protected Logger logger = LoggerFactory.getLogger(Connector.class);
+    private Logger logger = LoggerFactory.getLogger(Connector.class);
 
     /**
      * Listening address.
      */
-    protected InetSocketAddress address;
+    private InetSocketAddress address;
 
     /**
      * Maximum size of JSON-RPC packet.
      */
-    protected int maxPacketSize = Connector.DEFAULT_PACKET_LIMIT;
+    private int maxPacketSize = Connector.DEFAULT_PACKET_LIMIT;
 
     /**
      * Connector itself.
      */
-    protected NioSocketConnector connector;
+    private NioSocketConnector connector;
 
     /**
      * JSON-RCP handler.
      */
-    protected RequestIoHandler handler;
+    private RequestIoHandler handler;
 
     /**
      * Current connection session.
      */
-    protected IoSession session;
+    private IoSession session;
 
     /**
      * Initializes connector with given configuration.
@@ -151,7 +151,7 @@ public class Connector
      * @return Method result.
      * @throws RpcCallException When execution fails.
      */
-    protected Object execute(JSONRPC2Request request)
+    private Object execute(JSONRPC2Request request)
         throws
             RpcCallException
     {
@@ -251,7 +251,7 @@ public class Connector
      *
      * @return Request ID.
      */
-    protected static long generateRequestId()
+    private static long generateRequestId()
     {
         return Connector.id++;
     }

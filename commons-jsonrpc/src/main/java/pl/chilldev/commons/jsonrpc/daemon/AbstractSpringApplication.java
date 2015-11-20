@@ -22,7 +22,7 @@ public abstract class AbstractSpringApplication extends AbstractApplication
     /**
      * Application context environment.
      */
-    protected AnnotationConfigApplicationContext context;
+    private AnnotationConfigApplicationContext context;
 
     /**
      * Runs all listeners.

@@ -25,7 +25,7 @@ public class DateTimeWriter
     /**
      * Assigned formatter.
      */
-    protected DateTimeFormatter formatter;
+    private DateTimeFormatter formatter;
 
     /**
      * Initializes writer with given date-time formatter.

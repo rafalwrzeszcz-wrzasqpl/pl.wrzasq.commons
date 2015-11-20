@@ -50,12 +50,12 @@ public class MessageBag
         /**
          * Message content.
          */
-        protected String content;
+        private String content;
 
         /**
          * Creation date.
          */
-        protected Date createdAt = new Date();
+        private Date createdAt = new Date();
 
         /**
          * Initializes message.
@@ -95,7 +95,7 @@ public class MessageBag
      * No need to use synchronized class as all external calls are synchronized by MessageBag class.
      * </p>
      */
-    protected Map<String, List<MessageBag.Message>> messages = new HashMap<>();
+    private Map<String, List<MessageBag.Message>> messages = new HashMap<>();
 
     /**
      * Adds message to container.
@@ -179,7 +179,7 @@ public class MessageBag
      * @param type Message type.
      * @return Messages list for given type.
      */
-    protected List<MessageBag.Message> ensureExists(String type)
+    private List<MessageBag.Message> ensureExists(String type)
     {
         return this.messages.computeIfAbsent(type, (String key) -> new ArrayList<MessageBag.Message>());
     }

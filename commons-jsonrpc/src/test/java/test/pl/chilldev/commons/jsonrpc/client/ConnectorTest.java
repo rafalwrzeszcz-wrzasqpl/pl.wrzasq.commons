@@ -38,21 +38,21 @@ import pl.chilldev.commons.jsonrpc.mina.RequestIoHandler;
 @RunWith(MockitoJUnitRunner.class)
 public class ConnectorTest
 {
-    protected InetSocketAddress address = new InetSocketAddress("127.0.0.1", 1234);
+    private InetSocketAddress address = new InetSocketAddress("127.0.0.1", 1234);
 
-    protected NioSocketConnector connector = new NioSocketConnector();
-
-    @Mock
-    protected RequestIoHandler handler;
+    private NioSocketConnector connector = new NioSocketConnector();
 
     @Mock
-    protected FutureTask<JSONRPC2Response> future;
+    private RequestIoHandler handler;
 
     @Mock
-    protected ConnectFuture connectFuture;
+    private FutureTask<JSONRPC2Response> future;
 
     @Mock
-    protected IoSession session;
+    private ConnectFuture connectFuture;
+
+    @Mock
+    private IoSession session;
 
     @Test
     public void setMaxPacketSize()

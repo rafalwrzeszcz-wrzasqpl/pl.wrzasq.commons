@@ -21,7 +21,7 @@ public class Runner extends Thread
     /**
      * Logger.
      */
-    protected Logger logger = LoggerFactory.getLogger(Runner.class);
+    private Logger logger = LoggerFactory.getLogger(Runner.class);
 
     /**
      * Runs application.

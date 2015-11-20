@@ -35,7 +35,7 @@ public class IoServiceUtils
     /**
      * Key for codec chains.
      */
-    protected static final String CHAIN_CODEC = "codec";
+    private static final String CHAIN_CODEC = "codec";
 
     /**
      * Initializes I/O service for text protocols.

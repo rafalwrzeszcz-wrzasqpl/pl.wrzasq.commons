@@ -35,12 +35,12 @@ public class RequestIoHandler extends IoHandlerAdapter
     /**
      * Logger.
      */
-    protected Logger logger = LoggerFactory.getLogger(RequestIoHandler.class);
+    private Logger logger = LoggerFactory.getLogger(RequestIoHandler.class);
 
     /**
      * Received responses.
      */
-    protected Map<Object, FutureResponder<JSONRPC2Response>> responses = new HashMap<>();
+    private Map<Object, FutureResponder<JSONRPC2Response>> responses = new HashMap<>();
 
     /**
      * Generates response future.

@@ -57,7 +57,7 @@ public class IntrospectorTest
     }
 
     @Mock
-    protected Connector connector;
+    private Connector connector;
 
     @Captor
     private ArgumentCaptor<Map<String, Object>> captor;

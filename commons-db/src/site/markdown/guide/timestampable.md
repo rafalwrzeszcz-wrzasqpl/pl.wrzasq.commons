@@ -26,11 +26,11 @@ public class Entity
 {
     @Column(nullable = false)
     @Timestamp(TimestampType.CREATE)
-    protected OffsetDateTime createdAt;
+    private OffsetDateTime createdAt;
 
     @Column(nullable = false)
     @Timestamp({ TimestampType.CREATE, TimestampType.UPDATE })
-    protected OffsetDateTime updatedAt;
+    private OffsetDateTime updatedAt;
 }
 ```
 

@@ -2,7 +2,7 @@
 # This file is part of the ChillDev-Commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2014 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2014 - 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
 # Futures
@@ -38,9 +38,9 @@ import my.package.ResponseType;
 
 public class ServiceClient
 {
-    protected static long id;
-    protected Queue<RequestType> requests = new ConcurrentLinkedQueue<>();
-    protected Map<Object, FutureResponder<ResponseType>> responses = new HashMap<>();
+    private static long id;
+    private Queue<RequestType> requests = new ConcurrentLinkedQueue<>();
+    private Map<Object, FutureResponder<ResponseType>> responses = new HashMap<>();
 
     public FutureTask<ResponseType> execute(RequestType request)
     {

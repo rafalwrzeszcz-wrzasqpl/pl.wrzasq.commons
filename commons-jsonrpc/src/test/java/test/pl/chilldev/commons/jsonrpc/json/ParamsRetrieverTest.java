@@ -383,7 +383,7 @@ public class ParamsRetrieverTest
 
 class Bean
 {
-    protected String foo;
+    private String foo;
 
     public String getFoo()
     {

@@ -33,7 +33,7 @@ public interface ReturningMethod<ContextType extends ContextInterface>
         /**
          * RPC method handler.
          */
-        protected ReturningMethod<? super ContextType> method;
+        private ReturningMethod<? super ContextType> method;
 
         /**
          * Initializes method wrapper.

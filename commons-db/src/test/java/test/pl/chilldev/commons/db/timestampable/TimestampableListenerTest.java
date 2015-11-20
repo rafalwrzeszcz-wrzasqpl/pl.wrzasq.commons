@@ -21,13 +21,13 @@ public class TimestampableListenerTest
     public class TestEntity
     {
         @Timestamp(TimestampType.CREATE)
-        protected OffsetDateTime createdAt;
+        private OffsetDateTime createdAt;
 
         @Timestamp(TimestampType.UPDATE)
-        protected OffsetDateTime updatedAt;
+        private OffsetDateTime updatedAt;
 
         @Timestamp({ TimestampType.CREATE, TimestampType.UPDATE })
-        protected OffsetDateTime lastChangedAt;
+        private OffsetDateTime lastChangedAt;
     }
 
     @Test
