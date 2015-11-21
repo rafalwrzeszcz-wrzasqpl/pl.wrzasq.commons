@@ -69,6 +69,11 @@ public class Introspector
             Dispatcher.RequestHandler<ContextType>
     {
         /**
+         * Logger.
+         */
+        private Logger logger = LoggerFactory.getLogger(Introspector.RequestHandler.class);
+
+        /**
          * Target method.
          */
         private String method;
@@ -136,6 +141,8 @@ public class Introspector
                 try {
                     result = method.invoke(context, arguments);
                 } catch (InvocationTargetException error) {
+                    this.logger.error("Error executing \"{}\".", request.getMethod(), error);
+
                     // unfold real exception
                     throw error.getCause();
                 }
@@ -152,8 +159,7 @@ public class Introspector
                     throw (JSONRPC2Error) error;
                 } else {
                     throw JSONRPC2Error.INTERNAL_ERROR
-                        .appendMessage(": " + error.getMessage())
-                        .setData(error);
+                        .appendMessage(": " + error.getMessage());
                 }
             }
         }
