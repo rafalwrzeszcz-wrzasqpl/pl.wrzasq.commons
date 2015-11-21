@@ -295,8 +295,7 @@ public class IntrospectorTest
     @Test
     public void createDispatcher()
     {
-        Introspector introspector = Introspector.createDefault();
-        Dispatcher<IntrospectorTest.TestService> dispatcher = introspector.createDispatcher(
+        Dispatcher<IntrospectorTest.TestService> dispatcher = Introspector.DEFAULT_INTROSPECTOR.createDispatcher(
             IntrospectorTest.TestService.class
         );
 
@@ -324,10 +323,9 @@ public class IntrospectorTest
 
     private Dispatcher<IntrospectorTest.TestService> buildDispatcher()
     {
-        Introspector introspector = Introspector.createDefault();
         Dispatcher<IntrospectorTest.TestService> dispatcher = new Dispatcher<>();
 
-        introspector.register(IntrospectorTest.TestService.class, dispatcher);
+        Introspector.DEFAULT_INTROSPECTOR.register(IntrospectorTest.TestService.class, dispatcher);
 
         return dispatcher;
     }

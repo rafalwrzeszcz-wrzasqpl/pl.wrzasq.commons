@@ -47,9 +47,8 @@ public class DispatcherFactory
     public Dispatcher<ApiFacade> createDispatcher()
     {
         Dispatcher<ApiFacade> dispatcher = new Dispatcher<>();
-        Introspector introspector = Introspector.createDefault();
 
-        introspector.register(ApiFacade.class, dispatcher);
+        Introspector.DEFAULT_INTROSPECTOR.register(ApiFacade.class, dispatcher);
 
         // you can register owne method handlers
 
@@ -201,16 +200,15 @@ Ok, so we don't need to define the logic, all the errorneus and tedious work is 
 ```java
 import pl.chilldev.commons.jsonrpc.client.introspector.Introspector;
 
-Introspector introspector = Introspector.createDefault();
 // connector is an instance of pl.chilldev.commons.jsonrpc.client.Connector
-MyClient client = introspector.createClient(MyClient.class, connector);
+MyClient client = Introspector.DEFAULT_INTROSPECTOR.createClient(MyClient.class, connector);
 
 System.out.println(client.getName("test@localhost"));
 ```
 
 ## Parameters mappers
 
-By default all parameters are passed as-they-are to the JSON dumper and they dumped into JSON structure (all non-standard JSON types are dumped by using their `.toString()` method). Instances created with `Introspector.createDefault()` are also capable of handling `org.springframework.data.domain.Pageable` objects (they are dumped as three parameters for page number, page size and sorting criteria, the standard format supported by `commons-jsonrpc` stack. If you want to handle custom parameters in a different way, you can register own parameter mappers. A parameter mapper takes method parameter name, parameter value and current state of request params and is responsible for putting new parameter into the parameter map.
+By default all parameters are passed as-they-are to the JSON dumper and they dumped into JSON structure (all non-standard JSON types are dumped by using their `.toString()` method). `Introspector.DEFAULT_INTROSPECTOR` is also capable of handling `org.springframework.data.domain.Pageable` objects (they are dumped as three parameters for page number, page size and sorting criteria, the standard format supported by `commons-jsonrpc` stack. If you want to handle custom parameters in a different way, you can register own parameter mappers. A parameter mapper takes method parameter name, parameter value and current state of request params and is responsible for putting new parameter into the parameter map.
 
 ```java
 introspector.registerParameterMapper(
@@ -225,7 +223,7 @@ introspector.registerParameterMapper(
 
 ## Response type handlers
 
-It's also possible to handle custom response types. For example introspectors created with `Introspector.createDefault()` are capable of returning (apart of standard JSON types) also instances of `java.util.UUID` parsed with `UUID.fromString()` method. You can register your own function for handling custom types:
+It's also possible to handle custom response types. For example `Introspector.DEFAULT_INTROSPECTOR` is capable of returning (apart of standard JSON types) also instances of `java.util.UUID` parsed with `UUID.fromString()` method. You can register your own function for handling custom types:
 
 ```java
 introspector.registerResultHandler(

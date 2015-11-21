@@ -160,6 +160,11 @@ public class Introspector
     }
 
     /**
+     * Default introspector instance.
+     */
+    public static final Introspector DEFAULT_INTROSPECTOR = Introspector.createDefault();
+
+    /**
      * Transparent response mapper.
      */
     private static final Function<Object, Object> IDENTITY_MAPPER = (Object value) -> value;
@@ -352,7 +357,7 @@ public class Introspector
      *
      * @return Introspector.
      */
-    public static Introspector createDefault()
+    private static Introspector createDefault()
     {
         Introspector introspector = new Introspector();
 

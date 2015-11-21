@@ -174,6 +174,11 @@ public class Introspector
     }
 
     /**
+     * Default introspector instance.
+     */
+    public static final Introspector DEFAULT_INTROSPECTOR = Introspector.createDefault();
+
+    /**
      * Default parameter mapper.
      */
     private static final ParameterMapper<Object> DEFAULT_MAPPER
@@ -349,7 +354,7 @@ public class Introspector
      *
      * @return Introspector.
      */
-    public static Introspector createDefault()
+    private static Introspector createDefault()
     {
         Introspector introspector = new Introspector();
 

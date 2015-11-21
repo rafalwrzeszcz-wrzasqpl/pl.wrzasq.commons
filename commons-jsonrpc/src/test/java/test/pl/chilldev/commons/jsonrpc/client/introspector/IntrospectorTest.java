@@ -69,9 +69,7 @@ public class IntrospectorTest
             InstantiationException,
             RpcCallException
     {
-        Introspector introspector = Introspector.createDefault();
-
-        IntrospectorTest.TestClient client = introspector.createClient(
+        IntrospectorTest.TestClient client = Introspector.DEFAULT_INTROSPECTOR.createClient(
             IntrospectorTest.TestClient.class,
             this.connector
         ).newInstance();
@@ -88,9 +86,7 @@ public class IntrospectorTest
             InstantiationException,
             RpcCallException
     {
-        Introspector introspector = Introspector.createDefault();
-
-        IntrospectorTest.TestClient client = introspector.createClient(
+        IntrospectorTest.TestClient client = Introspector.DEFAULT_INTROSPECTOR.createClient(
             IntrospectorTest.TestClient.class,
             this.connector
         ).newInstance();
@@ -121,9 +117,7 @@ public class IntrospectorTest
         UUID id = UUID.randomUUID();
         Pageable request = new PageRequest(1, 2);
 
-        Introspector introspector = Introspector.createDefault();
-
-        IntrospectorTest.TestClient client = introspector.createClient(
+        IntrospectorTest.TestClient client = Introspector.DEFAULT_INTROSPECTOR.createClient(
             IntrospectorTest.TestClient.class,
             this.connector
         ).newInstance();
@@ -164,9 +158,7 @@ public class IntrospectorTest
         List<String> list = new ArrayList<>();
         list.add(value);
 
-        Introspector introspector = Introspector.createDefault();
-
-        IntrospectorTest.TestClient client = introspector.createClient(
+        IntrospectorTest.TestClient client = Introspector.DEFAULT_INTROSPECTOR.createClient(
             IntrospectorTest.TestClient.class,
             this.connector
         ).newInstance();
