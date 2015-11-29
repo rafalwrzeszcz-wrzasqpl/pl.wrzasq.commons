@@ -27,7 +27,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import pl.chilldev.commons.jsonrpc.client.Connector;
-import pl.chilldev.commons.jsonrpc.client.RpcCallException;
 import pl.chilldev.commons.jsonrpc.client.introspector.Introspector;
 import pl.chilldev.commons.jsonrpc.rpc.introspector.JsonRpcCall;
 import pl.chilldev.commons.jsonrpc.rpc.introspector.JsonRpcParam;
@@ -66,8 +65,7 @@ public class IntrospectorTest
     public void createClient()
         throws
             IllegalAccessException,
-            InstantiationException,
-            RpcCallException
+            InstantiationException
     {
         IntrospectorTest.TestClient client = Introspector.DEFAULT_INTROSPECTOR.createClient(
             IntrospectorTest.TestClient.class,
@@ -83,8 +81,7 @@ public class IntrospectorTest
     public void createClientNamed()
         throws
             IllegalAccessException,
-            InstantiationException,
-            RpcCallException
+            InstantiationException
     {
         IntrospectorTest.TestClient client = Introspector.DEFAULT_INTROSPECTOR.createClient(
             IntrospectorTest.TestClient.class,
@@ -111,8 +108,7 @@ public class IntrospectorTest
     public void createClientTypes()
         throws
             IllegalAccessException,
-            InstantiationException,
-            RpcCallException
+            InstantiationException
     {
         UUID id = UUID.randomUUID();
         Pageable request = new PageRequest(1, 2);
@@ -150,8 +146,7 @@ public class IntrospectorTest
     public void createClientNamedParam()
         throws
             IllegalAccessException,
-            InstantiationException,
-            RpcCallException
+            InstantiationException
     {
         String query = "foo";
         String value = "bar";

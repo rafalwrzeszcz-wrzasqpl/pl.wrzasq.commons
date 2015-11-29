@@ -119,8 +119,6 @@ public class Connector
      * @throws RpcCallException When execution fails.
      */
     public Object execute(String method)
-        throws
-            RpcCallException
     {
         long id = Connector.generateRequestId();
 
@@ -136,8 +134,6 @@ public class Connector
      * @throws RpcCallException When execution fails.
      */
     public Object execute(String method, Map<String, Object> params)
-        throws
-            RpcCallException
     {
         long id = Connector.generateRequestId();
 
@@ -152,8 +148,6 @@ public class Connector
      * @throws RpcCallException When execution fails.
      */
     private Object execute(JSONRPC2Request request)
-        throws
-            RpcCallException
     {
         // (re-)connect if needed
         if (this.session == null || !this.session.isConnected()) {

@@ -31,7 +31,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
 
 import pl.chilldev.commons.jsonrpc.client.Connector;
-import pl.chilldev.commons.jsonrpc.client.RpcCallException;
 import pl.chilldev.commons.jsonrpc.rpc.introspector.JsonRpcCall;
 import pl.chilldev.commons.jsonrpc.rpc.introspector.JsonRpcParam;
 
@@ -101,11 +100,8 @@ public class Introspector
          * @param connector TCP connector.
          * @param arguments Request parameters.
          * @return Response result.
-         * @throws RpcCallException When execution of remote call fails.
          */
         public Object execute(Connector connector, Object[] arguments)
-            throws
-                RpcCallException
         {
             Map<String, Object> params = new HashMap<>();
             for (int i = 0; i < arguments.length; ++i) {
@@ -162,12 +158,9 @@ public class Introspector
          * @param method Invoked method.
          * @param arguments Call-time arguments.
          * @return Execution result.
-         * @throws RpcCallException When execution of remote call fails.
          */
         @RuntimeType
         public Object execute(@Origin Method method, @AllArguments Object[] arguments)
-            throws
-                RpcCallException
         {
             return this.calls.get(method).execute(this.connector, arguments);
         }

@@ -10,7 +10,7 @@ package pl.chilldev.commons.jsonrpc.client;
 /**
  * RPC exception method fail details.
  */
-public class RpcCallException extends Exception
+public class RpcCallException extends RuntimeException
 {
     /**
      * Serializable class ID.

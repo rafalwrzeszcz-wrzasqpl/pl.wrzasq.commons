@@ -78,8 +78,7 @@ public class ConnectorTest
         throws
             InterruptedException,
             ExecutionException,
-            JSONRPC2Error,
-            RpcCallException
+            JSONRPC2Error
     {
         Connector connector = new Connector(this.connector, this.handler, this.address);
 
@@ -107,8 +106,7 @@ public class ConnectorTest
         throws
             InterruptedException,
             ExecutionException,
-            JSONRPC2Error,
-            RpcCallException
+            JSONRPC2Error
     {
         Connector connector = new Connector(this.connector, this.handler, this.address);
         Connector spy = Mockito.spy(connector);
@@ -135,8 +133,7 @@ public class ConnectorTest
         throws
             InterruptedException,
             ExecutionException,
-            JSONRPC2Error,
-            RpcCallException
+            JSONRPC2Error
     {
         Connector connector = new Connector(this.connector, this.handler, this.address);
         Connector spy = Mockito.spy(connector);
@@ -166,8 +163,7 @@ public class ConnectorTest
         throws
             InterruptedException,
             ExecutionException,
-            JSONRPC2Error,
-            RpcCallException
+            JSONRPC2Error
     {
         Connector connector = new Connector(this.connector, this.handler, this.address);
 
@@ -197,8 +193,7 @@ public class ConnectorTest
         throws
             InterruptedException,
             ExecutionException,
-            JSONRPC2Error,
-            RpcCallException
+            JSONRPC2Error
     {
         Connector connector = new Connector(this.connector, this.handler, this.address);
 
@@ -222,8 +217,7 @@ public class ConnectorTest
         throws
             InterruptedException,
             ExecutionException,
-            JSONRPC2Error,
-            RpcCallException
+            JSONRPC2Error
     {
         Connector connector = new Connector(this.connector, this.handler, this.address);
 
@@ -244,8 +238,7 @@ public class ConnectorTest
         throws
             InterruptedException,
             ExecutionException,
-            JSONRPC2Error,
-            RpcCallException
+            JSONRPC2Error
     {
         Connector connector = new Connector(this.connector, this.handler, this.address);
 

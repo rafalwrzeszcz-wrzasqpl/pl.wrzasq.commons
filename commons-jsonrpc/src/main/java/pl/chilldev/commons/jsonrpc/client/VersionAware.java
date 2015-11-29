@@ -26,9 +26,7 @@ public interface VersionAware
      * @throws RpcCallException When remote call fails.
      */
     @JsonRpcCall
-    String version()
-        throws
-            RpcCallException;
+    String version();
 
     /**
      * Returns service version.
