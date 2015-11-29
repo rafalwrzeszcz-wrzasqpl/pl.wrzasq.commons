@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Error;
@@ -51,7 +52,8 @@ public class IntrospectorTest
             String string,
             UUID uuid,
             @JsonRpcParam(optional = false, defaultValue = "5") Pageable pageable,
-            List<?> list
+            List<?> list,
+            Set<?> set
         )
             throws JSONRPC2Error;
 
@@ -63,7 +65,8 @@ public class IntrospectorTest
             @JsonRpcParam(defaultValue = "foo") String string,
             @JsonRpcParam(defaultNull = true) UUID uuid,
             @JsonRpcParam(defaultValue = "4") Pageable pageable,
-            @JsonRpcParam(defaultValue = "first") List<?> list
+            @JsonRpcParam(defaultValue = "first") List<?> list,
+            @JsonRpcParam(defaultValue = "single") Set<?> set
         );
 
         @JsonRpcCall
@@ -118,7 +121,8 @@ public class IntrospectorTest
                 Matchers.eq("foo"),
                 (UUID) Matchers.isNull(),
                 Matchers.isA(Pageable.class),
-                Matchers.isA(List.class)
+                Matchers.isA(List.class),
+                Matchers.isA(Set.class)
             )
         ).thenReturn(result);
 
@@ -218,6 +222,7 @@ public class IntrospectorTest
         params.put("uuid", UUID.randomUUID().toString());
         params.put("limit", 4);
         params.put("list", new ArrayList<String>());
+        params.put("set", new ArrayList<>());
 
         JSONRPC2Error error = new JSONRPC2Error(1, "test");
         Mockito.doThrow(error).when(this.context).test(
@@ -227,7 +232,8 @@ public class IntrospectorTest
             Matchers.eq("test"),
             Matchers.isA(UUID.class),
             Matchers.isA(Pageable.class),
-            Matchers.isA(List.class)
+            Matchers.isA(List.class),
+            Matchers.isA(Set.class)
         );
 
         JSONRPC2Request request = new JSONRPC2Request(
@@ -259,6 +265,7 @@ public class IntrospectorTest
         params.put("uuid", UUID.randomUUID().toString());
         params.put("limit", 4);
         params.put("list", new ArrayList<String>());
+        params.put("set", new ArrayList<String>());
 
         ClassCastException error = new ClassCastException();
         Mockito.doThrow(error).when(this.context).test(
@@ -268,7 +275,8 @@ public class IntrospectorTest
             Matchers.eq("test"),
             Matchers.isA(UUID.class),
             Matchers.isA(Pageable.class),
-            Matchers.isA(List.class)
+            Matchers.isA(List.class),
+            Matchers.isA(Set.class)
         );
 
         JSONRPC2Request request = new JSONRPC2Request(

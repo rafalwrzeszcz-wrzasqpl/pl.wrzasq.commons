@@ -13,9 +13,11 @@ import java.lang.reflect.Parameter;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.function.Function;
 
@@ -426,6 +428,18 @@ public class Introspector
                 return optional
                     ? params.getOptList(name, Collections.singletonList(defaultValue))
                     : params.getList(name);
+            }
+        );
+
+        // Set retriever
+        introspector.registerParameterProvider(
+            Set.class,
+            (String name, ParamsRetriever params, boolean optional, String defaultValue) -> {
+                return new HashSet<>(
+                    optional
+                        ? params.getOptList(name, Collections.singletonList(defaultValue))
+                        : params.getList(name)
+                );
             }
         );
 
