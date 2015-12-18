@@ -29,7 +29,7 @@
 <a class="jxr_linenumber" name="L21" href="#L21">21</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L22" href="#L22">22</a>  <em class="jxr_javadoccomment">     * Logger.</em>
 <a class="jxr_linenumber" name="L23" href="#L23">23</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>      <strong class="jxr_keyword">protected</strong> Logger logger = LoggerFactory.getLogger(Runner.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>      <strong class="jxr_keyword">private</strong> Logger logger = LoggerFactory.getLogger(Runner.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L25" href="#L25">25</a>  
 <a class="jxr_linenumber" name="L26" href="#L26">26</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>  <em class="jxr_javadoccomment">     * Runs application.</em>
@@ -53,9 +53,9 @@
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>  
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>              <em class="jxr_comment">// schedule shutdown hook for daemon cleanup</em>
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>              Runtime.getRuntime().addShutdownHook(<strong class="jxr_keyword">new</strong> Shutdown(daemon));
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>          <em class="jxr_comment">//CHECKSTYLE:OFF: IllegalCatchCheck</em>
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>              <em class="jxr_comment">//CHECKSTYLE:OFF: IllegalCatchCheck</em>
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>          } <strong class="jxr_keyword">catch</strong> (Throwable error) {
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>          <em class="jxr_comment">//CHECKSTYLE:ON: IllegalCatchCheck</em>
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>              <em class="jxr_comment">//CHECKSTYLE:ON: IllegalCatchCheck</em>
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>              <strong class="jxr_keyword">this</strong>.logger.error(<span class="jxr_string">"Fatal error {}."</span>, error.getMessage(), error);
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>  
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> RuntimeException(

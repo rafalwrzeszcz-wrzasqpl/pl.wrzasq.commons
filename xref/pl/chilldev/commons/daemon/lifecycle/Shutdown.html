@@ -29,12 +29,12 @@
 <a class="jxr_linenumber" name="L21" href="#L21">21</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L22" href="#L22">22</a>  <em class="jxr_javadoccomment">     * Logger.</em>
 <a class="jxr_linenumber" name="L23" href="#L23">23</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>      <strong class="jxr_keyword">protected</strong> Logger logger = LoggerFactory.getLogger(Shutdown.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>      <strong class="jxr_keyword">private</strong> Logger logger = LoggerFactory.getLogger(Shutdown.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L25" href="#L25">25</a>  
 <a class="jxr_linenumber" name="L26" href="#L26">26</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>  <em class="jxr_javadoccomment">     * Application service.</em>
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>      <strong class="jxr_keyword">protected</strong> Daemon daemon;
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>      <strong class="jxr_keyword">private</strong> Daemon daemon;
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>  
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>  <em class="jxr_javadoccomment">     * Initializes reference.</em>
@@ -56,9 +56,9 @@
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>              <strong class="jxr_keyword">this</strong>.daemon.stop();
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>              <strong class="jxr_keyword">this</strong>.daemon.destroy();
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>              <strong class="jxr_keyword">this</strong>.logger.trace(<span class="jxr_string">"Good bye!"</span>);
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>          <em class="jxr_comment">//CHECKSTYLE:OFF: IllegalCatchCheck</em>
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>              <em class="jxr_comment">//CHECKSTYLE:OFF: IllegalCatchCheck</em>
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>          } <strong class="jxr_keyword">catch</strong> (Throwable error) {
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>          <em class="jxr_comment">//CHECKSTYLE:ON: IllegalCatchCheck</em>
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>              <em class="jxr_comment">//CHECKSTYLE:ON: IllegalCatchCheck</em>
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>              <strong class="jxr_keyword">this</strong>.logger.error(<span class="jxr_string">"Error while stopping dameon {}."</span>, error.getMessage(), error);
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>          }
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>      }

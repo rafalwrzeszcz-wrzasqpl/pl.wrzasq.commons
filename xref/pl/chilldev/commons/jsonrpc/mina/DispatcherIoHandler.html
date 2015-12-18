@@ -40,17 +40,17 @@
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>  <em class="jxr_javadoccomment">     * Logger.</em>
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>      <strong class="jxr_keyword">protected</strong> Logger logger = LoggerFactory.getLogger(DispatcherIoHandler.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>      <strong class="jxr_keyword">private</strong> Logger logger = LoggerFactory.getLogger(DispatcherIoHandler.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>  
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>  <em class="jxr_javadoccomment">     * Execution context.</em>
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>      <strong class="jxr_keyword">protected</strong> ContextType context;
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>      <strong class="jxr_keyword">private</strong> ContextType context;
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>  
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment">     * JSON-RPC dispatcher.</em>
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>      <strong class="jxr_keyword">protected</strong> Dispatcher&lt;? <strong class="jxr_keyword">super</strong> ContextType&gt; dispatcher;
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>      <strong class="jxr_keyword">private</strong> Dispatcher&lt;? <strong class="jxr_keyword">super</strong> ContextType&gt; dispatcher;
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>  
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>  <em class="jxr_javadoccomment">     * Initializes JSON-RPC binding.</em>
@@ -102,9 +102,9 @@
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>              <em class="jxr_comment">// dispatch it</em>
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>              <strong class="jxr_keyword">try</strong> {
 <a class="jxr_linenumber" name="L96" href="#L96">96</a>                  response = <strong class="jxr_keyword">this</strong>.dispatcher.dispatch(request, <strong class="jxr_keyword">this</strong>.context);
-<a class="jxr_linenumber" name="L97" href="#L97">97</a>              <em class="jxr_comment">//CHECKSTYLE:OFF: IllegalCatchCheck</em>
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>                  <em class="jxr_comment">//CHECKSTYLE:OFF: IllegalCatchCheck</em>
 <a class="jxr_linenumber" name="L98" href="#L98">98</a>              } <strong class="jxr_keyword">catch</strong> (Throwable error) {
-<a class="jxr_linenumber" name="L99" href="#L99">99</a>              <em class="jxr_comment">//CHECKSTYLE:ON: IllegalCatchCheck</em>
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>                  <em class="jxr_comment">//CHECKSTYLE:ON: IllegalCatchCheck</em>
 <a class="jxr_linenumber" name="L100" href="#L100">100</a>                 <em class="jxr_comment">// we DO WANT to catch all exceptions to avoid listener thread to die</em>
 <a class="jxr_linenumber" name="L101" href="#L101">101</a>                 <strong class="jxr_keyword">this</strong>.logger.error(<span class="jxr_string">"Internal error."</span>, error);
 <a class="jxr_linenumber" name="L102" href="#L102">102</a>                 response = <strong class="jxr_keyword">new</strong> JSONRPC2Response(

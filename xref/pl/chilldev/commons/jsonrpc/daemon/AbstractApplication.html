@@ -41,7 +41,7 @@
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>  <em class="jxr_javadoccomment">     * List of children threads.</em>
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>      <strong class="jxr_keyword">protected</strong> Collection&lt;Listener&gt; threads = <strong class="jxr_keyword">new</strong> HashSet&lt;&gt;();
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>      <strong class="jxr_keyword">private</strong> Collection&lt;Listener&lt;?&gt;&gt; threads = <strong class="jxr_keyword">new</strong> HashSet&lt;&gt;();
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>  
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>  <em class="jxr_javadoccomment">     * Runs all listeners.</em>
@@ -50,13 +50,13 @@
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> start()
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>      {
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>          <em class="jxr_comment">// running threads</em>
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>          <strong class="jxr_keyword">for</strong> (Listener thread : <strong class="jxr_keyword">this</strong>.buildListeners()) {
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>          <strong class="jxr_keyword">for</strong> (Listener&lt;?&gt; thread : <strong class="jxr_keyword">this</strong>.buildListeners()) {
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>              <strong class="jxr_keyword">try</strong> {
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>                  thread.start();
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>                  <strong class="jxr_keyword">this</strong>.threads.add(thread);
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>              <em class="jxr_comment">//CHECKSTYLE:OFF: IllegalCatchCheck</em>
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>                  <em class="jxr_comment">//CHECKSTYLE:OFF: IllegalCatchCheck</em>
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>              } <strong class="jxr_keyword">catch</strong> (Throwable error) {
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>              <em class="jxr_comment">//CHECKSTYLE:ON: IllegalCatchCheck</em>
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>                  <em class="jxr_comment">//CHECKSTYLE:ON: IllegalCatchCheck</em>
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>                  <strong class="jxr_keyword">this</strong>.logger.error(
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>                      <span class="jxr_string">"Not starting \&quot;{}\&quot; because of {}."</span>,
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>                      thread.getName(),
@@ -155,11 +155,11 @@
 <a class="jxr_linenumber" name="L147" href="#L147">147</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">abstract</strong> String getDaemonVersion();
 <a class="jxr_linenumber" name="L148" href="#L148">148</a> 
 <a class="jxr_linenumber" name="L149" href="#L149">149</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L150" href="#L150">150</a> <em class="jxr_javadoccomment">     * Retruns collection of listeners (not started, but instantiated).</em>
+<a class="jxr_linenumber" name="L150" href="#L150">150</a> <em class="jxr_javadoccomment">     * Returns collection of listeners (not started, but instantiated).</em>
 <a class="jxr_linenumber" name="L151" href="#L151">151</a> <em class="jxr_javadoccomment">     *</em>
 <a class="jxr_linenumber" name="L152" href="#L152">152</a> <em class="jxr_javadoccomment">     * @return Collection of listeners to be started by the daemon.</em>
 <a class="jxr_linenumber" name="L153" href="#L153">153</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L154" href="#L154">154</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">abstract</strong> Collection&lt;Listener&gt; buildListeners();
+<a class="jxr_linenumber" name="L154" href="#L154">154</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">abstract</strong> Collection&lt;Listener&lt;?&gt;&gt; buildListeners();
 <a class="jxr_linenumber" name="L155" href="#L155">155</a> }
 </pre>
 <hr/>
