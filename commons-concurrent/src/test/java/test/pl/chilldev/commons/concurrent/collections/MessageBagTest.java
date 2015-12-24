@@ -2,17 +2,18 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2014 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2014 - 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.chilldev.commons.concurrent.collections;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import java.time.Instant;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 import pl.chilldev.commons.concurrent.collections.MessageBag;
 
@@ -28,25 +29,25 @@ public class MessageBagTest
 
         MessageBag messages = new MessageBag();
 
-        Date start = new Date();
+        Instant start = Instant.now();
         messages.addMessage(key, value);
-        Date end = new Date();
+        Instant end = Instant.now();
 
         MessageBag.Message message = messages.getMessages(key).get(0);
-        Date createdAt = message.getCreatedAt();
+        Instant createdAt = message.getCreatedAt();
 
-        assertEquals(
+        Assert.assertEquals(
             "MessageBag.addMessage() should create internally message with defined content.",
             value,
             message.getContent()
         );
-        assertFalse(
+        Assert.assertFalse(
             "MessageBag.Message constructor should initialize message with current date.",
-            createdAt.before(start)
+            createdAt.isBefore(start)
         );
-        assertFalse(
+        Assert.assertFalse(
             "MessageBag.Message constructor should initialize message with current date.",
-            createdAt.after(end)
+            createdAt.isAfter(end)
         );
     }
 
@@ -55,11 +56,11 @@ public class MessageBagTest
     {
         MessageBag messages = new MessageBag();
 
-        assertFalse("MessageBag.hasMessages() should return overall state of the container.", messages.hasMessages());
+        Assert.assertFalse("MessageBag.hasMessages() should return overall state of the container.", messages.hasMessages());
 
         messages.addMessage("foo", "bar");
 
-        assertTrue("MessageBag.hasMessages() should return overall state of the container.", messages.hasMessages());
+        Assert.assertTrue("MessageBag.hasMessages() should return overall state of the container.", messages.hasMessages());
     }
 
     @Test
@@ -70,22 +71,22 @@ public class MessageBagTest
 
         MessageBag messages = new MessageBag();
 
-        assertFalse(
+        Assert.assertFalse(
             "MessageBag.hasMessages(type) should return state of the container for given message type.",
             messages.hasMessages(key)
         );
-        assertFalse(
+        Assert.assertFalse(
             "MessageBag.hasMessages(type) should return state of the container for given message type.",
             messages.hasMessages(otherKey)
         );
 
         messages.addMessage(key, "bar");
 
-        assertTrue(
+        Assert.assertTrue(
             "MessageBag.hasMessages(type) should return state of the container for given message type.",
             messages.hasMessages(key)
         );
-        assertFalse(
+        Assert.assertFalse(
             "MessageBag.hasMessages(type) should return state of the container for given message type.",
             messages.hasMessages(otherKey)
         );
@@ -101,15 +102,15 @@ public class MessageBagTest
         messages.addMessage(key, value);
 
         List<MessageBag.Message> list = messages.getMessages(key);
-        assertEquals("MessageBag.getMessages() should return list of messages of given type.", 1, list.size());
-        assertEquals(
+        Assert.assertEquals("MessageBag.getMessages() should return list of messages of given type.", 1, list.size());
+        Assert.assertEquals(
             "MessageBag.getMessages() should return list of messages of given type.",
             value,
             list.get(0).getContent()
         );
 
         list = messages.getMessages(key);
-        assertTrue("MessageBag.getMessages() should clean sotrage for given type.", list.isEmpty());
+        Assert.assertTrue("MessageBag.getMessages() should clean sotrage for given type.", list.isEmpty());
     }
 
     @Test
@@ -117,7 +118,7 @@ public class MessageBagTest
     {
         MessageBag messages = new MessageBag();
         List<MessageBag.Message> list = messages.getMessages("foo");
-        assertTrue(
+        Assert.assertTrue(
             "MessageBag.getMessages() should return empty list if there are no messages of given type.",
             list.isEmpty()
         );
@@ -133,23 +134,23 @@ public class MessageBagTest
         messages.addMessage(key, value);
 
         Map<String, List<MessageBag.Message>> map = messages.getAllMessages();
-        assertEquals(
+        Assert.assertEquals(
             "MessageBag.getAllMessages() should return list of all messages (groupped by type).",
             1,
             map.size()
         );
-        assertEquals(
+        Assert.assertEquals(
             "MessageBag.getAllMessages() should return list of all messages (groupped by type).",
             1,
             map.get(key).size()
         );
-        assertEquals(
+        Assert.assertEquals(
             "MessageBag.getAllMessages() should return list of all messages.",
             value,
             map.get(key).get(0).getContent()
         );
 
-        assertFalse("MessageBag.getAllMessages() should clean sotrage for given type.", messages.hasMessages());
+        Assert.assertFalse("MessageBag.getAllMessages() should clean sotrage for given type.", messages.hasMessages());
     }
 
     @Test
@@ -157,7 +158,7 @@ public class MessageBagTest
     {
         MessageBag messages = new MessageBag();
         Map<String, List<MessageBag.Message>> map = messages.getAllMessages();
-        assertTrue(
+        Assert.assertTrue(
             "MessageBag.getAllMessages() should return empty map if there are no messages.",
             map.isEmpty()
         );

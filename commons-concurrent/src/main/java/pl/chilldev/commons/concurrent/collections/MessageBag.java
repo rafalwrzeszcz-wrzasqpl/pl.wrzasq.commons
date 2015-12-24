@@ -9,8 +9,9 @@ package pl.chilldev.commons.concurrent.collections;
 
 import java.io.Serializable;
 
+import java.time.Instant;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +56,7 @@ public class MessageBag
         /**
          * Creation date.
          */
-        private Date createdAt = new Date();
+        private Instant createdAt = Instant.now();
 
         /**
          * Initializes message.
@@ -82,9 +83,9 @@ public class MessageBag
          *
          * @return Message creation date.
          */
-        public Date getCreatedAt()
+        public Instant getCreatedAt()
         {
-            return (Date) this.createdAt.clone();
+            return this.createdAt;
         }
     }
 
