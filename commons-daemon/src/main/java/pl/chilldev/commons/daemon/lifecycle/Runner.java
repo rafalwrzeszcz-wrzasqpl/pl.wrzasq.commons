@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2014 - 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2014 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.chilldev.commons.daemon.lifecycle;
@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Handles application shutdown.
  */
-public class Runner extends Thread
+public class Runner
 {
     /**
      * Logger.

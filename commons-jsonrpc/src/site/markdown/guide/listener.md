@@ -2,7 +2,7 @@
 # This file is part of the ChillDev-Commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2015 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
 # Listener
@@ -34,7 +34,6 @@ public class App
 
 You can tune server settings with:
 
--   `Listener.setSleepTick(int sleepTick)` - to change sleep interval for release checks (defaults to **0.5s**);
 -   `Listener.setMaxPacketSize(int maxPacketSize)` - to change maximum JSON-RPC packet size (defaults to **32MiB**).
 
 ## Execution context

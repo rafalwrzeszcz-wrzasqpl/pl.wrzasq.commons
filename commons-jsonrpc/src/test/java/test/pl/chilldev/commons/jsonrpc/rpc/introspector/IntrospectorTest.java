@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2015 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.chilldev.commons.jsonrpc.rpc.introspector;
@@ -91,6 +91,7 @@ public class IntrospectorTest
         params.put("uuid", UUID.randomUUID().toString());
         params.put("limit", 4);
         params.put("list", new ArrayList<String>());
+        params.put("set", new ArrayList<String>());
 
         JSONRPC2Request request = new JSONRPC2Request(
             "test",

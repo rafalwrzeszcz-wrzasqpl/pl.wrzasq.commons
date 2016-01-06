@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2015 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.chilldev.commons.jsonrpc.daemon;
@@ -13,71 +13,24 @@ import java.util.HashSet;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import pl.chilldev.commons.jsonrpc.daemon.AbstractApplication;
-import pl.chilldev.commons.jsonrpc.daemon.ContextInterface;
 import pl.chilldev.commons.jsonrpc.daemon.Listener;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AbstractApplicationTest
 {
-    public class TestListener extends Listener<ContextInterface>
-    {
-        private boolean fail;
-
-        public TestListener(String name, boolean fail)
-        {
-            super(name, null, null);
-            this.fail = fail;
-        }
-
-        public TestListener(String name)
-        {
-            this(name, true);
-        }
-
-        @Override
-        public void start()
-        {
-            if (this.fail) {
-                throw new IllegalThreadStateException("error");
-            }
-            super.start();
-        }
-
-        @Override
-        public void run()
-        {
-            try {
-                this.noop();
-            } catch (InterruptedException error) {
-                try {
-                    this.noop();
-                } catch (InterruptedException silence) {
-                }
-            }
-        }
-
-        public void noop()
-            throws
-                InterruptedException
-        {
-            while (true) {
-                Thread.sleep(500);
-            }
-        }
-    }
-
     public class Application extends AbstractApplication
     {
-        private Listener<?> thread;
+        private Listener<?> listener;
 
-        public Application(Listener<?> thread)
+        public Application(Listener<?> listener)
         {
-            this.thread = thread;
+            this.listener = listener;
         }
 
         @Override
@@ -95,9 +48,9 @@ public class AbstractApplicationTest
         @Override
         protected Collection<Listener<?>> buildListeners()
         {
-            Collection<Listener<?>> threads = new HashSet<>();
-            threads.add(this.thread);
-            return threads;
+            Collection<Listener<?>> listeners = new HashSet<>();
+            listeners.add(this.listener);
+            return listeners;
         }
     }
 
@@ -106,12 +59,16 @@ public class AbstractApplicationTest
 
     @Test
     public void start()
+        throws
+            InterruptedException
     {
         AbstractApplicationTest.Application app = new AbstractApplicationTest.Application(this.listener);
 
+        app.setAcceptorsCount(1);
+        app.setWorkersCount(1);
         app.start();
 
-        Mockito.verify(this.listener).start();
+        Mockito.verify(this.listener).start(Matchers.any(), Matchers.any());
 
         // just for code coverage
         app.init(null);
@@ -120,67 +77,55 @@ public class AbstractApplicationTest
 
     @Test
     public void startWithException()
+        throws
+            InterruptedException
     {
-        // impossible to mock, Thread.getName() is a final method
-        AbstractApplicationTest.TestListener listener = new AbstractApplicationTest.TestListener(
-            "test"
-        );
-        AbstractApplicationTest.Application app = new AbstractApplicationTest.Application(listener);
+        Mockito.when(this.listener.getName()).thenReturn("test");
+        Mockito.doThrow(InterruptedException.class).when(this.listener).start(Matchers.any(), Matchers.any());
+
+        AbstractApplicationTest.Application app = new AbstractApplicationTest.Application(this.listener);
 
         app.start();
     }
 
     @Test
     public void stop()
+        throws
+            InterruptedException
     {
         AbstractApplicationTest.Application app = new AbstractApplicationTest.Application(this.listener);
 
         app.start();
         app.stop();
 
-        Mockito.verify(this.listener).release();
+        Mockito.verify(this.listener).stop();
     }
 
     @Test
     public void stopWithInterruptedException()
+        throws
+            InterruptedException
     {
-        // impossible to mock, Thread.getName() and Thread.join() are final methods
-        AbstractApplicationTest.TestListener listener = new AbstractApplicationTest.TestListener(
-            "test",
-            false
-        );
-        AbstractApplicationTest.Application app = new AbstractApplicationTest.Application(listener);
-        final Thread thread = Thread.currentThread();
-        Thread closer = new Thread(new Runnable() {
-            @Override
-            public void run()
-            {
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException error) {
-                    System.exit(1);
-                }
-                thread.interrupt();
-            }
-        });
+        Mockito.when(this.listener.getName()).thenReturn("test");
+        Mockito.when(this.listener.stop()).thenThrow(InterruptedException.class);
+
+        AbstractApplicationTest.Application app = new AbstractApplicationTest.Application(this.listener);
 
         app.start();
-        closer.start();
         app.stop();
-
-        // second interrupt is needed to close fake listener thread
-        listener.interrupt();
     }
 
     @Test
     public void signal()
+        throws
+            InterruptedException
     {
         AbstractApplicationTest.Application app = new AbstractApplicationTest.Application(this.listener);
 
         app.start();
         app.signal();
 
-        Mockito.verify(this.listener, Mockito.times(2)).start();
-        Mockito.verify(this.listener).release();
+        Mockito.verify(this.listener, Mockito.times(2)).start(Matchers.any(), Matchers.any());
+        Mockito.verify(this.listener).stop();
     }
 }

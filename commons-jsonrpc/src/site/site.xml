@@ -3,7 +3,7 @@
 # This file is part of the ChillDev-Commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2015 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 <project
     xmlns="http://maven.apache.org/DECORATION/1.4.0"
@@ -17,7 +17,7 @@
         <menu name="Guide">
             <item name="JSON-RPC - dispatcher" href="guide/rpc.html"/>
             <item name="JSON-RPC - introspector" href="guide/introspector.html"/>
-            <item name="Mina I/O" href="guide/mina.html"/>
+            <item name="Netty I/O" href="guide/netty.html"/>
             <item name="Building listener" href="guide/listener.html"/>
             <item name="Building daemon" href="guide/daemon.html"/>
             <item name="Building client" href="guide/client.html"/>

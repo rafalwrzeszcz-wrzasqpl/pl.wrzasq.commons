@@ -3,7 +3,7 @@
 # This file is part of the ChillDev-Commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2015 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 <project
     xmlns="http://maven.apache.org/POM/4.0.0"
@@ -26,7 +26,7 @@
     <!-- project meta info -->
     <name>ChillDev Commons JSON-RPC</name>
     <url>https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-jsonrpc/</url>
-    <description>Bridge library that helps building JSON-RPC daemons using Apache MINA and JSON-RPC 2.0 Base libraries.</description>
+    <description>Bridge library that helps building JSON-RPC daemons using Netty and JSON-RPC 2.0 Base libraries.</description>
     <inceptionYear>2015</inceptionYear>
 
     <!-- plugins configuration -->
@@ -46,12 +46,6 @@
 
     <!-- project dependencies -->
     <dependencies>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>commons-concurrent</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>commons-daemon</artifactId>
@@ -78,15 +72,33 @@
         </dependency>
 
         <dependency>
-            <groupId>net.bytebuddy</groupId>
-            <artifactId>byte-buddy</artifactId>
-            <version>0.7.7</version>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-codec</artifactId>
+            <version>4.0.33.Final</version>
         </dependency>
 
         <dependency>
-            <groupId>org.apache.mina</groupId>
-            <artifactId>mina-core</artifactId>
-            <version>2.0.9</version>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-common</artifactId>
+            <version>4.0.33.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-handler</artifactId>
+            <version>4.0.33.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-transport</artifactId>
+            <version>4.0.33.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy</artifactId>
+            <version>0.7.7</version>
         </dependency>
 
         <dependency>
@@ -133,6 +145,13 @@
             <artifactId>spring-data-commons</artifactId>
             <version>1.11.1.RELEASE</version>
             <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.mina</groupId>
+            <artifactId>mina-core</artifactId>
+            <version>2.0.9</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>

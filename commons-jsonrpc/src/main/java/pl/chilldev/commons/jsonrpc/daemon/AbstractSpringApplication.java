@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2015 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.chilldev.commons.jsonrpc.daemon;
@@ -20,6 +20,24 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public abstract class AbstractSpringApplication extends AbstractApplication
 {
     /**
+     * Configures the application before it starts.
+     *
+     * <p>
+     * Defining beans of this type allows one to customize application behavior.
+     * </p>
+     */
+    @FunctionalInterface
+    public interface ApplicationConfigurer
+    {
+        /**
+         * Configures application properties.
+         *
+         * @param application Subject application.
+         */
+        void configureApplication(AbstractApplication application);
+    }
+
+    /**
      * Application context environment.
      */
     private AnnotationConfigApplicationContext context;
@@ -35,6 +53,17 @@ public abstract class AbstractSpringApplication extends AbstractApplication
         this.context = new AnnotationConfigApplicationContext();
         this.context.scan(this.getPackageToScan());
         this.context.refresh();
+
+        // configures current application
+        for (AbstractSpringApplication.ApplicationConfigurer configurer
+            : BeanFactoryUtils.beansOfTypeIncludingAncestors(
+                this.context,
+                AbstractSpringApplication.ApplicationConfigurer.class
+            ).values()
+        )
+        {
+            configurer.configureApplication(this);
+        }
 
         super.start();
     }

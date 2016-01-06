@@ -2,13 +2,16 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2015 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.chilldev.commons.jsonrpc.daemon;
 
 import java.util.Collection;
 import java.util.HashSet;
+
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
 
 import org.apache.commons.daemon.Daemon;
 import org.apache.commons.daemon.DaemonContext;
@@ -33,7 +36,47 @@ public abstract class AbstractApplication
     /**
      * List of children threads.
      */
-    private Collection<Listener<?>> threads = new HashSet<>();
+    private Collection<Listener<?>> listeners = new HashSet<>();
+
+    /**
+     * Acceptor threads.
+     */
+    private EventLoopGroup acceptors;
+
+    /**
+     * Worker threads.
+     */
+    private EventLoopGroup workers;
+
+    /**
+     * Acceptors thread count.
+     */
+    private int acceptorsCount;
+
+    /**
+     * Workers thread count.
+     */
+    private int workersCount;
+
+    /**
+     * Sets acceptors threads count.
+     *
+     * @param acceptorsCount Threads count.
+     */
+    public void setAcceptorsCount(int acceptorsCount)
+    {
+        this.acceptorsCount = acceptorsCount;
+    }
+
+    /**
+     * Sets workers threads count.
+     *
+     * @param workersCount Threads count.
+     */
+    public void setWorkersCount(int workersCount)
+    {
+        this.workersCount = workersCount;
+    }
 
     /**
      * Runs all listeners.
@@ -41,17 +84,20 @@ public abstract class AbstractApplication
     @Override
     public void start()
     {
+        this.acceptors = new NioEventLoopGroup(this.acceptorsCount);
+        this.workers = new NioEventLoopGroup(this.workersCount);
+
         // running threads
-        for (Listener<?> thread : this.buildListeners()) {
+        for (Listener<?> listener : this.buildListeners()) {
             try {
-                thread.start();
-                this.threads.add(thread);
+                listener.start(this.acceptors, this.workers);
+                this.listeners.add(listener);
                 //CHECKSTYLE:OFF: IllegalCatchCheck
             } catch (Throwable error) {
                 //CHECKSTYLE:ON: IllegalCatchCheck
                 this.logger.error(
                     "Not starting \"{}\" because of {}.",
-                    thread.getName(),
+                    listener.getName(),
                     error.getMessage(),
                     error
                 );
@@ -69,21 +115,24 @@ public abstract class AbstractApplication
     {
         this.logger.info("Stopping…");
 
-        // stop all threads
-        this.threads.forEach(Listener::release);
-
-        // wait for all threads
-        for (Thread thread : this.threads) {
+        // wait for all listener
+        for (Listener<?> listener : this.listeners) {
             try {
-                // this is to make sure that thread don't hang on some I/O
-                thread.interrupt();
-                thread.join();
+                listener.stop();
             } catch (InterruptedException error) {
-                this.logger.error("Had to interrupt while waiting for thread \"{}\".", thread.getName(), error);
+                this.logger.error("Had to interrupt while waiting for thread \"{}\".", listener.getName(), error);
             }
         }
         // just to clean references
-        this.threads.clear();
+        this.listeners.clear();
+
+        // close thread pools
+        if (this.acceptors != null) {
+            this.acceptors.shutdownGracefully();
+        }
+        if (this.workers != null) {
+            this.workers.shutdownGracefully();
+        }
     }
 
     /**

@@ -2,37 +2,40 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2015 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.chilldev.commons.jsonrpc.client;
 
 import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
+import java.util.concurrent.Future;
 
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Error;
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Request;
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Response;
 
-import org.apache.mina.core.future.ConnectFuture;
-import org.apache.mina.core.session.IoSession;
-import org.apache.mina.transport.socket.nio.NioSocketConnector;
+import io.netty.bootstrap.Bootstrap;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.socket.nio.NioSocketChannel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pl.chilldev.commons.jsonrpc.mina.IoServiceUtils;
-import pl.chilldev.commons.jsonrpc.mina.RequestIoHandler;
+import pl.chilldev.commons.jsonrpc.netty.RequestHandler;
+import pl.chilldev.commons.jsonrpc.netty.StringChannelInitializer;
 
 /**
  * Single TCP client.
  */
 public class Connector
     implements
-        IoServiceUtils.Configuration
+        StringChannelInitializer.Configuration
 {
     /**
      * Default packet size limit.
@@ -50,9 +53,9 @@ public class Connector
     private Logger logger = LoggerFactory.getLogger(Connector.class);
 
     /**
-     * Listening address.
+     * Destination address.
      */
-    private InetSocketAddress address;
+    private SocketAddress address;
 
     /**
      * Maximum size of JSON-RPC packet.
@@ -60,34 +63,36 @@ public class Connector
     private int maxPacketSize = Connector.DEFAULT_PACKET_LIMIT;
 
     /**
-     * Connector itself.
+     * Client connector bootstrap.
      */
-    private NioSocketConnector connector;
+    private Bootstrap bootstrap = new Bootstrap();
 
     /**
      * JSON-RCP handler.
      */
-    private RequestIoHandler handler;
+    private RequestHandler handler;
 
     /**
      * Current connection session.
      */
-    private IoSession session;
+    private Channel session;
 
     /**
      * Initializes connector with given configuration.
      *
-     * @param connector Socket connector.
+     * @param connectors Connectors thread pool.
      * @param handler JSON-RPC request handler.
-     * @param address Listening address.
+     * @param address Server address.
      */
-    public Connector(NioSocketConnector connector, RequestIoHandler handler, InetSocketAddress address)
+    public Connector(EventLoopGroup connectors, RequestHandler handler, SocketAddress address)
     {
-        this.connector = connector;
         this.handler = handler;
         this.address = address;
 
-        IoServiceUtils.initialize(this.connector, this.handler, this);
+        this.bootstrap
+            .group(connectors)
+            .channel(NioSocketChannel.class)
+            .handler(new StringChannelInitializer<Channel>(this.handler, this));
     }
 
     /**
@@ -150,16 +155,16 @@ public class Connector
     private Object execute(JSONRPC2Request request)
     {
         // (re-)connect if needed
-        if (this.session == null || !this.session.isConnected()) {
+        if (this.session == null || !this.session.isActive()) {
             this.reconnect(this.connect());
         }
 
         try {
             // first register request to listen for the response
-            FutureTask<JSONRPC2Response> future = this.handler.execute(request);
+            Future<JSONRPC2Response> future = this.handler.execute(request);
 
             // send request to server
-            this.session.write(request);
+            this.session.writeAndFlush(request);
 
             JSONRPC2Response response = future.get();
 
@@ -194,9 +199,9 @@ public class Connector
      *
      * @return Connection establishing future.
      */
-    public ConnectFuture connect()
+    public ChannelFuture connect()
     {
-        return this.connector.connect(this.address);
+        return this.bootstrap.connect(this.address);
     }
 
     /**
@@ -204,40 +209,34 @@ public class Connector
      *
      * @param future Connection establishing future.
      */
-    public void reconnect(ConnectFuture future)
+    public void reconnect(ChannelFuture future)
     {
-        this.session = future.awaitUninterruptibly().getSession();
-    }
-
-    /**
-     * Releases all resources.
-     */
-    public void dispose()
-    {
-        this.connector.dispose();
+        this.session = future.syncUninterruptibly().channel();
     }
 
     /**
      * Creates connector instance with default resources.
      *
+     * @param connectors Connectors thread pool.
      * @param address Server address.
      * @return Client connector.
      */
-    public static Connector create(InetSocketAddress address)
+    public static Connector create(EventLoopGroup connectors, SocketAddress address)
     {
-        return new Connector(new NioSocketConnector(), new RequestIoHandler(), address);
+        return new Connector(connectors, new RequestHandler(), address);
     }
 
     /**
      * Creates connector instance with default resources.
      *
+     * @param connectors Connectors thread pool.
      * @param host Listen host.
      * @param port Listen port.
      * @return Client connector.
      */
-    public static Connector create(String host, int port)
+    public static Connector create(EventLoopGroup connectors, String host, int port)
     {
-        return Connector.create(new InetSocketAddress(host, port));
+        return Connector.create(connectors, new InetSocketAddress(host, port));
     }
 
     /**

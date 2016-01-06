@@ -2,22 +2,27 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2015 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.chilldev.commons.jsonrpc.daemon;
 
-import java.io.IOException;
+import java.net.SocketAddress;
 
-import java.net.InetSocketAddress;
+import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandler;
+import io.netty.channel.ChannelOption;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
 
-import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
+import io.netty.handler.logging.LoggingHandler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pl.chilldev.commons.jsonrpc.mina.DispatcherIoHandler;
-import pl.chilldev.commons.jsonrpc.mina.IoServiceUtils;
+import pl.chilldev.commons.jsonrpc.netty.DispatcherHandler;
+import pl.chilldev.commons.jsonrpc.netty.StringChannelInitializer;
 import pl.chilldev.commons.jsonrpc.rpc.Dispatcher;
 
 /**
@@ -25,24 +30,29 @@ import pl.chilldev.commons.jsonrpc.rpc.Dispatcher;
  *
  * @param <ContextType> Execution context type.
  */
-public class Listener<ContextType extends ContextInterface> extends Thread
+public class Listener<ContextType extends ContextInterface>
     implements
-        IoServiceUtils.Configuration
+        StringChannelInitializer.Configuration
 {
-    /**
-     * Sleep timeout.
-     */
-    public static final int SLEEP_TICK = 500;
-
     /**
      * Default packet size limit.
      */
     public static final int DEFAULT_PACKET_LIMIT = 33554432;
 
     /**
+     * Netty logging handler.
+     */
+    public static final ChannelHandler LOGGING_HANDLER = new LoggingHandler(Listener.class);
+
+    /**
      * Logger.
      */
     private Logger logger = LoggerFactory.getLogger(Listener.class);
+
+    /**
+     * Listener name.
+     */
+    private String name;
 
     /**
      * API context.
@@ -57,22 +67,17 @@ public class Listener<ContextType extends ContextInterface> extends Thread
     /**
      * Execution interval.
      */
-    private int sleepTick = Listener.SLEEP_TICK;
+    private Channel channel;
 
     /**
      * Listening address.
      */
-    private InetSocketAddress address;
+    private SocketAddress address;
 
     /**
      * Maximum size of JSON-RPC packet.
      */
     private int maxPacketSize = Listener.DEFAULT_PACKET_LIMIT;
-
-    /**
-     * Thread running flag.
-     */
-    private boolean running = true;
 
     /**
      * Initializes listener thread.
@@ -83,19 +88,19 @@ public class Listener<ContextType extends ContextInterface> extends Thread
      */
     public Listener(String name, ContextType context, Dispatcher<? super ContextType> dispatcher)
     {
-        super(name);
+        this.name = name;
         this.context = context;
         this.dispatcher = dispatcher;
     }
 
     /**
-     * Sets sleep interval.
+     * Returns listener name.
      *
-     * @param sleepTick Sleep interval (in miliseconds).
+     * @return Listener name.
      */
-    public void setSleepTick(int sleepTick)
+    public String getName()
     {
-        this.sleepTick = sleepTick;
+        return this.name;
     }
 
     /**
@@ -103,7 +108,7 @@ public class Listener<ContextType extends ContextInterface> extends Thread
      *
      * @param address Listening address.
      */
-    public void setAddress(InetSocketAddress address)
+    public void setAddress(SocketAddress address)
     {
         this.address = address;
     }
@@ -133,19 +138,29 @@ public class Listener<ContextType extends ContextInterface> extends Thread
      * Sets shutdown flag.
      *
      * @return Self instance.
+     * @throws InterruptedException When the thread got interrupted when waiting for sockets to be closed.
      */
-    public Listener<ContextType> release()
+    public synchronized Listener<ContextType> stop()
+        throws
+            InterruptedException
     {
-        this.running = false;
+        if (this.channel != null) {
+            this.channel.close().sync();
+        }
 
         return this;
     }
 
     /**
      * Perform the thread loop.
+     *
+     * @param acceptors Acceptors thread pool.
+     * @param workers Workers thread pool.
+     * @throws InterruptedException When the thread got interrupted when waiting for sockets to be started.
      */
-    @Override
-    public void run()
+    public void start(EventLoopGroup acceptors, EventLoopGroup workers)
+        throws
+            InterruptedException
     {
         // check if there is any sense in running this listener
         if (this.address == null) {
@@ -153,33 +168,26 @@ public class Listener<ContextType extends ContextInterface> extends Thread
             return;
         }
 
-        NioSocketAcceptor acceptor = new NioSocketAcceptor();
-
-        try {
+        // this is to make sure that possible .stop() calls will wait until server is started
+        synchronized (this) {
             // network service configuration
-            IoServiceUtils.initialize(
-                acceptor,
-                new DispatcherIoHandler<ContextType>(this.context, this.dispatcher),
-                this
-            );
-            acceptor.setReuseAddress(true);
-            acceptor.bind(this.address);
+            ServerBootstrap bootstrap = new ServerBootstrap();
+            bootstrap
+                .group(acceptors, workers)
+                .channel(NioServerSocketChannel.class)
+                .option(ChannelOption.SO_REUSEADDR, true)
+                .handler(Listener.LOGGING_HANDLER)
+                .childHandler(
+                    new StringChannelInitializer<Channel>(
+                        new DispatcherHandler<ContextType>(this.context, this.dispatcher),
+                        this
+                    )
+                );
 
-            this.logger.info("Started.");
-
-            try {
-                while (this.running) {
-                    Thread.sleep(this.sleepTick);
-                }
-            } catch (InterruptedException error) {
-                // don't worry - it's what we want in fact
-            }
-        } catch (IOException error) {
-            this.logger.error("IO connection error: {}.", error.getMessage());
-        } finally {
-            // close connection
-            acceptor.unbind();
-            acceptor.dispose();
+            // start the server
+            this.channel = bootstrap.bind(this.address).sync().channel();
         }
+
+        this.logger.info("Started.");
     }
 }

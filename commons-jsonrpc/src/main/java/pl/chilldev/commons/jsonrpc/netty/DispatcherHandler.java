@@ -2,19 +2,19 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2015 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
-package pl.chilldev.commons.jsonrpc.mina;
+package pl.chilldev.commons.jsonrpc.netty;
 
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Error;
 import com.thetransactioncompany.jsonrpc2.JSONRPC2ParseException;
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Request;
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Response;
 
-import org.apache.mina.core.service.IoHandlerAdapter;
-import org.apache.mina.core.session.IdleStatus;
-import org.apache.mina.core.session.IoSession;
+import io.netty.channel.ChannelHandler;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,12 +27,13 @@ import pl.chilldev.commons.jsonrpc.rpc.Dispatcher;
  *
  * @param <ContextType> Service request context type (will be used as context for request handlers).
  */
-public class DispatcherIoHandler<ContextType extends ContextInterface> extends IoHandlerAdapter
+@ChannelHandler.Sharable
+public class DispatcherHandler<ContextType extends ContextInterface> extends ChannelInboundHandlerAdapter
 {
     /**
      * Logger.
      */
-    private Logger logger = LoggerFactory.getLogger(DispatcherIoHandler.class);
+    private Logger logger = LoggerFactory.getLogger(DispatcherHandler.class);
 
     /**
      * Execution context.
@@ -50,7 +51,7 @@ public class DispatcherIoHandler<ContextType extends ContextInterface> extends I
      * @param context Execution context.
      * @param dispatcher JSON-RPC dispatcher.
      */
-    public DispatcherIoHandler(ContextType context, Dispatcher<? super ContextType> dispatcher)
+    public DispatcherHandler(ContextType context, Dispatcher<? super ContextType> dispatcher)
     {
         super();
         this.context = context;
@@ -64,15 +65,15 @@ public class DispatcherIoHandler<ContextType extends ContextInterface> extends I
      * @param error Error.
      */
     @Override
-    public void exceptionCaught(IoSession session, Throwable error)
+    public void exceptionCaught(ChannelHandlerContext session, Throwable error)
     {
         this.logger.error(
             "Session ID {}: connection exteption.",
-            session.getId(),
+            session.name(),
             error
         );
-        session.write(new JSONRPC2Response(JSONRPC2Error.INTERNAL_ERROR, null));
-        session.close(false);
+        session.writeAndFlush(new JSONRPC2Response(JSONRPC2Error.INTERNAL_ERROR, null));
+        session.close();
     }
 
     /**
@@ -82,14 +83,13 @@ public class DispatcherIoHandler<ContextType extends ContextInterface> extends I
      * @param message Incomming message.
      */
     @Override
-    public void messageReceived(IoSession session, Object message)
+    public void channelRead(ChannelHandlerContext session, Object message)
     {
         JSONRPC2Response response = null;
 
         try {
             // parse the request
             JSONRPC2Request request = JSONRPC2Request.parse(message.toString());
-            this.logger.debug("Session ID {}: JSON request: {}.", session.getId(), request);
 
             // dispatch it
             try {
@@ -104,50 +104,12 @@ public class DispatcherIoHandler<ContextType extends ContextInterface> extends I
                     request.getID()
                 );
             }
-
-            this.logger.debug("JSON response: {}.", response);
         } catch (JSONRPC2ParseException error) {
             response = new JSONRPC2Response(JSONRPC2Error.PARSE_ERROR, null);
             this.logger.error("Could not parse JSON-RPC request.");
-            this.logger.debug("Session ID {}: malformed JSON request: {}.", session.getId(), message);
         }
 
         // send response to client
-        session.write(response);
-    }
-
-    /**
-     * Handles idle connections.
-     *
-     * @param session Current connection session.
-     * @param status Status.
-     */
-    @Override
-    public void sessionIdle(IoSession session, IdleStatus status)
-    {
-        this.logger.info("Session ID {}: closing idle connection.", session.getId());
-        session.close(true);
-    }
-
-    /**
-     * Handles new session logging.
-     *
-     * @param session Current connection session.
-     */
-    @Override
-    public void sessionOpened(IoSession session)
-    {
-        this.logger.info("New connection from {}, connection ID: {}.", session.getRemoteAddress(), session.getId());
-    }
-
-    /**
-     * Handles session closing.
-     *
-     * @param session Closed connection session.
-     */
-    @Override
-    public void sessionClosed(IoSession session)
-    {
-        this.logger.debug("Connection from {} closed, connection ID: {}.", session.getRemoteAddress(), session.getId());
+        session.writeAndFlush(response);
     }
 }

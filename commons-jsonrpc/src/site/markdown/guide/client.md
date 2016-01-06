@@ -2,19 +2,19 @@
 # This file is part of the ChillDev-Commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2015 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
 # Client handler
 
-Although `commons-jsonrpc` package mainly focuses on building services, it provides also base classes for building clients for those services. It's especially helpful because uses the same networking library - [**Apache MINA**](https://mina.apache.org). First of all it allows you to minimize dependencies and secondly - it brings asynchronicity to your client out of the box.
+Although `commons-jsonrpc` package mainly focuses on building services, it provides also base classes for building clients for those services. It's especially helpful because uses the same networking library - [**Netty**](http://netty.io). First of all it allows you to minimize dependencies and secondly - it brings asynchronicity to your client out of the box.
 
-Base class that encodes all calls as JSON-RPC requests is `pl.chilldev.commons.jsonrpc.mina.RequestIoHandler`. It returns future objects that are fullfilled once the response for given request is received.
+Base class that encodes all calls as JSON-RPC requests is `pl.chilldev.commons.jsonrpc.netty.RequestHandler`. It returns future objects that are fullfilled once the response for given request is received.
 
 ```java
 RequestIoHandler handler = new RequestIoHandler();
 
-// establish MINA connection
+// establish Netty connection
 // set handler as your connection handler
 
 // sends JSON-RPC request for `getVersion()` method without params
@@ -39,13 +39,13 @@ It provides `execute(String method)` method which executes method on RPC service
 ```java
 // constructor is quite verbose
 Connector connector = new Connector(
-    yourMinaNioSocketConnectorInstance,
+    yourNettyNioSocketConnectorBootstrap,
     yourRequestIoHandlerInstance,
     new InetSocketAddress("api.domain.com", 1234)
 );
 
 // but there is factory method
-// as in most cases you don't need to interact with MINA socket and request handler directly
+// as in most cases you don't need to interact with Netty socket and request handler directly
 // factory method creates default instances for you
 Connector connector = Connector.create(new InetSocketAddress("api.domain.com", 1234));
 

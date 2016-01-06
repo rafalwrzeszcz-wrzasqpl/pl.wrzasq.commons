@@ -2,17 +2,20 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2015 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.chilldev.commons.jsonrpc.daemon;
 
 import java.net.InetSocketAddress;
 
-import org.apache.mina.util.AvailablePortFinder;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
 
+import org.apache.mina.util.AvailablePortFinder;
+import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 import pl.chilldev.commons.jsonrpc.daemon.ContextInterface;
 import pl.chilldev.commons.jsonrpc.daemon.Listener;
@@ -20,6 +23,17 @@ import pl.chilldev.commons.jsonrpc.rpc.Dispatcher;
 
 public class ListenerTest
 {
+    private static EventLoopGroup acceptors = new NioEventLoopGroup();
+
+    private static EventLoopGroup workers = new NioEventLoopGroup();
+
+    @AfterClass
+    public static void tearDown()
+    {
+        ListenerTest.acceptors.shutdownGracefully();
+        ListenerTest.workers.shutdownGracefully();
+    }
+
     @Test
     public void setMaxPacketSize()
     {
@@ -27,12 +41,25 @@ public class ListenerTest
 
         Listener<ContextInterface> listener = new Listener<>("test", null, new Dispatcher<ContextInterface>());
         listener.setMaxPacketSize(maxPacketSize);
-        listener.setSleepTick(100); // just for code coverage :(
 
-        assertEquals(
+        Assert.assertEquals(
             "Listener.setMaxPacketSize() should set maximum size of JSON-RPC packet.",
             maxPacketSize,
             listener.getMaxPacketSize()
+        );
+    }
+
+    @Test
+    public void getName()
+    {
+        String name = "test";
+
+        Listener<ContextInterface> listener = new Listener<>(name, null, new Dispatcher<ContextInterface>());
+
+        Assert.assertEquals(
+            "Listener.getName() should return listener name.",
+            name,
+            listener.getName()
         );
     }
 
@@ -45,70 +72,24 @@ public class ListenerTest
 
         Listener<ContextInterface> listener = new Listener<>("test", null, new Dispatcher<ContextInterface>());
         listener.setAddress(new InetSocketAddress("127.0.0.1", port));
-        listener.start();
+        listener.start(ListenerTest.acceptors, ListenerTest.workers);
 
-        // this can take a while - any better way?
-        Thread.sleep(500);
+        Assert.assertFalse("Listener.run() should start socket acceptor on specified port.", AvailablePortFinder.available(port));
 
-        assertTrue("Listener.run() should start the listener thread.", listener.isAlive());
-        assertFalse("Listener.run() should start socket acceptor on specified port.", AvailablePortFinder.available(port));
-
-        listener.interrupt();
-        listener.join();
-
-        assertFalse("Listener.run() should stop the listener thread, when interrupted.", listener.isAlive());
-        assertTrue("Listener.run() should release socket port, when interrupted.", AvailablePortFinder.available(port));
-    }
-
-    @Test
-    public void runIOException()
-        throws
-            InterruptedException
-    {
-        int port = AvailablePortFinder.getNextAvailable(1024);
-
-        Listener<ContextInterface> listener = new Listener<>("test", null, new Dispatcher<ContextInterface>());
-        listener.setAddress(new InetSocketAddress("127.0.0.1", port));
-        listener.start();
-
-        // this can take a while - any better way?
-        Thread.sleep(500);
-
-        Listener<ContextInterface> listenerBusy = new Listener<>("test-busy", null, new Dispatcher<ContextInterface>());
-        listenerBusy.setAddress(new InetSocketAddress("127.0.0.1", port));
-        listenerBusy.start();
-
-        // this can take a while - any better way?
-        Thread.sleep(500);
-
-        assertTrue("Listener.run() should start the listener thread.", listener.isAlive());
-        assertFalse("Listener.run() should start socket acceptor on specified port.", AvailablePortFinder.available(port));
-        assertFalse("Listener.run() should fail if address is already in use.", listenerBusy.isAlive());
-
-        listener.interrupt();
-        listener.join();
-        // this is just for sure
-        listenerBusy.interrupt();
-        listenerBusy.join();
-
-        assertFalse("Listener.run() should stop the listener thread, when interrupted.", listener.isAlive());
-        assertTrue("Listener.run() should release socket port, when interrupted.", AvailablePortFinder.available(port));
+        listener.stop();
     }
 
     @Test
     public void runWithoutAddress()
+        throws
+            InterruptedException
     {
         Listener<ContextInterface> listener = new Listener<>("test", null, new Dispatcher<ContextInterface>());
-        listener.run();
-
-        assertFalse(
-            "Listener.run() should not run the thread if the listen address is not configured.",
-            listener.isAlive()
-        );
+        listener.start(ListenerTest.acceptors, ListenerTest.workers);
     }
 
     @Test
-    public void release()
+    public void stop()
         throws
             InterruptedException
     {
@@ -116,17 +97,18 @@ public class ListenerTest
 
         Listener<ContextInterface> listener = new Listener<>("test", null, new Dispatcher<ContextInterface>());
         listener.setAddress(new InetSocketAddress("127.0.0.1", port));
-        listener.start();
+        listener.start(ListenerTest.acceptors, ListenerTest.workers);
+        listener.stop();
 
-        // this can take a while - any better way?
-        Thread.sleep(500);
+        Assert.assertTrue("Listener.stop() should release socket port.", AvailablePortFinder.available(port));
+    }
 
-        assertTrue("Listener.run() should start the listener thread.", listener.isAlive());
-
-        listener.release();
-        Thread.sleep(500);
-
-        assertFalse("Listener.release() should stop the listener thread.", listener.isAlive());
-        assertTrue("Listener.release() should release socket port.", AvailablePortFinder.available(port));
+    @Test
+    public void stopWithoutChannel()
+        throws
+            InterruptedException
+    {
+        Listener<ContextInterface> listener = new Listener<>("test", null, new Dispatcher<ContextInterface>());
+        listener.stop();
     }
 }
