@@ -2,7 +2,7 @@
 # This file is part of the ChillDev-Commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2014 - 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2014 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
 ##
 
 /.classpath
@@ -14,11 +14,6 @@
 /commons-collections/.project
 /commons-collections/.settings
 /commons-collections/target
-
-/commons-concurrent/.classpath
-/commons-concurrent/.project
-/commons-concurrent/.settings
-/commons-concurrent/target
 
 /commons-daemon/.classpath
 /commons-daemon/.project

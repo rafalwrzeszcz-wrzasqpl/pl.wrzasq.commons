@@ -3,7 +3,7 @@
 # This file is part of the ChillDev-Commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2014 - 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2014 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 <project
     xmlns="http://maven.apache.org/POM/4.0.0"
@@ -127,7 +127,6 @@
     <!-- components of ChillDev-Commons project -->
     <modules>
         <module>commons-collections</module>
-        <module>commons-concurrent</module>
         <module>commons-daemon</module>
         <module>commons-db</module>
         <module>commons-jsonrpc</module>
