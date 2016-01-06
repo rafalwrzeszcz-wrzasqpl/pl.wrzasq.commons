@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2015 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.chilldev.commons.jsonrpc.client;
@@ -22,7 +22,7 @@ public class RpcCallException extends RuntimeException
      *
      * @param cause Root cause.
      */
-    public RpcCallException(Exception cause)
+    public RpcCallException(Throwable cause)
     {
         super(cause.getMessage());
     }

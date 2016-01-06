@@ -70,8 +70,8 @@ public class NetworkService
 
 **Note:** The snippet above is the standard implementation available out of the box with <a href="./listener.html">listener</a>.
 
-**Note:** `DispatcherIoHandler` handles all exceptions thrown during request processing (if not reported properly as error responses) and reports them as internal error to the client to avoid listener thread to die. Returned error has error code `-1` (see <a href="./rpc.html">error codes</a>).
+**Note:** `DispatcherHandler` handles all exceptions thrown during request processing (if not reported properly as error responses) and reports them as internal error to the client to avoid listener thread to die. Returned error has error code `-1` (see <a href="./rpc.html">error codes</a>).
 
-## `IoServiceUtils.Configuration`
+## `StringChannelInitializer.Configuration`
 
-The example is rather straightforward, despite some boilerplate code. But one thing may not be clear - the third parameter of `IoServiceUtils.initialize()`, the `IoServiceUtils.Configuration` interface implementation and `getMaxPacketSize()` method (yes, in fact it's just one thing!). One of the parameters `IoServiceUtils.initialize()` method set is maximum packet size. It does that based on configuration object passed as a thord argument, which has to implement `IoServiceUtils.Configuration` interface. All you need to do is simply implement the `getMaxPacketSize()` that will return your desired packet size limit.
+The example is rather straightforward, despite some boilerplate code. But one thing may not be clear - the second parameter of `StringChannelInitializer()` constructor, the `StringChannelInitializer.Configuration` interface implementation and `getMaxPacketSize()` method (yes, in fact it's just one thing!). One of the parameters `StringChannelInitializer()` constructor set is maximum packet size. It does that based on configuration object passed as a thord argument, which has to implement `StringChannelInitializer.Configuration` interface. All you need to do is simply implement the `getMaxPacketSize()` that will return your desired packet size limit.

@@ -2,7 +2,7 @@
 # This file is part of the ChillDev-Commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2015 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
 # Daemon application
@@ -88,6 +88,16 @@ public class App extends AbstractApplication
         // build list of listeners and return it - don't start them!
     }
 }
+```
+
+### Fine-tuning
+
+You can specify size of thread pools for both acceptors and workers threads by using `.setAcceptorsCount()` and `.setWorkersCount()` methods:
+
+```java
+AbstractApplication app = new YourApplicationImpl();
+app.setAcceptorsCount(5);
+app.setWorkersCount(3);
 ```
 
 ## Spring integration

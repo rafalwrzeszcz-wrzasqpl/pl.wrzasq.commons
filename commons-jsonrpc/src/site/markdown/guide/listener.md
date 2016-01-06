@@ -7,7 +7,7 @@
 
 # Listener
 
-If you just want to build own, stand-alone **JSON-RPC** daemon, `pl.chilldev.commons.jsonrpc.daemon.Listener` is all you need to bind your dispatcher to listen on the network address. Listener is a thread that is specified to listen for ongoing connection on given port and react on them. All you need to do is to start the thread with specified address to listen on:
+If you just want to build own, stand-alone **JSON-RPC** daemon, `pl.chilldev.commons.jsonrpc.daemon.Listener` is all you need to bind your dispatcher to listen on the network address. Listener is specified to listen for ongoing connection on given port and react on them. All you need to do is to start it with specified address to listen on:
 
 ```java
 import java.net.InetSocketAddress;
@@ -18,16 +18,14 @@ public class App
 {
     public static void main(String[] args)
     {
-        Listener<YourContextType> listener = new Listener<>("threadName", yourContext, yourDispatcher);
+        Listener<YourContextType> listener = new Listener<>("listenerName", yourContext, yourDispatcher);
         listener.setAddress(new InetSocketAddress("localhost", 1234));
         listener.start();
 
         // do your stuff
 
         // this tells listener to stop the server
-        listener.release();
-        // listener is just a java.lang.Thread instance, use standard Java API to wait for thread end
-        listener.join();
+        listener.stop();
     }
 }
 ```
@@ -40,7 +38,7 @@ You can tune server settings with:
 
 Ok, what's with this `YourContextType` class, finally? This is the execution context that will be passed to all RPC request handlers. This allows you to build service-agnostic request handlers and dispatchers - you can build universal service with multiple listeners running with same **JSON-RPC** dispatcher (and thus same request handlers) on different sockets. For example run same JSON-RPC service on shared server with different execution context for each project.
 
-Context is bound to `DispatcherIoHandler` instance (`Listener` builds own `DispatcherIoHandler` internally), not to the `Dispatcher` one, so the dispatcher (together with request handlers) can simply operate on resources of each contexts separately.
+Context is bound to `DispatcherHandler` instance (`Listener` builds own `DispatcherHandler` internally), not to the `Dispatcher` one, so the dispatcher (together with request handlers) can simply operate on resources of each of contexts separately.
 
 Your context need to implement interface `pl.chilldev.commons.jsonrpc.daemon.ContextInterface` (for now it's empty interface, just used as a marker):
 

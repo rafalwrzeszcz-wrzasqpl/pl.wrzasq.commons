@@ -187,7 +187,7 @@ public class Connector
             throw new RpcCallException(error);
         } catch (ExecutionException error) {
             this.logger.error("Error while executing asynchronous response handler: {}.", error.getMessage());
-            throw new RpcCallException(error);
+            throw new RpcCallException(error.getCause());
         } catch (JSONRPC2Error error) {
             this.logger.error("Server returned error response: {}.", error.getMessage());
             throw new RpcCallException(error);

@@ -87,8 +87,6 @@ public class ConnectorTest
     @Test
     public void connect()
     {
-        //TODO
-
         Connector connector = new Connector(this.connectors, this.handler, this.address);
 
         Whitebox.setInternalState(connector, "bootstrap", this.bootstrap);
