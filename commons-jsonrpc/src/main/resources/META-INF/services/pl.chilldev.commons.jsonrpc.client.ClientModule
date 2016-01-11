@@ -1,0 +1,9 @@
+##
+# This file is part of the ChillDev-Commons.
+#
+# @license http://mit-license.org/ The MIT license
+# @copyright 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
+##
+
+pl.chilldev.commons.jsonrpc.client.JavaModule
+pl.chilldev.commons.jsonrpc.client.SpringDataModule

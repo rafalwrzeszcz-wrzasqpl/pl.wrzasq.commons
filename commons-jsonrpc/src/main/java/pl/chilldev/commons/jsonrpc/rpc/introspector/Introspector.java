@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2015 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.chilldev.commons.jsonrpc.rpc.introspector;
@@ -11,14 +11,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
 import java.util.Map;
+import java.util.ServiceLoader;
 import java.util.Set;
-import java.util.UUID;
 import java.util.function.Function;
 
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Error;
@@ -28,12 +25,10 @@ import com.thetransactioncompany.jsonrpc2.JSONRPC2Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 import pl.chilldev.commons.jsonrpc.daemon.ContextInterface;
 import pl.chilldev.commons.jsonrpc.json.ParamsRetriever;
 import pl.chilldev.commons.jsonrpc.rpc.Dispatcher;
+import pl.chilldev.commons.jsonrpc.rpc.DispatcherModule;
 import pl.chilldev.commons.jsonrpc.rpc.handler.VersionHandler;
 
 /**
@@ -168,14 +163,14 @@ public class Introspector
     }
 
     /**
-     * Default introspector instance.
-     */
-    public static final Introspector DEFAULT_INTROSPECTOR = Introspector.createDefault();
-
-    /**
      * Transparent response mapper.
      */
     private static final Function<Object, Object> IDENTITY_MAPPER = (Object value) -> value;
+
+    /**
+     * Server modules SPIs.
+     */
+    private static Set<DispatcherModule> modules = new HashSet<>();
 
     /**
      * Logger.
@@ -191,6 +186,11 @@ public class Introspector
      * Results mappers.
      */
     private Map<Class<?>, Function<Object, Object>> mappers = new HashMap<>();
+
+    static {
+        ServiceLoader<DispatcherModule> loader = ServiceLoader.load(DispatcherModule.class);
+        loader.forEach(Introspector.modules::add);
+    }
 
     /**
      * Registers parameter resolver for given class.
@@ -361,108 +361,15 @@ public class Introspector
     }
 
     /**
-     * Creates introspector with handlers for common types.
+     * Creates introspector initializes with SPI services.
      *
      * @return Introspector.
      */
-    private static Introspector createDefault()
+    public static Introspector createDefault()
     {
         Introspector introspector = new Introspector();
 
-        // parameters retrievers
-
-        // boolean retriever
-        introspector.registerParameterProvider(
-            boolean.class,
-            (String name, ParamsRetriever params, boolean optional, String defaultValue) -> {
-                return optional
-                    ? params.getOptBoolean(name, defaultValue.toLowerCase(Locale.ROOT).equals("true"))
-                    : params.getBoolean(name);
-            }
-        );
-
-        // integer retriever
-        introspector.registerParameterProvider(
-            int.class,
-            (String name, ParamsRetriever params, boolean optional, String defaultValue) -> {
-                return optional
-                    ? params.getOptInt(name, Integer.parseInt(defaultValue))
-                    : params.getInt(name);
-            }
-        );
-
-        // long retriever
-        introspector.registerParameterProvider(
-            long.class,
-            (String name, ParamsRetriever params, boolean optional, String defaultValue) -> {
-                return optional
-                    ? params.getOptLong(name, Long.parseLong(defaultValue))
-                    : params.getLong(name);
-            }
-        );
-
-        // string retriever
-        introspector.registerParameterProvider(
-            String.class,
-            (String name, ParamsRetriever params, boolean optional, String defaultValue) -> {
-                return optional
-                    ? params.getOptString(name, defaultValue)
-                    : params.getString(name);
-            }
-        );
-
-        // UUID retriever
-        introspector.registerParameterProvider(
-            UUID.class,
-            (String name, ParamsRetriever params, boolean optional, String defaultValue) -> {
-                return optional
-                    ? params.getOptUuid(name)
-                    : params.getUuid(name);
-            }
-        );
-
-        // List retriever
-        introspector.registerParameterProvider(
-            List.class,
-            (String name, ParamsRetriever params, boolean optional, String defaultValue) -> {
-                return optional
-                    ? params.getOptList(name, Collections.singletonList(defaultValue))
-                    : params.getList(name);
-            }
-        );
-
-        // Set retriever
-        introspector.registerParameterProvider(
-            Set.class,
-            (String name, ParamsRetriever params, boolean optional, String defaultValue) -> {
-                return new HashSet<>(
-                    optional
-                        ? params.getOptList(name, Collections.singletonList(defaultValue))
-                        : params.getList(name)
-                );
-            }
-        );
-
-        // Spring Data paged request retriever
-        introspector.registerParameterProvider(
-            Pageable.class,
-            (String name, ParamsRetriever params, boolean optional, String defaultValue) -> {
-                return params.getPageable(Integer.parseInt(defaultValue));
-            }
-        );
-
-        // return types handlers
-
-        // Spring Data paged response handler
-        introspector.registerResultMapper(
-            Page.class,
-            (Page page) -> {
-                Map<String, Object> result = new HashMap<>();
-                result.put("count", page.getTotalElements());
-                result.put("records", page.getContent());
-                return result;
-            }
-        );
+        Introspector.modules.forEach((DispatcherModule module) -> module.initializeIntrospector(introspector));
 
         return introspector;
     }

@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2015 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.chilldev.commons.jsonrpc.client.introspector;
@@ -12,9 +12,11 @@ import java.lang.reflect.Parameter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+import java.util.ServiceLoader;
+import java.util.Set;
 import java.util.function.Function;
 
 import net.bytebuddy.ByteBuddy;
@@ -28,8 +30,7 @@ import net.bytebuddy.matcher.ElementMatchers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.springframework.data.domain.Pageable;
-
+import pl.chilldev.commons.jsonrpc.client.ClientModule;
 import pl.chilldev.commons.jsonrpc.client.Connector;
 import pl.chilldev.commons.jsonrpc.rpc.introspector.JsonRpcCall;
 import pl.chilldev.commons.jsonrpc.rpc.introspector.JsonRpcParam;
@@ -167,11 +168,6 @@ public class Introspector
     }
 
     /**
-     * Default introspector instance.
-     */
-    public static final Introspector DEFAULT_INTROSPECTOR = Introspector.createDefault();
-
-    /**
      * Default parameter mapper.
      */
     private static final ParameterMapper<Object> DEFAULT_MAPPER
@@ -181,6 +177,11 @@ public class Introspector
      * Transparent response handler.
      */
     private static final Function<Object, Object> IDENTITY_HANDLER = (Object value) -> value;
+
+    /**
+     * Client modules SPIs.
+     */
+    private static Set<ClientModule> modules = new HashSet<>();
 
     /**
      * Logger.
@@ -196,6 +197,11 @@ public class Introspector
      * Results handlers.
      */
     private Map<Class<?>, Function<Object, ?>> handlers = new HashMap<>();
+
+    static {
+        ServiceLoader<ClientModule> loader = ServiceLoader.load(ClientModule.class);
+        loader.forEach(Introspector.modules::add);
+    }
 
     /**
      * Registers parameter mapper for given class.
@@ -343,33 +349,15 @@ public class Introspector
     }
 
     /**
-     * Creates introspector with handlers for common types.
+     * Creates introspector initializes with SPI services.
      *
      * @return Introspector.
      */
-    private static Introspector createDefault()
+    public static Introspector createDefault()
     {
         Introspector introspector = new Introspector();
 
-        // parameters mappers
-
-        // Spring Data page request mapper
-        introspector.registerParameterMapper(
-            Pageable.class,
-            (String name, Pageable value, Map<String, Object> params) -> {
-                params.put("page", value.getPageNumber());
-                params.put("limit", value.getPageSize());
-                params.put("sort", value.getSort());
-            }
-        );
-
-        // response types handlers
-
-        // UUID handling
-        introspector.registerResultHandler(
-            UUID.class,
-            (Object response) -> UUID.fromString(response.toString())
-        );
+        Introspector.modules.forEach((ClientModule module) -> module.initializeIntrospector(introspector));
 
         return introspector;
     }

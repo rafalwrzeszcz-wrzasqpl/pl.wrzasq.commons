@@ -2,7 +2,7 @@
 # This file is part of the ChillDev-Commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2015 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
 # Service introspector
@@ -48,7 +48,7 @@ public class DispatcherFactory
     {
         Dispatcher<ApiFacade> dispatcher = new Dispatcher<>();
 
-        Introspector.DEFAULT_INTROSPECTOR.register(ApiFacade.class, dispatcher);
+        Introspector.createDefault().register(ApiFacade.class, dispatcher);
 
         // you can register owne method handlers
 
@@ -134,6 +134,34 @@ introspector.registerResultMapper(
 
 **Note:** You have to register results mapper before using introspector on your facade.
 
+## SPI
+
+To make your custom types handling reusable and automatically discovered, you can use `pl.chilldev.commons.jsonrpc.rpc.DispatcherModule` and register it as your **SPI** implementation. When your module is discovered by SPI loader, it will automatically be applied to every introspector created with `Introspector.createDefault()`. Module interface has just one method that is entry point for introspector initialization:
+
+```java
+class YourModule implements DispatcherModule
+{
+    @Override
+    public void initializeIntrospector(Introspector introspector)
+    {
+        introspector.registerParameterProvider(
+            YourType.class
+            (String name, ParamsRetriever params, boolean optional, String defaultValue) -> {
+                String value = optional ? params.getOptString(name, defaultValue) : params.getString(name);
+                return YourType::fromString(value);
+            }
+        );
+
+        introspector.registerResultMapper(
+            YourEntity.class,
+            (YourEntity entity) -> new YourTransferPojo(entity)
+        );
+    }
+}
+```
+
+And define it as your module implementation in `META-INF/services/pl.chilldev.commons.jsonrpc.rpc.DispatcherModule` file.
+
 # Client introspector
 
 Similar mechanism exists for the client-side classes. All you have to do is to define an interface (can be also an abstract class) the maps to service methods (you even use same annotations):
@@ -201,14 +229,15 @@ Ok, so we don't need to define the logic, all the errorneus and tedious work is 
 import pl.chilldev.commons.jsonrpc.client.introspector.Introspector;
 
 // connector is an instance of pl.chilldev.commons.jsonrpc.client.Connector
-MyClient client = Introspector.DEFAULT_INTROSPECTOR.createClient(MyClient.class, connector);
+Class<MyClient> clientType = Introspector.createDefault().createClient(MyClient.class, connector);
+MyClient client = clientType.newInstance();
 
 System.out.println(client.getName("test@localhost"));
 ```
 
 ## Parameters mappers
 
-By default all parameters are passed as-they-are to the JSON dumper and they dumped into JSON structure (all non-standard JSON types are dumped by using their `.toString()` method). `Introspector.DEFAULT_INTROSPECTOR` is also capable of handling `org.springframework.data.domain.Pageable` objects (they are dumped as three parameters for page number, page size and sorting criteria, the standard format supported by `commons-jsonrpc` stack. If you want to handle custom parameters in a different way, you can register own parameter mappers. A parameter mapper takes method parameter name, parameter value and current state of request params and is responsible for putting new parameter into the parameter map.
+By default all parameters are passed as-they-are to the JSON dumper and they dumped into JSON structure (all non-standard JSON types are dumped by using their `.toString()` method). `Introspector.createDefault()` is also capable of handling `org.springframework.data.domain.Pageable` objects (they are dumped as three parameters for page number, page size and sorting criteria, the standard format supported by `commons-jsonrpc` stack. If you want to handle custom parameters in a different way, you can register own parameter mappers. A parameter mapper takes method parameter name, parameter value and current state of request params and is responsible for putting new parameter into the parameter map.
 
 ```java
 introspector.registerParameterMapper(
@@ -223,7 +252,7 @@ introspector.registerParameterMapper(
 
 ## Response type handlers
 
-It's also possible to handle custom response types. For example `Introspector.DEFAULT_INTROSPECTOR` is capable of returning (apart of standard JSON types) also instances of `java.util.UUID` parsed with `UUID.fromString()` method. You can register your own function for handling custom types:
+It's also possible to handle custom response types. For example `Introspector.createDefault()` is capable of returning (apart of standard JSON types) also instances of `java.util.UUID` parsed with `UUID.fromString()` method. You can register your own function for handling custom types:
 
 ```java
 introspector.registerResultHandler(
@@ -231,3 +260,30 @@ introspector.registerResultHandler(
     (Object response) -> ParamsRetriever.OBJECT_MAPPER.convertValue(response, MyEntity.class)
 );
 ```
+
+## SPI
+
+The same way as for service introspector, client introspector can be also handled by SPI implementation. The flow is exactly the same - you have to define your module (even the entry point method is called the same), just instead of service introspector you have to initialize client introspector. The interface for client modules is `pl.chilldev.commons.jsonrpc.client.ClientModule`:
+
+```java
+class YourModule implements ClientModule
+{
+    @Override
+    public void initializeIntrospector(Introspector introspector)
+    {
+        introspector.registerParameterMapper(
+            UUID.class,
+            (String name, UUID value, Map<String, Object> params) -> {
+                params.put(name, value.toString());
+            }
+        );
+
+        introspector.registerResultHandler(
+            MyEntity.class,
+            (Object response) -> ParamsRetriever.OBJECT_MAPPER.convertValue(response, MyEntity.class)
+        );
+    }
+}
+```
+
+And define it as your module implementation in `META-INF/services/pl.chilldev.commons.jsonrpc.rpc.ClientModule` file.

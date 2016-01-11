@@ -7,12 +7,9 @@
 
 package test.pl.chilldev.commons.jsonrpc.rpc.introspector;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
 
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Error;
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Request;
@@ -22,17 +19,12 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-
 import pl.chilldev.commons.jsonrpc.daemon.ContextInterface;
+import pl.chilldev.commons.jsonrpc.json.ParamsRetriever;
 import pl.chilldev.commons.jsonrpc.rpc.Dispatcher;
 import pl.chilldev.commons.jsonrpc.rpc.introspector.Introspector;
 import pl.chilldev.commons.jsonrpc.rpc.introspector.JsonRpcCall;
@@ -45,32 +37,14 @@ public class IntrospectorTest
         extends ContextInterface
     {
         @JsonRpcCall
-        void test(
-            boolean bool,
-            int integer,
-            long longint,
-            String string,
-            UUID uuid,
-            @JsonRpcParam(optional = false, defaultValue = "5") Pageable pageable,
-            List<?> list,
-            Set<?> set
-        )
+        void test()
             throws JSONRPC2Error;
 
         @JsonRpcCall(name = "optional")
-        String testOptionals(
-            @JsonRpcParam(defaultValue = "false") boolean bool,
-            @JsonRpcParam(defaultValue = "123") int integer,
-            @JsonRpcParam(defaultValue = "123456789") long longint,
-            @JsonRpcParam(defaultValue = "foo") String string,
-            @JsonRpcParam(defaultNull = true) UUID uuid,
-            @JsonRpcParam(defaultValue = "4") Pageable pageable,
-            @JsonRpcParam(defaultValue = "first") List<?> list,
-            @JsonRpcParam(defaultValue = "single") Set<?> set
-        );
+        String testOptionals();
 
         @JsonRpcCall
-        Page<String> mapping(@JsonRpcParam(name = "boolean", optional = false) boolean bool);
+        void mapping(@JsonRpcParam(name = "boolean", optional = false) boolean bool);
 
         void nonRpc();
     }
@@ -84,14 +58,6 @@ public class IntrospectorTest
         Dispatcher<IntrospectorTest.TestService> dispatcher = this.buildDispatcher();
 
         Map<String, Object> params = new HashMap<>();
-        params.put("bool", true);
-        params.put("integer", 123);
-        params.put("longint", 123456789L);
-        params.put("string", "test");
-        params.put("uuid", UUID.randomUUID().toString());
-        params.put("limit", 4);
-        params.put("list", new ArrayList<String>());
-        params.put("set", new ArrayList<String>());
 
         JSONRPC2Request request = new JSONRPC2Request(
             "test",
@@ -115,16 +81,7 @@ public class IntrospectorTest
         Map<String, Object> params = new HashMap<>();
 
         Mockito.when(
-            this.context.testOptionals(
-                Matchers.eq(false),
-                Matchers.eq(123),
-                Matchers.eq(123456789L),
-                Matchers.eq("foo"),
-                (UUID) Matchers.isNull(),
-                Matchers.isA(Pageable.class),
-                Matchers.isA(List.class),
-                Matchers.isA(Set.class)
-            )
+            this.context.testOptionals()
         ).thenReturn(result);
 
         JSONRPC2Request request = new JSONRPC2Request(
@@ -146,15 +103,8 @@ public class IntrospectorTest
     {
         Dispatcher<IntrospectorTest.TestService> dispatcher = this.buildDispatcher();
 
-        List<String> data = new ArrayList<>();
-        data.add("Grześ");
-        data.add("Miłosz");
-
-        Page<String> result = new PageImpl<>(data, new PageRequest(0, 2), 5);
         Map<String, Object> params = new HashMap<>();
         params.put("boolean",  false);
-
-        Mockito.when(this.context.mapping(false)).thenReturn(result);
 
         JSONRPC2Request request = new JSONRPC2Request(
             "mapping",
@@ -162,50 +112,9 @@ public class IntrospectorTest
             1
         );
 
-        JSONRPC2Response response = dispatcher.dispatch(request, this.context);
+        dispatcher.dispatch(request, this.context);
 
-        Object output = response.getResult();
-        Assert.assertTrue(
-            "Introspector.register() should create handler that applies mapper for known result type.",
-            output instanceof Map
-        );
-
-        Map<?, ?> map = (Map<?, ?>) output;
-        Assert.assertTrue(
-            "Page<?> response mapper should set total records count key.",
-            map.containsKey("count")
-        );
-        Assert.assertTrue(
-            "Page<?> response mapper should set current page data key.",
-            map.containsKey("records")
-        );
-
-        Assert.assertEquals(
-            "Page<?> response mapper should set total number of records.",
-            5L,
-            map.get("count")
-        );
-
-        Object content = map.get("records");
-        Assert.assertTrue(
-            "Page<?> response mapper should set result records.",
-            content instanceof List
-        );
-
-        List<?> list = (List<?>) content;
-        Assert.assertEquals(
-            "Page<?> response mapper should put all result records into data list.",
-            2,
-            list.size()
-        );
-        Assert.assertTrue(
-            "Page<?> response mapper should put all result records into data list.",
-            list.contains("Grześ")
-        );
-        Assert.assertTrue(
-            "Page<?> response mapper should put all result records into data list.",
-            list.contains("Miłosz")
-        );
+        Mockito.verify(this.context).mapping(false);
     }
 
     @Test
@@ -216,26 +125,9 @@ public class IntrospectorTest
         Dispatcher<IntrospectorTest.TestService> dispatcher = this.buildDispatcher();
 
         Map<String, Object> params = new HashMap<>();
-        params.put("bool", true);
-        params.put("integer", 123);
-        params.put("longint", 123456789L);
-        params.put("string", "test");
-        params.put("uuid", UUID.randomUUID().toString());
-        params.put("limit", 4);
-        params.put("list", new ArrayList<String>());
-        params.put("set", new ArrayList<>());
 
         JSONRPC2Error error = new JSONRPC2Error(1, "test");
-        Mockito.doThrow(error).when(this.context).test(
-            Matchers.eq(true),
-            Matchers.eq(123),
-            Matchers.eq(123456789L),
-            Matchers.eq("test"),
-            Matchers.isA(UUID.class),
-            Matchers.isA(Pageable.class),
-            Matchers.isA(List.class),
-            Matchers.isA(Set.class)
-        );
+        Mockito.doThrow(error).when(this.context).test();
 
         JSONRPC2Request request = new JSONRPC2Request(
             "test",
@@ -259,26 +151,9 @@ public class IntrospectorTest
         Dispatcher<IntrospectorTest.TestService> dispatcher = this.buildDispatcher();
 
         Map<String, Object> params = new HashMap<>();
-        params.put("bool", true);
-        params.put("integer", 123);
-        params.put("longint", 123456789L);
-        params.put("string", "test");
-        params.put("uuid", UUID.randomUUID().toString());
-        params.put("limit", 4);
-        params.put("list", new ArrayList<String>());
-        params.put("set", new ArrayList<String>());
 
         ClassCastException error = new ClassCastException();
-        Mockito.doThrow(error).when(this.context).test(
-            Matchers.eq(true),
-            Matchers.eq(123),
-            Matchers.eq(123456789L),
-            Matchers.eq("test"),
-            Matchers.isA(UUID.class),
-            Matchers.isA(Pageable.class),
-            Matchers.isA(List.class),
-            Matchers.isA(Set.class)
-        );
+        Mockito.doThrow(error).when(this.context).test();
 
         JSONRPC2Request request = new JSONRPC2Request(
             "test",
@@ -298,24 +173,17 @@ public class IntrospectorTest
     {
         Introspector introspector = new Introspector();
 
-        introspector.register(IntrospectorTest.TestService.class, null);
+        introspector.register(IntrospectorTest.TestService.class, new Dispatcher<>());
     }
 
     @Test
     public void createDispatcher()
     {
-        Dispatcher<IntrospectorTest.TestService> dispatcher = Introspector.DEFAULT_INTROSPECTOR.createDispatcher(
+        Dispatcher<IntrospectorTest.TestService> dispatcher = Introspector.createDefault().createDispatcher(
             IntrospectorTest.TestService.class
         );
 
         Map<String, Object> params = new HashMap<>();
-        params.put("bool", true);
-        params.put("integer", 123);
-        params.put("longint", 123456789L);
-        params.put("string", "test");
-        params.put("uuid", UUID.randomUUID().toString());
-        params.put("limit", 4);
-        params.put("list", new ArrayList<String>());
 
         JSONRPC2Request request = new JSONRPC2Request(
             "test",
@@ -334,7 +202,19 @@ public class IntrospectorTest
     {
         Dispatcher<IntrospectorTest.TestService> dispatcher = new Dispatcher<>();
 
-        Introspector.DEFAULT_INTROSPECTOR.register(IntrospectorTest.TestService.class, dispatcher);
+        Introspector introspector = new Introspector();
+
+        // boolean retriever
+        introspector.registerParameterProvider(
+            boolean.class,
+            (String name, ParamsRetriever params, boolean optional, String defaultValue) -> {
+                return optional
+                    ? params.getOptBoolean(name, defaultValue.toLowerCase(Locale.ROOT).equals("true"))
+                    : params.getBoolean(name);
+            }
+        );
+
+        introspector.register(IntrospectorTest.TestService.class, dispatcher);
 
         return dispatcher;
     }
