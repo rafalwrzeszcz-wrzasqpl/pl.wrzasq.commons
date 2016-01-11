@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2015 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.chilldev.commons.jsonrpc;
@@ -17,11 +17,32 @@ import java.io.Serializable;
 public abstract class AbstractIdentifiable<Type extends Serializable>
 {
     /**
+     * Object identifier.
+     */
+    private Type id;
+
+    /**
      * Returns record identifier.
      *
      * @return Record identifier.
      */
-    public abstract Type getId();
+    public Type getId()
+    {
+        return this.id;
+    }
+
+    /**
+     * Sets record identifier.
+     *
+     * @param id Identifier.
+     * @return Self instance.
+     */
+    public AbstractIdentifiable<Type> setId(Type id)
+    {
+        this.id = id;
+
+        return this;
+    }
 
     /**
      * Checks object equality.
@@ -35,10 +56,10 @@ public abstract class AbstractIdentifiable<Type extends Serializable>
         if (this == object) {
             return true;
         }
-        if (object == null || !(object instanceof AbstractIdentifiable) || this.getId() == null) {
+        if (object == null || !(object instanceof AbstractIdentifiable) || this.id == null) {
             return false;
         }
-        return this.getId().equals(((AbstractIdentifiable<?>) object).getId());
+        return this.id.equals(((AbstractIdentifiable<?>) object).id);
     }
 
     /**
@@ -49,6 +70,6 @@ public abstract class AbstractIdentifiable<Type extends Serializable>
     @Override
     public int hashCode()
     {
-        return this.getId() == null ? 0 : this.getId().hashCode();
+        return this.id == null ? 0 : this.id.hashCode();
     }
 }
