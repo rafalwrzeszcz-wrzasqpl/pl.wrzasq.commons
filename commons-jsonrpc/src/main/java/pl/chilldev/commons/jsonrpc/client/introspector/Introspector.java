@@ -59,8 +59,10 @@ public class Introspector
 
     /**
      * RPC method call.
+     *
+     * @param <Type> Result type.
      */
-    static class Call
+    static class Call<Type>
     {
         /**
          * RPC method name.
@@ -75,7 +77,7 @@ public class Introspector
         /**
          * Response handler.
          */
-        private Function<Object, ?> handler;
+        private Function<Object, ? extends Type> handler;
 
         /**
          * Initializes RPC call handler.
@@ -87,7 +89,7 @@ public class Introspector
         Call(
             String name,
             List<Introspector.ParameterMapperWrapper<Object>> params,
-            Function<Object, ?> handler
+            Function<Object, ? extends Type> handler
         )
         {
             this.name = name;
@@ -102,7 +104,7 @@ public class Introspector
          * @param arguments Request parameters.
          * @return Response result.
          */
-        public Object execute(Connector connector, Object[] arguments)
+        public Type execute(Connector connector, Object[] arguments)
         {
             Map<String, Object> params = new HashMap<>();
             for (int i = 0; i < arguments.length; ++i) {
@@ -130,7 +132,7 @@ public class Introspector
         /**
          * RPC calls.
          */
-        private Map<Method, Introspector.Call> calls = new HashMap<>();
+        private Map<Method, Introspector.Call<?>> calls = new HashMap<>();
 
         /**
          * Initializes service over given client.
@@ -148,7 +150,7 @@ public class Introspector
          * @param method Client class method.
          * @param call RPC call handler.
          */
-        public void register(Method method, Introspector.Call call)
+        public void register(Method method, Introspector.Call<?> call)
         {
             this.calls.put(method, call);
         }
@@ -176,7 +178,7 @@ public class Introspector
     /**
      * Transparent response handler.
      */
-    private static final Function<Object, Object> IDENTITY_HANDLER = (Object value) -> value;
+    private static final Function<Object, ?> IDENTITY_HANDLER = (Object value) -> value;
 
     /**
      * Client modules SPIs.
@@ -191,7 +193,7 @@ public class Introspector
     /**
      * Parameters mappers.
      */
-    private Map<Class<?>, ParameterMapper<Object>> mappers = new HashMap<>();
+    private Map<Class<?>, ParameterMapper<?>> mappers = new HashMap<>();
 
     /**
      * Results handlers.
@@ -217,8 +219,7 @@ public class Introspector
     {
         this.mappers.put(
             type,
-            (String name, Object value, Map<String, Object> params)
-                -> mapper.putParam(name, type.cast(value), params)
+            mapper
         );
     }
 
@@ -295,8 +296,8 @@ public class Introspector
                 client.register(
                     // use overridden name if set
                     method,
-                    new Introspector.Call(
-                        "".equals(call.name()) ? method.getName() : call.name(),
+                    new Introspector.Call<>(
+                        call.name().isEmpty() ? method.getName() : call.name(),
                         mappers,
                         handler
                     )
@@ -311,14 +312,17 @@ public class Introspector
      * Creates mapper for given parameter.
      *
      * @param parameter Method parameter.
+     * @param <Type> Parameter type.
      * @return Parameter provider.
      */
-    private Introspector.ParameterMapperWrapper<Object> createParameterMapper(Parameter parameter)
+    private <Type> Introspector.ParameterMapperWrapper<Type> createParameterMapper(Parameter parameter)
     {
         // try to fetch provider by parameter type
-        Class<?> type = parameter.getType();
-        ParameterMapper<Object> mapper = this.mappers.containsKey(type)
-            ? this.mappers.get(type)
+        @SuppressWarnings("unchecked")
+        Class<Type> type = (Class<Type>) parameter.getType();
+        @SuppressWarnings("unchecked")
+        ParameterMapper<? super Type> mapper = this.mappers.containsKey(type)
+            ? (ParameterMapper<Type>) this.mappers.get(type)
             : Introspector.DEFAULT_MAPPER;
 
         String name = parameter.getName();
@@ -326,7 +330,7 @@ public class Introspector
         // override defaults if annotation is defined
         JsonRpcParam metadata = parameter.getAnnotation(JsonRpcParam.class);
         if (metadata != null) {
-            name = "".equals(metadata.name()) ? name : metadata.name();
+            name = metadata.name().isEmpty() ? name : metadata.name();
         }
 
         return this.createParameterMapperWrapper(mapper, name);

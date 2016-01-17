@@ -185,7 +185,7 @@ public class Introspector
     /**
      * Results mappers.
      */
-    private Map<Class<?>, Function<Object, Object>> mappers = new HashMap<>();
+    private Map<Class<?>, Function<?, Object>> mappers = new HashMap<>();
 
     static {
         ServiceLoader<DispatcherModule> loader = ServiceLoader.load(DispatcherModule.class);
@@ -221,7 +221,7 @@ public class Introspector
     {
         this.mappers.put(
             type,
-            (Object response) -> mapper.apply(type.cast(response))
+            mapper
         );
     }
 
@@ -233,6 +233,7 @@ public class Introspector
      * @param <ContextType> Service request context type (will be used for execution context).
      * @throws IllegalArgumentException When a method of the facade can't be mapped to JSON-RPC call.
      */
+    @SuppressWarnings("unchecked")
     public <ContextType extends ContextInterface> void register(
         Class<? super ContextType> facade,
         Dispatcher<? extends ContextType> dispatcher
@@ -268,13 +269,15 @@ public class Introspector
                 Class<?> response = method.getReturnType();
                 dispatcher.register(
                     // use overridden name if set
-                    "".equals(call.name()) ? method.getName() : call.name(),
+                    call.name().isEmpty() ? method.getName() : call.name(),
                     new Introspector.RequestHandler<ContextType>(
                         method.getName(),
                         method.getParameterTypes(),
                         providers,
                         // fall back to transparent mapper if no type-specific mapper is registered
-                        this.mappers.containsKey(response) ? this.mappers.get(response) : Introspector.IDENTITY_MAPPER
+                        this.mappers.containsKey(response)
+                            ? (Function<Object, Object>) this.mappers.get(response)
+                            : Introspector.IDENTITY_MAPPER
                     )
                 );
             }
@@ -285,13 +288,15 @@ public class Introspector
      * Creates provider for given parameter.
      *
      * @param parameter Method parameter.
+     * @param <Type> Parameter type.
      * @return Parameter provider.
      * @throws IllegalArgumentException When a parameter cann't be resolved from JSON-RPC request.
      */
-    private Introspector.ParameterProviderWrapper<?> createParameterProvider(Parameter parameter)
+    private <Type> Introspector.ParameterProviderWrapper<Type> createParameterProvider(Parameter parameter)
     {
         // try to fetch provider by parameter type
-        ParameterProvider<?> provider = this.resolvers.get(parameter.getType());
+        @SuppressWarnings("unchecked")
+        ParameterProvider<Type> provider = (ParameterProvider<Type>) this.resolvers.get(parameter.getType());
 
         // not supported parameter type
         if (provider == null) {
@@ -311,7 +316,7 @@ public class Introspector
         // override defaults if annotation is defined
         JsonRpcParam metadata = parameter.getAnnotation(JsonRpcParam.class);
         if (metadata != null) {
-            name = "".equals(metadata.name()) ? name : metadata.name();
+            name = metadata.name().isEmpty() ? name : metadata.name();
             optional = metadata.optional();
             defaultValue = metadata.defaultNull() ? null : metadata.defaultValue();
         }
