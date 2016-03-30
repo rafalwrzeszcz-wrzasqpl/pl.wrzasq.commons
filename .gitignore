@@ -5,32 +5,14 @@
 # @copyright 2014 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
 ##
 
-/.classpath
-/.project
-/.settings
-/target
+# Eclipse IDE files
+/**/.classpath
+/**/.project
+/**/.settings
 
-/commons-collections/.classpath
-/commons-collections/.project
-/commons-collections/.settings
-/commons-collections/target
+# IntelliJ IDE files
+/.idea
+/**/*.iml
 
-/commons-daemon/.classpath
-/commons-daemon/.project
-/commons-daemon/.settings
-/commons-daemon/target
-
-/commons-db/.classpath
-/commons-db/.project
-/commons-db/.settings
-/commons-db/target
-
-/commons-jsonrpc/.classpath
-/commons-jsonrpc/.project
-/commons-jsonrpc/.settings
-/commons-jsonrpc/target
-
-/commons-text/.classpath
-/commons-text/.project
-/commons-text/.settings
-/commons-text/target
+# project builds
+/**/target
