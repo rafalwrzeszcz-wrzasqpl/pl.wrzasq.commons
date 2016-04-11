@@ -92,18 +92,7 @@ public class DispatcherHandler<ContextType extends ContextInterface> extends Cha
             JSONRPC2Request request = JSONRPC2Request.parse(message.toString());
 
             // dispatch it
-            try {
-                response = this.dispatcher.dispatch(request, this.context);
-                //CHECKSTYLE:OFF: IllegalCatchCheck
-            } catch (Throwable error) {
-                //CHECKSTYLE:ON: IllegalCatchCheck
-                // we DO WANT to catch all exceptions to avoid listener thread to die
-                this.logger.error("Internal error.", error);
-                response = new JSONRPC2Response(
-                    JSONRPC2Error.INTERNAL_ERROR.appendMessage(": " + error.getMessage() + "."),
-                    request.getID()
-                );
-            }
+            response = this.dispatchRequest(request);
         } catch (JSONRPC2ParseException error) {
             response = new JSONRPC2Response(JSONRPC2Error.PARSE_ERROR, null);
             this.logger.error("Could not parse JSON-RPC request.");
@@ -111,5 +100,27 @@ public class DispatcherHandler<ContextType extends ContextInterface> extends Cha
 
         // send response to client
         session.writeAndFlush(response);
+    }
+
+    /**
+     * Dispatches request to proper handler.
+     *
+     * @param request JSON-RPC request.
+     * @return JSON-RPC response.
+     */
+    private JSONRPC2Response dispatchRequest(JSONRPC2Request request)
+    {
+        try {
+            return this.dispatcher.dispatch(request, this.context);
+            //CHECKSTYLE:OFF: IllegalCatchCheck
+        } catch (Exception error) {
+            //CHECKSTYLE:ON: IllegalCatchCheck
+            // we DO WANT to catch all exceptions to avoid listener thread to die
+            this.logger.error("Internal error.", error);
+            return new JSONRPC2Response(
+                JSONRPC2Error.INTERNAL_ERROR.appendMessage(": " + error.getMessage() + "."),
+                request.getID()
+            );
+        }
     }
 }

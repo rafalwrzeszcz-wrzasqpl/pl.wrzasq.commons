@@ -12,6 +12,7 @@ import pl.chilldev.commons.jsonrpc.client.introspector.Introspector;
 /**
  * Client module SPI API.
  */
+@FunctionalInterface
 public interface ClientModule
 {
     /**

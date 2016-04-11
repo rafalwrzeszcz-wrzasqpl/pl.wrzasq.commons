@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2015 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.chilldev.commons.jsonrpc.json;
@@ -52,24 +52,24 @@ public class ConvertUtils
         }
         Map<?, ?> params = (Map<?, ?>) result;
 
-        result = params.get(recordsParam);
-        if (!(result instanceof List)) {
+        Object data = params.get(recordsParam);
+        if (!(data instanceof List)) {
             throw new ClassCastException(
                 String.format(
                     "Value returned under key \"%s\" is not a list of records: %s found.",
                     recordsParam,
-                    result.getClass().getName()
+                    data.getClass().getName()
                 )
             );
         }
-        List<?> records = (List<?>) result;
+        List<?> records = (List<?>) data;
 
         // convert all elements
         List<Type> list = records.stream()
                 .map((Object record) -> ParamsRetriever.OBJECT_MAPPER.convertValue(record, type))
                 .collect(Collectors.toList());
 
-        return new PageImpl<Type>(
+        return new PageImpl<>(
             list,
             request,
             Long.parseLong(params.get(countParam).toString())

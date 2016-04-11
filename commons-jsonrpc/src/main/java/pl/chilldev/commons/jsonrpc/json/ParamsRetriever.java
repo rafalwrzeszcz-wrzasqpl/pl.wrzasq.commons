@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2015 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.chilldev.commons.jsonrpc.json;
@@ -79,8 +79,8 @@ public class ParamsRetriever extends NamedParamsRetriever
     {
         super(
             request.getParamsType() == JSONRPC2ParamsType.NO_PARAMS
-            ? new HashMap<String, Object>()
-            : request.getNamedParams()
+                ? new HashMap<String, Object>()
+                : request.getNamedParams()
         );
     }
 
@@ -208,7 +208,7 @@ public class ParamsRetriever extends NamedParamsRetriever
             }
         }
 
-        return sort.size() > 0 ? new Sort(sort) : null;
+        return sort.isEmpty() ? null : new Sort(sort);
     }
 
     /**

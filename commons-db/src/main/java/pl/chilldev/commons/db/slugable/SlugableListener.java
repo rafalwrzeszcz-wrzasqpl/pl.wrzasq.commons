@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2015 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.chilldev.commons.db.slugable;
@@ -76,26 +76,41 @@ public class SlugableListener
             IllegalAccessException
     {
         Class<?> type = slugable.getClass();
-        int i;
 
         for (Field field : FieldUtils.getAllFields(type)) {
             if (field.isAnnotationPresent(Slug.class)) {
-                // get slug configuration
-                Slug options = field.getDeclaredAnnotation(Slug.class);
-
-                // check if it should be updated
-                if (!update || options.updatable()) {
-                    // find all source fields
-                    String[] fields = options.value();
-                    String[] texts = new String[fields.length];
-                    for (i = 0; i < fields.length; ++i) {
-                        texts[i] = FieldUtils.readField(slugable, fields[i], true).toString();
-                    }
-
-                    // generate slug
-                    FieldUtils.writeField(slugable, field.getName(), this.generateSlug(texts, options), true);
-                }
+                this.fillSlug(field, slugable, update);
             }
+        }
+    }
+
+    /**
+     * Fills single slug declared in given object.
+     *
+     * @param field Slug field.
+     * @param slugable Object to be handled.
+     * @param update Whether it's first save of slugs need to be only re-created.
+     * @throws IllegalAccessException When accessing source field is impossible.
+     */
+    private void fillSlug(Field field, Object slugable, boolean update)
+        throws
+            IllegalAccessException
+    {
+        // get slug configuration
+        Slug options = field.getDeclaredAnnotation(Slug.class);
+        int i;
+
+        // check if it should be updated
+        if (!update || options.updatable()) {
+            // find all source fields
+            String[] fields = options.value();
+            String[] texts = new String[fields.length];
+            for (i = 0; i < fields.length; ++i) {
+                texts[i] = FieldUtils.readField(slugable, fields[i], true).toString();
+            }
+
+            // generate slug
+            FieldUtils.writeField(slugable, field.getName(), this.generateSlug(texts, options), true);
         }
     }
 

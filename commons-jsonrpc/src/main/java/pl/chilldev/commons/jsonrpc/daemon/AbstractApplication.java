@@ -93,7 +93,7 @@ public abstract class AbstractApplication
                 listener.start(this.acceptors, this.workers);
                 this.listeners.add(listener);
                 //CHECKSTYLE:OFF: IllegalCatchCheck
-            } catch (Throwable error) {
+            } catch (Exception error) {
                 //CHECKSTYLE:ON: IllegalCatchCheck
                 this.logger.error(
                     "Not starting \"{}\" because of {}.",

@@ -148,16 +148,14 @@ public class Introspector
                 return method.getReturnType().equals(Void.TYPE)
                     ? new JSONRPC2Response(request.getID())
                     : new JSONRPC2Response(this.mapper.apply(result), request.getID());
+            } catch (JSONRPC2Error error) {
+                // just re-throw to the client
+                throw error;
                 //CHECKSTYLE:OFF: IllegalCatchCheck
             } catch (Throwable error) {
                 //CHECKSTYLE:ON: IllegalCatchCheck
-                if (error instanceof JSONRPC2Error) {
-                    // just re-throw to the client
-                    throw (JSONRPC2Error) error;
-                } else {
-                    throw JSONRPC2Error.INTERNAL_ERROR
-                        .appendMessage(": " + error.getMessage());
-                }
+                throw JSONRPC2Error.INTERNAL_ERROR
+                    .appendMessage(": " + error.getMessage());
             }
         }
     }
@@ -233,7 +231,6 @@ public class Introspector
      * @param <ContextType> Service request context type (will be used for execution context).
      * @throws IllegalArgumentException When a method of the facade can't be mapped to JSON-RPC call.
      */
-    @SuppressWarnings("unchecked")
     public <ContextType extends ContextInterface> void register(
         Class<? super ContextType> facade,
         Dispatcher<? extends ContextType> dispatcher
@@ -243,45 +240,62 @@ public class Introspector
             if (method.isAnnotationPresent(JsonRpcCall.class)) {
                 this.logger.debug("Found {}.{} method as JSON-RPC handler.", facade.getName(), method.getName());
 
-                JsonRpcCall call = method.getAnnotation(JsonRpcCall.class);
-
-                Parameter[] parameters = method.getParameters();
-                Introspector.ParameterProviderWrapper<?>[] providers
-                    = new Introspector.ParameterProviderWrapper[parameters.length];
-
-                try {
-                    // build parameters resolvers
-                    for (int i = 0; i < parameters.length; ++i) {
-                        // register synthetic RPC handler
-                        providers[i] = this.createParameterProvider(parameters[i]);
-                    }
-                } catch (IllegalArgumentException error) {
-                    throw new IllegalArgumentException(
-                        String.format(
-                            "%s.%s() cann't be mapped to JSON-RPC handler.",
-                            facade.getName(),
-                            method.getName()
-                        ),
-                        error
-                    );
-                }
-
-                Class<?> response = method.getReturnType();
-                dispatcher.register(
-                    // use overridden name if set
-                    call.name().isEmpty() ? method.getName() : call.name(),
-                    new Introspector.RequestHandler<ContextType>(
-                        method.getName(),
-                        method.getParameterTypes(),
-                        providers,
-                        // fall back to transparent mapper if no type-specific mapper is registered
-                        this.mappers.containsKey(response)
-                            ? (Function<Object, Object>) this.mappers.get(response)
-                            : Introspector.IDENTITY_MAPPER
-                    )
-                );
+                this.register(method, dispatcher);
             }
         }
+    }
+
+    /**
+     * Registers single method.
+     *
+     * @param method Method to handle.
+     * @param dispatcher Methods dispatcher.
+     * @param <ContextType> Service request context type (will be used for execution context).
+     * @throws IllegalArgumentException When a method of the facade can't be mapped to JSON-RPC call.
+     */
+    @SuppressWarnings("unchecked")
+    private <ContextType extends ContextInterface> void register(
+        Method method,
+        Dispatcher<? extends ContextType> dispatcher
+    )
+    {
+        JsonRpcCall call = method.getAnnotation(JsonRpcCall.class);
+
+        Parameter[] parameters = method.getParameters();
+        Introspector.ParameterProviderWrapper<?>[] providers
+            = new Introspector.ParameterProviderWrapper[parameters.length];
+
+        try {
+            // build parameters resolvers
+            for (int i = 0; i < parameters.length; ++i) {
+                // register synthetic RPC handler
+                providers[i] = this.createParameterProvider(parameters[i]);
+            }
+        } catch (IllegalArgumentException error) {
+            throw new IllegalArgumentException(
+                String.format(
+                    "%s.%s() cann't be mapped to JSON-RPC handler.",
+                    method.getDeclaringClass().getName(),
+                    method.getName()
+                ),
+                error
+            );
+        }
+
+        Class<?> response = method.getReturnType();
+        dispatcher.register(
+            // use overridden name if set
+            call.name().isEmpty() ? method.getName() : call.name(),
+            new Introspector.RequestHandler<ContextType>(
+                method.getName(),
+                method.getParameterTypes(),
+                providers,
+                // fall back to transparent mapper if no type-specific mapper is registered
+                this.mappers.containsKey(response)
+                    ? (Function<Object, Object>) this.mappers.get(response)
+                    : Introspector.IDENTITY_MAPPER
+            )
+        );
     }
 
     /**

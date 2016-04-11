@@ -46,7 +46,7 @@ public class Runner
             // schedule shutdown hook for daemon cleanup
             Runtime.getRuntime().addShutdownHook(new Shutdown(daemon));
             //CHECKSTYLE:OFF: IllegalCatchCheck
-        } catch (Throwable error) {
+        } catch (Exception error) {
             //CHECKSTYLE:ON: IllegalCatchCheck
             this.logger.error("Fatal error {}.", error.getMessage(), error);
 

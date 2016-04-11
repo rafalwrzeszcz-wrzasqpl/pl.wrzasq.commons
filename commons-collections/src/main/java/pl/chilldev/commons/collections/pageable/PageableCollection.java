@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2015 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.chilldev.commons.collections.pageable;
@@ -48,6 +48,6 @@ public class PageableCollection<Type> implements Iterable<Type>
     @Override
     public Iterator<Type> iterator()
     {
-        return new PageableIterator<Type>(this.source.apply(this.request), this.source);
+        return new PageableIterator<>(this.source.apply(this.request), this.source);
     }
 }

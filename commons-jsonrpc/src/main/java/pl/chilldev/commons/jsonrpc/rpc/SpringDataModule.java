@@ -32,9 +32,8 @@ public class SpringDataModule implements DispatcherModule
         // Spring Data paged request retriever
         introspector.registerParameterProvider(
             Pageable.class,
-            (String name, ParamsRetriever params, boolean optional, String defaultValue) -> {
-                return params.getPageable(Integer.parseInt(defaultValue));
-            }
+            (String name, ParamsRetriever params, boolean optional, String defaultValue) ->
+                params.getPageable(Integer.parseInt(defaultValue))
         );
 
         // return types handlers

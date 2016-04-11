@@ -34,6 +34,7 @@ public class StringChannelInitializer<ChannelType extends Channel> extends Chann
     /**
      * Interface for I/O channel configuration.
      */
+    @FunctionalInterface
     public interface Configuration
     {
         /**

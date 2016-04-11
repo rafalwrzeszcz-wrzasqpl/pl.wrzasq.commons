@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2014 - 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2014 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.chilldev.commons.daemon.lifecycle;
@@ -49,7 +49,7 @@ public class Shutdown extends Thread
             this.daemon.destroy();
             this.logger.trace("Good bye!");
             //CHECKSTYLE:OFF: IllegalCatchCheck
-        } catch (Throwable error) {
+        } catch (Exception error) {
             //CHECKSTYLE:ON: IllegalCatchCheck
             this.logger.error("Error while stopping dameon {}.", error.getMessage(), error);
         }

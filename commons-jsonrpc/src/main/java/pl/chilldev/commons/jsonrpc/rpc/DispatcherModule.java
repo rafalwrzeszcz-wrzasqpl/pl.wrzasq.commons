@@ -12,6 +12,7 @@ import pl.chilldev.commons.jsonrpc.rpc.introspector.Introspector;
 /**
  * Server module SPI API.
  */
+@FunctionalInterface
 public interface DispatcherModule
 {
     /**
