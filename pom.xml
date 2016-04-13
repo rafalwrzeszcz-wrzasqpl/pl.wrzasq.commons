@@ -130,6 +130,7 @@
         <module>commons-daemon</module>
         <module>commons-db</module>
         <module>commons-jsonrpc</module>
+        <module>commons-service</module>
         <module>commons-text</module>
     </modules>
 </project>
