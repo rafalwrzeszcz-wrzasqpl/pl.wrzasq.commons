@@ -21,7 +21,7 @@
     <parent>
         <groupId>pl.chilldev.parent</groupId>
         <artifactId>parent-opensource</artifactId>
-        <version>0.0.7</version>
+        <version>0.0.8</version>
     </parent>
 
     <!-- project meta info -->
@@ -106,7 +106,6 @@
     <!-- build profiles -->
     <profiles>
         <profile>
-            <id>deploy</id>
             <build>
                 <plugins>
                     <plugin>

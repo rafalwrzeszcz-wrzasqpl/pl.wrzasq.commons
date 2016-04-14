@@ -3,7 +3,7 @@
 # This file is part of the ChillDev-Commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2014 - 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2014 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 <project
     xmlns="http://maven.apache.org/DECORATION/1.4.0"
@@ -12,9 +12,9 @@
         http://maven.apache.org/DECORATION/1.4.0 http://maven.apache.org/xsd/decoration-1.4.0.xsd
 ">
     <skin>
-        <groupId>lt.velykis.maven.skins</groupId>
-        <artifactId>reflow-maven-skin</artifactId>
-        <version>1.1.1</version>
+        <groupId>org.apache.maven.skins</groupId>
+        <artifactId>maven-fluido-skin</artifactId>
+        <version>1.5</version>
     </skin>
 
     <bannerLeft>
@@ -67,23 +67,4 @@
 
         <menu ref="reports"/>
     </body>
-
-    <custom>
-        <reflowSkin>
-            <highlightJs>true</highlightJs>
-            <!-- it really looks better, but we can't use it because of our dark logos
-            <navbarInverse>true</navbarInverse>
-            -->
-            <brand>
-                <name>&lt;img src="http://static.chilldev.pl/images/chilldevpl.png" alt="Chillout Development"/&gt;</name>
-                <href>http://chilldev.pl</href>
-            </brand>
-            <bottomNav maxSpan="12">
-                <column>Main</column>
-                <column>modules</column>
-                <column>Contribution guide</column>
-                <column>reports</column>
-            </bottomNav>
-        </reflowSkin>
-    </custom>
 </project>
