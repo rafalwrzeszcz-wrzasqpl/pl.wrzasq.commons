@@ -18,6 +18,9 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 import io.netty.handler.logging.LoggingHandler;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,6 +55,7 @@ public class Listener<ContextType extends ContextInterface>
     /**
      * Listener name.
      */
+    @Getter
     private String name;
 
     /**
@@ -72,11 +76,14 @@ public class Listener<ContextType extends ContextInterface>
     /**
      * Listening address.
      */
+    @Setter
     private SocketAddress address;
 
     /**
      * Maximum size of JSON-RPC packet.
      */
+    @Getter
+    @Setter
     private int maxPacketSize = Listener.DEFAULT_PACKET_LIMIT;
 
     /**
@@ -91,47 +98,6 @@ public class Listener<ContextType extends ContextInterface>
         this.name = name;
         this.context = context;
         this.dispatcher = dispatcher;
-    }
-
-    /**
-     * Returns listener name.
-     *
-     * @return Listener name.
-     */
-    public String getName()
-    {
-        return this.name;
-    }
-
-    /**
-     * Sets listening interface.
-     *
-     * @param address Listening address.
-     */
-    public void setAddress(SocketAddress address)
-    {
-        this.address = address;
-    }
-
-    /**
-     * Sets max JSON-RPC packet size.
-     *
-     * @param maxPacketSize Packet size in bytes.
-     */
-    public void setMaxPacketSize(int maxPacketSize)
-    {
-        this.maxPacketSize = maxPacketSize;
-    }
-
-    /**
-     * Returns size of maximum JSON-RPC packet size.
-     *
-     * @return Maximum packet size.
-     */
-    @Override
-    public int getMaxPacketSize()
-    {
-        return this.maxPacketSize;
     }
 
     /**

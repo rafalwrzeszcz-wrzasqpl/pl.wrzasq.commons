@@ -13,6 +13,8 @@ import java.util.HashSet;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 
+import lombok.Setter;
+
 import org.apache.commons.daemon.Daemon;
 import org.apache.commons.daemon.DaemonContext;
 import org.apache.commons.daemon.DaemonUserSignal;
@@ -51,32 +53,14 @@ public abstract class AbstractApplication
     /**
      * Acceptors thread count.
      */
+    @Setter
     private int acceptorsCount;
 
     /**
      * Workers thread count.
      */
+    @Setter
     private int workersCount;
-
-    /**
-     * Sets acceptors threads count.
-     *
-     * @param acceptorsCount Threads count.
-     */
-    public void setAcceptorsCount(int acceptorsCount)
-    {
-        this.acceptorsCount = acceptorsCount;
-    }
-
-    /**
-     * Sets workers threads count.
-     *
-     * @param workersCount Threads count.
-     */
-    public void setWorkersCount(int workersCount)
-    {
-        this.workersCount = workersCount;
-    }
 
     /**
      * Runs all listeners.

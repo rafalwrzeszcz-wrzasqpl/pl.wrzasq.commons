@@ -24,6 +24,9 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,6 +63,8 @@ public class Connector
     /**
      * Maximum size of JSON-RPC packet.
      */
+    @Getter
+    @Setter
     private int maxPacketSize = Connector.DEFAULT_PACKET_LIMIT;
 
     /**
@@ -93,27 +98,6 @@ public class Connector
             .group(connectors)
             .channel(NioSocketChannel.class)
             .handler(new StringChannelInitializer<Channel>(this.handler, this));
-    }
-
-    /**
-     * Sets max JSON-RPC packet size.
-     *
-     * @param maxPacketSize Packet size in bytes.
-     */
-    public void setMaxPacketSize(int maxPacketSize)
-    {
-        this.maxPacketSize = maxPacketSize;
-    }
-
-    /**
-     * Returns size of maximum JSON-RPC packet size.
-     *
-     * @return Maximum packet size.
-     */
-    @Override
-    public int getMaxPacketSize()
-    {
-        return this.maxPacketSize;
     }
 
     /**

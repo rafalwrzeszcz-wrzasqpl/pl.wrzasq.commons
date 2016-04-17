@@ -9,40 +9,24 @@ package pl.chilldev.commons.jsonrpc;
 
 import java.io.Serializable;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+
 /**
  * Base class for transfer objects that can be identified by key.
  *
  * @param <Type> Key type.
  */
+@Accessors(chain = true)
+@Getter
+@Setter
 public abstract class AbstractIdentifiable<Type extends Serializable>
 {
     /**
      * Object identifier.
      */
     private Type id;
-
-    /**
-     * Returns record identifier.
-     *
-     * @return Record identifier.
-     */
-    public Type getId()
-    {
-        return this.id;
-    }
-
-    /**
-     * Sets record identifier.
-     *
-     * @param id Identifier.
-     * @return Self instance.
-     */
-    public AbstractIdentifiable<Type> setId(Type id)
-    {
-        this.id = id;
-
-        return this;
-    }
 
     /**
      * Checks object equality.

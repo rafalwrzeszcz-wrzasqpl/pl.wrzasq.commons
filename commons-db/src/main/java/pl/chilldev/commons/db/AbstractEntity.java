@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2015 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.chilldev.commons.db;
@@ -14,12 +14,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+
 import org.hibernate.annotations.GenericGenerator;
 
 /**
  * Core entity features.
  */
 @MappedSuperclass
+@Accessors(chain = true)
+@Getter
+@Setter
 public abstract class AbstractEntity
 {
     /**
@@ -50,33 +57,6 @@ public abstract class AbstractEntity
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
     @Column(length = AbstractEntity.LENGTH_UUID)
     private UUID id;
-
-    /**
-     * Returns record identifier.
-     *
-     * @return Record identifier.
-     */
-    public UUID getId()
-    {
-        return this.id;
-    }
-
-    /**
-     * Sets ID.
-     *
-     * <p>
-     * This is implemented only because of Spring loading purposes.
-     * </p>
-     *
-     * @param value Record ID.
-     * @return Self instance.
-     */
-    public AbstractEntity setId(UUID value)
-    {
-        this.id = value;
-
-        return this;
-    }
 
     /**
      * Checks object equality.

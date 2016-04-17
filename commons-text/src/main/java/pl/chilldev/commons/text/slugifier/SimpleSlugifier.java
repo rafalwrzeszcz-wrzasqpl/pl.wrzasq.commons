@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2015 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.chilldev.commons.text.slugifier;
@@ -10,6 +10,8 @@ package pl.chilldev.commons.text.slugifier;
 import java.text.Normalizer;
 
 import java.util.Locale;
+
+import lombok.Setter;
 
 /**
  * Simple implementation of slugifier.
@@ -24,17 +26,8 @@ public class SimpleSlugifier implements Slugifier
     /**
      * Separator for URL parts.
      */
+    @Setter
     private String delimiter = SimpleSlugifier.DEFAULT_DELIMITER;
-
-    /**
-     * Changes words delimiter.
-     *
-     * @param delimiter New delimiter.
-     */
-    public void setDelimiter(String delimiter)
-    {
-        this.delimiter = delimiter;
-    }
 
     /**
      * {@inheritDoc}
