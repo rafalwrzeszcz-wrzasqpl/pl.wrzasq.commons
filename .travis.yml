@@ -2,7 +2,7 @@
 # This file is part of the ChillDev-Commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2014 - 2015 © by Rafal Wrzeszcz - Wrzasq.pl.
+# @copyright 2014 - 2016 © by Rafal Wrzeszcz - Wrzasq.pl.
 ##
 
 #FIXME: https://github.com/travis-ci/travis-ci/issues/753
@@ -13,6 +13,8 @@ sudo: false
 
 jdk:
     - "oraclejdk8"
+
+install: true
 
 script: "mvn verify site"
 
