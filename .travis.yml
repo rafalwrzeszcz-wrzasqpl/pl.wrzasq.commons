@@ -20,6 +20,13 @@ script: "mvn verify site"
 
 after_script: "mvn coveralls:report"
 
+cache:
+    directories:
+        - "$HOME/.m2/"
+
+before_cache:
+    - "rm -rf $HOME/.m2/repository/pl/chilldev/commons"
+
 notifications:
     webhooks:
         urls:
