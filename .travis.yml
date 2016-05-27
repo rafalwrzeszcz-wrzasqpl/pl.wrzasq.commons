@@ -7,6 +7,14 @@
 
 #FIXME: https://github.com/travis-ci/travis-ci/issues/753
 
+#TODO: this is just to prevent failing build with old Maven version
+before_install:
+    - "wget http://apache.mirror.rafal.ca/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz"
+    - "tar xzvf apache-maven-3.3.9-bin.tar.gz"
+    - "export M2_HOME=`pwd`/apache-maven-3.3.9"
+    - "export M2=$M2_HOME/bin"
+    - "export PATH=$M2:$PATH"
+
 language: "java"
 
 sudo: false
