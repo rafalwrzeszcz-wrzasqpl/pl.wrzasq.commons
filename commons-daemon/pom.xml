@@ -40,13 +40,13 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.16</version>
+            <version>1.7.21</version>
         </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-nop</artifactId>
-            <version>1.7.16</version>
+            <version>1.7.21</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -54,6 +54,7 @@
     <!-- build profiles -->
     <profiles>
         <profile>
+            <id>deploy</id>
             <build>
                 <plugins>
                     <plugin>

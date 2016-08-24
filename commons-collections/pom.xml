@@ -33,13 +33,14 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-commons</artifactId>
-            <version>1.11.0.RELEASE</version>
+            <version>1.12.2.RELEASE</version>
         </dependency>
     </dependencies>
 
     <!-- build profiles -->
     <profiles>
         <profile>
+            <id>deploy</id>
             <build>
                 <plugins>
                     <plugin>

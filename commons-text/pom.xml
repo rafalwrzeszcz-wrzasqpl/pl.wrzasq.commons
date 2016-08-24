@@ -32,6 +32,7 @@
     <!-- build profiles -->
     <profiles>
         <profile>
+            <id>deploy</id>
             <build>
                 <plugins>
                     <plugin>
