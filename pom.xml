@@ -21,7 +21,7 @@
     <parent>
         <groupId>pl.chilldev.parent</groupId>
         <artifactId>parent-opensource</artifactId>
-        <version>0.0.8</version>
+        <version>0.1.0</version>
     </parent>
 
     <!-- project meta info -->
@@ -118,6 +118,12 @@
                             <noJekyll>true</noJekyll>
                             <server>github</server>
                         </configuration>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-scm-plugin</artifactId>
+                        <inherited>false</inherited>
                     </plugin>
                 </plugins>
             </build>

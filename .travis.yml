@@ -7,14 +7,6 @@
 
 #FIXME: https://github.com/travis-ci/travis-ci/issues/753
 
-#TODO: this is just to prevent failing build with old Maven version
-before_install:
-    - "wget http://apache.mirror.rafal.ca/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz"
-    - "tar xzvf apache-maven-3.3.9-bin.tar.gz"
-    - "export M2_HOME=`pwd`/apache-maven-3.3.9"
-    - "export M2=$M2_HOME/bin"
-    - "export PATH=$M2:$PATH"
-
 language: "java"
 
 sudo: false
@@ -22,11 +14,50 @@ sudo: false
 jdk:
     - "oraclejdk8"
 
-install: true
+env:
+    global:
+        -
+            secure: "RWVCMZ942ezUNvxDD54WHFy3PNN68wN8l3IcSeXmXGcUYz9HYUmCs6duNuXninAFXd/ypSevJO8jA8CNVyYip7QtFYkZnxLqDbIL2xMK0z89tfbMrEM2T8pYygUz220Gkriu05sN+KzmD9FKSU1qdYqFnmmKeoT3X50l+bfqZAE="
+        -
+            secure: "CrtYpv6O4i+FRLc5HqthXsjeUVEmIzjUvPR73qYZZw3tRwXsG0/oe4zjmFSmEgjQxq+ULDrvAnpm4hAxYR2gbpHwTXmH9jSI5fkjR6/9kXPiXTwrtQGUx1EQ/LwfPd6AthPGjdsUFuiaFD7VEL2IKd22BO+fVtFqarQIWH0Hl08="
+        -
+            secure: "DjbHaFvXuBj5qjSLlZ0inN3rfeS2/wBkpSUZfOPMdnbKRRazi2Pg684xK6ndISTyppxx5wLHF9w+TZVKF8hltJHnZ9KHtu8W5GmM3iMyctISherNp3YJB2J6tcGkD/9FdEFxLnHUR2TC5fcbj9hOulbI7LJ7cuwTNVYMZMaSVoI="
+        -
+            secure: "BBjzAhf8ULex4lJO+s2C6E8W+4vD2xDA/NWKLMXqPFDbhiQtGG20oUuexZMaa85ZkCCFNqYcb9WACOZyIzPEp5jwE5WKMCupQDDKLoqeVhK6VVxl7dIkC8wtQZQq9oPCQdk4JEmLaWp781pwPehQWwfdXgtjqEOa91nffIDXCfY="
+        -
+            secure: "S4wuhuqPiFgCIv1x/kPEp+ZooRGe5eJUSf2YZSlA/VA4BVCEi3LSv2X10OXofflzDndToX1nwP+bSwaxwt+2pie4AWE2M0hHDkmZDcIkU1zsxaUP/2nFKgm1SDgxz9HAd2mgcKLcBcDlC2O+usFYUIIMPK+UvlH3WRv+tcAtyFU="
+
+#TODO: this is just to prevent failing build with old Maven version
+before_install:
+    - "wget http://apache.mirror.rafal.ca/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz"
+    - "tar xzvf apache-maven-3.3.9-bin.tar.gz"
+    - "export M2=`pwd`/apache-maven-3.3.9/bin"
+    - "export PATH=$M2:$PATH"
+
+# this is not a boolean, this is a Linux `true` command to simply override this step
+install: "true"
 
 script: "mvn verify site"
 
 after_script: "mvn coveralls:report"
+
+before_deploy:
+    - "eval \"$(ssh-agent -s)\""
+    - "git config user.name \"Travis CI\""
+    - "git config user.email \"office@chilldev.pl\""
+    - "openssl aes-256-cbc -k \"$SECRET\" -in .travis/gpg_key.enc -out .travis/gpg_key -d"
+    - "openssl aes-256-cbc -k \"$SECRET\" -in .travis/id_rsa.enc -out .travis/id_rsa -d"
+    - "gpg --fast-import .travis/gpg_key"
+    - "chmod 600 .travis/id_rsa"
+    - "ssh-add .travis/id_rsa"
+
+deploy:
+    provider: "script"
+    skip_cleanup: true
+    script: "mvn deploy site-deploy -P deploy --settings .travis/settings.xml"
+    on:
+        branch: "master"
+        jdk: "oraclejdk8"
 
 cache:
     directories:
