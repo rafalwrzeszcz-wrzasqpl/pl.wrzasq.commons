@@ -23,10 +23,10 @@ under the License.
     <link>https://chilloutdevelopment.github.io/pl.chilldev.commons</link>
     <description>ChillDev Commons - Checkstyle report</description>
     <language>en-us</language>
-    <copyright>&#169;2014 - 2015 Rafał Wrzeszcz - Wrzasq.pl</copyright>
+    <copyright>&#169;2014 - 2016 Rafał Wrzeszcz - Wrzasq.pl</copyright>
     <item>
-      <title>File: 44,
-             Errors: 0,
+      <title>File: 52,
+             Errors: 79,
              Warnings: 0,
              Infos: 0
       </title>
@@ -46,49 +46,7 @@ under the License.
           <tbody>
                           <tr>
                 <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.daemon.lifecycle.Shutdown.java">pl/chilldev/commons/daemon/lifecycle/Shutdown.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.db.slugable.Slug.java">pl/chilldev/commons/db/slugable/Slug.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.json.ParamsRetriever.java">pl/chilldev/commons/jsonrpc/json/ParamsRetriever.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.concurrent.FutureResponder.java">pl/chilldev/commons/concurrent/FutureResponder.java</a>
                 </td>
                 <td>
                   0
@@ -144,6 +102,356 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.rpc.handler.VersionHandler.java">pl/chilldev/commons/jsonrpc/rpc/handler/VersionHandler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.service.spring.config.AbstractDataSourceBeanDefinitionParser.java">pl/chilldev/commons/service/spring/config/AbstractDataSourceBeanDefinitionParser.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.netty.DispatcherHandler.java">pl/chilldev/commons/jsonrpc/netty/DispatcherHandler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.text.html.Utils.java">pl/chilldev/commons/text/html/Utils.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.db.AbstractEntity.java">pl/chilldev/commons/db/AbstractEntity.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  11
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.daemon.Package.java">pl/chilldev/commons/daemon/Package.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.daemon.AbstractSpringApplication.java">pl/chilldev/commons/jsonrpc/daemon/AbstractSpringApplication.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.service.spring.config.AbstractListenerBeanDefinitionParser.java">pl/chilldev/commons/service/spring/config/AbstractListenerBeanDefinitionParser.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.text.slugifier.Slugifier.java">pl/chilldev/commons/text/slugifier/Slugifier.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.client.ClientModule.java">pl/chilldev/commons/jsonrpc/client/ClientModule.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.json.writer.StringDumpingWriter.java">pl/chilldev/commons/jsonrpc/json/writer/StringDumpingWriter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.rpc.SpringDataModule.java">pl/chilldev/commons/jsonrpc/rpc/SpringDataModule.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.service.config.BaseApplicationConfiguration.java">pl/chilldev/commons/service/config/BaseApplicationConfiguration.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.client.Connector.java">pl/chilldev/commons/jsonrpc/client/Connector.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  19
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.collections.pageable.PageableIterator.java">pl/chilldev/commons/collections/pageable/PageableIterator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.json.ConvertUtils.java">pl/chilldev/commons/jsonrpc/json/ConvertUtils.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.text.slugifier.SimpleSlugifier.java">pl/chilldev/commons/text/slugifier/SimpleSlugifier.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  8
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.daemon.ChillDevApplication.java">pl/chilldev/commons/jsonrpc/daemon/ChillDevApplication.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.rpc.Dispatcher.java">pl/chilldev/commons/jsonrpc/rpc/Dispatcher.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.AbstractIdentifiable.java">pl/chilldev/commons/jsonrpc/AbstractIdentifiable.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  9
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.service.api.AbstractApiFacade.java">pl/chilldev/commons/service/api/AbstractApiFacade.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.rpc.VoidMethod.java">pl/chilldev/commons/jsonrpc/rpc/VoidMethod.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.collections.pageable.PageableCollection.java">pl/chilldev/commons/collections/pageable/PageableCollection.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.daemon.lifecycle.Shutdown.java">pl/chilldev/commons/daemon/lifecycle/Shutdown.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.json.ParamsRetriever.java">pl/chilldev/commons/jsonrpc/json/ParamsRetriever.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.daemon.Listener.java">pl/chilldev/commons/jsonrpc/daemon/Listener.java</a>
                 </td>
                 <td>
@@ -153,7 +461,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  0
+                  16
                 </td>
               </tr>
                           <tr>
@@ -172,7 +480,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.rpc.handler.VersionHandler.java">pl/chilldev/commons/jsonrpc/rpc/handler/VersionHandler.java</a>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.rpc.DispatcherModule.java">pl/chilldev/commons/jsonrpc/rpc/DispatcherModule.java</a>
                 </td>
                 <td>
                   0
@@ -214,7 +522,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.concurrent.collections.MessageBag.java">pl/chilldev/commons/concurrent/collections/MessageBag.java</a>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.netty.RequestHandler.java">pl/chilldev/commons/jsonrpc/netty/RequestHandler.java</a>
                 </td>
                 <td>
                   0
@@ -228,7 +536,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.text.html.Utils.java">pl/chilldev/commons/text/html/Utils.java</a>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.client.SpringDataModule.java">pl/chilldev/commons/jsonrpc/client/SpringDataModule.java</a>
                 </td>
                 <td>
                   0
@@ -242,35 +550,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.db.AbstractEntity.java">pl/chilldev/commons/db/AbstractEntity.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.mina.IoServiceUtils.java">pl/chilldev/commons/jsonrpc/mina/IoServiceUtils.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.daemon.Package.java">pl/chilldev/commons/daemon/Package.java</a>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.client.JavaModule.java">pl/chilldev/commons/jsonrpc/client/JavaModule.java</a>
                 </td>
                 <td>
                   0
@@ -312,21 +592,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.mina.RequestIoHandler.java">pl/chilldev/commons/jsonrpc/mina/RequestIoHandler.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.daemon.AbstractSpringApplication.java">pl/chilldev/commons/jsonrpc/daemon/AbstractSpringApplication.java</a>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.netty.StringChannelInitializer.java">pl/chilldev/commons/jsonrpc/netty/StringChannelInitializer.java</a>
                 </td>
                 <td>
                   0
@@ -354,49 +620,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.text.slugifier.Slugifier.java">pl/chilldev/commons/text/slugifier/Slugifier.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.json.writer.StringDumpingWriter.java">pl/chilldev/commons/jsonrpc/json/writer/StringDumpingWriter.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.client.introspector.ParameterMapper.java">pl/chilldev/commons/jsonrpc/client/introspector/ParameterMapper.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.client.Connector.java">pl/chilldev/commons/jsonrpc/client/Connector.java</a>
                 </td>
                 <td>
                   0
@@ -424,48 +648,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.collections.pageable.PageableIterator.java">pl/chilldev/commons/collections/pageable/PageableIterator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.json.ConvertUtils.java">pl/chilldev/commons/jsonrpc/json/ConvertUtils.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.rpc.introspector.ParameterProvider.java">pl/chilldev/commons/jsonrpc/rpc/introspector/ParameterProvider.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.rpc.introspector.JsonRpcParam.java">pl/chilldev/commons/jsonrpc/rpc/introspector/JsonRpcParam.java</a>
                 </td>
                 <td>
@@ -480,35 +662,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.text.slugifier.SimpleSlugifier.java">pl/chilldev/commons/text/slugifier/SimpleSlugifier.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.daemon.ChillDevApplication.java">pl/chilldev/commons/jsonrpc/daemon/ChillDevApplication.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.rpc.Dispatcher.java">pl/chilldev/commons/jsonrpc/rpc/Dispatcher.java</a>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.rpc.introspector.ParameterProvider.java">pl/chilldev/commons/jsonrpc/rpc/introspector/ParameterProvider.java</a>
                 </td>
                 <td>
                   0
@@ -550,7 +704,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.rpc.introspector.Introspector.java">pl/chilldev/commons/jsonrpc/rpc/introspector/Introspector.java</a>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.rpc.JavaModule.java">pl/chilldev/commons/jsonrpc/rpc/JavaModule.java</a>
                 </td>
                 <td>
                   0
@@ -573,26 +727,12 @@ under the License.
                   0
                 </td>
                 <td>
-                  0
+                  16
                 </td>
               </tr>
                           <tr>
                 <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.AbstractIdentifiable.java">pl/chilldev/commons/jsonrpc/AbstractIdentifiable.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.mina.DispatcherIoHandler.java">pl/chilldev/commons/jsonrpc/mina/DispatcherIoHandler.java</a>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.rpc.introspector.Introspector.java">pl/chilldev/commons/jsonrpc/rpc/introspector/Introspector.java</a>
                 </td>
                 <td>
                   0
@@ -620,35 +760,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.rpc.VoidMethod.java">pl/chilldev/commons/jsonrpc/rpc/VoidMethod.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jsonrpc.client.introspector.Introspector.java">pl/chilldev/commons/jsonrpc/client/introspector/Introspector.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.collections.pageable.PageableCollection.java">pl/chilldev/commons/collections/pageable/PageableCollection.java</a>
                 </td>
                 <td>
                   0
