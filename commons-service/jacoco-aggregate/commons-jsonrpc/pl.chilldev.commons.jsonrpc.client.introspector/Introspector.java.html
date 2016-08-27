@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../jacoco-resources/report.gif" type="image/gif"/><title>Introspector.java</title><link rel="stylesheet" href="../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../index.html" class="el_report">ChillDev Commons Service</a> &gt; <a href="../index.html" class="el_bundle">commons-jsonrpc</a> &gt; <a href="index.source.html" class="el_package">pl.chilldev.commons.jsonrpc.client.introspector</a> &gt; <span class="el_source">Introspector.java</span></div><h1>Introspector.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of the ChillDev-Commons.
+ *
+ * @license http://mit-license.org/ The MIT license
+ * @copyright 2015 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
+ */
+
+package pl.chilldev.commons.jsonrpc.client.introspector;
+
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.ServiceLoader;
+import java.util.Set;
+import java.util.function.Function;
+
+import net.bytebuddy.ByteBuddy;
+import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
+import net.bytebuddy.implementation.MethodDelegation;
+import net.bytebuddy.implementation.bind.annotation.AllArguments;
+import net.bytebuddy.implementation.bind.annotation.Origin;
+import net.bytebuddy.implementation.bind.annotation.RuntimeType;
+import net.bytebuddy.matcher.ElementMatchers;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import pl.chilldev.commons.jsonrpc.client.ClientModule;
+import pl.chilldev.commons.jsonrpc.client.Connector;
+import pl.chilldev.commons.jsonrpc.rpc.introspector.JsonRpcCall;
+import pl.chilldev.commons.jsonrpc.rpc.introspector.JsonRpcParam;
+
+/**
+ * Introspector for clients classes to automatically map method to JSON calls.
+ */
+<span class="fc" id="L41">public class Introspector</span>
+{
+    /**
+     * Wrapper for parameter mapper that reduces dependency to just call parameters.
+     *
+     * @param &lt;Type&gt; Mapping parameter type.
+     */
+    @FunctionalInterface
+    interface ParameterMapperWrapper&lt;Type&gt;
+    {
+        /**
+         * Populates call parameters with given value.
+         *
+         * @param value Parameter value passed to the call.
+         * @param params Current state of RPC call parameters.
+         */
+        void putParam(Type value, Map&lt;String, Object&gt; params);
+    }
+
+    /**
+     * RPC method call.
+     *
+     * @param &lt;Type&gt; Result type.
+     */
+    static class Call&lt;Type&gt;
+    {
+        /**
+         * RPC method name.
+         */
+        private String name;
+
+        /**
+         * Parameters mappers.
+         */
+        private List&lt;Introspector.ParameterMapperWrapper&lt;Object&gt;&gt; params;
+
+        /**
+         * Response handler.
+         */
+        private Function&lt;Object, ? extends Type&gt; handler;
+
+        /**
+         * Initializes RPC call handler.
+         *
+         * @param name Request method name.
+         * @param params Parameters mappers.
+         * @param handler Response handler.
+         */
+        Call(
+            String name,
+            List&lt;Introspector.ParameterMapperWrapper&lt;Object&gt;&gt; params,
+            Function&lt;Object, ? extends Type&gt; handler
+        )
+<span class="fc" id="L94">        {</span>
+<span class="fc" id="L95">            this.name = name;</span>
+<span class="fc" id="L96">            this.params = params;</span>
+<span class="fc" id="L97">            this.handler = handler;</span>
+<span class="fc" id="L98">        }</span>
+
+        /**
+         * Executes request on given connector.
+         *
+         * @param connector TCP connector.
+         * @param arguments Request parameters.
+         * @return Response result.
+         */
+        public Type execute(Connector connector, Object[] arguments)
+        {
+<span class="fc" id="L109">            Map&lt;String, Object&gt; params = new HashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">            for (int i = 0; i &lt; arguments.length; ++i) {</span>
+<span class="fc" id="L111">                this.params.get(i).putParam(arguments[i], params);</span>
+            }
+
+<span class="fc" id="L114">            return this.handler.apply(</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">                params.isEmpty()</span>
+<span class="fc" id="L116">                    ? connector.execute(this.name)</span>
+<span class="fc" id="L117">                    : connector.execute(this.name, params)</span>
+            );
+        }
+    }
+
+    /**
+     * RPC calls wrapper.
+     */
+    public static class Client
+    {
+        /**
+         * TCP connector.
+         */
+        private Connector connector;
+
+        /**
+         * RPC calls.
+         */
+<span class="fc" id="L135">        private Map&lt;Method, Introspector.Call&lt;?&gt;&gt; calls = new HashMap&lt;&gt;();</span>
+
+        /**
+         * Initializes service over given client.
+         *
+         * @param connector TCP connector.
+         */
+        Client(Connector connector)
+<span class="fc" id="L143">        {</span>
+<span class="fc" id="L144">            this.connector = connector;</span>
+<span class="fc" id="L145">        }</span>
+
+        /**
+         * Registers method call handler.
+         *
+         * @param method Client class method.
+         * @param call RPC call handler.
+         */
+        public void register(Method method, Introspector.Call&lt;?&gt; call)
+        {
+<span class="fc" id="L155">            this.calls.put(method, call);</span>
+<span class="fc" id="L156">        }</span>
+
+        /**
+         * Executes the RPC call.
+         *
+         * @param method Invoked method.
+         * @param arguments Call-time arguments.
+         * @return Execution result.
+         */
+        @RuntimeType
+        public Object execute(@Origin Method method, @AllArguments Object[] arguments)
+        {
+<span class="fc" id="L168">            return this.calls.get(method).execute(this.connector, arguments);</span>
+        }
+    }
+
+    /**
+     * Default parameter mapper.
+     */
+<span class="fc" id="L175">    private static final ParameterMapper&lt;Object&gt; DEFAULT_MAPPER</span>
+<span class="fc" id="L176">        = (String name, Object value, Map&lt;String, Object&gt; params) -&gt; params.put(name, value);</span>
+
+    /**
+     * Transparent response handler.
+     */
+<span class="fc" id="L181">    private static final Function&lt;Object, ?&gt; IDENTITY_HANDLER = (Object value) -&gt; value;</span>
+
+    /**
+     * Client modules SPIs.
+     */
+<span class="fc" id="L186">    private static Set&lt;ClientModule&gt; modules = new HashSet&lt;&gt;();</span>
+
+    /**
+     * Logger.
+     */
+<span class="fc" id="L191">    private Logger logger = LoggerFactory.getLogger(Introspector.class);</span>
+
+    /**
+     * Parameters mappers.
+     */
+<span class="fc" id="L196">    private Map&lt;Class&lt;?&gt;, ParameterMapper&lt;?&gt;&gt; mappers = new HashMap&lt;&gt;();</span>
+
+    /**
+     * Results handlers.
+     */
+<span class="fc" id="L201">    private Map&lt;Class&lt;?&gt;, Function&lt;Object, ?&gt;&gt; handlers = new HashMap&lt;&gt;();</span>
+
+    static {
+<span class="fc" id="L204">        ServiceLoader&lt;ClientModule&gt; loader = ServiceLoader.load(ClientModule.class);</span>
+<span class="fc" id="L205">        loader.forEach(Introspector.modules::add);</span>
+<span class="fc" id="L206">    }</span>
+
+    /**
+     * Registers parameter mapper for given class.
+     *
+     * @param type Parameter type.
+     * @param mapper Parameter mapper.
+     * @param &lt;Type&gt; Parameter type.
+     */
+    public &lt;Type&gt; void registerParameterMapper(
+        Class&lt;Type&gt; type,
+        ParameterMapper&lt;? super Type&gt; mapper
+    )
+    {
+<span class="fc" id="L220">        this.mappers.put(</span>
+            type,
+            mapper
+        );
+<span class="fc" id="L224">    }</span>
+
+    /**
+     * Registers response type handler for given class.
+     *
+     * @param type Response type.
+     * @param handler Response handler.
+     * @param &lt;Type&gt; Response object type.
+     */
+    public &lt;Type&gt; void registerResultHandler(
+        Class&lt;Type&gt; type,
+        Function&lt;Object, ? extends Type&gt; handler
+    )
+    {
+<span class="fc" id="L238">        this.handlers.put(</span>
+            type,
+            handler
+        );
+<span class="fc" id="L242">    }</span>
+
+    /**
+     * Builds client wrapper that handles all of the JSON-RPC calls.
+     *
+     * @param type Base client type.
+     * @param connector TPC connector to use for the calls.
+     * @param &lt;Type&gt; Client type.
+     * @return Client instance.
+     */
+    public &lt;Type&gt; Class&lt;? extends Type&gt; createClient(Class&lt;Type&gt; type, Connector connector)
+    {
+<span class="fc" id="L254">        return new ByteBuddy()</span>
+<span class="fc" id="L255">            .subclass(type)</span>
+<span class="fc" id="L256">            .method(ElementMatchers.isAnnotatedWith(JsonRpcCall.class))</span>
+<span class="fc" id="L257">            .intercept(MethodDelegation.to(this.buildClient(type, connector)))</span>
+<span class="fc" id="L258">            .make()</span>
+<span class="fc" id="L259">            .load(this.getClass().getClassLoader(), ClassLoadingStrategy.Default.WRAPPER)</span>
+<span class="fc" id="L260">            .getLoaded();</span>
+    }
+
+    /**
+     * Creates RPC client.
+     *
+     * @param type Base client type.
+     * @param connector TPC connector to use for the calls.
+     * @return RPC client.
+     */
+    private Introspector.Client buildClient(Class&lt;?&gt; type, Connector connector)
+    {
+<span class="fc" id="L272">        Introspector.Client client = new Introspector.Client(connector);</span>
+
+<span class="fc bfc" id="L274" title="All 2 branches covered.">        for (Method method : type.getMethods()) {</span>
+<span class="fc bfc" id="L275" title="All 2 branches covered.">            if (method.isAnnotationPresent(JsonRpcCall.class)) {</span>
+<span class="fc" id="L276">                this.logger.debug(&quot;Found {}.{} method as JSON-RPC request.&quot;, type.getName(), method.getName());</span>
+
+<span class="fc" id="L278">                JsonRpcCall call = method.getAnnotation(JsonRpcCall.class);</span>
+
+<span class="fc" id="L280">                Parameter[] parameters = method.getParameters();</span>
+<span class="fc" id="L281">                List&lt;Introspector.ParameterMapperWrapper&lt;Object&gt;&gt; mappers</span>
+                    = new ArrayList&lt;&gt;(parameters.length);
+
+                // build parameters resolvers
+<span class="fc bfc" id="L285" title="All 2 branches covered.">                for (Parameter parameter : parameters) {</span>
+                    // register synthetic RPC handler
+<span class="fc" id="L287">                    mappers.add(this.createParameterMapper(parameter));</span>
+                }
+
+                // response handler
+<span class="fc" id="L291">                Class&lt;?&gt; response = method.getReturnType();</span>
+<span class="fc bfc" id="L292" title="All 2 branches covered.">                Function&lt;Object, ?&gt; handler = this.handlers.containsKey(response)</span>
+<span class="fc" id="L293">                    ? this.handlers.get(response)</span>
+<span class="fc" id="L294">                    : Introspector.IDENTITY_HANDLER;</span>
+
+<span class="fc" id="L296">                client.register(</span>
+                    // use overridden name if set
+                    method,
+                    new Introspector.Call&lt;&gt;(
+<span class="fc bfc" id="L300" title="All 2 branches covered.">                        call.name().isEmpty() ? method.getName() : call.name(),</span>
+                        mappers,
+                        handler
+                    )
+                );
+            }
+        }
+
+<span class="fc" id="L308">        return client;</span>
+    }
+
+    /**
+     * Creates mapper for given parameter.
+     *
+     * @param parameter Method parameter.
+     * @param &lt;Type&gt; Parameter type.
+     * @return Parameter provider.
+     */
+    private &lt;Type&gt; Introspector.ParameterMapperWrapper&lt;Type&gt; createParameterMapper(Parameter parameter)
+    {
+        // try to fetch provider by parameter type
+        @SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L322">        Class&lt;Type&gt; type = (Class&lt;Type&gt;) parameter.getType();</span>
+        @SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc bfc" id="L324" title="All 2 branches covered.">        ParameterMapper&lt;? super Type&gt; mapper = this.mappers.containsKey(type)</span>
+<span class="fc" id="L325">            ? (ParameterMapper&lt;Type&gt;) this.mappers.get(type)</span>
+<span class="fc" id="L326">            : Introspector.DEFAULT_MAPPER;</span>
+
+<span class="fc" id="L328">        String name = parameter.getName();</span>
+
+        // override defaults if annotation is defined
+<span class="fc" id="L331">        JsonRpcParam metadata = parameter.getAnnotation(JsonRpcParam.class);</span>
+<span class="fc bfc" id="L332" title="All 2 branches covered.">        if (metadata != null) {</span>
+<span class="fc bfc" id="L333" title="All 2 branches covered.">            name = metadata.name().isEmpty() ? name : metadata.name();</span>
+        }
+
+<span class="fc" id="L336">        return this.createParameterMapperWrapper(mapper, name);</span>
+    }
+
+    /**
+     * Creates parameter mapper wrapper for given parameter scope.
+     *
+     * @param mapper Value mapper.
+     * @param name Parameter name.
+     * @param &lt;Type&gt; Parameter type.
+     * @return Wrapped parameter mapper.
+     */
+    private &lt;Type&gt; Introspector.ParameterMapperWrapper&lt;Type&gt; createParameterMapperWrapper(
+        ParameterMapper&lt;? super Type&gt; mapper,
+        String name
+    )
+    {
+<span class="fc" id="L352">        return (Type value, Map&lt;String, Object&gt; params) -&gt; mapper.putParam(name, value, params);</span>
+    }
+
+    /**
+     * Creates introspector initializes with SPI services.
+     *
+     * @return Introspector.
+     */
+    public static Introspector createDefault()
+    {
+<span class="fc" id="L362">        Introspector introspector = new Introspector();</span>
+
+<span class="fc" id="L364">        Introspector.modules.forEach((ClientModule module) -&gt; module.initializeIntrospector(introspector));</span>
+
+<span class="fc" id="L366">        return introspector;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

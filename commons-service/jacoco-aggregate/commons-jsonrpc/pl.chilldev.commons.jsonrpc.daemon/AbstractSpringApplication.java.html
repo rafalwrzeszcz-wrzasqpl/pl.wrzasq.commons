@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../jacoco-resources/report.gif" type="image/gif"/><title>AbstractSpringApplication.java</title><link rel="stylesheet" href="../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../index.html" class="el_report">ChillDev Commons Service</a> &gt; <a href="../index.html" class="el_bundle">commons-jsonrpc</a> &gt; <a href="index.source.html" class="el_package">pl.chilldev.commons.jsonrpc.daemon</a> &gt; <span class="el_source">AbstractSpringApplication.java</span></div><h1>AbstractSpringApplication.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of the ChillDev-Commons.
+ *
+ * @license http://mit-license.org/ The MIT license
+ * @copyright 2015 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
+ */
+
+package pl.chilldev.commons.jsonrpc.daemon;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+import org.springframework.beans.factory.BeanFactoryUtils;
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+/**
+ * Base daemon implementation based on Spring context.
+ */
+<span class="fc" id="L20">public abstract class AbstractSpringApplication extends AbstractApplication</span>
+{
+    /**
+     * Configures the application before it starts.
+     *
+     * &lt;p&gt;
+     * Defining beans of this type allows one to customize application behavior.
+     * &lt;/p&gt;
+     */
+    @FunctionalInterface
+    public interface ApplicationConfigurer
+    {
+        /**
+         * Configures application properties.
+         *
+         * @param application Subject application.
+         */
+        void configureApplication(AbstractApplication application);
+    }
+
+    /**
+     * Application context environment.
+     */
+    private AnnotationConfigApplicationContext context;
+
+    /**
+     * Runs all listeners.
+     */
+    @Override
+    public void start()
+    {
+        // load fresh context
+<span class="fc" id="L52">        this.logger.info(&quot;Loading application context.&quot;);</span>
+<span class="fc" id="L53">        this.context = new AnnotationConfigApplicationContext();</span>
+<span class="fc" id="L54">        this.context.scan(this.getPackageToScan());</span>
+<span class="fc" id="L55">        this.context.refresh();</span>
+
+        // configures current application
+        for (AbstractSpringApplication.ApplicationConfigurer configurer
+<span class="fc bfc" id="L59" title="All 2 branches covered.">            : BeanFactoryUtils.beansOfTypeIncludingAncestors(</span>
+                this.context,
+                AbstractSpringApplication.ApplicationConfigurer.class
+<span class="fc" id="L62">            ).values()</span>
+        )
+        {
+<span class="fc" id="L65">            configurer.configureApplication(this);</span>
+<span class="fc" id="L66">        }</span>
+
+<span class="fc" id="L68">        super.start();</span>
+<span class="fc" id="L69">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void stop()
+    {
+<span class="fc" id="L77">        super.stop();</span>
+
+        // clean up the context
+<span class="fc bfc" id="L80" title="All 2 branches covered.">        if (this.context != null) {</span>
+<span class="fc" id="L81">            this.context.close();</span>
+        }
+<span class="fc" id="L83">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Collection&lt;Listener&lt;?&gt;&gt; buildListeners()
+    {
+<span class="fc" id="L91">        Collection&lt;Listener&lt;?&gt;&gt; listeners = new ArrayList&lt;&gt;();</span>
+
+        // this is to cast raw types into generics
+<span class="fc" id="L94">        BeanFactoryUtils.beansOfTypeIncludingAncestors(</span>
+            this.context,
+            Listener.class
+<span class="fc" id="L97">        ).values().forEach(listeners::add);</span>
+
+<span class="fc" id="L99">        return listeners;</span>
+    }
+
+    /**
+     * Returns base package name for context scanning.
+     *
+     * @return Package name that contains any Spring configuration.
+     */
+    protected String getPackageToScan()
+    {
+<span class="fc" id="L109">        return this.getClass().getPackage().getName();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractListenerBeanDefinitionParser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ChillDev Commons Service</a> &gt; <a href="index.source.html" class="el_package">pl.chilldev.commons.service.spring.config</a> &gt; <span class="el_source">AbstractListenerBeanDefinitionParser.java</span></div><h1>AbstractListenerBeanDefinitionParser.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of the ChillDev-Commons.
+ *
+ * @license http://mit-license.org/ The MIT license
+ * @copyright 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
+ */
+
+package pl.chilldev.commons.service.spring.config;
+
+import java.net.InetSocketAddress;
+
+import org.springframework.beans.MutablePropertyValues;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.config.ConstructorArgumentValues;
+import org.springframework.beans.factory.config.RuntimeBeanReference;
+import org.springframework.beans.factory.support.AbstractBeanDefinition;
+import org.springframework.beans.factory.support.GenericBeanDefinition;
+import org.springframework.beans.factory.xml.BeanDefinitionParser;
+import org.springframework.beans.factory.xml.ParserContext;
+
+import org.springframework.transaction.interceptor.TransactionProxyFactoryBean;
+
+import org.w3c.dom.Element;
+
+/**
+ * Handler for listener beans.
+ */
+<span class="fc" id="L28">public abstract class AbstractListenerBeanDefinitionParser</span>
+    implements BeanDefinitionParser
+{
+    /**
+     * `name=&quot;&quot;` attribute.
+     */
+    private static final String ATTRIBUTE_NAME = &quot;name&quot;;
+
+    /**
+     * `host=&quot;&quot;` attribute.
+     */
+    private static final String ATTRIBUTE_HOST = &quot;host&quot;;
+
+    /**
+     * `port=&quot;&quot;` attribute.
+     */
+    private static final String ATTRIBUTE_PORT = &quot;port&quot;;
+
+    /**
+     * `maxPacketSize=&quot;&quot;` attribute.
+     */
+    private static final String ATTRIBUTE_MAXPACKETSIZE = &quot;maxPacketSize&quot;;
+
+    /**
+     * `dataSource=&quot;&quot;` attribute.
+     */
+    private static final String ATTRIBUTE_DATASOURCE = &quot;dataSource&quot;;
+
+    /**
+     * `address` property name.
+     */
+    private static final String PROPERTY_ADDRESS = &quot;address&quot;;
+
+    /**
+     * `target` property name.
+     */
+    private static final String PROPERTY_TARGET = &quot;target&quot;;
+
+    /**
+     * `transactionManager` property name.
+     */
+    private static final String PROPERTY_TRANSACTIONMANAGER = &quot;transactionManager&quot;;
+
+    /**
+     * `transactionAttributeSource` property name.
+     */
+    private static final String PROPERTY_TRANSACTIONATTRIBUTESOURCE = &quot;transactionAttributeSource&quot;;
+
+    /**
+     * `createListener()` factory method name.
+     */
+    private static final String METHOD_CREATELISTENER = &quot;createListener&quot;;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BeanDefinition parse(Element element, ParserContext parserContext)
+    {
+<span class="fc" id="L87">        Class&lt;?&gt; beanClass = this.getFactoryClass();</span>
+<span class="fc" id="L88">        String name = element.getAttribute(AbstractListenerBeanDefinitionParser.ATTRIBUTE_NAME);</span>
+
+        // main bean setup
+<span class="fc" id="L91">        GenericBeanDefinition listenerBean = new GenericBeanDefinition();</span>
+<span class="fc" id="L92">        listenerBean.setBeanClass(beanClass);</span>
+<span class="fc" id="L93">        listenerBean.setFactoryMethodName(AbstractListenerBeanDefinitionParser.METHOD_CREATELISTENER);</span>
+<span class="fc" id="L94">        listenerBean.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_CONSTRUCTOR);</span>
+
+<span class="fc" id="L96">        ConstructorArgumentValues arguments = listenerBean.getConstructorArgumentValues();</span>
+<span class="fc" id="L97">        MutablePropertyValues properties = listenerBean.getPropertyValues();</span>
+
+        // constructor arguments
+<span class="fc" id="L100">        arguments.addGenericArgumentValue(name);</span>
+<span class="fc" id="L101">        arguments.addGenericArgumentValue(</span>
+<span class="fc" id="L102">            this.createApiFacadeProxyBeanDefinition(</span>
+<span class="fc" id="L103">                element.getAttribute(AbstractListenerBeanDefinitionParser.ATTRIBUTE_DATASOURCE)</span>
+            )
+        );
+
+        // required properties
+<span class="fc" id="L108">        properties.addPropertyValue(</span>
+            AbstractListenerBeanDefinitionParser.PROPERTY_ADDRESS,
+<span class="fc" id="L110">            this.createAddressBeanDefinition(element)</span>
+        );
+
+        // optional properties
+<span class="fc bfc" id="L114" title="All 2 branches covered.">        if (element.hasAttribute(AbstractListenerBeanDefinitionParser.ATTRIBUTE_MAXPACKETSIZE)) {</span>
+<span class="fc" id="L115">            properties.addPropertyValue(</span>
+                AbstractListenerBeanDefinitionParser.ATTRIBUTE_MAXPACKETSIZE,
+<span class="fc" id="L117">                element.getAttribute(AbstractListenerBeanDefinitionParser.ATTRIBUTE_MAXPACKETSIZE)</span>
+            );
+        }
+
+        // register bean
+<span class="fc" id="L122">        parserContext.getRegistry().registerBeanDefinition(</span>
+<span class="fc" id="L123">            beanClass.getName() + AbstractDataSourceBeanDefinitionParser.SEPARATOR_BEANNAME + name,</span>
+            listenerBean
+        );
+
+<span class="fc" id="L127">        return null;</span>
+    }
+
+    /**
+     * Creates socket address bean definition.
+     *
+     * @param element Element with address configuration.
+     * @return Socket address definition.
+     */
+    private BeanDefinition createAddressBeanDefinition(Element element)
+    {
+<span class="fc" id="L138">        GenericBeanDefinition addressBean = new GenericBeanDefinition();</span>
+<span class="fc" id="L139">        addressBean.setBeanClass(InetSocketAddress.class);</span>
+
+        // set up address initialization
+<span class="fc" id="L142">        ConstructorArgumentValues arguments = addressBean.getConstructorArgumentValues();</span>
+<span class="fc" id="L143">        arguments.addGenericArgumentValue(</span>
+<span class="fc" id="L144">            element.getAttribute(AbstractListenerBeanDefinitionParser.ATTRIBUTE_HOST),</span>
+            &quot;java.lang.String&quot;
+        );
+<span class="fc" id="L147">        arguments.addGenericArgumentValue(</span>
+<span class="fc" id="L148">            element.getAttribute(AbstractListenerBeanDefinitionParser.ATTRIBUTE_PORT),</span>
+            &quot;int&quot;
+        );
+
+<span class="fc" id="L152">        return addressBean;</span>
+    }
+
+    /**
+     * Creates transactional proxy bean definition for API facade.
+     *
+     * @param name Data source scope identifier.
+     * @return API facade proxy bean.
+     */
+    private BeanDefinition createApiFacadeProxyBeanDefinition(String name)
+    {
+<span class="fc" id="L163">        GenericBeanDefinition proxyBean = new GenericBeanDefinition();</span>
+<span class="fc" id="L164">        proxyBean.setBeanClass(TransactionProxyFactoryBean.class);</span>
+
+<span class="fc" id="L166">        MutablePropertyValues properties = proxyBean.getPropertyValues();</span>
+
+        // original API facade
+<span class="fc" id="L169">        properties.addPropertyValue(</span>
+            AbstractListenerBeanDefinitionParser.PROPERTY_TARGET,
+<span class="fc" id="L171">            this.createApiFacadeBeanDefinition(name)</span>
+        );
+
+<span class="fc" id="L174">        properties.addPropertyValue(</span>
+            AbstractListenerBeanDefinitionParser.PROPERTY_TRANSACTIONMANAGER,
+            new RuntimeBeanReference(
+                AbstractDataSourceBeanDefinitionParser.BEANNAME_TRANSACTIONMANAGER
+                    + AbstractDataSourceBeanDefinitionParser.SEPARATOR_BEANNAME
+                    + name
+            )
+        );
+<span class="fc" id="L182">        properties.addPropertyValue(</span>
+            AbstractListenerBeanDefinitionParser.PROPERTY_TRANSACTIONATTRIBUTESOURCE,
+            new RuntimeBeanReference(AbstractListenerBeanDefinitionParser.PROPERTY_TRANSACTIONATTRIBUTESOURCE)
+        );
+
+<span class="fc" id="L187">        return proxyBean;</span>
+    }
+
+    /**
+     * Creates API facade bean definition.
+     *
+     * @param name Data source scope identifier.
+     * @return API facade bean.
+     */
+    protected abstract BeanDefinition createApiFacadeBeanDefinition(String name);
+
+    /**
+     * Provides factory class for bean definition.
+     *
+     * @return Factory class.
+     */
+    protected abstract Class&lt;?&gt; getFactoryClass();
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

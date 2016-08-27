@@ -1,0 +1,5 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+ChillDev Commons Service,pl.chilldev.commons.service.spring.config,AbstractDataSourceBeanDefinitionParser,0,320,0,4,0,74,0,10,0,8
+ChillDev Commons Service,pl.chilldev.commons.service.spring.config,AbstractListenerBeanDefinitionParser,0,135,0,2,0,37,0,5,0,4
+ChillDev Commons Service,pl.chilldev.commons.service.config,BaseApplicationConfiguration,0,53,0,0,0,9,0,5,0,5
+ChillDev Commons Service,pl.chilldev.commons.service.api,AbstractApiFacade,0,58,0,4,0,15,0,5,0,3

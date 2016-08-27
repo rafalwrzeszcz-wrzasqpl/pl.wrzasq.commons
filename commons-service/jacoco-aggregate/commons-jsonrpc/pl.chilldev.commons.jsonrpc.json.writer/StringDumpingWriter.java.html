@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../jacoco-resources/report.gif" type="image/gif"/><title>StringDumpingWriter.java</title><link rel="stylesheet" href="../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../index.html" class="el_report">ChillDev Commons Service</a> &gt; <a href="../index.html" class="el_bundle">commons-jsonrpc</a> &gt; <a href="index.source.html" class="el_package">pl.chilldev.commons.jsonrpc.json.writer</a> &gt; <span class="el_source">StringDumpingWriter.java</span></div><h1>StringDumpingWriter.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of the ChillDev-Commons.
+ *
+ * @license http://mit-license.org/ The MIT license
+ * @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+ */
+
+package pl.chilldev.commons.jsonrpc.json.writer;
+
+import java.io.IOException;
+
+import net.minidev.json.JSONStyle;
+import net.minidev.json.reader.JsonWriterI;
+
+/**
+ * Generic JSON dumper for types with plain string representation.
+ */
+<span class="fc" id="L18">public class StringDumpingWriter</span>
+    implements
+        JsonWriterI&lt;Object&gt;
+{
+    /**
+     * Dumps object as a string representation.
+     *
+     * @param value Value.
+     * @param out Output stream.
+     * @param compression JSON formatter style.
+     * @throws IOException When write to output stream fails.
+     */
+    @Override
+    public void writeJSONString(Object value, Appendable out, JSONStyle compression)
+        throws
+            IOException
+    {
+<span class="fc" id="L35">        compression.writeString(out, value.toString());</span>
+<span class="fc" id="L36">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

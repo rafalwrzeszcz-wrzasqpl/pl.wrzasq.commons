@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BaseApplicationConfiguration.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ChillDev Commons Service</a> &gt; <a href="index.source.html" class="el_package">pl.chilldev.commons.service.config</a> &gt; <span class="el_source">BaseApplicationConfiguration.java</span></div><h1>BaseApplicationConfiguration.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of the ChillDev-Commons.
+ *
+ * @license http://mit-license.org/ The MIT license
+ * @copyright 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
+ */
+
+package pl.chilldev.commons.service.config;
+
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
+
+import java.util.UUID;
+
+import javax.validation.Validation;
+import javax.validation.Validator;
+
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
+import net.minidev.json.JSONValue;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import org.springframework.data.domain.Sort;
+
+import org.springframework.transaction.annotation.AnnotationTransactionAttributeSource;
+import org.springframework.transaction.interceptor.TransactionAttributeSource;
+
+import pl.chilldev.commons.jsonrpc.json.ParamsRetriever;
+import pl.chilldev.commons.jsonrpc.json.writer.DateTimeWriter;
+import pl.chilldev.commons.jsonrpc.json.writer.SortWriter;
+import pl.chilldev.commons.jsonrpc.json.writer.StringDumpingWriter;
+import pl.chilldev.commons.jsonrpc.rpc.introspector.Introspector;
+
+/**
+ * General services definition that are present in every service.
+ */
+@Configuration
+<span class="fc" id="L40">public class BaseApplicationConfiguration</span>
+{
+    static {
+        // register JSON handlers
+<span class="fc" id="L44">        ParamsRetriever.OBJECT_MAPPER.registerModule(new JavaTimeModule());</span>
+<span class="fc" id="L45">        JSONValue.defaultWriter.registerWriter(new StringDumpingWriter(), UUID.class);</span>
+<span class="fc" id="L46">        JSONValue.defaultWriter.registerWriter(new SortWriter(), Sort.class);</span>
+<span class="fc" id="L47">        JSONValue.defaultWriter.registerWriter(</span>
+            new DateTimeWriter(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
+            OffsetDateTime.class
+        );
+<span class="fc" id="L51">    }</span>
+
+    /**
+     * Introspector instance.
+     *
+     * @return Introspector.
+     */
+    @Bean
+    public Introspector introspector()
+    {
+<span class="fc" id="L61">        return Introspector.createDefault();</span>
+    }
+
+    /**
+     * Validator instance.
+     *
+     * @return Validator.
+     */
+    @Bean
+    public Validator validator()
+    {
+<span class="fc" id="L72">        return Validation.buildDefaultValidatorFactory().getValidator();</span>
+    }
+
+    /**
+     * Creates transaction metadata extractor.
+     *
+     * @return Annotation-bases transaction metadata extractor.
+     */
+    @Bean
+    public TransactionAttributeSource transactionAttributeSource()
+    {
+<span class="fc" id="L83">        return new AnnotationTransactionAttributeSource();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

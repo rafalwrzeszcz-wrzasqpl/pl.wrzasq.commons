@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../jacoco-resources/report.gif" type="image/gif"/><title>JavaModule.java</title><link rel="stylesheet" href="../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../index.html" class="el_report">ChillDev Commons Service</a> &gt; <a href="../index.html" class="el_bundle">commons-jsonrpc</a> &gt; <a href="index.source.html" class="el_package">pl.chilldev.commons.jsonrpc.client</a> &gt; <span class="el_source">JavaModule.java</span></div><h1>JavaModule.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of the ChillDev-Commons.
+ *
+ * @license http://mit-license.org/ The MIT license
+ * @copyright 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
+ */
+
+package pl.chilldev.commons.jsonrpc.client;
+
+import java.util.UUID;
+
+import pl.chilldev.commons.jsonrpc.client.introspector.Introspector;
+
+/**
+ * Core Java types handling.
+ */
+<span class="fc" id="L17">public class JavaModule implements ClientModule</span>
+{
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void initializeIntrospector(Introspector introspector)
+    {
+        // response types handlers
+
+        // UUID handling
+<span class="fc" id="L28">        introspector.registerResultHandler(</span>
+            UUID.class,
+<span class="fc" id="L30">            (Object response) -&gt; UUID.fromString(response.toString())</span>
+        );
+<span class="fc" id="L32">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
