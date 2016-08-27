@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TimestampableListener.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ChillDev Commons DB</a> &gt; <a href="index.source.html" class="el_package">pl.chilldev.commons.db.timestampable</a> &gt; <span class="el_source">TimestampableListener.java</span></div><h1>TimestampableListener.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of the ChillDev-Commons.
+ *
+ * @license http://mit-license.org/ The MIT license
+ * @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+ */
+
+package pl.chilldev.commons.db.timestampable;
+
+import java.lang.reflect.Field;
+
+import java.time.OffsetDateTime;
+
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.reflect.FieldUtils;
+
+/**
+ * Handler for timestampable annotations.
+ */
+<span class="fc" id="L23">public class TimestampableListener</span>
+{
+    /**
+     * Fills all marked fields with timestamps.
+     *
+     * @param timestampable Object to be filled.
+     * @param timestampType Type of operation to handler.
+     * @throws IllegalAccessException When accessing source field is impossible.
+     */
+    private void generateTimestamps(Object timestampable, TimestampType timestampType)
+        throws
+            IllegalAccessException
+    {
+<span class="fc" id="L36">        Class&lt;?&gt; type = timestampable.getClass();</span>
+
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        for (Field field : FieldUtils.getAllFields(type)) {</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">            if (field.isAnnotationPresent(Timestamp.class)) {</span>
+                // get timestamp configuration
+<span class="fc" id="L41">                Timestamp options = field.getDeclaredAnnotation(Timestamp.class);</span>
+
+                // verify timestamp type
+<span class="fc bfc" id="L44" title="All 2 branches covered.">                if (ArrayUtils.contains(options.value(), timestampType)) {</span>
+                    // generate timestamp
+<span class="fc" id="L46">                    FieldUtils.writeField(timestampable, field.getName(), OffsetDateTime.now(), true);</span>
+                }
+            }
+        }
+<span class="fc" id="L50">    }</span>
+
+    /**
+     * Saves timestamps marked for entity creation creation.
+     *
+     * @param timestampable Subject for timestamp handling.
+     * @throws IllegalAccessException When accessing source field is impossible.
+     */
+    @PrePersist
+    public void createTimestamps(Object timestampable)
+        throws
+            IllegalAccessException
+    {
+<span class="fc" id="L63">        this.generateTimestamps(timestampable, TimestampType.CREATE);</span>
+<span class="fc" id="L64">    }</span>
+
+    /**
+     * Saves timestamps marked for entity update creation.
+     *
+     * @param timestampable Subject for timestamp handling.
+     * @throws IllegalAccessException When accessing source field is impossible.
+     */
+    @PreUpdate
+    public void updateTimestamps(Object timestampable)
+        throws
+            IllegalAccessException
+    {
+<span class="fc" id="L77">        this.generateTimestamps(timestampable, TimestampType.UPDATE);</span>
+<span class="fc" id="L78">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
