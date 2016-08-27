@@ -31,7 +31,8 @@ env:
 before_install:
     - "wget http://apache.mirror.rafal.ca/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz"
     - "tar xzvf apache-maven-3.3.9-bin.tar.gz"
-    - "export M2=`pwd`/apache-maven-3.3.9/bin"
+    - "export M2_HOME=`pwd`/apache-maven-3.3.9"
+    - "export M2=$M2_HOME/bin"
     - "export PATH=$M2:$PATH"
 
 # this is not a boolean, this is a Linux `true` command to simply override this step
@@ -54,7 +55,7 @@ before_deploy:
 deploy:
     provider: "script"
     skip_cleanup: true
-    script: "mvn deploy site-deploy -P deploy --settings .travis/settings.xml"
+    script: "mvn deploy -P deploy --settings .travis/settings.xml"
     on:
         branch: "master"
         jdk: "oraclejdk8"
