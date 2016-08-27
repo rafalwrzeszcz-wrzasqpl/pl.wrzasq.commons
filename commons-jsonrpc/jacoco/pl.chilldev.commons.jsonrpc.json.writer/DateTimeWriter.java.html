@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DateTimeWriter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ChillDev Commons JSON-RPC</a> &gt; <a href="index.source.html" class="el_package">pl.chilldev.commons.jsonrpc.json.writer</a> &gt; <span class="el_source">DateTimeWriter.java</span></div><h1>DateTimeWriter.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of the ChillDev-Commons.
+ *
+ * @license http://mit-license.org/ The MIT license
+ * @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+ */
+
+package pl.chilldev.commons.jsonrpc.json.writer;
+
+import java.io.IOException;
+
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
+
+import net.minidev.json.JSONStyle;
+import net.minidev.json.reader.JsonWriterI;
+
+/**
+ * Generic JSON dumper for types with plain string representation.
+ */
+public class DateTimeWriter
+    implements
+        JsonWriterI&lt;TemporalAccessor&gt;
+{
+    /**
+     * Assigned formatter.
+     */
+    private DateTimeFormatter formatter;
+
+    /**
+     * Initializes writer with given date-time formatter.
+     *
+     * @param formatter Formatter.
+     */
+    public DateTimeWriter(DateTimeFormatter formatter)
+<span class="fc" id="L36">    {</span>
+<span class="fc" id="L37">        this.formatter = formatter;</span>
+<span class="fc" id="L38">    }</span>
+
+    /**
+     * Dumps object as a string representation.
+     *
+     * @param value Value.
+     * @param out Output stream.
+     * @param compression JSON formatter style.
+     * @throws IOException When write to output stream fails.
+     */
+    @Override
+    public void writeJSONString(TemporalAccessor value, Appendable out, JSONStyle compression)
+        throws
+            IOException
+    {
+<span class="fc" id="L53">        compression.writeString(out, this.formatter.format(value));</span>
+<span class="fc" id="L54">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

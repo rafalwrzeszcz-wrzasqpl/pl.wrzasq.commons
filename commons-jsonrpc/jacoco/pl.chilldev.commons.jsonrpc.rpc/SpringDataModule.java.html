@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SpringDataModule.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ChillDev Commons JSON-RPC</a> &gt; <a href="index.source.html" class="el_package">pl.chilldev.commons.jsonrpc.rpc</a> &gt; <span class="el_source">SpringDataModule.java</span></div><h1>SpringDataModule.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of the ChillDev-Commons.
+ *
+ * @license http://mit-license.org/ The MIT license
+ * @copyright 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
+ */
+
+package pl.chilldev.commons.jsonrpc.rpc;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import pl.chilldev.commons.jsonrpc.json.ParamsRetriever;
+import pl.chilldev.commons.jsonrpc.rpc.introspector.Introspector;
+
+/**
+ * Spring-Data types handling module.
+ */
+<span class="fc" id="L22">public class SpringDataModule implements DispatcherModule</span>
+{
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void initializeIntrospector(Introspector introspector)
+    {
+        // parameters retrievers
+
+        // Spring Data paged request retriever
+<span class="fc" id="L33">        introspector.registerParameterProvider(</span>
+            Pageable.class,
+            (String name, ParamsRetriever params, boolean optional, String defaultValue) -&gt;
+<span class="fc" id="L36">                params.getPageable(Integer.parseInt(defaultValue))</span>
+        );
+
+        // return types handlers
+
+        // Spring Data paged response handler
+<span class="fc" id="L42">        introspector.registerResultMapper(</span>
+            Page.class,
+            (Page page) -&gt; {
+<span class="fc" id="L45">                Map&lt;String, Object&gt; result = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L46">                result.put(&quot;count&quot;, page.getTotalElements());</span>
+<span class="fc" id="L47">                result.put(&quot;records&quot;, page.getContent());</span>
+<span class="fc" id="L48">                return result;</span>
+            }
+        );
+<span class="fc" id="L51">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

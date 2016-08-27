@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../jacoco-resources/report.gif" type="image/gif"/><title>Runner.java</title><link rel="stylesheet" href="../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../index.html" class="el_report">ChillDev Commons JSON-RPC</a> &gt; <a href="../index.html" class="el_bundle">commons-daemon</a> &gt; <a href="index.source.html" class="el_package">pl.chilldev.commons.daemon.lifecycle</a> &gt; <span class="el_source">Runner.java</span></div><h1>Runner.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of the ChillDev-Commons.
+ *
+ * @license http://mit-license.org/ The MIT license
+ * @copyright 2014 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
+ */
+
+package pl.chilldev.commons.daemon.lifecycle;
+
+// dependencies and sub-modules
+import org.apache.commons.daemon.Daemon;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * Handles application shutdown.
+ */
+<span class="fc" id="L19">public class Runner</span>
+{
+    /**
+     * Logger.
+     */
+<span class="fc" id="L24">    private Logger logger = LoggerFactory.getLogger(Runner.class);</span>
+
+    /**
+     * Runs application.
+     *
+     * &lt;p&gt;
+     * This method runs application directly by invoking Apache Commons Daemon flow.
+     * &lt;/p&gt;
+     *
+     * &lt;p&gt;
+     * Standard usage is just `(new Runner()).run(new ChillDevApplication())`.
+     * &lt;/p&gt;
+     *
+     * @param daemon Daemon application.
+     */
+    public void run(Daemon daemon)
+    {
+        try {
+            // perform initialization and start daemon
+<span class="fc" id="L43">            daemon.init(null);</span>
+<span class="fc" id="L44">            daemon.start();</span>
+
+            // schedule shutdown hook for daemon cleanup
+<span class="fc" id="L47">            Runtime.getRuntime().addShutdownHook(new Shutdown(daemon));</span>
+            //CHECKSTYLE:OFF: IllegalCatchCheck
+<span class="fc" id="L49">        } catch (Exception error) {</span>
+            //CHECKSTYLE:ON: IllegalCatchCheck
+<span class="fc" id="L51">            this.logger.error(&quot;Fatal error {}.&quot;, error.getMessage(), error);</span>
+
+<span class="fc" id="L53">            throw new RuntimeException(</span>
+<span class="fc" id="L54">                String.format(&quot;Fatal error: %s&quot;, error.getMessage()),</span>
+                error
+            );
+<span class="fc" id="L57">        }</span>
+<span class="fc" id="L58">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
