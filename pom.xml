@@ -21,7 +21,7 @@
     <parent>
         <groupId>pl.chilldev.parent</groupId>
         <artifactId>parent-opensource</artifactId>
-        <version>0.1.0</version>
+        <version>0.1.1</version>
     </parent>
 
     <!-- project meta info -->
@@ -102,6 +102,20 @@
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
+
+    <!-- plugins configuration -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.versioneye</groupId>
+                <artifactId>versioneye-maven-plugin</artifactId>
+                <inherited>false</inherited>
+                <configuration>
+                    <projectId>55e2bf35c6d8f2001d000332</projectId>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <!-- build profiles -->
     <profiles>

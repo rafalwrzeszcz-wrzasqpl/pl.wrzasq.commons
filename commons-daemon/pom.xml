@@ -29,6 +29,20 @@
     <description>Helper components for handling daemon services with Apache Commons Daemon.</description>
     <inceptionYear>2014</inceptionYear>
 
+    <!-- plugins configuration -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.versioneye</groupId>
+                <artifactId>versioneye-maven-plugin</artifactId>
+                <inherited>false</inherited>
+                <configuration>
+                    <projectId>55e2bf2ec6d8f2001d000327</projectId>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
     <!-- project dependencies -->
     <dependencies>
         <dependency>

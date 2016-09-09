@@ -2,11 +2,12 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2015 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.chilldev.commons.db;
 
+import java.util.Objects;
 import java.util.UUID;
 
 import org.junit.Test;
@@ -47,7 +48,7 @@ public class AbstractEntityTest
         AbstractEntity entity = new Entity();
         Assert.assertTrue(
             "AbstractEntity.equals() should return TRUE if the object is the very same instance.",
-            entity.equals(entity)
+            Objects.equals(entity, entity)
         );
     }
 

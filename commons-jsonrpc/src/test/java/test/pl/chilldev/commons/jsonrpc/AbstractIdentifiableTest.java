@@ -7,6 +7,7 @@
 
 package test.pl.chilldev.commons.jsonrpc;
 
+import java.util.Objects;
 import java.util.UUID;
 
 import org.junit.Test;
@@ -36,7 +37,7 @@ public class AbstractIdentifiableTest
         AbstractIdentifiable<UUID> entity = new AbstractIdentifiable<UUID>() {};
         Assert.assertTrue(
             "AbstractIdentifiable.equals() should return TRUE if the object is the very same instance.",
-            entity.equals(entity)
+            Objects.equals(entity, entity)
         );
     }
 

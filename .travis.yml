@@ -26,6 +26,8 @@ env:
             secure: "BBjzAhf8ULex4lJO+s2C6E8W+4vD2xDA/NWKLMXqPFDbhiQtGG20oUuexZMaa85ZkCCFNqYcb9WACOZyIzPEp5jwE5WKMCupQDDKLoqeVhK6VVxl7dIkC8wtQZQq9oPCQdk4JEmLaWp781pwPehQWwfdXgtjqEOa91nffIDXCfY="
         -
             secure: "S4wuhuqPiFgCIv1x/kPEp+ZooRGe5eJUSf2YZSlA/VA4BVCEi3LSv2X10OXofflzDndToX1nwP+bSwaxwt+2pie4AWE2M0hHDkmZDcIkU1zsxaUP/2nFKgm1SDgxz9HAd2mgcKLcBcDlC2O+usFYUIIMPK+UvlH3WRv+tcAtyFU="
+        -
+            secure: "F0R8B/9pRaKIewRo+CMem7tkksAy25jscvPG4C3H9bJ7PttrCvFswpVY3TygGiz8VYXUXLtcJt4w9yT9Rzla86e7bN5TVT49hCd1MI5B1cGcfPvhq/1chuoYaoEZS3Bslz4MxfSzWrPKp8+bkW8t1CsWZTbGwziWznbSReoMNns="
 
 #TODO: this is just to prevent failing build with old Maven version
 before_install:
@@ -64,8 +66,7 @@ cache:
     directories:
         - "$HOME/.m2/"
 
-before_cache:
-    - "rm -rf $HOME/.m2/repository/pl/chilldev/commons"
+before_cache: "rm -rf $HOME/.m2/repository/pl/chilldev/commons"
 
 notifications:
     webhooks:

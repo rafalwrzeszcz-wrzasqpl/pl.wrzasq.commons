@@ -29,6 +29,20 @@
     <description>Base database and model-related structures and routines.</description>
     <inceptionYear>2015</inceptionYear>
 
+    <!-- plugins configuration -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.versioneye</groupId>
+                <artifactId>versioneye-maven-plugin</artifactId>
+                <inherited>false</inherited>
+                <configuration>
+                    <projectId>55e2dfddc6d8f2001c0004f0</projectId>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
     <!-- project dependencies -->
     <dependencies>
         <dependency>

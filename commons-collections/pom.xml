@@ -29,6 +29,20 @@
     <description>Collections-related utilities and data structures.</description>
     <inceptionYear>2015</inceptionYear>
 
+    <!-- plugins configuration -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.versioneye</groupId>
+                <artifactId>versioneye-maven-plugin</artifactId>
+                <inherited>false</inherited>
+                <configuration>
+                    <projectId>570e8cebfcd19a00518553f4</projectId>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.data</groupId>
