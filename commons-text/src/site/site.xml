@@ -16,7 +16,9 @@
 
         <menu name="Guide">
             <item name="HTML utilities" href="guide/html-utils.html"/>
+            <item name="Text formatter" href="guide/text-formatter.html"/>
             <item name="Slugifier" href="guide/slugifier.html"/>
+            <item name="Utils" href="guide/utils.html"/>
         </menu>
 
         <menu ref="reports"/>
