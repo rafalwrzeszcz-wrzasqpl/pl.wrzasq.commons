@@ -31,6 +31,12 @@ You can use libraries in your `pom.xml` by defining following dependencies:
 ```xml
 <dependency>
     <groupId>pl.chilldev.commons</groupId>
+    <artifactId>commons-collections</artifactId>
+    <version>${pl.chilldev.commons.version}</version>
+</dependency>
+
+<dependency>
+    <groupId>pl.chilldev.commons</groupId>
     <artifactId>commons-daemon</artifactId>
     <version>${pl.chilldev.commons.version}</version>
 </dependency>
@@ -38,18 +44,6 @@ You can use libraries in your `pom.xml` by defining following dependencies:
 <dependency>
     <groupId>pl.chilldev.commons</groupId>
     <artifactId>commons-db</artifactId>
-    <version>${pl.chilldev.commons.version}</version>
-</dependency>
-
-<dependency>
-    <groupId>pl.chilldev.commons</groupId>
-    <artifactId>commons-jsonrpc</artifactId>
-    <version>${pl.chilldev.commons.version}</version>
-</dependency>
-
-<dependency>
-    <groupId>pl.chilldev.commons</groupId>
-    <artifactId>commons-service</artifactId>
     <version>${pl.chilldev.commons.version}</version>
 </dependency>
 
@@ -69,8 +63,6 @@ You can of course pick only those parts that you need directly.
 -   [**Collections**](http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-collections/): general purpose routines for dealing with various types of collections,
 -   [**Daemon**](http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-daemon/): helper routines for handling *Apache Commons Daemon* services,
 -   [**DB**](http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-db/): base database and model-related structures and routines,
--   [**JSON-RPC**](http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-jsonrpc/): a bridge library that binds [**Netty**](http://netty.io/) with [**JSON-RPC 2.0 Base**](http://software.dzhuvinov.com/json-rpc-2.0-base.html).
--   [**Service**](http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-service/): addiotional utilities usefull when creating JSON-RPC services.
 -   [**Text**](http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-text/): various text processing utilities.
 
 # Resources

@@ -1,15 +1,15 @@
 <!---
-# This file is part of the ChillDev-Web.
+# This file is part of the ChillDev-Commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
 Text formatter feature holds formatters for different text formats allowing to generate **(X)HTML** code from various source types.
 
 ## Usage
 
-Central class for text processing is `pl.chilldev.web.core.text.TextFormatter` - it aggregates multiple format handlers. You can use it's instance to format source text in any registred format:
+Central class for text processing is `pl.chilldev.commons.text.TextFormatter` - it aggregates multiple format handlers. You can use it's instance to format source text in any registred format:
 
 ```java
 Formatter formatter = new Formatter();
@@ -34,7 +34,7 @@ String unknown = formatter.format("unknown", "foo");
 
 ### Plain text
 
-Handled by `pl.chilldev.web.core.text.formatter.PlainTextFormatter`. It returns HTML snippet that with all HTML special characters replaced by entities to avoid their interpretation. Also replaces new line characters with `<br/>` to map all lines.
+Handled by `pl.chilldev.commons.text.formatter.PlainTextFormatter`. It returns HTML snippet that with all HTML special characters replaced by entities to avoid their interpretation. Also replaces new line characters with `<br/>` to map all lines.
 
 ```java
 FormatterInterface formatHandler = new PlainTextFormatter();
@@ -45,7 +45,7 @@ formatHandler.transform("foo <bar>\nbaz");
 
 ### (X)HTML
 
-Handled by `pl.chilldev.web.core.text.formatter.HtmlFormatter`. Since we operate in (X)HTML by default this formatter does literally nothing - returns input text untouched.
+Handled by `pl.chilldev.commons.text.formatter.HtmlFormatter`. Since we operate in (X)HTML by default this formatter does literally nothing - returns input text untouched.
 
 ```java
 FormatterInterface formatHandler = new HtmlFormatter();
@@ -56,7 +56,7 @@ formatHandler.transform("foo <bar>\nbaz");
 
 ### Markdown
 
-Handled by `pl.chilldev.web.core.text.formatter.MarkdownFormatter`. Formats [Markdown](http://daringfireball.net/projects/markdown/syntax) into HTML. It uses [Pegdown](http://pegdown.org) with all available extensions.
+Handled by `pl.chilldev.commons.text.formatter.MarkdownFormatter`. Formats [Markdown](http://daringfireball.net/projects/markdown/syntax) into HTML. It uses [Pegdown](http://pegdown.org) with all available extensions.
 
 ```java
 FormatterInterface formatHandler = new MarkdownFormatter();
@@ -67,7 +67,7 @@ formatHandler.transform("**foo** _bar_");
 
 ## Custom implementation
 
-Apart from existing formatters there is an interface `pl.chilldev.web.core.text.formatter.FormatterInterface`. It can be used for implementing any custom format handler:
+Apart from existing formatters there is an interface `pl.chilldev.commons.text.formatter.FormatterInterface`. It can be used for implementing any custom format handler:
 
 ```java
 class MyTextFormatter implements FormatterInterface
