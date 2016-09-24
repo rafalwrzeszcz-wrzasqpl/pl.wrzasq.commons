@@ -150,5 +150,6 @@
         <module>commons-daemon</module>
         <module>commons-db</module>
         <module>commons-text</module>
+        <module>commons-web</module>
     </modules>
 </project>

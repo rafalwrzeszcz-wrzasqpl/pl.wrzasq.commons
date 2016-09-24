@@ -52,6 +52,12 @@ You can use libraries in your `pom.xml` by defining following dependencies:
     <artifactId>commons-text</artifactId>
     <version>${pl.chilldev.commons.version}</version>
 </dependency>
+
+<dependency>
+    <groupId>pl.chilldev.commons</groupId>
+    <artifactId>commons-web</artifactId>
+    <version>${pl.chilldev.commons.version}</version>
+</dependency>
 ```
 
 You can of course pick only those parts that you need directly.
@@ -64,6 +70,7 @@ You can of course pick only those parts that you need directly.
 -   [**Daemon**](http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-daemon/): helper routines for handling *Apache Commons Daemon* services,
 -   [**DB**](http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-db/): base database and model-related structures and routines,
 -   [**Text**](http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-text/): various text processing utilities.
+-   [**Web**](http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-web/): web-apps related stuff.
 
 # Resources
 
