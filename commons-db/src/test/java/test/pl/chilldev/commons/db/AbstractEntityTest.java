@@ -74,17 +74,6 @@ public class AbstractEntityTest
     }
 
     @Test
-    public void equalsNullId()
-    {
-        AbstractEntity object = new Entity();
-        AbstractEntity entity = new Entity();
-        Assert.assertFalse(
-            "AbstractEntity.equals() should return FALSE when it is not persisted.",
-            entity.equals(object)
-        );
-    }
-
-    @Test
     public void equals()
     {
         UUID id = UUID.randomUUID();
@@ -106,32 +95,6 @@ public class AbstractEntityTest
         Assert.assertFalse(
             "AbstractEntity.equals() should return FALSE when compared entity has different ID.",
             entity.equals(other)
-        );
-    }
-
-    @Test
-    public void testHashCode()
-    {
-        UUID id = UUID.randomUUID();
-        AbstractEntity entity = new Entity();
-        entity.setId(id);
-
-        Assert.assertEquals(
-            "AbstractEntity.hashCode() should return hash code that is equal to it's ID hash code.",
-            id.hashCode(),
-            entity.hashCode()
-        );
-    }
-
-    @Test
-    public void testHashCodeNull()
-    {
-        AbstractEntity entity = new Entity();
-
-        Assert.assertEquals(
-            "AbstractEntity.hashCode() should return 0 if entity is not persisted.",
-            0,
-            entity.hashCode()
         );
     }
 }
