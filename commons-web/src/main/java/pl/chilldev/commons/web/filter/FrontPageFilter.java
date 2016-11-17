@@ -22,7 +22,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
 import lombok.Setter;
@@ -47,48 +46,6 @@ import org.springframework.web.util.ContentCachingResponseWrapper;
 @Component("chillDevFrontPageFilter")
 public class FrontPageFilter implements Filter
 {
-    /**
-     * Request wrapper that overrides acceptable MIME type.
-     */
-    private static class FrontHttpServletRequest extends HttpServletRequestWrapper
-    {
-        /**
-         * Initializes wrapper with embedded request.
-         *
-         * @param request Nested request object.
-         */
-        FrontHttpServletRequest(HttpServletRequest request)
-        {
-            super(request);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getHeader(String name)
-        {
-            if (name.equalsIgnoreCase(HttpHeaders.ACCEPT)) {
-                return MediaType.APPLICATION_JSON_VALUE;
-            }
-
-            return super.getHeader(name);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Enumeration<String> getHeaders(String name)
-        {
-            if (name.equalsIgnoreCase(HttpHeaders.ACCEPT)) {
-                return Collections.enumeration(Collections.singletonList(MediaType.APPLICATION_JSON_VALUE));
-            }
-
-            return super.getHeaders(name);
-        }
-    }
-
     /**
      * Response wrapper that buffers the response.
      */
@@ -196,7 +153,6 @@ public class FrontPageFilter implements Filter
                     {
                         this.logger.trace("Rendering page response for {}.", request.getRequestURI());
 
-                        request = new FrontPageFilter.FrontHttpServletRequest(request);
                         response = new FrontPageFilter.FrontHttpServletResponse(response);
 
                         break;

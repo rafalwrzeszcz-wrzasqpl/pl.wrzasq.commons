@@ -8,7 +8,6 @@
 package test.pl.chilldev.commons.web.filter;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 
@@ -68,12 +67,6 @@ public class FrontPageFilterTest
     private View view;
 
     @Captor
-    private ArgumentCaptor<HttpServletRequest> requestCaptor;
-
-    @Captor
-    private ArgumentCaptor<HttpServletResponse> responseCaptor;
-
-    @Captor
     private ArgumentCaptor<Map<String, Object>> dataCaptor;
 
     @Test
@@ -102,35 +95,13 @@ public class FrontPageFilterTest
                     return null;
             })
             .when(this.chain)
-            .doFilter(this.requestCaptor.capture(), Mockito.isA(HttpServletResponse.class));
+            .doFilter(Mockito.isA(HttpServletRequest.class), Mockito.isA(HttpServletResponse.class));
 
         filter.doFilter(request, response, this.chain);
 
         Mockito
             .verify(this.view)
             .render(this.dataCaptor.capture(), Mockito.isA(HttpServletRequest.class), Mockito.same(response));
-
-        // request wrapper verification
-        Assert.assertEquals(
-            "FrontPageFilter.FrontHttpServletRequest.getHeader() should always return JSON for acceptable MIME type.",
-            MediaType.APPLICATION_JSON_VALUE,
-            this.requestCaptor.getValue().getHeader(HttpHeaders.ACCEPT)
-        );
-        Assert.assertEquals(
-            "FrontPageFilter.FrontHttpServletRequest.getHeader() should return real value for other header.",
-            FrontPageFilterTest.ACCEPT_LANGUAGE_VALUE,
-            this.requestCaptor.getValue().getHeader(HttpHeaders.ACCEPT_LANGUAGE)
-        );
-        Assert.assertEquals(
-            "FrontPageFilter.FrontHttpServletRequest.getHeaders() should always return JSON for acceptable MIME type.",
-            Collections.singletonList(MediaType.APPLICATION_JSON_VALUE),
-            Collections.list(this.requestCaptor.getValue().getHeaders(HttpHeaders.ACCEPT))
-        );
-        Assert.assertEquals(
-            "FrontPageFilter.FrontHttpServletRequest.getHeaders() should return real value for other header.",
-            Collections.singletonList(FrontPageFilterTest.ACCEPT_LANGUAGE_VALUE),
-            Collections.list(this.requestCaptor.getValue().getHeaders(HttpHeaders.ACCEPT_LANGUAGE))
-        );
 
         // response view verification
         Assert.assertTrue(
@@ -192,7 +163,7 @@ public class FrontPageFilterTest
                 return null;
             })
             .when(this.chain)
-            .doFilter(this.requestCaptor.capture(), Mockito.isA(HttpServletResponse.class));
+            .doFilter(Mockito.isA(HttpServletRequest.class), Mockito.isA(HttpServletResponse.class));
 
         filter.doFilter(request, response, this.chain);
 
@@ -222,7 +193,7 @@ public class FrontPageFilterTest
                 return null;
             })
             .when(this.chain)
-            .doFilter(this.requestCaptor.capture(), Mockito.isA(HttpServletResponse.class));
+            .doFilter(Mockito.isA(HttpServletRequest.class), Mockito.isA(HttpServletResponse.class));
 
         filter.doFilter(request, response, this.chain);
 
@@ -248,7 +219,7 @@ public class FrontPageFilterTest
                 return null;
             })
             .when(this.chain)
-            .doFilter(this.requestCaptor.capture(), Mockito.isA(HttpServletResponse.class));
+            .doFilter(Mockito.isA(HttpServletRequest.class), Mockito.isA(HttpServletResponse.class));
 
         filter.doFilter(request, response, this.chain);
 
@@ -275,7 +246,7 @@ public class FrontPageFilterTest
                 return null;
             })
             .when(this.chain)
-            .doFilter(this.requestCaptor.capture(), Mockito.isA(HttpServletResponse.class));
+            .doFilter(Mockito.isA(HttpServletRequest.class), Mockito.isA(HttpServletResponse.class));
 
         filter.doFilter(request, response, this.chain);
 
@@ -302,7 +273,7 @@ public class FrontPageFilterTest
                 return null;
             })
             .when(this.chain)
-            .doFilter(this.requestCaptor.capture(), Mockito.isA(HttpServletResponse.class));
+            .doFilter(Mockito.isA(HttpServletRequest.class), Mockito.isA(HttpServletResponse.class));
         Mockito
             .doThrow(Exception.class)
             .when(this.view)
