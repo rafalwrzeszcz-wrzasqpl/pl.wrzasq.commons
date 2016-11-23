@@ -1,0 +1,9 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+ChillDev Commons Text,pl.chilldev.commons.text.html,Utils,0,99,0,8,0,21,0,14,0,10
+ChillDev Commons Text,pl.chilldev.commons.text.slugifier,SimpleSlugifier,0,64,0,0,0,6,0,4,0,4
+ChillDev Commons Text,pl.chilldev.commons.text.slugifier,Slugifier,0,9,0,0,0,1,0,1,0,1
+ChillDev Commons Text,pl.chilldev.commons.text,TextProcessingException,0,9,0,0,0,4,0,2,0,2
+ChillDev Commons Text,pl.chilldev.commons.text,Formatter,0,40,0,2,0,7,0,4,0,3
+ChillDev Commons Text,pl.chilldev.commons.text.formatter,PlainTextFormatter,0,10,0,0,0,2,0,2,0,2
+ChillDev Commons Text,pl.chilldev.commons.text.formatter,HtmlFormatter,0,5,0,0,0,2,0,2,0,2
+ChillDev Commons Text,pl.chilldev.commons.text.formatter,MarkdownFormatter,0,14,0,0,0,3,0,2,0,2
