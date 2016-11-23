@@ -14,7 +14,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import pl.chilldev.commons.text.Formatter;
 import pl.chilldev.commons.text.TextProcessingException;
 import pl.chilldev.commons.text.formatter.FormatterInterface;

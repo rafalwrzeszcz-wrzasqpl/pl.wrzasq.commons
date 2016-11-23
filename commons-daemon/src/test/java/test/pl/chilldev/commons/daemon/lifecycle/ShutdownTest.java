@@ -2,19 +2,19 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2014 - 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2014 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.chilldev.commons.daemon.lifecycle;
 
+import org.apache.commons.daemon.Daemon;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.apache.commons.daemon.Daemon;
-
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import pl.chilldev.commons.daemon.lifecycle.Shutdown;
 

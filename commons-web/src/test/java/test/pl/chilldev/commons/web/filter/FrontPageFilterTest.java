@@ -27,7 +27,7 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -278,7 +278,7 @@ public class FrontPageFilterTest
             .doThrow(Exception.class)
             .when(this.view)
             .render(
-                Mockito.anyMapOf(String.class, Object.class),
+                Mockito.anyMap(),
                 Mockito.isA(HttpServletRequest.class),
                 Mockito.isA(HttpServletResponse.class)
             );
