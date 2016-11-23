@@ -57,7 +57,7 @@ before_deploy:
 deploy:
     provider: "script"
     skip_cleanup: true
-    script: "mvn deploy -P deploy --settings .travis/settings.xml"
+    script: "mvn deploy site-deploy -P deploy --settings .travis/settings.xml"
     on:
         branch: "master"
         jdk: "oraclejdk8"
