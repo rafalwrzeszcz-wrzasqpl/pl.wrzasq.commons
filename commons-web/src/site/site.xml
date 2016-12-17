@@ -16,6 +16,7 @@
 
         <menu name="Guide">
             <item name="Front page filter" href="guide/front-page.html"/>
+            <item name="Jetty daemon" href="guide/jetty-daemon.html"/>
         </menu>
 
         <menu ref="reports"/>

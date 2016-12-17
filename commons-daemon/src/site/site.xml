@@ -16,6 +16,7 @@
 
         <menu name="Guide">
             <item name="Futures" href="guide/shutdown.html"/>
+            <item name="Daemons" href="guide/daemon.html"/>
         </menu>
 
         <menu ref="reports"/>
