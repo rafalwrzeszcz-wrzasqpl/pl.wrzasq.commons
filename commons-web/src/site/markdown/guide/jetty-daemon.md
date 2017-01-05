@@ -50,7 +50,7 @@ public class MyWebDaemon extends AbstractWebDaemon
     private WebApplicationContextLoader contextLoader;
 
     @Override
-    protected Server createServer();
+    protected Server createServer()
     {
         // servlet context initialization
         ServletContextHandler servlet = new ServletContextHandler(ServletContextHandler.SESSIONS);
@@ -68,10 +68,42 @@ public class MyWebDaemon extends AbstractWebDaemon
     }
 
     @Override
-    protected void stopServer();
+    protected void stopServer()
     {
         // server can be managed by Spring with it's `.stop()` method as destroy method
         this.contextLoader.closeWebApplicationContext();
     }
 }
 ```
+
+To put it together you can use `pl.chilldev.commons.web.daemon.AbstractSpringWebDaemon` class that combines `ContextLoader` into `AbstractWebDaemon` flow.
+
+What you need to do then is to just point out your configuration class (and optionally active **Spring** profiles) and configure context of your servlet:
+
+```java
+import org.eclipse.jetty.servlet.ServletContextHandler;
+
+import org.springframework.beans.factory.BeanFactory;
+
+import pl.chilldev.commons.web.context.WebApplicationContextLoader;
+import pl.chilldev.commons.web.daemon.AbstractSpringWebDaemon;
+
+public class MyWebDaemon extends AbstractSpringWebDaemon
+{
+    private WebApplicationContextLoader contextLoader;
+
+    @Override
+    protected WebApplicationContextLoader createContextLoader()
+    {
+        return new WebApplicationContextLoader(YourConfigurationClass.class);
+    }
+
+    @Override
+    configureServletContext(ServletContextHandler servlet, BeanFactory beanFactory)
+    {
+        // configure application servlet - eg. assign filters
+    }
+}
+```
+
+In case you also want to customize servlet initialization you can customize it by overriding `createServletContext()` method.

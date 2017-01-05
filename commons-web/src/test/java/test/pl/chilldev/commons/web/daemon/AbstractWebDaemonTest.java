@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2016 - 2017 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.chilldev.commons.web.daemon;
@@ -18,7 +18,7 @@ import pl.chilldev.commons.web.daemon.AbstractWebDaemon;
 @RunWith(MockitoJUnitRunner.class)
 public class AbstractWebDaemonTest
 {
-    private static class TestServer extends Server
+    protected static class TestServer extends Server
     {
         @Override
         public void doStart()
@@ -28,7 +28,7 @@ public class AbstractWebDaemonTest
     }
 
     @Spy
-    private TestServer server = new AbstractWebDaemonTest.TestServer();
+    private AbstractWebDaemonTest.TestServer server = new AbstractWebDaemonTest.TestServer();
 
     @Spy
     private AbstractWebDaemon daemon = new AbstractWebDaemon()
