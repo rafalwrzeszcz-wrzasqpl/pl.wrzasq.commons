@@ -21,6 +21,11 @@ public abstract class AbstractWebDaemon extends AbstractDaemon
     public static final String ROOT_CONTEXT_PATH = "/";
 
     /**
+     * Filter path specification that matches all requests.
+     */
+    public static final String PATHSPEC_CATCH_ALL = "/*";
+
+    /**
      * Jetty HTTP server.
      */
     protected Server server;
