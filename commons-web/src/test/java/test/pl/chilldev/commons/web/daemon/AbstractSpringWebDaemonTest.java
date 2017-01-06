@@ -54,6 +54,11 @@ public class AbstractSpringWebDaemonTest extends AbstractSpringWebDaemon
             "AbstractSpringWebDaemon.createServletContext() should assign logger to context instance.",
             servlet.getLogger()
         );
+        Assert.assertEquals(
+            "AbstractSpringWebDaemon.createServletContext() should set root path to the servlet context.",
+            "/",
+            servlet.getContextPath()
+        );
     }
 
     @Test

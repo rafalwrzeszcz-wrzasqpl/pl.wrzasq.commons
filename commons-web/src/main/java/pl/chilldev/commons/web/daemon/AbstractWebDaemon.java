@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2016 - 2017 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.chilldev.commons.web.daemon;
@@ -15,6 +15,11 @@ import pl.chilldev.commons.daemon.AbstractDaemon;
  */
 public abstract class AbstractWebDaemon extends AbstractDaemon
 {
+    /**
+     * Catch-all servlet context path.
+     */
+    public static final String ROOT_CONTEXT_PATH = "/";
+
     /**
      * Jetty HTTP server.
      */

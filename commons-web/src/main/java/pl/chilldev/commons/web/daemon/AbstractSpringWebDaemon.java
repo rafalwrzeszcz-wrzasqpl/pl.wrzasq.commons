@@ -39,7 +39,8 @@ public abstract class AbstractSpringWebDaemon extends AbstractWebDaemon
     {
         // servlet context initialization
         ServletContextHandler servlet = new ServletContextHandler();
-        servlet.setLogger(Log.getLogger("/"));
+        servlet.setLogger(Log.getLogger(AbstractWebDaemon.ROOT_CONTEXT_PATH));
+        servlet.setContextPath(AbstractWebDaemon.ROOT_CONTEXT_PATH);
         return servlet;
     }
 
