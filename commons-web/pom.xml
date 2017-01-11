@@ -60,13 +60,13 @@
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-servlet</artifactId>
-            <version>9.3.14.v20161028</version>
+            <version>9.4.0.v20161208</version>
         </dependency>
 
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-util</artifactId>
-            <version>9.3.12.v20160915</version>
+            <version>9.4.0.v20161208</version>
         </dependency>
 
         <dependency>
@@ -78,25 +78,25 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
-            <version>4.3.4.RELEASE</version>
+            <version>4.3.5.RELEASE</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>4.3.4.RELEASE</version>
+            <version>4.3.5.RELEASE</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>4.3.4.RELEASE</version>
+            <version>4.3.5.RELEASE</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>4.3.4.RELEASE</version>
+            <version>4.3.5.RELEASE</version>
             <exclusions>
                 <exclusion>
                     <groupId>commons-logging</groupId>
@@ -108,7 +108,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>4.3.4.RELEASE</version>
+            <version>4.3.5.RELEASE</version>
         </dependency>
 
         <dependency>
