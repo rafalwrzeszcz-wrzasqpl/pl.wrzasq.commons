@@ -3,7 +3,7 @@
 # This file is part of the ChillDev-Commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2014 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2014 - 2017 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 <project
     xmlns="http://maven.apache.org/POM/4.0.0"
@@ -21,7 +21,7 @@
     <parent>
         <groupId>pl.chilldev.parent</groupId>
         <artifactId>parent-opensource</artifactId>
-        <version>0.2.1</version>
+        <version>0.3.0</version>
     </parent>
 
     <!-- project meta info -->
