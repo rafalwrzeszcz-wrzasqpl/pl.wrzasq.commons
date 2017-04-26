@@ -2,7 +2,7 @@
 # This file is part of the ChillDev-Commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2014 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2014 - 2017 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
 # ChillDev-Commons
@@ -29,12 +29,6 @@ Only one exception is `commons-daemon` library which depends on [*Apache Commons
 You can use libraries in your `pom.xml` by defining following dependencies:
 
 ```xml
-<dependency>
-    <groupId>pl.chilldev.commons</groupId>
-    <artifactId>commons-collections</artifactId>
-    <version>${pl.chilldev.commons.version}</version>
-</dependency>
-
 <dependency>
     <groupId>pl.chilldev.commons</groupId>
     <artifactId>commons-daemon</artifactId>
@@ -66,7 +60,6 @@ You can of course pick only those parts that you need directly.
 
 **ChillDev-Commons** consists of various sub-modules, each of which is a separate `.jar` library:
 
--   [**Collections**](http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-collections/): general purpose routines for dealing with various types of collections,
 -   [**Daemon**](http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-daemon/): helper routines for handling *Apache Commons Daemon* services,
 -   [**DB**](http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-db/): base database and model-related structures and routines,
 -   [**Text**](http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-text/): various text processing utilities.
