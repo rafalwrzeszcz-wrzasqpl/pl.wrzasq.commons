@@ -37,6 +37,12 @@ You can use libraries in your `pom.xml` by defining following dependencies:
 
 <dependency>
     <groupId>pl.chilldev.commons</groupId>
+    <artifactId>commons-data</artifactId>
+    <version>${pl.chilldev.commons.version}</version>
+</dependency>
+
+<dependency>
+    <groupId>pl.chilldev.commons</groupId>
     <artifactId>commons-db</artifactId>
     <version>${pl.chilldev.commons.version}</version>
 </dependency>
@@ -61,6 +67,7 @@ You can of course pick only those parts that you need directly.
 **ChillDev-Commons** consists of various sub-modules, each of which is a separate `.jar` library:
 
 -   [**Daemon**](http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-daemon/): helper routines for handling *Apache Commons Daemon* services,
+-   [**Data**](http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-data/): helper routines for handling *Spring Data* structures,
 -   [**DB**](http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-db/): base database and model-related structures and routines,
 -   [**Text**](http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-text/): various text processing utilities.
 -   [**Web**](http://chilloutdevelopment.github.io/pl.chilldev.commons/commons-web/): web-apps related stuff.

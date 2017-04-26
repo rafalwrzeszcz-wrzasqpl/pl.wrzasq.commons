@@ -147,6 +147,7 @@
     <!-- components of ChillDev-Commons project -->
     <modules>
         <module>commons-daemon</module>
+        <module>commons-data</module>
         <module>commons-db</module>
         <module>commons-text</module>
         <module>commons-web</module>
