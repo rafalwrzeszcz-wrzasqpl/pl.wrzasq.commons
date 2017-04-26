@@ -15,6 +15,7 @@
         <menu ref="parent"/>
 
         <menu name="Guide">
+            <item name="Conversion utils" href="guide/conversion.html"/>
         </menu>
 
         <menu ref="reports"/>
