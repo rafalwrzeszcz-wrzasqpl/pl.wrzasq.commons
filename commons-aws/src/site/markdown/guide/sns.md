@@ -114,3 +114,50 @@ public class MyLambda
     }
 }
 ```
+
+## Typed messages
+
+This is still not all - you can also define typed message consumer that will automatically handle your **JSON** handling:
+
+```java
+class MyPojo
+{
+    public String name;
+    public String email;
+}
+
+class MyConsumer
+{
+    public void consume(MyPojo)
+    {
+        // (1)
+    }
+}
+
+public class MyLambda
+{
+    private static NotificationHandler handler;
+
+    static {
+        ObjectMapper objectMapper = new ObjectMapper();
+        // configure your object mapper
+
+        MyConsumer consumer = new MyConsumer();
+        // configure your consumer
+
+        // (2)
+        MyLambda.handler = new TypedNotificationHandler(
+            objectMapper,
+            consumer::consume
+        );
+    }
+
+    public static void entryPoint(SNSEvent event)
+    {
+        MyLambda.handler.process(event);
+    }
+}
+```
+
+1.  In your logic you get your unserialized data model.
+1.  All you need to do is to plug your entry point.

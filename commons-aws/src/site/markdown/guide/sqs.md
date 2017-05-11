@@ -66,3 +66,51 @@ public class MyLambda
     }
 }
 ```
+
+## Typed messages
+
+If you work with serialized structures, you can also automate this by using `TypedQueueHandler` which deserializes **JSON** for you:
+
+```java
+class MyPojo
+{
+    public String name;
+    public String email;
+}
+
+class MyConsumer
+{
+    public void consume(MyPojo)
+    {
+        // (1)
+    }
+}
+
+public class MyLambda
+{
+    private static QueueHandler handler;
+
+    static {
+        ObjectMapper objectMapper = new ObjectMapper();
+        // configure your object mapper
+
+        MyConsumer consumer = new MyConsumer();
+        // configure your consumer
+
+        // (2)
+        MyLambda.handler = new TypedQueueHandler(
+            System.getenv("MY_QUEUE_URL"),
+            objectMapper,
+            consumer::consume
+        );
+    }
+
+    public static void entryPoint()
+    {
+        MyLambda.handler.process();
+    }
+}
+```
+
+1.  In your logic you get your unserialized data model.
+1.  All you need to do is to plug your entry point.
