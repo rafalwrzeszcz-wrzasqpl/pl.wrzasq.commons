@@ -146,6 +146,7 @@
 
     <!-- components of ChillDev-Commons project -->
     <modules>
+        <module>commons-aws</module>
         <module>commons-daemon</module>
         <module>commons-data</module>
         <module>commons-db</module>
