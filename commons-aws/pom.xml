@@ -30,7 +30,6 @@
     <inceptionYear>2017</inceptionYear>
 
     <!-- plugins configuration -->
-<!--
     <build>
         <plugins>
             <plugin>
@@ -38,12 +37,11 @@
                 <artifactId>versioneye-maven-plugin</artifactId>
                 <inherited>false</inherited>
                 <configuration>
-                    <projectId>55e2bf2ec6d8f2001d000327</projectId>
+                    <projectId>5914b94aa786140043ee16d1</projectId>
                 </configuration>
             </plugin>
         </plugins>
     </build>
--->
 
     <!-- project dependencies -->
     <dependencies>
