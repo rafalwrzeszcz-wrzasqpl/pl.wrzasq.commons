@@ -118,23 +118,4 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
-
-    <!-- build profiles -->
-    <profiles>
-        <profile>
-            <id>deploy</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.github.github</groupId>
-                        <artifactId>site-maven-plugin</artifactId>
-                        <configuration>
-                            <path>${project.artifactId}/</path>
-                            <merge>true</merge>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 </project>

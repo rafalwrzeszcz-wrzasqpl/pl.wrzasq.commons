@@ -101,6 +101,10 @@
             <id>ossrh</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
+        <site>
+            <id>github</id>
+            <url>git:ssh://git@github.com/chilloutdevelopment/pl.chilldev.commons.git?gh-pages#</url>
+        </site>
     </distributionManagement>
 
     <!-- plugins configuration -->
@@ -123,17 +127,6 @@
             <id>deploy</id>
             <build>
                 <plugins>
-                    <plugin>
-                        <groupId>com.github.github</groupId>
-                        <artifactId>site-maven-plugin</artifactId>
-                        <configuration combine.self="override">
-                            <merge>false</merge>
-                            <message>${project.version} ${project.artifactId} API doc.</message>
-                            <noJekyll>true</noJekyll>
-                            <server>github</server>
-                        </configuration>
-                    </plugin>
-
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-scm-plugin</artifactId>
