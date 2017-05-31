@@ -2,7 +2,7 @@
 # This file is part of the ChillDev-Commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2014 - 2016 © by Rafal Wrzeszcz - Wrzasq.pl.
+# @copyright 2014 - 2017 © by Rafal Wrzeszcz - Wrzasq.pl.
 ##
 
 #FIXME: https://github.com/travis-ci/travis-ci/issues/753
@@ -53,6 +53,7 @@ before_deploy:
     - "gpg --fast-import .travis/gpg_key"
     - "chmod 600 .travis/id_rsa"
     - "ssh-add .travis/id_rsa"
+    - "echo -e \"Host github.com\\n    StrictHostKeyChecking no\\n\" >> ~/.ssh/config"
 
 deploy:
     provider: "script"
