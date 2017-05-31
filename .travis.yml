@@ -56,12 +56,22 @@ before_deploy:
     - "echo -e \"Host github.com\\n    StrictHostKeyChecking no\\n\" >> ~/.ssh/config"
 
 deploy:
-    provider: "script"
-    skip_cleanup: true
-    script: "mvn deploy site-deploy -P deploy --settings .travis/settings.xml"
-    on:
-        branch: "master"
-        jdk: "oraclejdk8"
+    -
+        provider: "script"
+        skip_cleanup: true
+        script: "mvn deploy site-deploy -P deploy --settings .travis/settings.xml"
+        on:
+            branch: "master"
+            jdk: "oraclejdk8"
+    -
+        provider: "releases"
+        skip_cleanup: true
+        api_key: "${GITHUB_TOKEN}"
+        file_glob: true
+        file: "*/target/*.jar"
+        on:
+            tags: true
+            jdk: "oraclejdk8"
 
 cache:
     directories:
