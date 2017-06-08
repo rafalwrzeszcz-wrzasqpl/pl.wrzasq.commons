@@ -2,7 +2,7 @@
 # This file is part of the ChillDev-Commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2016 - 2017 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
 Text formatter feature holds formatters for different text formats allowing to generate **(X)HTML** code from various source types.
@@ -56,7 +56,7 @@ formatHandler.transform("foo <bar>\nbaz");
 
 ### Markdown
 
-Handled by `pl.chilldev.commons.text.formatter.MarkdownFormatter`. Formats [Markdown](http://daringfireball.net/projects/markdown/syntax) into HTML. It uses [Pegdown](http://pegdown.org) with all available extensions.
+Handled by `pl.chilldev.commons.text.formatter.MarkdownFormatter`. Formats [Markdown](https://daringfireball.net/projects/markdown/syntax) into HTML. It uses [Pegdown](http://pegdown.org) with all available extensions.
 
 ```java
 FormatterInterface formatHandler = new MarkdownFormatter();

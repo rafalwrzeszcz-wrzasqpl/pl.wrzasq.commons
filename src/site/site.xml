@@ -22,8 +22,8 @@
     </bannerLeft>
 
     <bannerRight>
-        <name>&lt;img src="http://static.wrzasq.pl/images/wrzasqpl.png" alt="Wrzasq.pl"/&gt;</name>
-        <href>http://wrzasq.pl</href>
+        <name>&lt;img src="https://static.wrzasq.pl/images/wrzasqpl.png" alt="Wrzasq.pl"/&gt;</name>
+        <href>https://wrzasq.pl</href>
     </bannerRight>
 
     <publishDate position="bottom"/>
@@ -32,20 +32,20 @@
     <poweredBy>
         <logo
             name="Maven"
-            href="http://maven.apache.org/"
-            img="http://maven.apache.org/images/logos/maven-feather.png"
+            href="https://maven.apache.org/"
+            img="https://maven.apache.org/images/logos/maven-feather.png"
             alt="Apache Maven"
             title="Build with Maven"/>
         <logo
             name="Chillout Development"
-            href="http://chilldev.pl"
-            img="http://static.chilldev.pl/images/chilldevpl.png"
+            href="https://chilldev.pl"
+            img="https://static.chilldev.pl/images/chilldevpl.png"
             alt="Chillout Development"
             title="Chillout Development"/>
         <logo
             name="Wrzasq.pl"
-            href="http://wrzasq.pl"
-            img="http://static.chilldev.pl/images/wrzasqpl.png"
+            href="https://wrzasq.pl"
+            img="https://static.chilldev.pl/images/wrzasqpl.png"
             alt="Wrzasq.pl"
             title="Wrzasq.pl"/>
     </poweredBy>
@@ -53,8 +53,8 @@
     <body>
         <menu name="Main" inherit="top">
             <item name="GitHub project" href="https://github.com/chilloutdevelopment/pl.chilldev.commons/"/>
-            <item name="Chillout Development" href="http://chilldev.pl/"/>
-            <item name="Wrzasq.pl" href="http://wrzasq.pl/"/>
+            <item name="Chillout Development" href="https://chilldev.pl/"/>
+            <item name="Wrzasq.pl" href="https://wrzasq.pl/"/>
             <item name="ChillDev @ Facebook" href="https://www.facebook.com/chilldev"/>
             <item name="Wrzasq.pl @ Facebook" href="https://www.facebook.com/wrzasqpl"/>
         </menu>

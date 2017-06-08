@@ -42,12 +42,12 @@
 
     <organization>
         <name>Rafał Wrzeszcz - Wrzasq.pl</name>
-        <url>http://wrzasq.pl/</url>
+        <url>https://wrzasq.pl/</url>
     </organization>
 <!-- POM can't have more then one
     <organization>
         <name>Chillout Development</name>
-        <url>http://chilldev.pl/</url>
+        <url>https://chilldev.pl/</url>
     </organization>
 -->
 
@@ -57,9 +57,9 @@
             <id>rafal.wrzeszcz</id>
             <name>Rafał Wrzeszcz</name>
             <email>rafal.wrzeszcz@wrzasq.pl</email>
-            <url>http://wrzasq.pl/</url>
+            <url>https://wrzasq.pl/</url>
             <organization>Rafał Wrzeszcz - Wrzasq.pl</organization>
-            <organizationUrl>http://wrzasq.pl/</organizationUrl>
+            <organizationUrl>https://wrzasq.pl/</organizationUrl>
             <roles>
                 <role>creator</role>
                 <role>owner</role>
@@ -69,7 +69,7 @@
             </roles>
             <timezone>+1</timezone>
             <properties>
-                <picUrl>http://www.gravatar.com/avatar/412a39726c1c9c96965d9db8f8c6787a.png</picUrl>
+                <picUrl>https://www.gravatar.com/avatar/412a39726c1c9c96965d9db8f8c6787a.png</picUrl>
             </properties>
         </developer>
     </developers>
