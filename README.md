@@ -82,19 +82,16 @@ You can of course pick only those parts that you need directly.
 # Resources
 
 -   [GitHub page with API documentation](https://chilloutdevelopment.github.io/pl.chilldev.commons)
+-   [Contribution guide](https://github.com/chilloutdevelopment/pl.chilldev.commons/blob/develop/CONTRIBUTING.md)
 -   [Issues tracker](https://github.com/chilloutdevelopment/pl.chilldev.commons/issues)
 -   [Maven packages](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22pl.chilldev.commons%22)
 -   [Chillout Development @ GitHub](https://github.com/chilloutdevelopment)
 -   [Chillout Development @ Facebook](https://www.facebook.com/chilldev)
 -   [Post on Wrzasq.pl](https://wrzasq.pl/blog/chilldev-commons-java-library.html)
 
-# Contributing
-
-Do you want to help improving this project? Simply *fork* it and post a pull request. You can do everything on your own, you don't need to ask if you can, just do all the awesome things you want!
+# Authors
 
 This project is published under [MIT license](https://github.com/chilloutdevelopment/pl.chilldev.commons/tree/master/LICENSE).
-
-# Authors
 
 **pl.chilldev.commons** is brought to you by [Chillout Development](https://chilldev.pl).
 
