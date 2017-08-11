@@ -11,7 +11,10 @@ language: "java"
 
 sudo: false
 
+dist: "trusty"
+
 jdk:
+    - "openjdk8"
     - "oraclejdk8"
 
 env:
@@ -28,14 +31,6 @@ env:
             secure: "S4wuhuqPiFgCIv1x/kPEp+ZooRGe5eJUSf2YZSlA/VA4BVCEi3LSv2X10OXofflzDndToX1nwP+bSwaxwt+2pie4AWE2M0hHDkmZDcIkU1zsxaUP/2nFKgm1SDgxz9HAd2mgcKLcBcDlC2O+usFYUIIMPK+UvlH3WRv+tcAtyFU="
         -
             secure: "F0R8B/9pRaKIewRo+CMem7tkksAy25jscvPG4C3H9bJ7PttrCvFswpVY3TygGiz8VYXUXLtcJt4w9yT9Rzla86e7bN5TVT49hCd1MI5B1cGcfPvhq/1chuoYaoEZS3Bslz4MxfSzWrPKp8+bkW8t1CsWZTbGwziWznbSReoMNns="
-
-#TODO: this is just to prevent failing build with old Maven version
-before_install:
-    - "wget http://apache.mirror.rafal.ca/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz"
-    - "tar xzvf apache-maven-3.3.9-bin.tar.gz"
-    - "export M2_HOME=`pwd`/apache-maven-3.3.9"
-    - "export M2=$M2_HOME/bin"
-    - "export PATH=$M2:$PATH"
 
 # this is not a boolean, this is a Linux `true` command to simply override this step
 install: "true"
