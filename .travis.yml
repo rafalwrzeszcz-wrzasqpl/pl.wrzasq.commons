@@ -13,6 +13,10 @@ sudo: false
 
 dist: "trusty"
 
+branches:
+    except:
+        - "/^release-/"
+
 jdk:
     - "openjdk8"
     - "oraclejdk8"
@@ -86,7 +90,7 @@ deploy:
         file_glob: true
         file: "*/target/*.jar"
         on:
-            tags: true
+            branch: "master"
             jdk: "oraclejdk8"
 
 cache:
