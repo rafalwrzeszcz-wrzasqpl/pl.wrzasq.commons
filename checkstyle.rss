@@ -23,10 +23,10 @@ under the License.
     <link>https://chilloutdevelopment.github.io/pl.chilldev.commons</link>
     <description>ChillDev Commons - Checkstyle report</description>
     <language>en-us</language>
-    <copyright>&#169;2014 - 2016 Rafał Wrzeszcz - Wrzasq.pl</copyright>
+    <copyright>&#169;2014 - 2017 Rafał Wrzeszcz - Wrzasq.pl</copyright>
     <item>
-      <title>File: 22,
-             Errors: 57,
+      <title>File: 32,
+             Errors: 83,
              Warnings: 0,
              Infos: 0
       </title>
@@ -74,7 +74,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.text.slugifier.Slugifier.java">pl/chilldev/commons/text/slugifier/Slugifier.java</a>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.aws.sns.SimpleNotificationHandler.java">pl/chilldev/commons/aws/sns/SimpleNotificationHandler.java</a>
                 </td>
                 <td>
                   0
@@ -116,7 +116,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.db.timestampable.Timestamp.java">pl/chilldev/commons/db/timestampable/Timestamp.java</a>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.aws.sqs.TypedQueueHandler.java">pl/chilldev/commons/aws/sqs/TypedQueueHandler.java</a>
                 </td>
                 <td>
                   0
@@ -130,7 +130,217 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.collections.pageable.PageableIterator.java">pl/chilldev/commons/collections/pageable/PageableIterator.java</a>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.text.formatter.HtmlFormatter.java">pl/chilldev/commons/text/formatter/HtmlFormatter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.web.context.WebApplicationContextLoader.java">pl/chilldev/commons/web/context/WebApplicationContextLoader.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.data.ConvertUtils.java">pl/chilldev/commons/data/ConvertUtils.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.text.html.Utils.java">pl/chilldev/commons/text/html/Utils.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.db.AbstractEntity.java">pl/chilldev/commons/db/AbstractEntity.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  22
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.aws.sqs.SimpleQueueHandler.java">pl/chilldev/commons/aws/sqs/SimpleQueueHandler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.text.formatter.MarkdownFormatter.java">pl/chilldev/commons/text/formatter/MarkdownFormatter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.aws.sqs.QueueHandler.java">pl/chilldev/commons/aws/sqs/QueueHandler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  9
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.daemon.Package.java">pl/chilldev/commons/daemon/Package.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.db.timestampable.TimestampType.java">pl/chilldev/commons/db/timestampable/TimestampType.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.web.daemon.AbstractWebDaemon.java">pl/chilldev/commons/web/daemon/AbstractWebDaemon.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.aws.sns.TopicClient.java">pl/chilldev/commons/aws/sns/TopicClient.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  8
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.text.slugifier.Slugifier.java">pl/chilldev/commons/text/slugifier/Slugifier.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.aws.MessageHandler.java">pl/chilldev/commons/aws/MessageHandler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.web.daemon.AbstractSpringWebDaemon.java">pl/chilldev/commons/web/daemon/AbstractSpringWebDaemon.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.db.timestampable.Timestamp.java">pl/chilldev/commons/db/timestampable/Timestamp.java</a>
                 </td>
                 <td>
                   0
@@ -172,7 +382,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.text.formatter.HtmlFormatter.java">pl/chilldev/commons/text/formatter/HtmlFormatter.java</a>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.aws.sns.TypedNotificationHandler.java">pl/chilldev/commons/aws/sns/TypedNotificationHandler.java</a>
                 </td>
                 <td>
                   0
@@ -200,20 +410,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.text.html.Utils.java">pl/chilldev/commons/text/html/Utils.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.web.filter.FrontPageFilter.java">pl/chilldev/commons/web/filter/FrontPageFilter.java</a>
                 </td>
                 <td>
@@ -228,7 +424,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.db.AbstractEntity.java">pl/chilldev/commons/db/AbstractEntity.java</a>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.aws.sns.NotificationHandler.java">pl/chilldev/commons/aws/sns/NotificationHandler.java</a>
                 </td>
                 <td>
                   0
@@ -237,21 +433,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  22
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.text.formatter.MarkdownFormatter.java">pl/chilldev/commons/text/formatter/MarkdownFormatter.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
+                  9
                 </td>
               </tr>
                           <tr>
@@ -298,49 +480,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.daemon.Package.java">pl/chilldev/commons/daemon/Package.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.db.timestampable.TimestampType.java">pl/chilldev/commons/db/timestampable/TimestampType.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.text.TextProcessingException.java">pl/chilldev/commons/text/TextProcessingException.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.collections.pageable.PageableCollection.java">pl/chilldev/commons/collections/pageable/PageableCollection.java</a>
                 </td>
                 <td>
                   0
