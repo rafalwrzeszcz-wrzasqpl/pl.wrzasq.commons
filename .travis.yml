@@ -20,17 +20,29 @@ jdk:
 env:
     global:
         -
-            secure: "RWVCMZ942ezUNvxDD54WHFy3PNN68wN8l3IcSeXmXGcUYz9HYUmCs6duNuXninAFXd/ypSevJO8jA8CNVyYip7QtFYkZnxLqDbIL2xMK0z89tfbMrEM2T8pYygUz220Gkriu05sN+KzmD9FKSU1qdYqFnmmKeoT3X50l+bfqZAE="
+            secure: |-
+                RWVCMZ942ezUNvxDD54WHFy3PNN68wN8l3IcSeXmXGcUYz9HYUmCs6duNuXninAFXd/ypSevJO8jA8CNVyYip7QtFYkZnxLqDbIL2xM
+                K0z89tfbMrEM2T8pYygUz220Gkriu05sN+KzmD9FKSU1qdYqFnmmKeoT3X50l+bfqZAE=
         -
-            secure: "CrtYpv6O4i+FRLc5HqthXsjeUVEmIzjUvPR73qYZZw3tRwXsG0/oe4zjmFSmEgjQxq+ULDrvAnpm4hAxYR2gbpHwTXmH9jSI5fkjR6/9kXPiXTwrtQGUx1EQ/LwfPd6AthPGjdsUFuiaFD7VEL2IKd22BO+fVtFqarQIWH0Hl08="
+            secure: |-
+                CrtYpv6O4i+FRLc5HqthXsjeUVEmIzjUvPR73qYZZw3tRwXsG0/oe4zjmFSmEgjQxq+ULDrvAnpm4hAxYR2gbpHwTXmH9jSI5fkjR6/
+                9kXPiXTwrtQGUx1EQ/LwfPd6AthPGjdsUFuiaFD7VEL2IKd22BO+fVtFqarQIWH0Hl08=
         -
-            secure: "DjbHaFvXuBj5qjSLlZ0inN3rfeS2/wBkpSUZfOPMdnbKRRazi2Pg684xK6ndISTyppxx5wLHF9w+TZVKF8hltJHnZ9KHtu8W5GmM3iMyctISherNp3YJB2J6tcGkD/9FdEFxLnHUR2TC5fcbj9hOulbI7LJ7cuwTNVYMZMaSVoI="
+            secure: |-
+                DjbHaFvXuBj5qjSLlZ0inN3rfeS2/wBkpSUZfOPMdnbKRRazi2Pg684xK6ndISTyppxx5wLHF9w+TZVKF8hltJHnZ9KHtu8W5GmM3iM
+                yctISherNp3YJB2J6tcGkD/9FdEFxLnHUR2TC5fcbj9hOulbI7LJ7cuwTNVYMZMaSVoI=
         -
-            secure: "BBjzAhf8ULex4lJO+s2C6E8W+4vD2xDA/NWKLMXqPFDbhiQtGG20oUuexZMaa85ZkCCFNqYcb9WACOZyIzPEp5jwE5WKMCupQDDKLoqeVhK6VVxl7dIkC8wtQZQq9oPCQdk4JEmLaWp781pwPehQWwfdXgtjqEOa91nffIDXCfY="
+            secure: |-
+                BBjzAhf8ULex4lJO+s2C6E8W+4vD2xDA/NWKLMXqPFDbhiQtGG20oUuexZMaa85ZkCCFNqYcb9WACOZyIzPEp5jwE5WKMCupQDDKLoq
+                eVhK6VVxl7dIkC8wtQZQq9oPCQdk4JEmLaWp781pwPehQWwfdXgtjqEOa91nffIDXCfY=
         -
-            secure: "S4wuhuqPiFgCIv1x/kPEp+ZooRGe5eJUSf2YZSlA/VA4BVCEi3LSv2X10OXofflzDndToX1nwP+bSwaxwt+2pie4AWE2M0hHDkmZDcIkU1zsxaUP/2nFKgm1SDgxz9HAd2mgcKLcBcDlC2O+usFYUIIMPK+UvlH3WRv+tcAtyFU="
+            secure: |-
+                S4wuhuqPiFgCIv1x/kPEp+ZooRGe5eJUSf2YZSlA/VA4BVCEi3LSv2X10OXofflzDndToX1nwP+bSwaxwt+2pie4AWE2M0hHDkmZDcI
+                kU1zsxaUP/2nFKgm1SDgxz9HAd2mgcKLcBcDlC2O+usFYUIIMPK+UvlH3WRv+tcAtyFU=
         -
-            secure: "F0R8B/9pRaKIewRo+CMem7tkksAy25jscvPG4C3H9bJ7PttrCvFswpVY3TygGiz8VYXUXLtcJt4w9yT9Rzla86e7bN5TVT49hCd1MI5B1cGcfPvhq/1chuoYaoEZS3Bslz4MxfSzWrPKp8+bkW8t1CsWZTbGwziWznbSReoMNns="
+            secure: |-
+                F0R8B/9pRaKIewRo+CMem7tkksAy25jscvPG4C3H9bJ7PttrCvFswpVY3TygGiz8VYXUXLtcJt4w9yT9Rzla86e7bN5TVT49hCd1MI5
+                B1cGcfPvhq/1chuoYaoEZS3Bslz4MxfSzWrPKp8+bkW8t1CsWZTbGwziWznbSReoMNns=
 
 # this is not a boolean, this is a Linux `true` command to simply override this step
 install: "true"
@@ -43,14 +55,23 @@ before_deploy:
     - "eval \"$(ssh-agent -s)\""
     - "git config user.name \"Travis CI\""
     - "git config user.email \"office@chilldev.pl\""
-    - "openssl aes-256-cbc -k \"$SECRET\" -in .travis/gpg_key.enc -out .travis/gpg_key -d"
-    - "openssl aes-256-cbc -k \"$SECRET\" -in .travis/id_rsa.enc -out .travis/id_rsa -d"
+    - "openssl aes-256-cbc -k \"${SECRET}\" -in .travis/gpg_key.enc -out .travis/gpg_key -d"
+    - "openssl aes-256-cbc -k \"${SECRET}\" -in .travis/id_rsa.enc -out .travis/id_rsa -d"
     - "gpg --fast-import .travis/gpg_key"
     - "chmod 600 .travis/id_rsa"
     - "ssh-add .travis/id_rsa"
     - "echo -e \"Host github.com\\n    StrictHostKeyChecking no\\n\" >> ~/.ssh/config"
 
 deploy:
+    -
+        provider: "script"
+        skip_cleanup: true
+        # unfortunately deploy script must be single command
+        script: "./.travis/release.sh"
+        on:
+            branch: "develop"
+            condition: "${TRAVIS_EVENT_TYPE} == push"
+            jdk: "oraclejdk8"
     -
         provider: "script"
         skip_cleanup: true
@@ -70,9 +91,9 @@ deploy:
 
 cache:
     directories:
-        - "$HOME/.m2/"
+        - "${HOME}/.m2/"
 
-before_cache: "rm -rf $HOME/.m2/repository/pl/chilldev/commons"
+before_cache: "rm -rf ${HOME}/.m2/repository/pl/chilldev/commons"
 
 notifications:
     webhooks:
