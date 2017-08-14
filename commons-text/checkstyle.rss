@@ -23,7 +23,7 @@ under the License.
     <link>https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-text/</link>
     <description>ChillDev Commons Text - Checkstyle report</description>
     <language>en-us</language>
-    <copyright>&#169;2015 - 2016 Rafał Wrzeszcz - Wrzasq.pl</copyright>
+    <copyright>&#169;2015 - 2017 Rafał Wrzeszcz - Wrzasq.pl</copyright>
     <item>
       <title>File: 9,
              Errors: 0,
@@ -102,7 +102,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-text//checkstyle.html#pl.chilldev.commons.text.formatter.PlainTextFormatter.java">pl/chilldev/commons/text/formatter/PlainTextFormatter.java</a>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-text//checkstyle.html#pl.chilldev.commons.text.formatter.FormatterInterface.java">pl/chilldev/commons/text/formatter/FormatterInterface.java</a>
                 </td>
                 <td>
                   0
@@ -116,7 +116,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-text//checkstyle.html#pl.chilldev.commons.text.formatter.FormatterInterface.java">pl/chilldev/commons/text/formatter/FormatterInterface.java</a>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-text//checkstyle.html#pl.chilldev.commons.text.formatter.PlainTextFormatter.java">pl/chilldev/commons/text/formatter/PlainTextFormatter.java</a>
                 </td>
                 <td>
                   0
