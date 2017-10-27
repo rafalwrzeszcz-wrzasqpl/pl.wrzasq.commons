@@ -7,7 +7,6 @@
 
 package test.pl.chilldev.commons.web.context;
 
-import java.lang.reflect.Field;
 import java.util.Collections;
 
 import javax.servlet.ServletContext;
@@ -40,15 +39,11 @@ public class WebApplicationContextLoaderTest
     @Mock
     private ServletContext servletContext;
 
-    @Mock
-    private WebApplicationContext webApplicationContext;
-
     @Before
     public void setUp()
     {
         Mockito.when(this.servletContext.getInitParameterNames()).thenReturn(Collections.emptyEnumeration());
         Mockito.when(this.servletContext.getAttributeNames()).thenReturn(Collections.emptyEnumeration());
-        Mockito.when(this.webApplicationContext.getServletContext()).thenReturn(null);
     }
 
     @Test
@@ -86,19 +81,6 @@ public class WebApplicationContextLoaderTest
         Mockito
             .verify(this.servletContext)
             .removeAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
-    }
-
-    @Test
-    public void closeWebApplicationContextWithNullServletContent()
-        throws IllegalAccessException, NoSuchFieldException
-    {
-        WebApplicationContextLoader contextLoader = this.createWebApplicationContextLoader();
-
-        Field field = contextLoader.getClass().getDeclaredField("applicationContext");
-        field.setAccessible(true);
-        field.set(contextLoader, this.webApplicationContext);
-
-        contextLoader.closeWebApplicationContext();
     }
 
     @Test

@@ -7,6 +7,8 @@
 
 package pl.chilldev.commons.web.context;
 
+import java.util.Optional;
+
 import javax.servlet.ServletContext;
 
 import org.springframework.web.context.ContextLoader;
@@ -71,12 +73,8 @@ public class WebApplicationContextLoader extends ContextLoader
      */
     public void closeWebApplicationContext()
     {
-        if (this.applicationContext != null) {
-            ServletContext servletContext = this.applicationContext.getServletContext();
-
-            if (servletContext != null) {
-                this.closeWebApplicationContext(servletContext);
-            }
-        }
+        Optional.ofNullable(this.applicationContext)
+            .map(WebApplicationContext::getServletContext)
+            .ifPresent(this::closeWebApplicationContext);
     }
 }
