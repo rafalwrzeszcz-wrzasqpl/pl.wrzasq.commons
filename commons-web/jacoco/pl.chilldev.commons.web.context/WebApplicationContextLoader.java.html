@@ -72,8 +72,12 @@ public class WebApplicationContextLoader extends ContextLoader
     public void closeWebApplicationContext()
     {
 <span class="fc bfc" id="L74" title="All 2 branches covered.">        if (this.applicationContext != null) {</span>
-<span class="fc" id="L75">            this.closeWebApplicationContext(this.applicationContext.getServletContext());</span>
+<span class="fc" id="L75">            ServletContext servletContext = this.applicationContext.getServletContext();</span>
+
+<span class="fc bfc" id="L77" title="All 2 branches covered.">            if (servletContext != null) {</span>
+<span class="fc" id="L78">                this.closeWebApplicationContext(servletContext);</span>
+            }
         }
-<span class="fc" id="L77">    }</span>
+<span class="fc" id="L81">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
