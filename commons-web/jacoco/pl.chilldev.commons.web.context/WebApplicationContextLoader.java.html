@@ -7,6 +7,8 @@
 
 package pl.chilldev.commons.web.context;
 
+import java.util.Optional;
+
 import javax.servlet.ServletContext;
 
 import org.springframework.web.context.ContextLoader;
@@ -40,10 +42,10 @@ public class WebApplicationContextLoader extends ContextLoader
      * @param profiles List of Spring profiles to activate.
      */
     public WebApplicationContextLoader(Class&lt;?&gt; configurationClass, String... profiles)
-<span class="fc" id="L43">    {</span>
-<span class="fc" id="L44">        this.configurationClass = configurationClass;</span>
-<span class="fc" id="L45">        this.profiles = profiles;</span>
-<span class="fc" id="L46">    }</span>
+<span class="fc" id="L45">    {</span>
+<span class="fc" id="L46">        this.configurationClass = configurationClass;</span>
+<span class="fc" id="L47">        this.profiles = profiles;</span>
+<span class="fc" id="L48">    }</span>
 
     /**
      * {@inheritDoc}
@@ -51,10 +53,10 @@ public class WebApplicationContextLoader extends ContextLoader
     @Override
     protected WebApplicationContext createWebApplicationContext(ServletContext servletContext)
     {
-<span class="fc" id="L54">        AnnotationConfigWebApplicationContext applicationContext = new AnnotationConfigWebApplicationContext();</span>
-<span class="fc" id="L55">        applicationContext.getEnvironment().setActiveProfiles(this.profiles);</span>
-<span class="fc" id="L56">        applicationContext.register(this.configurationClass);</span>
-<span class="fc" id="L57">        return applicationContext;</span>
+<span class="fc" id="L56">        AnnotationConfigWebApplicationContext applicationContext = new AnnotationConfigWebApplicationContext();</span>
+<span class="fc" id="L57">        applicationContext.getEnvironment().setActiveProfiles(this.profiles);</span>
+<span class="fc" id="L58">        applicationContext.register(this.configurationClass);</span>
+<span class="fc" id="L59">        return applicationContext;</span>
     }
 
     /**
@@ -63,7 +65,7 @@ public class WebApplicationContextLoader extends ContextLoader
     @Override
     public WebApplicationContext initWebApplicationContext(ServletContext servletContext)
     {
-<span class="fc" id="L66">        return this.applicationContext = super.initWebApplicationContext(servletContext);</span>
+<span class="fc" id="L68">        return this.applicationContext = super.initWebApplicationContext(servletContext);</span>
     }
 
     /**
@@ -71,13 +73,9 @@ public class WebApplicationContextLoader extends ContextLoader
      */
     public void closeWebApplicationContext()
     {
-<span class="fc bfc" id="L74" title="All 2 branches covered.">        if (this.applicationContext != null) {</span>
-<span class="fc" id="L75">            ServletContext servletContext = this.applicationContext.getServletContext();</span>
-
-<span class="fc bfc" id="L77" title="All 2 branches covered.">            if (servletContext != null) {</span>
-<span class="fc" id="L78">                this.closeWebApplicationContext(servletContext);</span>
-            }
-        }
-<span class="fc" id="L81">    }</span>
+<span class="fc" id="L76">        Optional.ofNullable(this.applicationContext)</span>
+<span class="fc" id="L77">            .map(WebApplicationContext::getServletContext)</span>
+<span class="fc" id="L78">            .ifPresent(this::closeWebApplicationContext);</span>
+<span class="fc" id="L79">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
