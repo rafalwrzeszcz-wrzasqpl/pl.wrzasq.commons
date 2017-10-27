@@ -29,7 +29,7 @@ public class ConvertUtilsTest
         new ConvertUtils();
 
         Collection<String> extracted = ConvertUtils.extractSort(
-            new Sort(
+            Sort.by(
                 new Sort.Order(Sort.Direction.DESC, "id"),
                 new Sort.Order(Sort.Direction.ASC, "name")
             )
@@ -73,7 +73,7 @@ public class ConvertUtilsTest
             Stream.of(object1, object2).collect(Collectors.toList()),
             new PagedResources.PageMetadata(size, number, total)
         );
-        Page<Object> page = ConvertUtils.buildPageFromResources(resources, new PageRequest(number, size));
+        Page<Object> page = ConvertUtils.buildPageFromResources(resources, PageRequest.of(number, size));
 
         // verify converted value
         Assert.assertEquals(

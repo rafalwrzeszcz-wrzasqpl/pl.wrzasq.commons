@@ -72,7 +72,11 @@ public class WebApplicationContextLoader extends ContextLoader
     public void closeWebApplicationContext()
     {
         if (this.applicationContext != null) {
-            this.closeWebApplicationContext(this.applicationContext.getServletContext());
+            ServletContext servletContext = this.applicationContext.getServletContext();
+
+            if (servletContext != null) {
+                this.closeWebApplicationContext(servletContext);
+            }
         }
     }
 }

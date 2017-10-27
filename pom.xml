@@ -21,7 +21,7 @@
     <parent>
         <groupId>pl.chilldev.parent</groupId>
         <artifactId>parent-opensource</artifactId>
-        <version>0.4.4</version>
+        <version>0.4.6</version>
     </parent>
 
     <!-- project meta info -->
@@ -106,20 +106,6 @@
             <url>github:http://chilloutdevelopment.github.io/pl.chilldev.commons/</url>
         </site>
     </distributionManagement>
-
-    <!-- plugins configuration -->
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>com.versioneye</groupId>
-                <artifactId>versioneye-maven-plugin</artifactId>
-                <inherited>false</inherited>
-                <configuration>
-                    <projectId>55e2bf35c6d8f2001d000332</projectId>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 
     <!-- build profiles -->
     <profiles>

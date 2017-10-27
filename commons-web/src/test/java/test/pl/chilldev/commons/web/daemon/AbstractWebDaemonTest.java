@@ -57,7 +57,7 @@ public class AbstractWebDaemonTest
     @Test
     public void startWithException() throws Exception
     {
-        Mockito.doThrow(Exception.class).when(this.server).doStart();
+        Mockito.doThrow(RuntimeException.class).when(this.server).doStart();
 
         this.daemon.start();
     }

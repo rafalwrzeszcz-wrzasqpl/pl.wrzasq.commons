@@ -29,20 +29,6 @@
     <description>Web-app related utilities.</description>
     <inceptionYear>2016</inceptionYear>
 
-    <!-- plugins configuration -->
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>com.versioneye</groupId>
-                <artifactId>versioneye-maven-plugin</artifactId>
-                <inherited>false</inherited>
-                <configuration>
-                    <projectId>5900ee50c2ef4238240d6016</projectId>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
     <!-- project dependencies -->
     <dependencies>
         <dependency>
@@ -54,19 +40,19 @@
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-server</artifactId>
-            <version>9.4.6.v20170531</version>
+            <version>9.4.7.v20170914</version>
         </dependency>
 
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-servlet</artifactId>
-            <version>9.4.6.v20170531</version>
+            <version>9.4.7.v20170914</version>
         </dependency>
 
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-util</artifactId>
-            <version>9.4.6.v20170531</version>
+            <version>9.4.7.v20170914</version>
         </dependency>
 
         <dependency>
@@ -78,25 +64,25 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
-            <version>4.3.10.RELEASE</version>
+            <version>5.0.1.RELEASE</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>4.3.10.RELEASE</version>
+            <version>5.0.1.RELEASE</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>4.3.10.RELEASE</version>
+            <version>5.0.1.RELEASE</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>4.3.10.RELEASE</version>
+            <version>5.0.1.RELEASE</version>
             <exclusions>
                 <exclusion>
                     <groupId>commons-logging</groupId>
@@ -108,13 +94,13 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>4.3.10.RELEASE</version>
+            <version>5.0.1.RELEASE</version>
         </dependency>
 
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
+            <version>4.0.0</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
