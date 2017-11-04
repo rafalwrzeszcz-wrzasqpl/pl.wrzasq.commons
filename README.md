@@ -37,6 +37,12 @@ You can use libraries in your `pom.xml` by defining following dependencies:
 
 <dependency>
     <groupId>pl.chilldev.commons</groupId>
+    <artifactId>commons-client</artifactId>
+    <version>${pl.chilldev.commons.version}</version>
+</dependency>
+
+<dependency>
+    <groupId>pl.chilldev.commons</groupId>
     <artifactId>commons-daemon</artifactId>
     <version>${pl.chilldev.commons.version}</version>
 </dependency>
@@ -50,6 +56,12 @@ You can use libraries in your `pom.xml` by defining following dependencies:
 <dependency>
     <groupId>pl.chilldev.commons</groupId>
     <artifactId>commons-db</artifactId>
+    <version>${pl.chilldev.commons.version}</version>
+</dependency>
+
+<dependency>
+    <groupId>pl.chilldev.commons</groupId>
+    <artifactId>commons-jwt</artifactId>
     <version>${pl.chilldev.commons.version}</version>
 </dependency>
 
@@ -73,9 +85,11 @@ You can of course pick only those parts that you need directly.
 **ChillDev-Commons** consists of various sub-modules, each of which is a separate `.jar` library:
 
 -   [**AWS**](https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-aws/): helper routines for eorking with *Amazon Web Services*,
+-   [**Client**](https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-client/): web service client building utilities,
 -   [**Daemon**](https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-daemon/): helper routines for handling *Apache Commons Daemon* services,
 -   [**Data**](https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-data/): helper routines for handling *Spring Data* structures,
 -   [**DB**](https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-db/): base database and model-related structures and routines,
+-   [**JWT**](https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-jwt/): *JSON Web Tokens* utilities,
 -   [**Text**](https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-text/): various text processing utilities.
 -   [**Web**](https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-web/): web-apps related stuff.
 

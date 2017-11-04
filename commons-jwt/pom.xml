@@ -14,7 +14,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- core project settings -->
-    <artifactId>commons-data</artifactId>
+    <artifactId>commons-jwt</artifactId>
     <packaging>jar</packaging>
     <parent>
         <groupId>pl.chilldev.commons</groupId>
@@ -24,23 +24,17 @@
     </parent>
 
     <!-- project meta info -->
-    <name>ChillDev Commons Data</name>
-    <url>https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-data/</url>
-    <description>Helper routines for working with Spring Data structures.</description>
+    <name>ChillDev Commons JWT</name>
+    <url>https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-jwt/</url>
+    <description>JSON Web Tokens utilities.</description>
     <inceptionYear>2017</inceptionYear>
 
     <!-- project dependencies -->
     <dependencies>
         <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-commons</artifactId>
-            <version>2.0.0.RELEASE</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.hateoas</groupId>
-            <artifactId>spring-hateoas</artifactId>
-            <version>0.23.0.RELEASE</version>
+            <groupId>com.auth0</groupId>
+            <artifactId>jwks-rsa</artifactId>
+            <version>0.2.0</version>
         </dependency>
     </dependencies>
 </project>

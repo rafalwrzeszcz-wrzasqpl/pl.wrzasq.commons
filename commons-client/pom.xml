@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+# This file is part of the ChillDev-Commons.
+#
+# @license http://mit-license.org/ The MIT license
+# @copyright 2017 © by Rafał Wrzeszcz - Wrzasq.pl.
+-->
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd
+">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- core project settings -->
+    <artifactId>commons-client</artifactId>
+    <packaging>jar</packaging>
+    <parent>
+        <groupId>pl.chilldev.commons</groupId>
+        <artifactId>commons</artifactId>
+        <version>0.3.0-SNAPSHOT</version>
+        <relativePath>../</relativePath>
+    </parent>
+
+    <!-- project meta info -->
+    <name>ChillDev Commons Client</name>
+    <url>https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-client/</url>
+    <description>Web services client building utilities.</description>
+    <inceptionYear>2017</inceptionYear>
+
+    <!-- project dependencies -->
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>commons-data</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <version>8.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-core</artifactId>
+            <version>9.5.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>5.0.1.RELEASE</version>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>5.0.1.RELEASE</version>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>5.0.1.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-commons</artifactId>
+            <version>2.0.0.RELEASE</version>
+        </dependency>
+    </dependencies>
+</project>
