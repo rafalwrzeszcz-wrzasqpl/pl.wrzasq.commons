@@ -25,7 +25,8 @@ jdk:
 # TODO: temporary as delombok won't work here
 matrix:
     allow_failures:
-        jdk: "oraclejdk9"
+        -
+            jdk: "oraclejdk9"
 
 env:
     global:
