@@ -25,8 +25,8 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2014 - 2017 Rafał Wrzeszcz - Wrzasq.pl</copyright>
     <item>
-      <title>File: 32,
-             Errors: 83,
+      <title>File: 38,
+             Errors: 90,
              Warnings: 0,
              Infos: 0
       </title>
@@ -61,6 +61,20 @@ under the License.
                           <tr>
                 <td>
                   <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.db.slugable.Slug.java">pl/chilldev/commons/db/slugable/Slug.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.jwt.jwk.FullUrlJwkProvider.java">pl/chilldev/commons/jwt/jwk/FullUrlJwkProvider.java</a>
                 </td>
                 <td>
                   0
@@ -242,6 +256,20 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.client.BaseFeignClientFactory.java">pl/chilldev/commons/client/BaseFeignClientFactory.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.daemon.Package.java">pl/chilldev/commons/daemon/Package.java</a>
                 </td>
                 <td>
@@ -299,6 +327,20 @@ under the License.
                           <tr>
                 <td>
                   <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.text.slugifier.Slugifier.java">pl/chilldev/commons/text/slugifier/Slugifier.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.client.codec.SpringErrorDecoder.java">pl/chilldev/commons/client/codec/SpringErrorDecoder.java</a>
                 </td>
                 <td>
                   0
@@ -396,6 +438,34 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.client.codec.SpringDataEncoder.java">pl/chilldev/commons/client/codec/SpringDataEncoder.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.client.FeignClientFactory.java">pl/chilldev/commons/client/FeignClientFactory.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.text.slugifier.SimpleSlugifier.java">pl/chilldev/commons/text/slugifier/SimpleSlugifier.java</a>
                 </td>
                 <td>
@@ -448,6 +518,20 @@ under the License.
                 </td>
                 <td>
                   0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.client.interceptor.AuthorizationForwarder.java">pl/chilldev/commons/client/interceptor/AuthorizationForwarder.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  7
                 </td>
               </tr>
                           <tr>
