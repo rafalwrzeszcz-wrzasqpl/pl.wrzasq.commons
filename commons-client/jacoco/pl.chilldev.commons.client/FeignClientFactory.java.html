@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FeignClientFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ChillDev Commons Client</a> &gt; <a href="index.source.html" class="el_package">pl.chilldev.commons.client</a> &gt; <span class="el_source">FeignClientFactory.java</span></div><h1>FeignClientFactory.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of the ChillDev-Commons.
+ *
+ * @license http://mit-license.org/ The MIT license
+ * @copyright 2017 © by Rafał Wrzeszcz - Wrzasq.pl.
+ */
+
+package pl.chilldev.commons.client;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
+import feign.Feign;
+
+/**
+ * Generic factory for REST services clients.
+ */
+public class FeignClientFactory
+{
+    /**
+     * Collection of all custom client modifiers.
+     */
+    private Collection&lt;Consumer&lt;Feign.Builder&gt;&gt; configurators;
+
+    /**
+     * Source for Feign builder.
+     */
+    private Supplier&lt;Feign.Builder&gt; feignBuilderSource;
+
+    /**
+     * Collection of all custom client modifiers.
+     *
+     * @param configurators Feign builder configurators.
+     * @param feignBuilderSource Feign builder producer.
+     */
+    public FeignClientFactory(
+        Collection&lt;Consumer&lt;Feign.Builder&gt;&gt; configurators,
+        Supplier&lt;Feign.Builder&gt; feignBuilderSource
+    )
+<span class="fc" id="L42">    {</span>
+<span class="fc" id="L43">        this.configurators = configurators;</span>
+<span class="fc" id="L44">        this.feignBuilderSource = feignBuilderSource;</span>
+<span class="fc" id="L45">    }</span>
+
+    /**
+     * Creates Feign client of given type.
+     *
+     * @param clientType Client type class.
+     * @param url Client URL.
+     * @param configurators Custom configuration callbacks.
+     * @param &lt;ClientType&gt; Type of client.
+     * @return Client instance.
+     */
+    public &lt;ClientType&gt; ClientType createClient(
+        Class&lt;? extends ClientType&gt; clientType,
+        String url,
+        Collection&lt;Consumer&lt;Feign.Builder&gt;&gt; configurators
+    )
+    {
+<span class="fc" id="L62">        Feign.Builder builder = this.feignBuilderSource.get();</span>
+
+        // pre-defined configurators
+<span class="fc" id="L65">        this.configurators.forEach((Consumer&lt;Feign.Builder&gt; configurator) -&gt; configurator.accept(builder));</span>
+        // custom configurators
+<span class="fc" id="L67">        configurators.forEach((Consumer&lt;Feign.Builder&gt; configurator) -&gt; configurator.accept(builder));</span>
+
+<span class="fc" id="L69">        return builder.target(clientType, url);</span>
+    }
+
+    /**
+     * Default creator for Feign client.
+     *
+     * @param clientType Client type class.
+     * @param url Client URL.
+     * @param &lt;ClientType&gt; Type of client.
+     * @return Client instance.
+     */
+    public &lt;ClientType&gt; ClientType createClient(
+        Class&lt;? extends ClientType&gt; clientType,
+        String url
+    )
+    {
+<span class="fc" id="L85">        return this.createClient(clientType, url, Collections.emptyList());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
