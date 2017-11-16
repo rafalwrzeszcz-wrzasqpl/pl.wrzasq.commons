@@ -9,7 +9,7 @@
 
 set -ex
 
-REPO=`git config remote.origin.url`
+REPO=$(git config remote.origin.url)
 SSH_REPO=${REPO/https:\/\/github.com\//git@github.com:}
 
 # prevent looping
