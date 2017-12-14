@@ -54,9 +54,9 @@ env:
 # this is not a boolean, this is a Linux `true` command to simply override this step
 install: "true"
 
-script: "mvn verify site"
+script: "mvn -e verify site"
 
-after_script: "mvn coveralls:report"
+after_script: "mvn -e coveralls:report"
 
 before_deploy:
     - "eval \"$(ssh-agent -s)\""
@@ -84,7 +84,7 @@ deploy:
     -
         provider: "script"
         skip_cleanup: true
-        script: "mvn deploy site-deploy -P deploy --settings .travis/settings.xml"
+        script: "mvn -e deploy site-deploy -P deploy --settings .travis/settings.xml"
         on:
             branch: "master"
             jdk: "oraclejdk8"
