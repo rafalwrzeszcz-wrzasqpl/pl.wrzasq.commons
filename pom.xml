@@ -103,7 +103,7 @@
         </snapshotRepository>
         <site>
             <id>github</id>
-            <url>github:http://chilloutdevelopment.github.io/pl.chilldev.commons/</url>
+            <url>git:ssh://git@github.com/chilloutdevelopment/pl.chilldev.commons.git?gh-pages#</url>
         </site>
     </distributionManagement>
 
