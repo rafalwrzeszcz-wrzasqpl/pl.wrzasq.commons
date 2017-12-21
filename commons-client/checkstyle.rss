@@ -25,7 +25,7 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2017 Rafał Wrzeszcz - Wrzasq.pl</copyright>
     <item>
-      <title>File: 5,
+      <title>File: 6,
              Errors: 0,
              Warnings: 0,
              Infos: 0
@@ -75,6 +75,20 @@ under the License.
                           <tr>
                 <td>
                   <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-client//checkstyle.html#pl.chilldev.commons.client.BaseFeignClientFactory.java">pl/chilldev/commons/client/BaseFeignClientFactory.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-client//checkstyle.html#pl.chilldev.commons.client.interceptor.BearerTokenAuthorizer.java">pl/chilldev/commons/client/interceptor/BearerTokenAuthorizer.java</a>
                 </td>
                 <td>
                   0
