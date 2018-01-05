@@ -3,7 +3,7 @@
 # This file is part of the ChillDev-Commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2017 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2017 - 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 <project
     xmlns="http://maven.apache.org/DECORATION/1.4.0"
@@ -17,7 +17,8 @@
         <menu name="Guide">
             <item name="Factory" href="guide/factory.html"/>
             <item name="Spring Data" href="guide/spring-data.html"/>
-            <item name="Sprign Errors" href="guide/spring-errors.html"/>
+            <item name="Spring Errors" href="guide/spring-errors.html"/>
+            <item name="Content-Type delegation" href="guide/delegate-decoder.html"/>
             <item name="Authorization" href="guide/authorization.html"/>
         </menu>
 
