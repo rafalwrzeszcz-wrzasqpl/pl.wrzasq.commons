@@ -9,11 +9,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="Date-Revision-yyyymmdd" content="20180105" />
     <meta http-equiv="Content-Language" content="en" />
-    <title>ChillDev Commons Client &#x2013; About</title>
-    <link rel="stylesheet" href="./css/apache-maven-fluido-1.6.min.css" />
-    <link rel="stylesheet" href="./css/site.css" />
-    <link rel="stylesheet" href="./css/print.css" media="print" />
-      <script type="text/javascript" src="./js/apache-maven-fluido-1.6.min.js"></script>
+    <title>ChillDev Commons Client &#x2013; </title>
+    <link rel="stylesheet" href="../css/apache-maven-fluido-1.6.min.css" />
+    <link rel="stylesheet" href="../css/site.css" />
+    <link rel="stylesheet" href="../css/print.css" media="print" />
+      <script type="text/javascript" src="../js/apache-maven-fluido-1.6.min.js"></script>
       </head>
     <body class="topBarDisabled">
       <div class="container-fluid">
@@ -41,32 +41,17 @@
     <li><a href="https://www.facebook.com/chilldev" class="externalLink" title="ChillDev @ Facebook"><span class="none"></span>ChillDev @ Facebook</a>  </li>
     <li><a href="https://www.facebook.com/wrzasqpl" class="externalLink" title="Wrzasq.pl @ Facebook"><span class="none"></span>Wrzasq.pl @ Facebook</a>  </li>
           <li class="nav-header">Parent Project</li>
-    <li><a href="../index.html" title="ChillDev Commons"><span class="none"></span>ChillDev Commons</a>  </li>
+    <li><a href="../../index.html" title="ChillDev Commons"><span class="none"></span>ChillDev Commons</a>  </li>
           <li class="nav-header">Guide</li>
-    <li><a href="guide/factory.html" title="Factory"><span class="none"></span>Factory</a>  </li>
-    <li><a href="guide/spring-data.html" title="Spring Data"><span class="none"></span>Spring Data</a>  </li>
-    <li><a href="guide/spring-errors.html" title="Spring Errors"><span class="none"></span>Spring Errors</a>  </li>
-    <li><a href="guide/delegate-decoder.html" title="Content-Type delegation"><span class="none"></span>Content-Type delegation</a>  </li>
-    <li><a href="guide/authorization.html" title="Authorization"><span class="none"></span>Authorization</a>  </li>
+    <li><a href="../guide/factory.html" title="Factory"><span class="none"></span>Factory</a>  </li>
+    <li><a href="../guide/spring-data.html" title="Spring Data"><span class="none"></span>Spring Data</a>  </li>
+    <li><a href="../guide/spring-errors.html" title="Spring Errors"><span class="none"></span>Spring Errors</a>  </li>
+    <li class="active"><a href="#"><span class="none"></span>Content-Type delegation</a>
+  </li>
+    <li><a href="../guide/authorization.html" title="Authorization"><span class="none"></span>Authorization</a>  </li>
           <li class="nav-header">Project Documentation</li>
-    <li><a href="project-info.html" title="Project Information"><span class="icon-chevron-down"></span>Project Information</a>
-      <ul class="nav nav-list">
-    <li><a href="integration.html" title="CI Management"><span class="none"></span>CI Management</a>  </li>
-    <li><a href="dependencies.html" title="Dependencies"><span class="none"></span>Dependencies</a>  </li>
-    <li><a href="dependency-info.html" title="Dependency Information"><span class="none"></span>Dependency Information</a>  </li>
-    <li><a href="distribution-management.html" title="Distribution Management"><span class="none"></span>Distribution Management</a>  </li>
-    <li class="active"><a href="#"><span class="none"></span>About</a>
-  </li>
-    <li><a href="issue-tracking.html" title="Issue Management"><span class="none"></span>Issue Management</a>  </li>
-    <li><a href="license.html" title="Licenses"><span class="none"></span>Licenses</a>  </li>
-    <li><a href="plugin-management.html" title="Plugin Management"><span class="none"></span>Plugin Management</a>  </li>
-    <li><a href="plugins.html" title="Plugins"><span class="none"></span>Plugins</a>  </li>
-    <li><a href="team-list.html" title="Team"><span class="none"></span>Team</a>  </li>
-    <li><a href="source-repository.html" title="Source Code Management"><span class="none"></span>Source Code Management</a>  </li>
-    <li><a href="project-summary.html" title="Summary"><span class="none"></span>Summary</a>  </li>
-      </ul>
-  </li>
-    <li><a href="project-reports.html" title="Project Reports"><span class="icon-chevron-right"></span>Project Reports</a>  </li>
+    <li><a href="../project-info.html" title="Project Information"><span class="icon-chevron-right"></span>Project Information</a>  </li>
+    <li><a href="../project-reports.html" title="Project Reports"><span class="icon-chevron-right"></span>Project Reports</a>  </li>
   </ul>
           <hr />
           <div id="poweredBy">
@@ -81,9 +66,38 @@
           </div>
         </div>
         <div id="bodyColumn"  class="span10" >
-<div class="section">
-<h2><a name="About_ChillDev_Commons_Client"></a>About ChillDev Commons Client</h2><a name="About_ChillDev_Commons_Client"></a>
-<p>Web services client building utilities.</p></div>
+<!---
+# This file is part of the ChillDev-Commons.
+#
+# @license http://mit-license.org/ The MIT license
+# @copyright 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
+--><p>Sometimes different API endpoints may return different media types (or maybe they can return negotiated content). With single decoder it&#x2019;s impossible to handle multiple response types. You would need to return plain <tt>feign.Response</tt> and operate on it.</p>
+<p>To help with this problem you can use <tt>pl.chilldev.commons.client.codec.DelegateDecoder</tt>. It allows you to register type-specific decoders:</p>
+
+<div class="source">
+<div class="source"><pre class="prettyprint">Decoder fallback = new StringDecoder();
+DelegateDecoder decoder = new DelegateDecoder(fallback);
+decoder.registerTypeDecoder(&quot;application/json&quot;, new JacksonDecoder());
+decoder.registerTypeDecoder(&quot;application/xml&quot;, new YourXmlDecoder());
+</pre></div></div>
+<p>Then you can use different response types:</p>
+
+<div class="source">
+<div class="source"><pre class="prettyprint">interface YourClient
+{
+    @RequestLine(&quot;GET /users&quot;)
+    @Headers(&quot;Accept: application/json&quot;)
+    List&lt;User&gt; getUsersFromJson(); // this will use JacksonDecoder
+
+    @RequestLine(&quot;GET /users&quot;)
+    @Headers(&quot;Accept: application/xml&quot;)
+    List&lt;User&gt; getUsersFromXml(); // this will use YourXmlDecoder
+
+    @RequestLine(&quot;GET /users&quot;)
+    @Headers(&quot;Accept: text/plain&quot;)
+    List&lt;User&gt; getUsersFromPlainText(); // this will use StringDecoder - will of course fail, but just to keep pattern
+}
+</pre></div></div>
         </div>
       </div>
     </div>
