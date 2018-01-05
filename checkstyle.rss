@@ -23,9 +23,9 @@ under the License.
     <link>https://chilloutdevelopment.github.io/pl.chilldev.commons</link>
     <description>ChillDev Commons - Checkstyle report</description>
     <language>en-us</language>
-    <copyright>&#169;2014 - 2017 Rafał Wrzeszcz - Wrzasq.pl</copyright>
+    <copyright>&#169;2014 - 2018 Rafał Wrzeszcz - Wrzasq.pl</copyright>
     <item>
-      <title>File: 39,
+      <title>File: 40,
              Errors: 98,
              Warnings: 0,
              Infos: 0
@@ -336,6 +336,20 @@ under the License.
                 </td>
                 <td>
                   8
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/checkstyle.html#pl.chilldev.commons.client.codec.DelegateDecoder.java">pl/chilldev/commons/client/codec/DelegateDecoder.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
               </tr>
                           <tr>
