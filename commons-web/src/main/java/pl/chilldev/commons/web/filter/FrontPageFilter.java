@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2016, 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.chilldev.commons.web.filter;
@@ -59,6 +59,27 @@ public class FrontPageFilter implements Filter
         FrontHttpServletResponse(HttpServletResponse response)
         {
             super(response);
+        }
+
+        /**
+         * Handles error code setting.
+         *
+         * @param statusCode HTTP status code.
+         */
+        public void sendError(int statusCode)
+        {
+            this.setStatus(statusCode);
+        }
+
+        /**
+         * Handles error code setting.
+         *
+         * @param statusCode HTTP status code.
+         * @param message Status message.
+         */
+        public void sendError(int statusCode, String message)
+        {
+            this.setStatus(statusCode, message);
         }
 
         /**

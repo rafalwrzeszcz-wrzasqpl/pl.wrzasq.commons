@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2016, 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.chilldev.commons.web.filter;
@@ -337,6 +337,82 @@ public class FrontPageFilterTest
         Filter filter = new FrontPageFilter();
         filter.doFilter(this.httpServletRequest, this.servletResponse, this.chain);
         Mockito.verifyZeroInteractions(this.chain);
+    }
+
+    @Test
+    public void doFilterSendError() throws Exception
+    {
+        FrontPageFilter filter = this.createFrontPageFilter();
+        MockHttpServletRequest request = this.createMockRequest();
+        request.addHeader(HttpHeaders.ACCEPT, MediaType.TEXT_HTML_VALUE);
+
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        response.setStatus(HttpStatus.OK.value());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+
+        Mockito
+            .when(this.viewResolver.resolveViewName(FrontPageFilterTest.VIEW_NAME, Locale.ROOT))
+            .thenReturn(this.view);
+        Mockito
+            .doAnswer((InvocationOnMock invocation) -> {
+                ((HttpServletResponse) (invocation.getArguments()[1])).sendError(HttpStatus.BAD_REQUEST.value());
+                return null;
+            })
+            .when(this.chain)
+            .doFilter(Mockito.isA(HttpServletRequest.class), Mockito.isA(HttpServletResponse.class));
+
+        filter.doFilter(request, response, this.chain);
+
+        Mockito
+            .verify(this.chain)
+            .doFilter(Mockito.isA(HttpServletRequest.class), Mockito.isA(HttpServletResponse.class));
+
+        Assert.assertEquals(
+            "FrontPageFilter.FrontHttpServletResponse.sendError() should set response status code.",
+            HttpStatus.BAD_REQUEST.value(),
+            response.getStatus()
+        );
+    }
+
+    @Test
+    public void doFilterSendErrorWithMessage() throws Exception
+    {
+        FrontPageFilter filter = this.createFrontPageFilter();
+        MockHttpServletRequest request = this.createMockRequest();
+        request.addHeader(HttpHeaders.ACCEPT, MediaType.TEXT_HTML_VALUE);
+
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        response.setStatus(HttpStatus.OK.value());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+
+        Mockito
+            .when(this.viewResolver.resolveViewName(FrontPageFilterTest.VIEW_NAME, Locale.ROOT))
+            .thenReturn(this.view);
+        Mockito
+            .doAnswer((InvocationOnMock invocation) -> {
+                ((HttpServletResponse) (invocation.getArguments()[1]))
+                    .sendError(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase());
+                return null;
+            })
+            .when(this.chain)
+            .doFilter(Mockito.isA(HttpServletRequest.class), Mockito.isA(HttpServletResponse.class));
+
+        filter.doFilter(request, response, this.chain);
+
+        Mockito
+            .verify(this.chain)
+            .doFilter(Mockito.isA(HttpServletRequest.class), Mockito.isA(HttpServletResponse.class));
+
+        Assert.assertEquals(
+            "FrontPageFilter.FrontHttpServletResponse.sendError() should set response status code.",
+            HttpStatus.BAD_REQUEST.value(),
+            response.getStatus()
+        );
+        Assert.assertEquals(
+            "FrontPageFilter.FrontHttpServletResponse.sendError() should set response status message.",
+            HttpStatus.BAD_REQUEST.getReasonPhrase(),
+            response.getErrorMessage()
+        );
     }
 
     private MockHttpServletRequest createMockRequest()
