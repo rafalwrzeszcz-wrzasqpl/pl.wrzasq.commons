@@ -67,7 +67,8 @@ public class DelegateDecoder implements Decoder
             response.headers().getOrDefault(HttpHeaders.CONTENT_TYPE, Collections.emptyList())
                 .stream()
                 .findFirst()
-                .orElse(""),
+                .orElse("")
+                .split(";")[0],
             this.fallback
         )
             .decode(response, type);

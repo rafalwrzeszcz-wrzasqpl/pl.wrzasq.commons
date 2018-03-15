@@ -62,6 +62,36 @@ public class DelegateDecoderTest
     }
 
     @Test
+    public void decodeWithExtraParameters() throws IOException
+    {
+        Response response = Response.builder()
+            .status(200)
+            .reason("ok")
+            .headers(
+                Collections.singletonMap(
+                    HttpHeaders.CONTENT_TYPE,
+                    Collections.singleton(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                )
+            )
+            .build();
+        Object result = this;
+
+        Mockito.when(this.typed.decode(response, String.class)).thenReturn(result);
+
+        DelegateDecoder decoder = new DelegateDecoder(this.fallback);
+        decoder.registerTypeDecoder(MediaType.APPLICATION_JSON_VALUE, this.typed);
+
+        Assert.assertSame(
+            "DelegateDecoder.decode() should return result of decoder, ignoring extra type parameters.",
+            result,
+            decoder.decode(response, String.class)
+        );
+
+        Mockito.verifyZeroInteractions(this.fallback);
+        Mockito.verify(this.typed).decode(response, String.class);
+    }
+
+    @Test
     public void decodeWithoutType() throws IOException
     {
         Response response = Response.builder()
