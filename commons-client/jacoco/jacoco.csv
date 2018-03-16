@@ -1,7 +1,7 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 ChillDev Commons Client,pl.chilldev.commons.client.codec,SpringDataEncoder,0,66,0,2,0,17,0,4,0,3
 ChillDev Commons Client,pl.chilldev.commons.client.codec,SpringErrorDecoder,0,36,0,4,0,9,0,4,0,2
-ChillDev Commons Client,pl.chilldev.commons.client.codec,DelegateDecoder,0,39,0,0,0,12,0,3,0,3
+ChillDev Commons Client,pl.chilldev.commons.client.codec,DelegateDecoder,0,44,0,0,0,13,0,3,0,3
 ChillDev Commons Client,pl.chilldev.commons.client,FeignClientFactory,0,42,0,0,0,9,0,5,0,5
 ChillDev Commons Client,pl.chilldev.commons.client,BaseFeignClientFactory,0,5,0,0,0,2,0,1,0,1
 ChillDev Commons Client,pl.chilldev.commons.client.interceptor,BearerTokenAuthorizer,0,25,0,0,0,5,0,2,0,2

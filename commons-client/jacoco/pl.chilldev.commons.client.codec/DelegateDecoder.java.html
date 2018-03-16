@@ -67,10 +67,11 @@ public class DelegateDecoder implements Decoder
 <span class="fc" id="L67">            response.headers().getOrDefault(HttpHeaders.CONTENT_TYPE, Collections.emptyList())</span>
 <span class="fc" id="L68">                .stream()</span>
 <span class="fc" id="L69">                .findFirst()</span>
-<span class="fc" id="L70">                .orElse(&quot;&quot;),</span>
+<span class="fc" id="L70">                .orElse(&quot;&quot;)</span>
+<span class="fc" id="L71">                .split(&quot;;&quot;)[0],</span>
             this.fallback
         )
-<span class="fc" id="L73">            .decode(response, type);</span>
+<span class="fc" id="L74">            .decode(response, type);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

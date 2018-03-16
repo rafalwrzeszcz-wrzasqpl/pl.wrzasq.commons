@@ -75,12 +75,13 @@
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>              response.headers().getOrDefault(HttpHeaders.CONTENT_TYPE, Collections.emptyList())
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>                  .stream()
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>                  .findFirst()
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>                  .orElse(<span class="jxr_string">""</span>),
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>              <strong class="jxr_keyword">this</strong>.fallback
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>          )
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>              .decode(response, type);
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>      }
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>  }
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>                  .orElse(<span class="jxr_string">""</span>)
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>                  .split(<span class="jxr_string">";"</span>)[0],
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>              <strong class="jxr_keyword">this</strong>.fallback
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>          )
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>              .decode(response, type);
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>      }
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>  }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2017&#x2013;2018 <a href="https://wrzasq.pl/">Rafał Wrzeszcz - Wrzasq.pl</a>. All rights reserved.</div>
