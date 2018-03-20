@@ -62,27 +62,6 @@ public class FrontPageFilter implements Filter
         }
 
         /**
-         * Handles error code setting.
-         *
-         * @param statusCode HTTP status code.
-         */
-        public void sendError(int statusCode)
-        {
-            this.setStatus(statusCode);
-        }
-
-        /**
-         * Handles error code setting.
-         *
-         * @param statusCode HTTP status code.
-         * @param message Status message.
-         */
-        public void sendError(int statusCode, String message)
-        {
-            this.setStatus(statusCode, message);
-        }
-
-        /**
          * Produces real response.
          *
          * @param view Destination template.
