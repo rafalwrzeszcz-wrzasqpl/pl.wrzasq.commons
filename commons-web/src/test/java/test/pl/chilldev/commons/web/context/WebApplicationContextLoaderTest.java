@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2017 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2017 - 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.chilldev.commons.web.context;
@@ -13,19 +13,22 @@ import javax.servlet.ServletContext;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.web.context.WebApplicationContext;
 import pl.chilldev.commons.web.context.WebApplicationContextLoader;
 
-@RunWith(MockitoJUnitRunner.class)
 public class WebApplicationContextLoaderTest
 {
+    @Rule
+    public MockitoRule mockito = MockitoJUnit.rule();
+
     // needed just for identity check
     private static final WebApplicationContextLoaderTest BEAN = new WebApplicationContextLoaderTest();
 

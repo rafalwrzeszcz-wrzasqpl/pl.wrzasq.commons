@@ -11,16 +11,19 @@ import java.util.function.Consumer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import pl.chilldev.commons.aws.MessageHandler;
 
-@RunWith(MockitoJUnitRunner.class)
 public class MessageHandlerTest
 {
+    @Rule
+    public MockitoRule mockito = MockitoJUnit.rule();
+
     @Mock
     private Consumer<Integer> messageHandler;
 

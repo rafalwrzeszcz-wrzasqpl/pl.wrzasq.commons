@@ -15,20 +15,23 @@ import com.amazonaws.services.lambda.runtime.events.SNSEvent;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import pl.chilldev.commons.aws.sns.NotificationHandler;
 import pl.chilldev.commons.aws.sns.TypedNotificationHandler;
 import test.pl.chilldev.commons.aws.GenericMessage;
 
-@RunWith(MockitoJUnitRunner.class)
 public class TypedNotificationHandlerTest
 {
+    @Rule
+    public MockitoRule mockito = MockitoJUnit.rule();
+
     @Mock
     private Consumer<String> messageHandler;
 

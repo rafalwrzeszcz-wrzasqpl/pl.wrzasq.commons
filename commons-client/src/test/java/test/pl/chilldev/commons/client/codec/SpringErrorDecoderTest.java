@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2017 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2017 - 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.chilldev.commons.client.codec;
@@ -12,19 +12,22 @@ import java.util.Collections;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.HttpStatusCodeException;
 import pl.chilldev.commons.client.codec.SpringErrorDecoder;
 
-@RunWith(MockitoJUnitRunner.class)
 public class SpringErrorDecoderTest
 {
+    @Rule
+    public MockitoRule mockito = MockitoJUnit.rule();
+
     @Mock
     private ErrorDecoder fallback;
 

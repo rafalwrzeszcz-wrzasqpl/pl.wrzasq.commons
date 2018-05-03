@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2017 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2017 - 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.chilldev.commons.web.daemon;
@@ -13,20 +13,23 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.web.context.WebApplicationContext;
 import pl.chilldev.commons.web.context.WebApplicationContextLoader;
 import pl.chilldev.commons.web.daemon.AbstractSpringWebDaemon;
 
-@RunWith(MockitoJUnitRunner.class)
 public class AbstractSpringWebDaemonTest extends AbstractSpringWebDaemon
 {
+    @Rule
+    public MockitoRule mockito = MockitoJUnit.rule();
+
     @Spy
     private AbstractWebDaemonTest.TestServer server = new AbstractWebDaemonTest.TestServer();
 

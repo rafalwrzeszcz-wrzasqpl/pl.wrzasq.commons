@@ -13,18 +13,21 @@ import java.util.Collections;
 import feign.Response;
 import feign.codec.Decoder;
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import pl.chilldev.commons.client.codec.DelegateDecoder;
 
-@RunWith(MockitoJUnitRunner.class)
 public class DelegateDecoderTest
 {
+    @Rule
+    public MockitoRule mockito = MockitoJUnit.rule();
+
     @Mock
     private Decoder fallback;
 

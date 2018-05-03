@@ -2,20 +2,20 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2016 - 2017 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2016 - 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.chilldev.commons.web.daemon;
 
 import org.eclipse.jetty.server.Server;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.Spy;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import pl.chilldev.commons.web.daemon.AbstractWebDaemon;
 
-@RunWith(MockitoJUnitRunner.class)
 public class AbstractWebDaemonTest
 {
     protected static class TestServer extends Server
@@ -26,6 +26,9 @@ public class AbstractWebDaemonTest
             // dummy method
         }
     }
+
+    @Rule
+    public MockitoRule mockito = MockitoJUnit.rule();
 
     @Spy
     private AbstractWebDaemonTest.TestServer server = new AbstractWebDaemonTest.TestServer();

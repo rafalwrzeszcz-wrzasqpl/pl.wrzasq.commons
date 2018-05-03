@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2017 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2017 - 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.chilldev.commons.aws.sqs;
@@ -16,16 +16,18 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.EnvironmentVariables;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import pl.chilldev.commons.aws.sqs.QueueHandler;
 import pl.chilldev.commons.aws.sqs.SimpleQueueHandler;
 
-@RunWith(MockitoJUnitRunner.class)
 public class SimpleQueueHandlerTest
 {
+    @Rule
+    public MockitoRule mockito = MockitoJUnit.rule();
+
     @Rule
     public EnvironmentVariables environmentVariables = new EnvironmentVariables();
 

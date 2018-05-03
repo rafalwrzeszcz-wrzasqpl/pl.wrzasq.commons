@@ -2,25 +2,25 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2014 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2014 - 2016, 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.chilldev.commons.daemon.lifecycle;
 
 import org.apache.commons.daemon.Daemon;
-
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
-
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import pl.chilldev.commons.daemon.lifecycle.Shutdown;
 
-@RunWith(MockitoJUnitRunner.class)
 public class ShutdownTest
 {
+    @Rule
+    public MockitoRule mockito = MockitoJUnit.rule();
+
     @Mock
     private Daemon daemon;
 

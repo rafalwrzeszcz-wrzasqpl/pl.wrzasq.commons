@@ -20,14 +20,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -38,12 +39,14 @@ import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 import pl.chilldev.commons.web.filter.FrontPageFilter;
 
-@RunWith(MockitoJUnitRunner.class)
 public class FrontPageFilterTest
 {
     private static final String ACCEPT_LANGUAGE_VALUE = "pl";
 
     private static final String VIEW_NAME = "front";
+
+    @Rule
+    public MockitoRule mockito = MockitoJUnit.rule();
 
     @Mock
     private FilterChain chain;

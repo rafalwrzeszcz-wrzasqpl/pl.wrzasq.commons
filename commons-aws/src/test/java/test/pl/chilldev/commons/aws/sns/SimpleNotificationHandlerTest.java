@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2017 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2017 - 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.chilldev.commons.aws.sns;
@@ -11,17 +11,20 @@ import java.util.Arrays;
 import java.util.function.Consumer;
 
 import com.amazonaws.services.lambda.runtime.events.SNSEvent;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import pl.chilldev.commons.aws.sns.NotificationHandler;
 import pl.chilldev.commons.aws.sns.SimpleNotificationHandler;
 
-@RunWith(MockitoJUnitRunner.class)
 public class SimpleNotificationHandlerTest
 {
+    @Rule
+    public MockitoRule mockito = MockitoJUnit.rule();
+
     @Mock
     private Consumer<String> messageHandler;
 

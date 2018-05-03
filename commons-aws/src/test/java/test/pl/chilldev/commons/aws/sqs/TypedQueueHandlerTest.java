@@ -19,19 +19,21 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.EnvironmentVariables;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import pl.chilldev.commons.aws.sqs.QueueHandler;
 import pl.chilldev.commons.aws.sqs.TypedQueueHandler;
 import test.pl.chilldev.commons.aws.GenericMessage;
 
-@RunWith(MockitoJUnitRunner.class)
 public class TypedQueueHandlerTest
 {
+    @Rule
+    public MockitoRule mockito = MockitoJUnit.rule();
+
     @Rule
     public EnvironmentVariables environmentVariables = new EnvironmentVariables();
 
