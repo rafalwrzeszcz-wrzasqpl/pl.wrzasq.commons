@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2015 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2015 - 2016, 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.chilldev.commons.text.html;
@@ -55,6 +55,7 @@ public class Utils
 
         return match.find() ? match.group(1) : "";
     }
+
     /**
      * Truncates text.
      *

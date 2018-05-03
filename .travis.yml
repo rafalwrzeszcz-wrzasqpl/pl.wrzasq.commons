@@ -2,7 +2,7 @@
 # This file is part of the ChillDev-Commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2014 - 2017 © by Rafal Wrzeszcz - Wrzasq.pl.
+# @copyright 2014 - 2018 © by Rafal Wrzeszcz - Wrzasq.pl.
 ##
 
 #FIXME: https://github.com/travis-ci/travis-ci/issues/753
@@ -21,12 +21,6 @@ jdk:
     - "openjdk8"
     - "oraclejdk8"
     - "oraclejdk9"
-
-# TODO: temporary as delombok won't work here
-matrix:
-    allow_failures:
-        -
-            jdk: "oraclejdk9"
 
 env:
     global:
