@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2017 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2017 - 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.chilldev.commons.aws.sns;
@@ -22,13 +22,15 @@ public class TypedNotificationHandler extends SimpleNotificationHandler
      *
      * @param objectMapper JSON handler.
      * @param messageHandler Single message consumer.
+     * @param type Message content type.
      * @param <Type> Message type.
      */
     public <Type> TypedNotificationHandler(
         ObjectMapper objectMapper,
-        Consumer<Type> messageHandler
+        Consumer<Type> messageHandler,
+        Class<Type> type
     )
     {
-        super(new MessageHandler<>(objectMapper, messageHandler)::handle);
+        super(new MessageHandler<>(objectMapper, messageHandler, type)::handle);
     }
 }

@@ -2,7 +2,7 @@
 # This file is part of the ChillDev-Commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2017 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2017 - 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
 # Publishing
@@ -128,7 +128,7 @@ class MyPojo
 
 class MyConsumer
 {
-    public void consume(MyPojo)
+    public void consume(MyPojo payload)
     {
         // (1)
     }
@@ -148,7 +148,8 @@ public class MyLambda
         // (2)
         MyLambda.handler = new TypedNotificationHandler(
             objectMapper,
-            consumer::consume
+            consumer::consume,
+            MyPojo.class
         );
     }
 

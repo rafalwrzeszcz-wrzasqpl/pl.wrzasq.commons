@@ -2,7 +2,7 @@
 # This file is part of the ChillDev-Commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2017 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2017 - 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
 # Handling messages
@@ -80,7 +80,7 @@ class MyPojo
 
 class MyConsumer
 {
-    public void consume(MyPojo)
+    public void consume(MyPojo payload)
     {
         // (1)
     }
@@ -101,7 +101,8 @@ public class MyLambda
         MyLambda.handler = new TypedQueueHandler(
             System.getenv("MY_QUEUE_URL"),
             objectMapper,
-            consumer::consume
+            consumer::consume,
+            MyPojo.class
         );
     }
 

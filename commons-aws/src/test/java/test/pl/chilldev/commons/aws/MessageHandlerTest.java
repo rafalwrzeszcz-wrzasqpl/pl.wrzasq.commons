@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2017 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2017 - 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.chilldev.commons.aws;
@@ -31,7 +31,8 @@ public class MessageHandlerTest
 
         MessageHandler<Integer> messageHandler = new MessageHandler<>(
             objectMapper,
-            this.messageHandler
+            this.messageHandler,
+            Integer.TYPE
         );
 
         Integer message = 44;
@@ -47,7 +48,8 @@ public class MessageHandlerTest
 
         MessageHandler<Integer> messageHandler = new MessageHandler<>(
             objectMapper,
-            this.messageHandler
+            this.messageHandler,
+            Integer.TYPE
         );
 
         messageHandler.handle("test");

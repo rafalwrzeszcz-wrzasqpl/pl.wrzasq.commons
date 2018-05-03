@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2017 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2017 - 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.chilldev.commons.aws;
@@ -10,7 +10,6 @@ package pl.chilldev.commons.aws;
 import java.io.IOException;
 import java.util.function.Consumer;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +19,7 @@ import org.slf4j.LoggerFactory;
  *
  * @param <Type> Message type.
  */
-public class MessageHandler<Type> extends TypeReference<Type>
+public class MessageHandler<Type>
 {
     /**
      * Logger.
@@ -38,16 +37,22 @@ public class MessageHandler<Type> extends TypeReference<Type>
     private Consumer<Type> messageHandler;
 
     /**
+     * Expected type.
+     */
+    private Class<Type> type;
+
+    /**
      * Initializes message conversion handler.
      *
      * @param objectMapper JSON handler.
      * @param messageHandler Single message consumer.
+     * @param type Expected message content type.
      */
-    public MessageHandler(ObjectMapper objectMapper, Consumer<Type> messageHandler)
+    public MessageHandler(ObjectMapper objectMapper, Consumer<Type> messageHandler, Class<Type> type)
     {
-        super();
         this.objectMapper = objectMapper;
         this.messageHandler = messageHandler;
+        this.type = type;
     }
 
     /**
@@ -60,7 +65,7 @@ public class MessageHandler<Type> extends TypeReference<Type>
         this.logger.info("Incoming message {}.", message);
 
         try {
-            Type data = this.objectMapper.readValue(message, this);
+            Type data = this.objectMapper.readValue(message, this.type);
             this.messageHandler.accept(data);
             this.logger.debug("Task processed.");
         } catch (IOException error) {
