@@ -25,7 +25,7 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2017 - 2018 Rafał Wrzeszcz - Wrzasq.pl</copyright>
     <item>
-      <title>File: 8,
+      <title>File: 0,
              Errors: 0,
              Warnings: 0,
              Infos: 0
@@ -44,118 +44,6 @@ under the License.
             </tr>
           </thead>
           <tbody>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-aws//checkstyle.html#pl.chilldev.commons.aws.sns.TopicClient.java">pl/chilldev/commons/aws/sns/TopicClient.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-aws//checkstyle.html#pl.chilldev.commons.aws.sns.NotificationHandler.java">pl/chilldev/commons/aws/sns/NotificationHandler.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-aws//checkstyle.html#pl.chilldev.commons.aws.sns.SimpleNotificationHandler.java">pl/chilldev/commons/aws/sns/SimpleNotificationHandler.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-aws//checkstyle.html#pl.chilldev.commons.aws.sqs.SimpleQueueHandler.java">pl/chilldev/commons/aws/sqs/SimpleQueueHandler.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-aws//checkstyle.html#pl.chilldev.commons.aws.sqs.QueueHandler.java">pl/chilldev/commons/aws/sqs/QueueHandler.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-aws//checkstyle.html#pl.chilldev.commons.aws.MessageHandler.java">pl/chilldev/commons/aws/MessageHandler.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-aws//checkstyle.html#pl.chilldev.commons.aws.sqs.TypedQueueHandler.java">pl/chilldev/commons/aws/sqs/TypedQueueHandler.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-aws//checkstyle.html#pl.chilldev.commons.aws.sns.TypedNotificationHandler.java">pl/chilldev/commons/aws/sns/TypedNotificationHandler.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
                       </tbody>
         </table>
         
