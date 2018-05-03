@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2015 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2015 - 2016, 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.chilldev.commons.text.html;
@@ -55,6 +55,7 @@ import pl.chilldev.commons.text.TextProcessingException;
 
 <span class="fc bfc" id="L56" title="All 2 branches covered.">        return match.find() ? match.group(1) : &quot;&quot;;</span>
     }
+
     /**
      * Truncates text.
      *
@@ -67,22 +68,22 @@ import pl.chilldev.commons.text.TextProcessingException;
     public static String truncate(String text, int length, String suffix, boolean wordBounds)
     {
         // nothing to do here
-<span class="fc bfc" id="L70" title="All 2 branches covered.">        if (text.length() &lt;= length) {</span>
-<span class="fc" id="L71">            return text;</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        if (text.length() &lt;= length) {</span>
+<span class="fc" id="L72">            return text;</span>
         }
 
         // look for last possible word
-<span class="fc bfc" id="L75" title="All 2 branches covered.">        if (wordBounds) {</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        if (wordBounds) {</span>
             // look for last word-break
-<span class="fc" id="L77">            String part = text.substring(0, length + 2);</span>
-<span class="fc" id="L78">            Matcher matcher = Utils.WORDBOUND_PATTERN.matcher(part);</span>
-<span class="fc bfc" id="L79" title="All 2 branches covered.">            if (matcher.find()) {</span>
+<span class="fc" id="L78">            String part = text.substring(0, length + 2);</span>
+<span class="fc" id="L79">            Matcher matcher = Utils.WORDBOUND_PATTERN.matcher(part);</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">            if (matcher.find()) {</span>
                 // we add 1 as second parameter is exclusive
-<span class="fc" id="L81">                length = matcher.start() + 1;</span>
+<span class="fc" id="L82">                length = matcher.start() + 1;</span>
             }
         }
 
-<span class="fc" id="L85">        return text.substring(0, length).trim() + suffix;</span>
+<span class="fc" id="L86">        return text.substring(0, length).trim() + suffix;</span>
     }
 
     /**
@@ -95,7 +96,7 @@ import pl.chilldev.commons.text.TextProcessingException;
      */
     public static String truncate(String text, int length, String suffix)
     {
-<span class="fc" id="L98">        return Utils.truncate(text, length, suffix, true);</span>
+<span class="fc" id="L99">        return Utils.truncate(text, length, suffix, true);</span>
     }
 
     /**
@@ -108,7 +109,7 @@ import pl.chilldev.commons.text.TextProcessingException;
      */
     public static String truncate(String text, int length, boolean wordBounds)
     {
-<span class="fc" id="L111">        return Utils.truncate(text, length, Utils.SUFFIX_DEFAULT, wordBounds);</span>
+<span class="fc" id="L112">        return Utils.truncate(text, length, Utils.SUFFIX_DEFAULT, wordBounds);</span>
     }
 
     /**
@@ -120,7 +121,7 @@ import pl.chilldev.commons.text.TextProcessingException;
      */
     public static String truncate(String text, int length)
     {
-<span class="fc" id="L123">        return Utils.truncate(text, length, Utils.SUFFIX_DEFAULT, true);</span>
+<span class="fc" id="L124">        return Utils.truncate(text, length, Utils.SUFFIX_DEFAULT, true);</span>
     }
 
     /**
@@ -130,8 +131,8 @@ import pl.chilldev.commons.text.TextProcessingException;
      */
     public static void setFormatter(Formatter formatter)
     {
-<span class="fc" id="L133">        Utils.formatter = formatter;</span>
-<span class="fc" id="L134">    }</span>
+<span class="fc" id="L134">        Utils.formatter = formatter;</span>
+<span class="fc" id="L135">    }</span>
 
     /**
      * Formats the text.
@@ -144,7 +145,7 @@ import pl.chilldev.commons.text.TextProcessingException;
     public static String format(String format, String text)
         throws TextProcessingException
     {
-<span class="fc" id="L147">        return Utils.formatter.transform(format, text);</span>
+<span class="fc" id="L148">        return Utils.formatter.transform(format, text);</span>
     }
 
     /**
@@ -157,7 +158,7 @@ import pl.chilldev.commons.text.TextProcessingException;
     public static String urlEncode(String value)
         throws UnsupportedEncodingException
     {
-<span class="fc" id="L160">        return URLEncoder.encode(value, &quot;UTF-8&quot;);</span>
+<span class="fc" id="L161">        return URLEncoder.encode(value, &quot;UTF-8&quot;);</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

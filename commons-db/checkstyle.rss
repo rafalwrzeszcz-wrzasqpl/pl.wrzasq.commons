@@ -25,7 +25,7 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2015 - 2018 Rafał Wrzeszcz - Wrzasq.pl</copyright>
     <item>
-      <title>File: 6,
+      <title>File: 0,
              Errors: 0,
              Warnings: 0,
              Infos: 0
@@ -44,90 +44,6 @@ under the License.
             </tr>
           </thead>
           <tbody>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-db//checkstyle.html#pl.chilldev.commons.db.slugable.Slug.java">pl/chilldev/commons/db/slugable/Slug.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-db//checkstyle.html#pl.chilldev.commons.db.AbstractEntity.java">pl/chilldev/commons/db/AbstractEntity.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-db//checkstyle.html#pl.chilldev.commons.db.slugable.SlugableListener.java">pl/chilldev/commons/db/slugable/SlugableListener.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-db//checkstyle.html#pl.chilldev.commons.db.timestampable.TimestampableListener.java">pl/chilldev/commons/db/timestampable/TimestampableListener.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-db//checkstyle.html#pl.chilldev.commons.db.timestampable.Timestamp.java">pl/chilldev/commons/db/timestampable/Timestamp.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-db//checkstyle.html#pl.chilldev.commons.db.timestampable.TimestampType.java">pl/chilldev/commons/db/timestampable/TimestampType.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
                       </tbody>
         </table>
         
