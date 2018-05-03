@@ -25,7 +25,7 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2016 - 2018 Rafał Wrzeszcz - Wrzasq.pl</copyright>
     <item>
-      <title>File: 4,
+      <title>File: 2,
              Errors: 0,
              Warnings: 0,
              Infos: 0
@@ -60,35 +60,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-web//checkstyle.html#pl.chilldev.commons.web.daemon.AbstractSpringWebDaemon.java">pl/chilldev/commons/web/daemon/AbstractSpringWebDaemon.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-web//checkstyle.html#pl.chilldev.commons.web.daemon.AbstractWebDaemon.java">pl/chilldev/commons/web/daemon/AbstractWebDaemon.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-web//checkstyle.html#pl.chilldev.commons.web.context.WebApplicationContextLoader.java">pl/chilldev/commons/web/context/WebApplicationContextLoader.java</a>
                 </td>
                 <td>
                   0
