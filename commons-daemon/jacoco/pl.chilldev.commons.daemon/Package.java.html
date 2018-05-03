@@ -65,7 +65,7 @@ import java.util.Properties;
 <span class="fc bfc" id="L65" title="All 2 branches covered.">        if (url != null) {</span>
 <span class="fc" id="L66">            try (InputStream stream = url.openStream()) {</span>
 <span class="fc" id="L67">                this.init(stream);</span>
-<span class="pc bpc" id="L68" title="4 of 8 branches missed.">            } catch (IOException error) {</span>
+<span class="fc" id="L68">            } catch (IOException error) {</span>
                 // it's not a critical problem in our case, just report it
 <span class="fc" id="L70">                this.version = &quot;error&quot;;</span>
 <span class="fc" id="L71">            }</span>
@@ -102,4 +102,4 @@ import java.util.Properties;
 <span class="fc" id="L102">        return this.version;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
