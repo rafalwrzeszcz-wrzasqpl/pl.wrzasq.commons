@@ -25,7 +25,7 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2015 - 2018 Rafał Wrzeszcz - Wrzasq.pl</copyright>
     <item>
-      <title>File: 9,
+      <title>File: 0,
              Errors: 0,
              Warnings: 0,
              Infos: 0
@@ -44,132 +44,6 @@ under the License.
             </tr>
           </thead>
           <tbody>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-text//checkstyle.html#pl.chilldev.commons.text.slugifier.SimpleSlugifier.java">pl/chilldev/commons/text/slugifier/SimpleSlugifier.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-text//checkstyle.html#pl.chilldev.commons.text.html.Utils.java">pl/chilldev/commons/text/html/Utils.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-text//checkstyle.html#pl.chilldev.commons.text.slugifier.Slugifier.java">pl/chilldev/commons/text/slugifier/Slugifier.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-text//checkstyle.html#pl.chilldev.commons.text.formatter.MarkdownFormatter.java">pl/chilldev/commons/text/formatter/MarkdownFormatter.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-text//checkstyle.html#pl.chilldev.commons.text.formatter.FormatterInterface.java">pl/chilldev/commons/text/formatter/FormatterInterface.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-text//checkstyle.html#pl.chilldev.commons.text.formatter.PlainTextFormatter.java">pl/chilldev/commons/text/formatter/PlainTextFormatter.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-text//checkstyle.html#pl.chilldev.commons.text.Formatter.java">pl/chilldev/commons/text/Formatter.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-text//checkstyle.html#pl.chilldev.commons.text.TextProcessingException.java">pl/chilldev/commons/text/TextProcessingException.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-text//checkstyle.html#pl.chilldev.commons.text.formatter.HtmlFormatter.java">pl/chilldev/commons/text/formatter/HtmlFormatter.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
                       </tbody>
         </table>
         
