@@ -25,7 +25,7 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2017 - 2018 Rafał Wrzeszcz - Wrzasq.pl</copyright>
     <item>
-      <title>File: 7,
+      <title>File: 0,
              Errors: 0,
              Warnings: 0,
              Infos: 0
@@ -44,104 +44,6 @@ under the License.
             </tr>
           </thead>
           <tbody>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-client//checkstyle.html#pl.chilldev.commons.client.codec.DelegateDecoder.java">pl/chilldev/commons/client/codec/DelegateDecoder.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-client//checkstyle.html#pl.chilldev.commons.client.codec.SpringErrorDecoder.java">pl/chilldev/commons/client/codec/SpringErrorDecoder.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-client//checkstyle.html#pl.chilldev.commons.client.interceptor.AuthorizationForwarder.java">pl/chilldev/commons/client/interceptor/AuthorizationForwarder.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-client//checkstyle.html#pl.chilldev.commons.client.BaseFeignClientFactory.java">pl/chilldev/commons/client/BaseFeignClientFactory.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-client//checkstyle.html#pl.chilldev.commons.client.interceptor.BearerTokenAuthorizer.java">pl/chilldev/commons/client/interceptor/BearerTokenAuthorizer.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-client//checkstyle.html#pl.chilldev.commons.client.codec.SpringDataEncoder.java">pl/chilldev/commons/client/codec/SpringDataEncoder.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-client//checkstyle.html#pl.chilldev.commons.client.FeignClientFactory.java">pl/chilldev/commons/client/FeignClientFactory.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
                       </tbody>
         </table>
         
