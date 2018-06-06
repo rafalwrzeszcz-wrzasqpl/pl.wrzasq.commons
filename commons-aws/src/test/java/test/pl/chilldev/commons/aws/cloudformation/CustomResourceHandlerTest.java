@@ -21,6 +21,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import pl.chilldev.commons.aws.cloudformation.CustomResourceHandler;
+import pl.chilldev.commons.aws.cloudformation.CustomResourceResponse;
 
 public class CustomResourceHandlerTest
 {
@@ -34,7 +35,7 @@ public class CustomResourceHandlerTest
     private Context context;
 
     @Mock
-    private Function<Object, Object> action;
+    private Function<Object, CustomResourceResponse<Object>> action;
 
     @Test
     public void handle() throws NoSuchFieldException, IllegalAccessException
@@ -48,17 +49,18 @@ public class CustomResourceHandlerTest
 
         Object input = new Object();
         Object output = new Object();
+        String id = "test";
 
         CfnRequest<Object> request = new CfnRequest<>();
         request.setRequestType("Create");
         request.setResourceProperties(input);
 
-        Mockito.when(this.action.apply(input)).thenReturn(output);
+        Mockito.when(this.action.apply(input)).thenReturn(new CustomResourceResponse<>(output, id));
 
         handler.handle(request, this.context);
 
         Mockito.verify(this.action).apply(input);
-        Mockito.verify(this.sender).send(request, Status.SUCCESS, this.context, "OK", output, null);
+        Mockito.verify(this.sender).send(request, Status.SUCCESS, this.context, "OK", output, id);
     }
 
     @Test

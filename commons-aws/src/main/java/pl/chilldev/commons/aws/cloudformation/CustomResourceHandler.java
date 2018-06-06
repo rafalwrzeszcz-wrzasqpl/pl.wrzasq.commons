@@ -39,7 +39,7 @@ public class CustomResourceHandler<InputType, OutputType>
     /**
      * Action handlers.
      */
-    private Map<String, Function<InputType, OutputType>> actions = new HashMap<>();
+    private Map<String, Function<InputType, CustomResourceResponse<OutputType>>> actions = new HashMap<>();
 
     /**
      * Initializes handler with all known current CloudFormation actions.
@@ -49,9 +49,9 @@ public class CustomResourceHandler<InputType, OutputType>
      * @param deleteAction Callback for resource deletion.
      */
     public CustomResourceHandler(
-        Function<InputType, OutputType> createAction,
-        Function<InputType, OutputType> updateAction,
-        Function<InputType, OutputType> deleteAction
+        Function<InputType, CustomResourceResponse<OutputType>> createAction,
+        Function<InputType, CustomResourceResponse<OutputType>> updateAction,
+        Function<InputType, CustomResourceResponse<OutputType>> deleteAction
     )
     {
         this.actions.put("Create", createAction);
@@ -77,13 +77,16 @@ public class CustomResourceHandler<InputType, OutputType>
         );
 
         try {
+            CustomResourceResponse<OutputType> response = this.actions.get(request.getRequestType())
+                .apply(request.getResourceProperties());
+
             this.sender.send(
                 request,
                 Status.SUCCESS,
                 context,
                 "OK",
-                this.actions.get(request.getRequestType()).apply(request.getResourceProperties()),
-                null
+                response.getData(),
+                response.getPhysicalResourceId()
             );
             //CHECKSTYLE:OFF: IllegalCatchCheck
         } catch (Exception error) {
