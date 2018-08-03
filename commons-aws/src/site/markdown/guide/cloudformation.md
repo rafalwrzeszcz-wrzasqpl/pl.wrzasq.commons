@@ -42,12 +42,12 @@ class S3Upload
         private long uploadedFilesCount;
     }
 
-    public S3Upload.ResourceOutputs upload(S3Upload.ResourceProperties request)
+    public CustomResourceResponse<S3Upload.ResourceOutputs> upload(S3Upload.ResourceProperties request)
     {
         // handle files upload and build output properties
     }
 
-    public S3Upload.ResourceOutputs cleanup(S3Upload.ResourceProperties request)
+    public CustomResourceResponse<S3Upload.ResourceOutputs> cleanup(S3Upload.ResourceProperties request)
     {
         // handle files cleanup and build output
         // output needs to have structure, but it's properties are meaningless in this case
@@ -82,3 +82,30 @@ passed from template as a parameter.
 1.  Your **Lambda** entry point gets lean - just pass the execution to the generic handler. Both arguments are
 important, as they are used to compute **CloudFormation** response. Without any of the information it will not be
 possible to send outcome back and your stack will get stuck!
+
+## `CustomResourceResponse`
+
+Ok, what is `CustomResourceResponse`? You are mainly interested in returning the data. But apart from that
+**CloudFormation** also takes some additional meta-information. The one you can actually interact with is
+`physicalResourceId` which identifies resource created by your handler.
+
+`pl.chilldev.commons.aws.cloudformation.CustomResourceResponse` just wraps your data together with resource information
+(for the moment just physical ID).
+
+You can return response in two ways - if you are not interested in physical ID, just wrap your data (it will set ID to
+`null` indicating default one):
+
+```java
+return new CustomResourceResponse<>(yourData);
+```
+
+Or if you want to set it explicitely:
+
+```java
+return new CustomResourceResponse<>(yourData, yourResourceId);
+```
+
+Why `physicalResourceId` is important? Because it identifies resource actually created by your handler. This way you
+can inform **CloudFormation** if an update to your resource caused new resource creation (return new resource ID on
+update) or you updated existing one (return same physical resource ID on update that you computed/acquired in creation).
+If you use different physical resource ID **CloudFormation** will try to delete old resource in the cleanup phase.
