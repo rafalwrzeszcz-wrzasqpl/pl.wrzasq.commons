@@ -97,12 +97,12 @@
         private long uploadedFilesCount;
     }
 
-    public S3Upload.ResourceOutputs upload(S3Upload.ResourceProperties request)
+    public CustomResourceResponse&lt;S3Upload.ResourceOutputs&gt; upload(S3Upload.ResourceProperties request)
     {
         // handle files upload and build output properties
     }
 
-    public S3Upload.ResourceOutputs cleanup(S3Upload.ResourceProperties request)
+    public CustomResourceResponse&lt;S3Upload.ResourceOutputs&gt; cleanup(S3Upload.ResourceProperties request)
     {
         // handle files cleanup and build output
         // output needs to have structure, but it's properties are meaningless in this case
@@ -137,6 +137,25 @@ public class MyLambda
 <li>All you expose to the handler are callbacks for your resource actions. You will receive input resource properties passed from template as a parameter.</li>
 <li>Your <b>Lambda</b> entry point gets lean - just pass the execution to the generic handler. Both arguments are important, as they are used to compute <b>CloudFormation</b> response. Without any of the information it will not be possible to send outcome back and your stack will get stuck!</li>
 </ol></div>
+<div class="section">
+<h2><a name="CustomResourceResponse"></a><tt>CustomResourceResponse</tt></h2>
+<p>Ok, what is <tt>CustomResourceResponse</tt>? You are mainly interested in returning the data. But apart from that <b>CloudFormation</b> also takes some additional meta-information. The one you can actually interact with is <tt>physicalResourceId</tt> which identifies resource created by your handler.</p>
+<p><tt>pl.chilldev.commons.aws.cloudformation.CustomResourceResponse</tt> just wraps your data together with resource information (for the moment just physical ID).</p>
+<p>You can return response in two ways - if you are not interested in physical ID, just wrap your data (it will set ID to <tt>null</tt> indicating default one):</p>
+
+<div>
+<div>
+<pre class="source">return new CustomResourceResponse&lt;&gt;(yourData);
+</pre></div></div>
+
+<p>Or if you want to set it explicitely:</p>
+
+<div>
+<div>
+<pre class="source">return new CustomResourceResponse&lt;&gt;(yourData, yourResourceId);
+</pre></div></div>
+
+<p>Why <tt>physicalResourceId</tt> is important? Because it identifies resource actually created by your handler. This way you can inform <b>CloudFormation</b> if an update to your resource caused new resource creation (return new resource ID on update) or you updated existing one (return same physical resource ID on update that you computed/acquired in creation). If you use different physical resource ID <b>CloudFormation</b> will try to delete old resource in the cleanup phase.</p></div>
         </div>
       </div>
     </div>
@@ -147,7 +166,7 @@ public class MyLambda
             <p>Copyright &copy;2017&#x2013;2018
 <a href="https://wrzasq.pl/">Rafał Wrzeszcz - Wrzasq.pl</a>.
 All rights reserved.        <li id="publishDate" class="pull-right">Last Published: 2018-08-03</li>
-          <li id="projectVersion" class="pull-right">Version: 0.3.18</li>
+          <li id="projectVersion" class="pull-right">Version: 0.3.19</li>
 </p>
         </div>
         </div>
