@@ -1,4 +1,4 @@
-/**
+/*
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
