@@ -25,7 +25,7 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2016 - 2018 Rafał Wrzeszcz - Wrzasq.pl</copyright>
     <item>
-      <title>File: 2,
+      <title>File: 1,
              Errors: 0,
              Warnings: 0,
              Infos: 0
@@ -44,20 +44,6 @@ under the License.
             </tr>
           </thead>
           <tbody>
-                          <tr>
-                <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-web//checkstyle.html#pl.chilldev.commons.web.filter.FrontPageFilter.java">pl/chilldev/commons/web/filter/FrontPageFilter.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
                           <tr>
                 <td>
                   <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-web//checkstyle.html#pl.chilldev.commons.web.daemon.AbstractWebDaemon.java">pl/chilldev/commons/web/daemon/AbstractWebDaemon.java</a>
