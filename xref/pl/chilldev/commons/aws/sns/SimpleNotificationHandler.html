@@ -22,14 +22,14 @@
 <a class="jxr_linenumber" name="L14" href="#L14">14</a>  <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_javadoccomment"> * SNS notifications handler that simply processes notification body.</em>
 <a class="jxr_linenumber" name="L16" href="#L16">16</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L17" href="#L17">17</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../pl/chilldev/commons/aws/sns/SimpleNotificationHandler.html">SimpleNotificationHandler</a> <strong class="jxr_keyword">extends</strong> <a href="../../../../../pl/chilldev/commons/aws/sns/NotificationHandler.html">NotificationHandler</a>
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="SimpleNotificationHandler" href="../../../../../pl/chilldev/commons/aws/sns/SimpleNotificationHandler.html#SimpleNotificationHandler">SimpleNotificationHandler</a> <strong class="jxr_keyword">extends</strong> <a name="NotificationHandler" href="../../../../../pl/chilldev/commons/aws/sns/NotificationHandler.html#NotificationHandler">NotificationHandler</a>
 <a class="jxr_linenumber" name="L18" href="#L18">18</a>  {
 <a class="jxr_linenumber" name="L19" href="#L19">19</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L20" href="#L20">20</a>  <em class="jxr_javadoccomment">     * Initializes notification handler.</em>
 <a class="jxr_linenumber" name="L21" href="#L21">21</a>  <em class="jxr_javadoccomment">     *</em>
 <a class="jxr_linenumber" name="L22" href="#L22">22</a>  <em class="jxr_javadoccomment">     * @param messageBodyHandler SNS message handler</em>
 <a class="jxr_linenumber" name="L23" href="#L23">23</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../../pl/chilldev/commons/aws/sns/SimpleNotificationHandler.html">SimpleNotificationHandler</a>(Consumer&lt;String&gt; messageBodyHandler)
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>      <strong class="jxr_keyword">public</strong> <a name="SimpleNotificationHandler" href="../../../../../pl/chilldev/commons/aws/sns/SimpleNotificationHandler.html#SimpleNotificationHandler">SimpleNotificationHandler</a>(Consumer&lt;String&gt; messageBodyHandler)
 <a class="jxr_linenumber" name="L25" href="#L25">25</a>      {
 <a class="jxr_linenumber" name="L26" href="#L26">26</a>          <strong class="jxr_keyword">super</strong>((SNSEvent.SNS data) -&gt; messageBodyHandler.accept(data.getMessage()));
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>      }
