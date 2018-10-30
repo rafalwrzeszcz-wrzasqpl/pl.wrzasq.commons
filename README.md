@@ -2,14 +2,14 @@
 # This file is part of the ChillDev-Commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2014 - 2017 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2014 - 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
 # ChillDev-Commons
 
 **ChillDev-Commons** is a general-purpose **Java library**.
 
-[![Build Status](https://travis-ci.org/chilloutdevelopment/pl.chilldev.commons.svg)](https://travis-ci.org/chilloutdevelopment/pl.chilldev.commons)
+[![Build Status](https://travis-ci.com/chilloutdevelopment/pl.chilldev.commons.svg)](https://travis-ci.org/chilloutdevelopment/pl.chilldev.commons)
 [![Coverage Status](https://coveralls.io/repos/chilloutdevelopment/pl.chilldev.commons/badge.png?branch=develop)](https://coveralls.io/r/chilloutdevelopment/pl.chilldev.commons)
 [![Known Vulnerabilities](https://snyk.io/test/github/chilloutdevelopment/pl.chilldev.commons/badge.svg)](https://snyk.io/test/github/chilloutdevelopment/pl.chilldev.commons)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/chilloutdevelopment/pl.chilldev.commons)
