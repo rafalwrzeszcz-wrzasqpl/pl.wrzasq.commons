@@ -27,16 +27,7 @@ jdk:
 
 # TODO: temporary as delombok won't work here
 matrix:
-    include:
-        # TODO: this is needed for OpenJDK missing certificates
-        -
-            jdk: "openjdk10"
-            before_install:
-                - "rm ${JAVA_HOME}/lib/security/cacerts"
-                - "ln -s /etc/ssl/certs/java/cacerts ${JAVA_HOME}/lib/security/cacerts"
     allow_failures:
-        -
-            jdk: "openjdk10"
         -
             jdk: "openjdk11"
         -
@@ -94,7 +85,6 @@ deploy:
         script: "./.travis/release.sh"
         on:
             branch: "develop"
-            condition: "${TRAVIS_EVENT_TYPE} == push"
             jdk: "oraclejdk8"
     -
         provider: "script"
