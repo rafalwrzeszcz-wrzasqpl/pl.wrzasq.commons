@@ -85,6 +85,7 @@ deploy:
         script: "./.travis/release.sh"
         on:
             branch: "develop"
+            condition: "${TRAVIS_EVENT_TYPE} == push"
             jdk: "oraclejdk8"
     -
         provider: "script"
