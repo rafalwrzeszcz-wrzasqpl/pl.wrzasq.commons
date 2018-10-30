@@ -12,34 +12,26 @@ import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 
 import feign.RequestTemplate;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpHeaders;
 import pl.chilldev.commons.client.interceptor.AuthorizationForwarder;
 
+@ExtendWith(MockitoExtension.class)
 public class AuthorizationForwarderTest
 {
-    @Rule
-    public MockitoRule mockito = MockitoJUnit.rule();
-
     @Mock
     private HttpServletRequest request;
-
-    @Before
-    public void setUp()
-    {
-        Mockito.when(this.request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn("foo");
-    }
 
     @Test
     public void apply()
     {
+        Mockito.when(this.request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn("foo");
+
         RequestTemplate template = new RequestTemplate();
         AuthorizationForwarder interceptor = new AuthorizationForwarder();
         interceptor.setRequest(this.request);
@@ -49,13 +41,13 @@ public class AuthorizationForwarderTest
         Mockito.verify(this.request).getHeader(HttpHeaders.AUTHORIZATION);
 
         Collection<String> values = template.headers().get(HttpHeaders.AUTHORIZATION);
-        Assert.assertEquals(
-            "AuthorizationForwarder.apply() should set Authorization HTTP header.",
-            1, values.size()
+        Assertions.assertEquals(
+            1, values.size(),
+            "AuthorizationForwarder.apply() should set Authorization HTTP header."
         );
-        Assert.assertTrue(
-            "AuthorizationForwarder.apply() should set Authorization header based on the upstream request.",
-            values.contains("foo")
+        Assertions.assertTrue(
+            values.contains("foo"),
+            "AuthorizationForwarder.apply() should set Authorization header based on the upstream request."
         );
     }
 
@@ -73,14 +65,14 @@ public class AuthorizationForwarderTest
         Mockito.verify(this.request, Mockito.never()).getHeader(HttpHeaders.AUTHORIZATION);
 
         Collection<String> values = template.headers().get(HttpHeaders.AUTHORIZATION);
-        Assert.assertEquals(
-            "AuthorizationForwarder.apply() should leave existing Authorization HTTP header.",
+        Assertions.assertEquals(
             1,
-            values.size()
+            values.size(),
+            "AuthorizationForwarder.apply() should leave existing Authorization HTTP header."
         );
-        Assert.assertTrue(
-            "AuthorizationForwarder.apply() should leave existing Authorization HTTP header.",
-            values.contains("bar")
+        Assertions.assertTrue(
+            values.contains("bar"),
+            "AuthorizationForwarder.apply() should leave existing Authorization HTTP header."
         );
     }
 }

@@ -11,19 +11,17 @@ import java.util.function.Consumer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 import pl.chilldev.commons.aws.MessageHandler;
 
+@ExtendWith(MockitoExtension.class)
 public class MessageHandlerTest
 {
-    @Rule
-    public MockitoRule mockito = MockitoJUnit.rule();
-
     @Mock
     private Consumer<Integer> messageHandler;
 
@@ -44,8 +42,8 @@ public class MessageHandlerTest
         Mockito.verify(this.messageHandler).accept(message);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void handleInvalidJson() throws JsonProcessingException
+    @Test
+    public void handleInvalidJson()
     {
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -55,6 +53,10 @@ public class MessageHandlerTest
             Integer.TYPE
         );
 
-        messageHandler.handle("test");
+        Assertions.assertThrows(
+            IllegalArgumentException.class,
+            () -> messageHandler.handle("test"),
+            "MessageHandler.handle() should throw exception when passed data is of different type."
+        );
     }
 }

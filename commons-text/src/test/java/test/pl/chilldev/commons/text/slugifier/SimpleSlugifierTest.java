@@ -2,14 +2,13 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2015, 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.chilldev.commons.text.slugifier;
 
-import org.junit.Assert;
-import org.junit.Test;
-
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import pl.chilldev.commons.text.slugifier.SimpleSlugifier;
 import pl.chilldev.commons.text.slugifier.Slugifier;
 
@@ -22,10 +21,10 @@ public class SimpleSlugifierTest
 
         slugifier.setDelimiter("::");
 
-        Assert.assertEquals(
-            "SimpleSlugifier.setDelimiter() should set delimiting sequence.",
+        Assertions.assertEquals(
             "foo::bar",
-            slugifier.slugify("foo", "bar")
+            slugifier.slugify("foo", "bar"),
+            "SimpleSlugifier.setDelimiter() should set delimiting sequence."
         );
     }
 
@@ -34,10 +33,10 @@ public class SimpleSlugifierTest
     {
         Slugifier slugifier = new SimpleSlugifier();
 
-        Assert.assertEquals(
-            "SimpleSlugifier.slugify() should normalize the character to latin charset.",
+        Assertions.assertEquals(
             "rafal",
-            slugifier.slugify("rąfaĺ")
+            slugifier.slugify("rąfaĺ"),
+            "SimpleSlugifier.slugify() should normalize the character to latin charset."
         );
     }
 
@@ -46,10 +45,10 @@ public class SimpleSlugifierTest
     {
         Slugifier slugifier = new SimpleSlugifier();
 
-        Assert.assertEquals(
-            "SimpleSlugifier.slugify() should remove all non-ascii characters.",
+        Assertions.assertEquals(
             "chilloutdevelopment",
-            slugifier.slugify("chillout»development")
+            slugifier.slugify("chillout»development"),
+            "SimpleSlugifier.slugify() should remove all non-ascii characters."
         );
     }
 
@@ -58,10 +57,10 @@ public class SimpleSlugifierTest
     {
         Slugifier slugifier = new SimpleSlugifier();
 
-        Assert.assertEquals(
-            "SimpleSlugifier.slugify() should replace all non-letter characters with delimiter.",
+        Assertions.assertEquals(
             "chillout-development",
-            slugifier.slugify("chillout!development")
+            slugifier.slugify("chillout!development"),
+            "SimpleSlugifier.slugify() should replace all non-letter characters with delimiter."
         );
     }
 
@@ -70,10 +69,10 @@ public class SimpleSlugifierTest
     {
         Slugifier slugifier = new SimpleSlugifier();
 
-        Assert.assertEquals(
-            "SimpleSlugifier.slugify() should reduce multiple delimiters to just one.",
+        Assertions.assertEquals(
             "chillout-development",
-            slugifier.slugify("chillout - development")
+            slugifier.slugify("chillout - development"),
+            "SimpleSlugifier.slugify() should reduce multiple delimiters to just one."
         );
     }
 
@@ -82,10 +81,10 @@ public class SimpleSlugifierTest
     {
         Slugifier slugifier = new SimpleSlugifier();
 
-        Assert.assertEquals(
-            "SimpleSlugifier.slugify() should drop leading delimiters.",
+        Assertions.assertEquals(
             "chillout-development",
-            slugifier.slugify("---chillout - development")
+            slugifier.slugify("---chillout - development"),
+            "SimpleSlugifier.slugify() should drop leading delimiters."
         );
     }
 
@@ -94,10 +93,10 @@ public class SimpleSlugifierTest
     {
         Slugifier slugifier = new SimpleSlugifier();
 
-        Assert.assertEquals(
-            "SimpleSlugifier.slugify() should drop trailing delimiters.",
+        Assertions.assertEquals(
             "chillout-development",
-            slugifier.slugify("chillout - development---")
+            slugifier.slugify("chillout - development---"),
+            "SimpleSlugifier.slugify() should drop trailing delimiters."
         );
     }
 
@@ -106,10 +105,10 @@ public class SimpleSlugifierTest
     {
         Slugifier slugifier = new SimpleSlugifier();
 
-        Assert.assertEquals(
-            "SimpleSlugifier.slugify() should lowercase all letters.",
+        Assertions.assertEquals(
             "chillout-development",
-            slugifier.slugify("ChillOut DevelopmenT")
+            slugifier.slugify("ChillOut DevelopmenT"),
+            "SimpleSlugifier.slugify() should lowercase all letters."
         );
     }
 
@@ -118,10 +117,10 @@ public class SimpleSlugifierTest
     {
         Slugifier slugifier = new SimpleSlugifier();
 
-        Assert.assertEquals(
-            "SimpleSlugifier.slugify() should slugify all words and concatenate them with delimiter.",
+        Assertions.assertEquals(
             "chillout-development",
-            slugifier.slugify("chillout", "development")
+            slugifier.slugify("chillout", "development"),
+            "SimpleSlugifier.slugify() should slugify all words and concatenate them with delimiter."
         );
     }
 }

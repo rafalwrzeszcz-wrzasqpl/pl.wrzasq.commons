@@ -9,23 +9,20 @@ package test.pl.chilldev.commons.text.html;
 
 import java.io.UnsupportedEncodingException;
 
-import org.junit.Assert;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 import pl.chilldev.commons.text.Formatter;
 import pl.chilldev.commons.text.TextProcessingException;
 import pl.chilldev.commons.text.formatter.FormatterInterface;
 import pl.chilldev.commons.text.html.Utils;
 
+@ExtendWith(MockitoExtension.class)
 public class UtilsTest
 {
-    @Rule
-    public MockitoRule mockito = MockitoJUnit.rule();
-
     @Mock
     private FormatterInterface formatHandler;
 
@@ -38,10 +35,10 @@ public class UtilsTest
         String value = "foo <span>bar</span>\n<em>baz</em>";
         String html = "<p>" + value + "</p> <p>\nquux</p>";
 
-        Assert.assertEquals(
-            "Utils.firstParagraph() should return content of the first paragraph from given snippet.",
+        Assertions.assertEquals(
             value,
-            Utils.firstParagraph(html)
+            Utils.firstParagraph(html),
+            "Utils.firstParagraph() should return content of the first paragraph from given snippet."
         );
     }
 
@@ -50,10 +47,10 @@ public class UtilsTest
     {
         String value = "foo <span>bar</span>\n<em>baz</em>";
 
-        Assert.assertEquals(
-            "Utils.firstParagraph() should return empty string if there is no paragraph in given snippet.",
+        Assertions.assertEquals(
             "",
-            Utils.firstParagraph(value)
+            Utils.firstParagraph(value),
+            "Utils.firstParagraph() should return empty string if there is no paragraph in given snippet."
         );
     }
 
@@ -65,10 +62,10 @@ public class UtilsTest
 
         String text = "Hello";
 
-        Assert.assertEquals(
-            "Utils.truncate() should leave text untouched if it't length fits given requirement.",
+        Assertions.assertEquals(
             text,
-            Utils.truncate(text, 7)
+            Utils.truncate(text, 7),
+            "Utils.truncate() should leave text untouched if it't length fits given requirement."
         );
     }
 
@@ -77,10 +74,10 @@ public class UtilsTest
     {
         String text = "Hello world!";
 
-        Assert.assertEquals(
-            "Utils.truncate() should truncate the text and apply default suffix indicating more content with respect to word bounds.",
+        Assertions.assertEquals(
             "Hello…",
-            Utils.truncate(text, 7)
+            Utils.truncate(text, 7),
+            "Utils.truncate() should truncate the text and apply default suffix indicating more content with respect to word bounds."
         );
     }
 
@@ -89,10 +86,10 @@ public class UtilsTest
     {
         String text = "Hello world!";
 
-        Assert.assertEquals(
-            "Utils.truncate() should ignore word bounds if specified to.",
+        Assertions.assertEquals(
             "Hello w…",
-            Utils.truncate(text, 7, false)
+            Utils.truncate(text, 7, false),
+            "Utils.truncate() should ignore word bounds if specified to."
         );
     }
 
@@ -101,10 +98,10 @@ public class UtilsTest
     {
         String text = "Helloworld!";
 
-        Assert.assertEquals(
-            "Utils.truncate() should ignore word bounds if a word bound can't be found.",
+        Assertions.assertEquals(
             "Hellowo…",
-            Utils.truncate(text, 7, true)
+            Utils.truncate(text, 7, true),
+            "Utils.truncate() should ignore word bounds if a word bound can't be found."
         );
     }
 
@@ -113,10 +110,10 @@ public class UtilsTest
     {
         String text = "Hello world!";
 
-        Assert.assertEquals(
-            "Utils.truncate() should use given suffix if specified.",
+        Assertions.assertEquals(
             "Hello.",
-            Utils.truncate(text, 7, ".")
+            Utils.truncate(text, 7, "."),
+            "Utils.truncate() should use given suffix if specified."
         );
     }
 
@@ -125,10 +122,10 @@ public class UtilsTest
     {
         String text = "Hello world!";
 
-        Assert.assertEquals(
-            "Utils.truncate() should use given suffix and ignore word bounds if specified to.",
+        Assertions.assertEquals(
             "Hello w.",
-            Utils.truncate(text, 7, ".", false)
+            Utils.truncate(text, 7, ".", false),
+            "Utils.truncate() should use given suffix and ignore word bounds if specified to."
         );
     }
 
@@ -146,10 +143,10 @@ public class UtilsTest
 
         Utils.setFormatter(formatter);
 
-        Assert.assertEquals(
-            "Utils.format() should return text formatted by given format handler.",
+        Assertions.assertEquals(
             result,
-            Utils.format("foo", input)
+            Utils.format("foo", input),
+            "Utils.format() should return text formatted by given format handler."
         );
 
         Mockito.verify(this.formatHandler).transform(input);
@@ -159,10 +156,10 @@ public class UtilsTest
     public void urlEncode()
         throws UnsupportedEncodingException
     {
-        Assert.assertEquals(
-            "Utils.urlEncode() should build URL-suitable string from the given input.",
+        Assertions.assertEquals(
             "foo+bar%2F%E2%80%A6",
-            Utils.urlEncode("foo bar/…")
+            Utils.urlEncode("foo bar/…"),
+            "Utils.urlEncode() should build URL-suitable string from the given input."
         );
     }
 }

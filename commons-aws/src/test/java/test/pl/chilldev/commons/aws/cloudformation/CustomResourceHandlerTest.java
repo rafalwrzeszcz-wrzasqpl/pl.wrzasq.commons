@@ -14,20 +14,17 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.sunrun.cfnresponse.CfnRequest;
 import com.sunrun.cfnresponse.CfnResponseSender;
 import com.sunrun.cfnresponse.Status;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 import pl.chilldev.commons.aws.cloudformation.CustomResourceHandler;
 import pl.chilldev.commons.aws.cloudformation.CustomResourceResponse;
 
+@ExtendWith(MockitoExtension.class)
 public class CustomResourceHandlerTest
 {
-    @Rule
-    public MockitoRule mockito = MockitoJUnit.rule();
-
     @Mock
     private CfnResponseSender sender;
 

@@ -13,23 +13,16 @@ import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.model.Message;
 import com.amazonaws.services.sqs.model.ReceiveMessageResult;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.contrib.java.lang.system.EnvironmentVariables;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 import pl.chilldev.commons.aws.sqs.QueueHandler;
 
+@ExtendWith(MockitoExtension.class)
 public class QueueHandlerTest
 {
-    @Rule
-    public MockitoRule mockito = MockitoJUnit.rule();
-
-    @Rule
-    public EnvironmentVariables environmentVariables = new EnvironmentVariables();
-
     @Mock
     private AmazonSQS sqs;
 
@@ -39,9 +32,6 @@ public class QueueHandlerTest
     @Test
     public void process() throws JsonProcessingException
     {
-        // this is to make sure we resolve the AWS region for default region provider
-        this.environmentVariables.set("AWS_REGION", "eu-central-1");
-
         // just for code coverage
         new QueueHandler(null, null);
 

@@ -8,31 +8,38 @@
 package test.pl.chilldev.commons.client.codec;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 
+import feign.Request;
 import feign.Response;
 import feign.codec.Decoder;
-import org.junit.Assert;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import pl.chilldev.commons.client.codec.DelegateDecoder;
 
+@ExtendWith(MockitoExtension.class)
 public class DelegateDecoderTest
 {
-    @Rule
-    public MockitoRule mockito = MockitoJUnit.rule();
-
     @Mock
     private Decoder fallback;
 
     @Mock
     private Decoder typed;
+
+    private Request request = Request.create(
+        Request.HttpMethod.HEAD,
+        "/",
+        Collections.emptyMap(),
+        new byte[] {},
+        StandardCharsets.UTF_8
+    );
 
     @Test
     public void decode() throws IOException
@@ -46,6 +53,7 @@ public class DelegateDecoderTest
                     Collections.singleton(MediaType.APPLICATION_JSON_VALUE)
                 )
             )
+            .request(this.request)
             .build();
         Object result = this;
 
@@ -54,10 +62,10 @@ public class DelegateDecoderTest
         DelegateDecoder decoder = new DelegateDecoder(this.fallback);
         decoder.registerTypeDecoder(MediaType.APPLICATION_JSON_VALUE, this.typed);
 
-        Assert.assertSame(
-            "DelegateDecoder.decode() should return result of decoder assigned to specified type.",
+        Assertions.assertSame(
             result,
-            decoder.decode(response, String.class)
+            decoder.decode(response, String.class),
+            "DelegateDecoder.decode() should return result of decoder assigned to specified type."
         );
 
         Mockito.verifyZeroInteractions(this.fallback);
@@ -76,6 +84,7 @@ public class DelegateDecoderTest
                     Collections.singleton(MediaType.APPLICATION_JSON_UTF8_VALUE)
                 )
             )
+            .request(this.request)
             .build();
         Object result = this;
 
@@ -84,10 +93,10 @@ public class DelegateDecoderTest
         DelegateDecoder decoder = new DelegateDecoder(this.fallback);
         decoder.registerTypeDecoder(MediaType.APPLICATION_JSON_VALUE, this.typed);
 
-        Assert.assertSame(
-            "DelegateDecoder.decode() should return result of decoder, ignoring extra type parameters.",
+        Assertions.assertSame(
             result,
-            decoder.decode(response, String.class)
+            decoder.decode(response, String.class),
+            "DelegateDecoder.decode() should return result of decoder, ignoring extra type parameters."
         );
 
         Mockito.verifyZeroInteractions(this.fallback);
@@ -103,6 +112,7 @@ public class DelegateDecoderTest
             .headers(
                 Collections.emptyMap()
             )
+            .request(this.request)
             .build();
         Object result = this;
 
@@ -111,10 +121,10 @@ public class DelegateDecoderTest
         DelegateDecoder decoder = new DelegateDecoder(this.fallback);
         decoder.registerTypeDecoder(MediaType.APPLICATION_JSON_VALUE, this.typed);
 
-        Assert.assertSame(
-            "DelegateDecoder.decode() should return fallback decoder result when no response type is available.",
+        Assertions.assertSame(
             result,
-            decoder.decode(response, String.class)
+            decoder.decode(response, String.class),
+            "DelegateDecoder.decode() should return fallback decoder result when no response type is available."
         );
 
         Mockito.verify(this.fallback).decode(response, String.class);
@@ -133,6 +143,7 @@ public class DelegateDecoderTest
                     Collections.singleton(MediaType.TEXT_PLAIN_VALUE)
                 )
             )
+            .request(this.request)
             .build();
         Object result = this;
 
@@ -141,10 +152,10 @@ public class DelegateDecoderTest
         DelegateDecoder decoder = new DelegateDecoder(this.fallback);
         decoder.registerTypeDecoder(MediaType.APPLICATION_JSON_VALUE, this.typed);
 
-        Assert.assertSame(
-            "DelegateDecoder.decode() should return fallback decoder result when no matching typed decoder found.",
+        Assertions.assertSame(
             result,
-            decoder.decode(response, String.class)
+            decoder.decode(response, String.class),
+            "DelegateDecoder.decode() should return fallback decoder result when no matching typed decoder found."
         );
 
         Mockito.verify(this.fallback).decode(response, String.class);

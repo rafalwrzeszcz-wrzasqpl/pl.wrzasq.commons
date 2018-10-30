@@ -2,14 +2,13 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2015, 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.chilldev.commons.db.slugable;
 
-import org.junit.Assert;
-import org.junit.Test;
-
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import pl.chilldev.commons.db.slugable.Slug;
 import pl.chilldev.commons.db.slugable.SlugableListener;
 
@@ -44,20 +43,20 @@ public class SlugableListenerTest
         SlugableListener listener = new SlugableListener();
         listener.createSlugs(entity);
 
-        Assert.assertEquals(
-            "SlugableListener.createSlugs() should create slug for annotated field.",
+        Assertions.assertEquals(
             "chillout-development",
-            entity.updatable
+            entity.updatable,
+            "SlugableListener.createSlugs() should create slug for annotated field."
         );
-        Assert.assertEquals(
-            "SlugableListener.createSlugs() should create slug for non-updatable field.",
+        Assertions.assertEquals(
             "chillout-development",
-            entity.initial
+            entity.initial,
+            "SlugableListener.createSlugs() should create slug for non-updatable field."
         );
-        Assert.assertEquals(
-            "SlugableListener.createSlugs() should handle complex slug configuration.",
+        Assertions.assertEquals(
             "chilldev-chillout-development-88.xhtml",
-            entity.combined
+            entity.combined,
+            "SlugableListener.createSlugs() should handle complex slug configuration."
         );
 
         // this is for code coverage of getSlugifier() method
@@ -77,19 +76,19 @@ public class SlugableListenerTest
         SlugableListener listener = new SlugableListener();
         listener.updateSlugs(entity);
 
-        Assert.assertEquals(
-            "SlugableListener.updateSlugs() should create slug for annotated field.",
+        Assertions.assertEquals(
             "chillout-development",
-            entity.updatable
+            entity.updatable,
+            "SlugableListener.updateSlugs() should create slug for annotated field."
         );
-        Assert.assertNull(
-            "SlugableListener.updateSlugs() should not touch non-updatable field.",
-            entity.initial
+        Assertions.assertNull(
+            entity.initial,
+            "SlugableListener.updateSlugs() should not touch non-updatable field."
         );
-        Assert.assertEquals(
-            "SlugableListener.updateSlugs() should handle complex slug configuration.",
+        Assertions.assertEquals(
             "chilldev-chillout-development-88.xhtml",
-            entity.combined
+            entity.combined,
+            "SlugableListener.updateSlugs() should handle complex slug configuration."
         );
     }
 }

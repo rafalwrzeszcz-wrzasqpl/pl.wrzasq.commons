@@ -98,7 +98,7 @@ You can of course pick only those parts that you need directly.
 -   [GitHub page with API documentation](https://chilloutdevelopment.github.io/pl.chilldev.commons)
 -   [Contribution guide](https://github.com/chilloutdevelopment/pl.chilldev.commons/blob/develop/CONTRIBUTING.md)
 -   [Issues tracker](https://github.com/chilloutdevelopment/pl.chilldev.commons/issues)
--   [Maven packages](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22pl.chilldev.commons%22)
+-   [Maven packages](https://search.maven.org/search?q=g:pl.chilldev.commons)
 -   [Chillout Development @ GitHub](https://github.com/chilloutdevelopment)
 -   [Chillout Development @ Facebook](https://www.facebook.com/chilldev)
 -   [Post on Wrzasq.pl](https://wrzasq.pl/blog/chilldev-commons-java-library.html)

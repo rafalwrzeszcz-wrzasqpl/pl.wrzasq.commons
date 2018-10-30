@@ -11,19 +11,16 @@ import java.util.Arrays;
 import java.util.function.Consumer;
 
 import com.amazonaws.services.lambda.runtime.events.SNSEvent;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 import pl.chilldev.commons.aws.sns.NotificationHandler;
 
+@ExtendWith(MockitoExtension.class)
 public class NotificationHandlerTest
 {
-    @Rule
-    public MockitoRule mockito = MockitoJUnit.rule();
-
     @Mock
     private Consumer<SNSEvent.SNS> messageHandler;
 

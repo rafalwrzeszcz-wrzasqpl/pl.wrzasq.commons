@@ -15,28 +15,21 @@ import com.amazonaws.services.sqs.model.Message;
 import com.amazonaws.services.sqs.model.ReceiveMessageResult;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Assert;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.contrib.java.lang.system.EnvironmentVariables;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 import pl.chilldev.commons.aws.sqs.QueueHandler;
 import pl.chilldev.commons.aws.sqs.TypedQueueHandler;
 import test.pl.chilldev.commons.aws.GenericMessage;
 
+@ExtendWith(MockitoExtension.class)
 public class TypedQueueHandlerTest
 {
-    @Rule
-    public MockitoRule mockito = MockitoJUnit.rule();
-
-    @Rule
-    public EnvironmentVariables environmentVariables = new EnvironmentVariables();
-
     @Mock
     private AmazonSQS sqs;
 
@@ -52,9 +45,6 @@ public class TypedQueueHandlerTest
     @Test
     public void process() throws JsonProcessingException
     {
-        // this is to make sure we resolve the AWS region for default region provider
-        this.environmentVariables.set("AWS_REGION", "eu-central-1");
-
         // just for code coverage
         new TypedQueueHandler(null, null, null, Object.class);
 
@@ -123,15 +113,15 @@ public class TypedQueueHandlerTest
 
         GenericMessage genericMessage = this.genericMessage.getValue();
 
-        Assert.assertEquals(
-            "TypedQueueHandler.process() should deserialize typed message.",
+        Assertions.assertEquals(
             id0,
-            genericMessage.getIds().get(0)
+            genericMessage.getIds().get(0),
+            "TypedQueueHandler.process() should deserialize typed message."
         );
-        Assert.assertEquals(
-            "TypedQueueHandler.process() should deserialize typed message.",
+        Assertions.assertEquals(
             id1,
-            genericMessage.getIds().get(1)
+            genericMessage.getIds().get(1),
+            "TypedQueueHandler.process() should deserialize typed message."
         );
     }
 }

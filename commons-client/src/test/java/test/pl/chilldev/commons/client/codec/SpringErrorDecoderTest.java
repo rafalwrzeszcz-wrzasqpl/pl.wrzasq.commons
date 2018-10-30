@@ -7,29 +7,36 @@
 
 package test.pl.chilldev.commons.client.codec;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 
+import feign.Request;
 import feign.Response;
 import feign.codec.ErrorDecoder;
-import org.junit.Assert;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.HttpStatusCodeException;
 import pl.chilldev.commons.client.codec.SpringErrorDecoder;
 
+@ExtendWith(MockitoExtension.class)
 public class SpringErrorDecoderTest
 {
-    @Rule
-    public MockitoRule mockito = MockitoJUnit.rule();
-
     @Mock
     private ErrorDecoder fallback;
+
+    private Request request = Request.create(
+        Request.HttpMethod.HEAD,
+        "/",
+        Collections.emptyMap(),
+        new byte[] {},
+        StandardCharsets.UTF_8
+    );
 
     @Test
     public void decode4xx()
@@ -38,24 +45,25 @@ public class SpringErrorDecoderTest
             .status(404)
             .reason("not found")
             .headers(Collections.emptyMap())
+            .request(this.request)
             .build();
 
         SpringErrorDecoder decoder = new SpringErrorDecoder(this.fallback);
         Exception decoded = decoder.decode("test", response);
 
-        Assert.assertTrue(
-            "SpringErrorDecoder.decode() should produce Spring client exception.",
-            decoded instanceof HttpClientErrorException
+        Assertions.assertTrue(
+            decoded instanceof HttpClientErrorException,
+            "SpringErrorDecoder.decode() should produce Spring client exception."
         );
-        Assert.assertEquals(
-            "SpringErrorDecoder.decode() should preserve HTTP status code.",
+        Assertions.assertEquals(
             404,
-            ((HttpStatusCodeException) decoded).getRawStatusCode()
+            ((HttpStatusCodeException) decoded).getRawStatusCode(),
+            "SpringErrorDecoder.decode() should preserve HTTP status code."
         );
-        Assert.assertEquals(
-            "SpringErrorDecoder.decode() should preserve HTTP reason message.",
+        Assertions.assertEquals(
             "404 not found",
-            decoded.getMessage()
+            decoded.getMessage(),
+            "SpringErrorDecoder.decode() should preserve HTTP reason message."
         );
 
         Mockito.verifyZeroInteractions(this.fallback);
@@ -68,24 +76,25 @@ public class SpringErrorDecoderTest
             .status(502)
             .reason("server error")
             .headers(Collections.emptyMap())
+            .request(this.request)
             .build();
 
         SpringErrorDecoder decoder = new SpringErrorDecoder(this.fallback);
         Exception decoded = decoder.decode("test", response);
 
-        Assert.assertTrue(
-            "SpringErrorDecoder.decode() should produce Spring server exception.",
-            decoded instanceof HttpServerErrorException
+        Assertions.assertTrue(
+            decoded instanceof HttpServerErrorException,
+            "SpringErrorDecoder.decode() should produce Spring server exception."
         );
-        Assert.assertEquals(
-            "SpringErrorDecoder.decode() should preserve HTTP status code.",
+        Assertions.assertEquals(
             502,
-            ((HttpStatusCodeException) decoded).getRawStatusCode()
+            ((HttpStatusCodeException) decoded).getRawStatusCode(),
+            "SpringErrorDecoder.decode() should preserve HTTP status code."
         );
-        Assert.assertEquals(
-            "SpringErrorDecoder.decode() should preserve HTTP reason message.",
+        Assertions.assertEquals(
             "502 server error",
-            decoded.getMessage()
+            decoded.getMessage(),
+            "SpringErrorDecoder.decode() should preserve HTTP reason message."
         );
 
         Mockito.verifyZeroInteractions(this.fallback);
@@ -98,6 +107,7 @@ public class SpringErrorDecoderTest
             .status(200)
             .reason("ok")
             .headers(Collections.emptyMap())
+            .request(this.request)
             .build();
         Exception error = new Exception();
 
@@ -106,10 +116,10 @@ public class SpringErrorDecoderTest
         SpringErrorDecoder decoder = new SpringErrorDecoder(this.fallback);
         Exception decoded = decoder.decode("test", response);
 
-        Assert.assertSame(
-            "SpringErrorDecoder.decode() fall back when it's not a HTTP error.",
+        Assertions.assertSame(
             error,
-            decoded
+            decoded,
+            "SpringErrorDecoder.decode() fall back when it's not a HTTP error."
         );
 
         Mockito.verify(this.fallback).decode("test", response);

@@ -7,8 +7,8 @@
 
 package test.pl.chilldev.commons.aws.cloudformation;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import pl.chilldev.commons.aws.cloudformation.CustomResourceResponse;
 
 public class CustomResourceResponseTest
@@ -20,15 +20,15 @@ public class CustomResourceResponseTest
 
         CustomResourceResponse<Object> response = new CustomResourceResponse<>(data);
 
-        Assert.assertSame(
-            "CustomResourceResponse() constructor should keep custom resource data into response.",
+        Assertions.assertSame(
             data,
-            response.getData()
+            response.getData(),
+            "CustomResourceResponse() constructor should keep custom resource data into response."
         );
 
-        Assert.assertNull(
-            "CustomResourceResponse() single-argument constructor should set no physical resource ID.",
-            response.getPhysicalResourceId()
+        Assertions.assertNull(
+            response.getPhysicalResourceId(),
+            "CustomResourceResponse() single-argument constructor should set no physical resource ID."
         );
     }
 }

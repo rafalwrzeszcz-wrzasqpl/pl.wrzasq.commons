@@ -2,14 +2,13 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2016, 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
-package test.pl.chilldev.commons.text.exception;
+package test.pl.chilldev.commons.text;
 
-import org.junit.Assert;
-import org.junit.Test;
-
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import pl.chilldev.commons.text.TextProcessingException;
 
 public class TextProcessingExceptionTest
@@ -19,10 +18,10 @@ public class TextProcessingExceptionTest
     {
         TextProcessingException exception = new TextProcessingException("foo");
 
-        Assert.assertEquals(
-            "TextProcessingException() constructor should set message text.",
+        Assertions.assertEquals(
             "foo",
-            exception.getMessage()
+            exception.getMessage(),
+            "TextProcessingException() constructor should set message text."
         );
     }
 
@@ -32,15 +31,15 @@ public class TextProcessingExceptionTest
         Exception cause = new Exception();
         TextProcessingException exception = new TextProcessingException("foo", cause);
 
-        Assert.assertEquals(
-            "TextProcessingException() constructor should set message text.",
+        Assertions.assertEquals(
             "foo",
-            exception.getMessage()
+            exception.getMessage(),
+            "TextProcessingException() constructor should set message text."
         );
-        Assert.assertSame(
-            "TextProcessingException() constructor should set root cause.",
+        Assertions.assertSame(
             cause,
-            exception.getCause()
+            exception.getCause(),
+            "TextProcessingException() constructor should set root cause."
         );
     }
 }

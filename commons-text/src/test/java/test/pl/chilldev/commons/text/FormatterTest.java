@@ -2,14 +2,13 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2016, 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.chilldev.commons.text;
 
-import org.junit.Assert;
-import org.junit.Test;
-
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import pl.chilldev.commons.text.Formatter;
 import pl.chilldev.commons.text.TextProcessingException;
 import pl.chilldev.commons.text.formatter.HtmlFormatter;
@@ -24,20 +23,24 @@ public class FormatterTest
         Formatter formatter = new Formatter();
         formatter.registerFormatter("html", new HtmlFormatter());
 
-        Assert.assertEquals(
-            "Formatter.transform() should handle source text of given format.",
+        Assertions.assertEquals(
             "<p>foo</p>",
-            formatter.transform("html", "<p>foo</p>")
+            formatter.transform("html", "<p>foo</p>"),
+            "Formatter.transform() should handle source text of given format."
         );
     }
 
-    @Test(expected = TextProcessingException.class)
+    @Test
     public void transformUnknownException()
         throws
             TextProcessingException
     {
         Formatter formatter = new Formatter();
 
-        formatter.transform("html", "<p>foo</p>");
+        Assertions.assertThrows(
+            TextProcessingException.class,
+            () -> formatter.transform("html", "<p>foo</p>"),
+            "Formatter.transform() should throw exception when unknown format is requested."
+        );
     }
 }

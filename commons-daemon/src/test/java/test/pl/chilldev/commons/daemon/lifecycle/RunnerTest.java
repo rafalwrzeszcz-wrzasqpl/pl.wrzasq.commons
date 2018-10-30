@@ -8,19 +8,17 @@
 package test.pl.chilldev.commons.daemon.lifecycle;
 
 import org.apache.commons.daemon.Daemon;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 import pl.chilldev.commons.daemon.lifecycle.Runner;
 
+@ExtendWith(MockitoExtension.class)
 public class RunnerTest
 {
-    @Rule
-    public MockitoRule mockito = MockitoJUnit.rule();
-
     @Mock
     private Daemon daemon;
 
@@ -35,13 +33,17 @@ public class RunnerTest
         Mockito.verify(this.daemon).start();
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void runWithException()
         throws
             Exception
     {
         Mockito.doThrow(new RuntimeException("test")).when(this.daemon).init(null);
 
-        new Runner().run(this.daemon);
+        Assertions.assertThrows(
+            RuntimeException.class,
+            () -> new Runner().run(this.daemon),
+            "Runner.run() should throw exception if underlying daemon initialization fails."
+        );
     }
 }

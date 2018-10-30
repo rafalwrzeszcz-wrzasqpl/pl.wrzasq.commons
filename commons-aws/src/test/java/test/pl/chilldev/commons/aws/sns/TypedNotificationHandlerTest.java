@@ -14,24 +14,21 @@ import java.util.function.Consumer;
 import com.amazonaws.services.lambda.runtime.events.SNSEvent;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Assert;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 import pl.chilldev.commons.aws.sns.NotificationHandler;
 import pl.chilldev.commons.aws.sns.TypedNotificationHandler;
 import test.pl.chilldev.commons.aws.GenericMessage;
 
+@ExtendWith(MockitoExtension.class)
 public class TypedNotificationHandlerTest
 {
-    @Rule
-    public MockitoRule mockito = MockitoJUnit.rule();
-
     @Mock
     private Consumer<String> messageHandler;
 
@@ -102,15 +99,15 @@ public class TypedNotificationHandlerTest
         Mockito.verify(this.genericMessageHandler).accept(this.genericMessage.capture());
         GenericMessage genericMessage = this.genericMessage.getValue();
 
-        Assert.assertEquals(
-            "TypedNotificationHandler.process() should deserialize typed message.",
+        Assertions.assertEquals(
             id0,
-            genericMessage.getIds().get(0)
+            genericMessage.getIds().get(0),
+            "TypedNotificationHandler.process() should deserialize typed message."
         );
-        Assert.assertEquals(
-            "TypedNotificationHandler.process() should deserialize typed message.",
+        Assertions.assertEquals(
             id1,
-            genericMessage.getIds().get(1)
+            genericMessage.getIds().get(1),
+            "TypedNotificationHandler.process() should deserialize typed message."
         );
     }
 }

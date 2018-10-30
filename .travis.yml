@@ -21,9 +21,30 @@ jdk:
     - "openjdk8"
     - "oraclejdk8"
     - "oraclejdk9"
+    - "openjdk10"
+    - "openjdk11"
+    - "oraclejdk11"
+
+# TODO: temporary as delombok won't work here
+matrix:
+    include:
+        # TODO: this is needed for OpenJDK missing certificates
+        -
+            jdk: "openjdk10"
+            before_install:
+                - "rm ${JAVA_HOME}/lib/security/cacerts"
+                - "ln -s /etc/ssl/certs/java/cacerts ${JAVA_HOME}/lib/security/cacerts"
+    allow_failures:
+        -
+            jdk: "openjdk10"
+        -
+            jdk: "openjdk11"
+        -
+            jdk: "oraclejdk11"
 
 env:
     global:
+        - "AWS_DEFAULT_REGION=eu-central-1"
         -
             secure: |-
                 RWVCMZ942ezUNvxDD54WHFy3PNN68wN8l3IcSeXmXGcUYz9HYUmCs6duNuXninAFXd/ypSevJO8jA8CNVyYip7QtFYkZnxLqDbIL2xM

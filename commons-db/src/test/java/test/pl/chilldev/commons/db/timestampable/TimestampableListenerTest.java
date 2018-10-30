@@ -2,16 +2,15 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2015, 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.chilldev.commons.db.timestampable;
 
 import java.time.OffsetDateTime;
 
-import org.junit.Assert;
-import org.junit.Test;
-
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import pl.chilldev.commons.db.timestampable.Timestamp;
 import pl.chilldev.commons.db.timestampable.TimestampType;
 import pl.chilldev.commons.db.timestampable.TimestampableListener;
@@ -48,25 +47,25 @@ public class TimestampableListenerTest
 
         OffsetDateTime after = OffsetDateTime.now();
 
-        Assert.assertFalse(
-            "TimestampableListener.createTimestamps() should set create timestamp for field annotated with CREATE timestamp.",
-            entity.createdAt.isBefore(before)
+        Assertions.assertFalse(
+            entity.createdAt.isBefore(before),
+            "TimestampableListener.createTimestamps() should set create timestamp for field annotated with CREATE timestamp."
         );
-        Assert.assertFalse(
-            "TimestampableListener.createTimestamps() should set create timestamp for field annotated with CREATE timestamp.",
-            entity.createdAt.isAfter(after)
+        Assertions.assertFalse(
+            entity.createdAt.isAfter(after),
+            "TimestampableListener.createTimestamps() should set create timestamp for field annotated with CREATE timestamp."
         );
-        Assert.assertNull(
-            "TimestampableListener.createTimestamps() should not set create timestamp for field not annotated with CREATE timestamp.",
-            entity.updatedAt
+        Assertions.assertNull(
+            entity.updatedAt,
+            "TimestampableListener.createTimestamps() should not set create timestamp for field not annotated with CREATE timestamp."
         );
-        Assert.assertFalse(
-            "TimestampableListener.createTimestamps() should set create timestamp for field annotated with multiple timestamps, including CREATE.",
-            entity.lastChangedAt.isBefore(before)
+        Assertions.assertFalse(
+            entity.lastChangedAt.isBefore(before),
+            "TimestampableListener.createTimestamps() should set create timestamp for field annotated with multiple timestamps, including CREATE."
         );
-        Assert.assertFalse(
-            "TimestampableListener.createTimestamps() should set create timestamp for field annotated with multiple timestamps, including CREATE.",
-            entity.lastChangedAt.isAfter(after)
+        Assertions.assertFalse(
+            entity.lastChangedAt.isAfter(after),
+            "TimestampableListener.createTimestamps() should set create timestamp for field annotated with multiple timestamps, including CREATE."
         );
     }
 
@@ -85,25 +84,25 @@ public class TimestampableListenerTest
 
         OffsetDateTime after = OffsetDateTime.now();
 
-        Assert.assertNull(
-            "TimestampableListener.updateTimestamps() should not set update timestamp for field not annotated with UPDATE timestamp.",
-            entity.createdAt
+        Assertions.assertNull(
+            entity.createdAt,
+            "TimestampableListener.updateTimestamps() should not set update timestamp for field not annotated with UPDATE timestamp."
         );
-        Assert.assertFalse(
-            "TimestampableListener.updateTimestamps() should set update timestamp for field annotated with UPDATE timestamp.",
-            entity.updatedAt.isBefore(before)
+        Assertions.assertFalse(
+            entity.updatedAt.isBefore(before),
+            "TimestampableListener.updateTimestamps() should set update timestamp for field annotated with UPDATE timestamp."
         );
-        Assert.assertFalse(
-            "TimestampableListener.updateTimestamps() should set update timestamp for field annotated with UPDATE timestamp.",
-            entity.updatedAt.isAfter(after)
+        Assertions.assertFalse(
+            entity.updatedAt.isAfter(after),
+            "TimestampableListener.updateTimestamps() should set update timestamp for field annotated with UPDATE timestamp."
         );
-        Assert.assertFalse(
-            "TimestampableListener.updateTimestamps() should set update timestamp for field annotated with multiple timestamps, including UPDATE.",
-            entity.lastChangedAt.isBefore(before)
+        Assertions.assertFalse(
+            entity.lastChangedAt.isBefore(before),
+            "TimestampableListener.updateTimestamps() should set update timestamp for field annotated with multiple timestamps, including UPDATE."
         );
-        Assert.assertFalse(
-            "TimestampableListener.updateTimestamps() should set update timestamp for field annotated with multiple timestamps, including UPDATE.",
-            entity.lastChangedAt.isAfter(after)
+        Assertions.assertFalse(
+            entity.lastChangedAt.isAfter(after),
+            "TimestampableListener.updateTimestamps() should set update timestamp for field annotated with multiple timestamps, including UPDATE."
         );
     }
 }

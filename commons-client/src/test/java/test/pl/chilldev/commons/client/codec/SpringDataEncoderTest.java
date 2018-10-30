@@ -12,23 +12,20 @@ import java.util.Map;
 
 import feign.RequestTemplate;
 import feign.codec.Encoder;
-import org.junit.Assert;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import pl.chilldev.commons.client.codec.SpringDataEncoder;
 
+@ExtendWith(MockitoExtension.class)
 public class SpringDataEncoderTest
 {
-    @Rule
-    public MockitoRule mockito = MockitoJUnit.rule();
-
     @Mock
     private Encoder fallback;
 
@@ -45,35 +42,35 @@ public class SpringDataEncoderTest
 
         Map<String, Collection<String>> queries = template.queries();
 
-        Assert.assertTrue(
-            "SpringDataEncoder.encode() should populate page number parameter.",
-            queries.containsKey("page")
+        Assertions.assertTrue(
+            queries.containsKey("page"),
+            "SpringDataEncoder.encode() should populate page number parameter."
         );
-        Assert.assertTrue(
-            "SpringDataEncoder.encode() should set page parameter to page number from the request.",
-            queries.get("page").contains("2")
-        );
-
-        Assert.assertTrue(
-            "SpringDataEncoder.encode() should populate page size parameter.",
-            queries.containsKey("size")
-        );
-        Assert.assertTrue(
-            "SpringDataEncoder.encode() should set size parameter to page size from the request.",
-            queries.get("size").contains("3")
+        Assertions.assertTrue(
+            queries.get("page").contains("2"),
+            "SpringDataEncoder.encode() should set page parameter to page number from the request."
         );
 
-        Assert.assertTrue(
-            "SpringDataEncoder.encode() should populate sorting parameter.",
-            queries.containsKey("sort")
+        Assertions.assertTrue(
+            queries.containsKey("size"),
+            "SpringDataEncoder.encode() should populate page size parameter."
         );
-        Assert.assertTrue(
-            "SpringDataEncoder.encode() should set sort parameter to criteria from the request.",
-            queries.get("sort").contains("foo,ASC")
+        Assertions.assertTrue(
+            queries.get("size").contains("3"),
+            "SpringDataEncoder.encode() should set size parameter to page size from the request."
         );
-        Assert.assertTrue(
-            "SpringDataEncoder.encode() should set sort parameter to criteria from the request.",
-            queries.get("sort").contains("bar,ASC")
+
+        Assertions.assertTrue(
+            queries.containsKey("sort"),
+            "SpringDataEncoder.encode() should populate sorting parameter."
+        );
+        Assertions.assertTrue(
+            queries.get("sort").contains("foo,ASC"),
+            "SpringDataEncoder.encode() should set sort parameter to criteria from the request."
+        );
+        Assertions.assertTrue(
+            queries.get("sort").contains("bar,ASC"),
+            "SpringDataEncoder.encode() should set sort parameter to criteria from the request."
         );
     }
 
@@ -90,31 +87,31 @@ public class SpringDataEncoderTest
 
         Map<String, Collection<String>> queries = template.queries();
 
-        Assert.assertTrue(
-            "SpringDataEncoder.encode() should populate page number parameter under given name.",
-            queries.containsKey("a")
+        Assertions.assertTrue(
+            queries.containsKey("a"),
+            "SpringDataEncoder.encode() should populate page number parameter under given name."
         );
-        Assert.assertTrue(
-            "SpringDataEncoder.encode() should set page parameter to page number from the request.",
-            queries.get("a").contains("2")
-        );
-
-        Assert.assertTrue(
-            "SpringDataEncoder.encode() should populate page size parameter under given name.",
-            queries.containsKey("b")
-        );
-        Assert.assertTrue(
-            "SpringDataEncoder.encode() should set size parameter to page size from the request.",
-            queries.get("b").contains("3")
+        Assertions.assertTrue(
+            queries.get("a").contains("2"),
+            "SpringDataEncoder.encode() should set page parameter to page number from the request."
         );
 
-        Assert.assertTrue(
-            "SpringDataEncoder.encode() should populate sorting parameter under given name.",
-            queries.containsKey("c")
+        Assertions.assertTrue(
+            queries.containsKey("b"),
+            "SpringDataEncoder.encode() should populate page size parameter under given name."
         );
-        Assert.assertTrue(
-            "SpringDataEncoder.encode() should set sort parameter to criteria from the request.",
-            queries.get("c").contains("foo,ASC")
+        Assertions.assertTrue(
+            queries.get("b").contains("3"),
+            "SpringDataEncoder.encode() should set size parameter to page size from the request."
+        );
+
+        Assertions.assertTrue(
+            queries.containsKey("c"),
+            "SpringDataEncoder.encode() should populate sorting parameter under given name."
+        );
+        Assertions.assertTrue(
+            queries.get("c").contains("foo,ASC"),
+            "SpringDataEncoder.encode() should set sort parameter to criteria from the request."
         );
     }
 

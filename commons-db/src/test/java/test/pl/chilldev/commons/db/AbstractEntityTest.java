@@ -2,15 +2,15 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2015 - 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2015 - 2016, 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.chilldev.commons.db;
 
 import java.util.UUID;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import pl.chilldev.commons.db.AbstractEntity;
 
 public class AbstractEntityTest
@@ -20,9 +20,9 @@ public class AbstractEntityTest
     {
         AbstractEntity entity = new Entity();
 
-        Assert.assertNull(
-            "AbstractEntity.getId() should return NULL if entity is not persisted.",
-            entity.getId()
+        Assertions.assertNull(
+            entity.getId(),
+            "AbstractEntity.getId() should return NULL if entity is not persisted."
         );
     }
 
@@ -33,10 +33,10 @@ public class AbstractEntityTest
         AbstractEntity entity = new Entity();
         entity.setId(id);
 
-        Assert.assertEquals(
-            "AbstractEntity.getId() should return previously set ID if assigned.",
+        Assertions.assertEquals(
             id,
-            entity.getId()
+            entity.getId(),
+            "AbstractEntity.getId() should return previously set ID if assigned."
         );
     }
 
@@ -44,9 +44,10 @@ public class AbstractEntityTest
     public void equalsSame()
     {
         AbstractEntity entity = new Entity();
-        Assert.assertTrue(
-            "AbstractEntity.equals() should return TRUE if the object is the very same instance.",
-            entity.equals(entity)
+        Assertions.assertEquals(
+            entity,
+            entity,
+            "AbstractEntity.equals() should return TRUE if the object is the very same instance."
         );
     }
 
@@ -54,9 +55,10 @@ public class AbstractEntityTest
     public void equalsNull()
     {
         AbstractEntity entity = new Entity();
-        Assert.assertFalse(
-            "AbstractEntity.equals() should return FALSE when compared to NULL.",
-            entity.equals(null)
+        Assertions.assertNotEquals(
+            entity,
+            null,
+            "AbstractEntity.equals() should return FALSE when compared to NULL."
         );
     }
 
@@ -65,9 +67,10 @@ public class AbstractEntityTest
     {
         UUID id = UUID.randomUUID();
         AbstractEntity entity = new Entity();
-        Assert.assertFalse(
-            "AbstractEntity.equals() should return FALSE when compared to a non-entity object.",
-            entity.equals(id)
+        Assertions.assertNotEquals(
+            entity,
+            id,
+            "AbstractEntity.equals() should return FALSE when compared to a non-entity object."
         );
     }
 
@@ -77,9 +80,10 @@ public class AbstractEntityTest
         AbstractEntity entity = new Entity();
         AbstractEntity other = new Entity();
 
-        Assert.assertTrue(
-            "AbstractEntity.equals() should return TRUE when objects have no IDs specified.",
-            entity.equals(other)
+        Assertions.assertEquals(
+            entity,
+            other,
+            "AbstractEntity.equals() should return TRUE when objects have no IDs specified."
         );
     }
 
@@ -93,9 +97,10 @@ public class AbstractEntityTest
 
         AbstractEntity other = new Entity();
 
-        Assert.assertFalse(
-            "AbstractEntity.equals() should return FALSE when object has no ID specified.",
-            entity.equals(other)
+        Assertions.assertNotEquals(
+            entity,
+            other,
+            "AbstractEntity.equals() should return FALSE when object has no ID specified."
         );
     }
 
@@ -109,9 +114,10 @@ public class AbstractEntityTest
         AbstractEntity other = new Entity();
         other.setId(id);
 
-        Assert.assertFalse(
-            "AbstractEntity.equals() should return FALSE when subject has no ID specified.",
-            entity.equals(other)
+        Assertions.assertNotEquals(
+            entity,
+            other,
+            "AbstractEntity.equals() should return FALSE when subject has no ID specified."
         );
     }
 
@@ -129,14 +135,16 @@ public class AbstractEntityTest
         AbstractEntity entity = new Entity();
         entity.setId(id);
 
-        Assert.assertTrue(
-            "AbstractEntity.equals() should return TRUE when compared entity has same ID.",
-            entity.equals(same)
+        Assertions.assertEquals(
+            entity,
+            same,
+            "AbstractEntity.equals() should return TRUE when compared entity has same ID."
         );
 
-        Assert.assertFalse(
-            "AbstractEntity.equals() should return FALSE when compared entity has different ID.",
-            entity.equals(other)
+        Assertions.assertNotEquals(
+            entity,
+            other,
+            "AbstractEntity.equals() should return FALSE when compared entity has different ID."
         );
     }
 
@@ -146,10 +154,10 @@ public class AbstractEntityTest
         AbstractEntity entity = new Entity();
         AbstractEntity other = new Entity();
 
-        Assert.assertEquals(
-            "AbstractEntity.hashCode() should calculate same hash code if there is no ID specified.",
+        Assertions.assertEquals(
             entity.hashCode(),
-            other.hashCode()
+            other.hashCode(),
+            "AbstractEntity.hashCode() should calculate same hash code if there is no ID specified."
         );
     }
 
@@ -164,10 +172,10 @@ public class AbstractEntityTest
         AbstractEntity other = new Entity();
         other.setId(id);
 
-        Assert.assertEquals(
-            "AbstractEntity.hashCode() should calculate same hash code if there is same ID specified.",
+        Assertions.assertEquals(
             entity.hashCode(),
-            other.hashCode()
+            other.hashCode(),
+            "AbstractEntity.hashCode() should calculate same hash code if there is same ID specified."
         );
     }
 
@@ -180,10 +188,10 @@ public class AbstractEntityTest
         AbstractEntity other = new Entity();
         other.setId(UUID.randomUUID());
 
-        Assert.assertNotEquals(
-            "AbstractEntity.hashCode() should calculate different hash code if there are different IDs specified.",
+        Assertions.assertNotEquals(
             entity.hashCode(),
-            other.hashCode()
+            other.hashCode(),
+            "AbstractEntity.hashCode() should calculate different hash code if there are different IDs specified."
         );
     }
 }

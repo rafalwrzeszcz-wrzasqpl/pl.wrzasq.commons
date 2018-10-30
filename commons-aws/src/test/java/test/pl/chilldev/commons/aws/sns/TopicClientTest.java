@@ -11,24 +11,17 @@ import com.amazonaws.services.sns.AmazonSNS;
 import com.amazonaws.services.sns.model.PublishResult;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Assert;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.contrib.java.lang.system.EnvironmentVariables;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 import pl.chilldev.commons.aws.sns.TopicClient;
 
+@ExtendWith(MockitoExtension.class)
 public class TopicClientTest
 {
-    @Rule
-    public MockitoRule mockito = MockitoJUnit.rule();
-
-    @Rule
-    public EnvironmentVariables environmentVariables = new EnvironmentVariables();
-
     @Mock
     private AmazonSNS sns;
 
@@ -38,9 +31,6 @@ public class TopicClientTest
     @Test
     public void publish() throws JsonProcessingException
     {
-        // this is to make sure we resolve the AWS region for default region provider
-        this.environmentVariables.set("AWS_REGION", "eu-central-1");
-
         // just for code coverage
         new TopicClient(this.objectMapper, null);
 
@@ -54,10 +44,10 @@ public class TopicClientTest
         Mockito.when(this.objectMapper.writeValueAsString(input)).thenReturn(message);
         Mockito.when(this.sns.publish(topic, message)).thenReturn(result);
 
-        Assert.assertSame(
-            "TopicClient.publish() should send serialized message to configured topic.",
+        Assertions.assertSame(
             result,
-            client.publish(input)
+            client.publish(input),
+            "TopicClient.publish() should send serialized message to configured topic."
         );
     }
 }

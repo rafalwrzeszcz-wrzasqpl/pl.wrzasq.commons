@@ -2,7 +2,7 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2017 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2017 - 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.chilldev.commons.data;
@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -35,28 +35,28 @@ public class ConvertUtilsTest
             )
         );
 
-        Assert.assertEquals(
-            "ConvertUtils.extractSort() should return collection of all sort params.",
+        Assertions.assertEquals(
             2,
-            extracted.size()
+            extracted.size(),
+            "ConvertUtils.extractSort() should return collection of all sort params."
         );
 
-        Assert.assertTrue(
-            "ConvertUtils.extractSort() should return collection of all sort params.",
-            extracted.contains("id,DESC")
+        Assertions.assertTrue(
+            extracted.contains("id,DESC"),
+            "ConvertUtils.extractSort() should return collection of all sort params."
         );
-        Assert.assertTrue(
-            "ConvertUtils.extractSort() should return collection of all sort params.",
-            extracted.contains("name,ASC")
+        Assertions.assertTrue(
+            extracted.contains("name,ASC"),
+            "ConvertUtils.extractSort() should return collection of all sort params."
         );
     }
 
     @Test
     public void extractSortNull()
     {
-        Assert.assertNull(
-            "ConvertUtils.extractSort() should return NULL value for NULL input.",
-            ConvertUtils.extractSort(null)
+        Assertions.assertNull(
+            ConvertUtils.extractSort(null),
+            "ConvertUtils.extractSort() should return NULL value for NULL input."
         );
     }
 
@@ -76,33 +76,33 @@ public class ConvertUtilsTest
         Page<Object> page = ConvertUtils.buildPageFromResources(resources, PageRequest.of(number, size));
 
         // verify converted value
-        Assert.assertEquals(
-            "ConvertUtils.buildPageFromResources() should populate page properties from input request.",
+        Assertions.assertEquals(
             size,
-            page.getSize()
+            page.getSize(),
+            "ConvertUtils.buildPageFromResources() should populate page properties from input request."
         );
-        Assert.assertEquals(
-            "ConvertUtils.buildPageFromResources() should populate page properties from input request.",
+        Assertions.assertEquals(
             number,
-            page.getNumber()
+            page.getNumber(),
+            "ConvertUtils.buildPageFromResources() should populate page properties from input request."
         );
-        Assert.assertEquals(
-            "ConvertUtils.buildPageFromResources() should populate page properties from loaded resources.",
+        Assertions.assertEquals(
             total,
-            page.getTotalElements()
+            page.getTotalElements(),
+            "ConvertUtils.buildPageFromResources() should populate page properties from loaded resources."
         );
 
         // verify content
         List<Object> content = page.getContent();
-        Assert.assertSame(
-            "ConvertUtils.buildPageFromResources() should populate page content from input request.",
+        Assertions.assertSame(
             object1,
-            content.get(0)
+            content.get(0),
+            "ConvertUtils.buildPageFromResources() should populate page content from input request."
         );
-        Assert.assertSame(
-            "ConvertUtils.buildPageFromResources() should populate page content from input request.",
+        Assertions.assertSame(
             object2,
-            content.get(1)
+            content.get(1),
+            "ConvertUtils.buildPageFromResources() should populate page content from input request."
         );
     }
 }

@@ -11,24 +11,22 @@ import javax.servlet.ServletContext;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.web.context.WebApplicationContext;
 import pl.chilldev.commons.web.context.WebApplicationContextLoader;
 import pl.chilldev.commons.web.daemon.AbstractSpringWebDaemon;
 
+@ExtendWith(MockitoExtension.class)
 public class AbstractSpringWebDaemonTest extends AbstractSpringWebDaemon
 {
-    @Rule
-    public MockitoRule mockito = MockitoJUnit.rule();
+    private static final String DUMMY_BEAN_ID = "called!";
 
     @Spy
     private AbstractWebDaemonTest.TestServer server = new AbstractWebDaemonTest.TestServer();
@@ -39,13 +37,14 @@ public class AbstractSpringWebDaemonTest extends AbstractSpringWebDaemon
     @Mock
     private WebApplicationContext applicationContext;
 
-    @Before
-    public void setUp()
+    private void setUpInitialization()
     {
         Mockito.when(this.mockContextLoader.initWebApplicationContext(Mockito.isA(ServletContext.class)))
             .thenReturn(this.applicationContext);
-        Mockito.when(this.applicationContext.getBean(Server.class))
-            .thenReturn(this.server);
+        Mockito.doReturn(this.server)
+            .when(this.applicationContext).getBean(Server.class);
+        Mockito.doReturn(null)
+            .when(this.applicationContext).getBean(AbstractSpringWebDaemonTest.DUMMY_BEAN_ID);
     }
 
     @Test
@@ -53,35 +52,39 @@ public class AbstractSpringWebDaemonTest extends AbstractSpringWebDaemon
     {
         ServletContextHandler servlet = this.createServletContext();
 
-        Assert.assertNotNull(
-            "AbstractSpringWebDaemon.createServletContext() should assign logger to context instance.",
-            servlet.getLogger()
+        Assertions.assertNotNull(
+            servlet.getLogger(),
+            "AbstractSpringWebDaemon.createServletContext() should assign logger to context instance."
         );
-        Assert.assertEquals(
-            "AbstractSpringWebDaemon.createServletContext() should set root path to the servlet context.",
+        Assertions.assertEquals(
             "/",
-            servlet.getContextPath()
+            servlet.getContextPath(),
+            "AbstractSpringWebDaemon.createServletContext() should set root path to the servlet context."
         );
     }
 
     @Test
     public void createServerTest()
     {
+        this.setUpInitialization();
+
         Server server = this.createServer();
 
-        Assert.assertSame(
-            "AbstractSpringWebDaemon.createServer() should return Jetty server instance acquired from Spring DIC.",
+        Assertions.assertSame(
             this.server,
-            server
+            server,
+            "AbstractSpringWebDaemon.createServer() should return Jetty server instance acquired from Spring DIC."
         );
 
         Mockito.verify(this.mockContextLoader).initWebApplicationContext(Mockito.isA(ServletContext.class));
-        Mockito.verify(this.applicationContext).getBean("called!");
+        Mockito.verify(this.applicationContext).getBean(AbstractSpringWebDaemonTest.DUMMY_BEAN_ID);
     }
 
     @Test
     public void stopServerRunning()
     {
+        this.setUpInitialization();
+
         this.createServer();
         this.stopServer();
 
@@ -105,7 +108,7 @@ public class AbstractSpringWebDaemonTest extends AbstractSpringWebDaemon
     @Override
     protected void configureServletContext(ServletContextHandler servlet, BeanFactory beanFactory)
     {
-        beanFactory.getBean("called!");
+        beanFactory.getBean(AbstractSpringWebDaemonTest.DUMMY_BEAN_ID);
         // dummy method
     }
 }

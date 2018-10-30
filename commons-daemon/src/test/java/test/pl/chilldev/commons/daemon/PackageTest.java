@@ -2,19 +2,17 @@
  * This file is part of the ChillDev-Commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2015, 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.chilldev.commons.daemon;
 
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.net.URL;
 
-import org.junit.Assert;
-import org.junit.Test;
-
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import pl.chilldev.commons.daemon.Package;
 
 public class PackageTest
@@ -25,10 +23,10 @@ public class PackageTest
         Package meta = new Package();
         meta.init(Package.class.getResource(Package.DEFAULT_RESOURCE));
 
-        Assert.assertEquals(
-            "Package.init() should load version string from given properties stream.",
+        Assertions.assertEquals(
             "test",
-            meta.getVersion()
+            meta.getVersion(),
+            "Package.init() should load version string from given properties stream."
         );
     }
 
@@ -40,10 +38,10 @@ public class PackageTest
         Package meta = new Package();
         meta.init(new URL("file:///unexisting/"));
 
-        Assert.assertEquals(
-            "Package.init() should set version string to \"error\" when properties loading fails on I/O.",
+        Assertions.assertEquals(
             "error",
-            meta.getVersion()
+            meta.getVersion(),
+            "Package.init() should set version string to \"error\" when properties loading fails on I/O."
         );
     }
 
@@ -64,10 +62,10 @@ public class PackageTest
         };
         meta.init(Package.class.getResource(Package.DEFAULT_RESOURCE));
 
-        Assert.assertEquals(
-            "Package.init() should set version string to \"error\" when properties loading fails on I/O.",
+        Assertions.assertEquals(
             "error",
-            meta.getVersion()
+            meta.getVersion(),
+            "Package.init() should set version string to \"error\" when properties loading fails on I/O."
         );
     }
 
@@ -77,10 +75,10 @@ public class PackageTest
         Package meta = new Package();
         meta.init(null);
 
-        Assert.assertEquals(
-            "Package.init() should set version string to \"devel\" if resource stream is unavailable.",
+        Assertions.assertEquals(
             "devel",
-            meta.getVersion()
+            meta.getVersion(),
+            "Package.init() should set version string to \"devel\" if resource stream is unavailable."
         );
     }
 
@@ -90,10 +88,10 @@ public class PackageTest
         Package meta = new Package();
         meta.init();
 
-        Assert.assertEquals(
-            "Package.getVersion() should return loaded application version.",
+        Assertions.assertEquals(
             "test",
-            meta.getVersion()
+            meta.getVersion(),
+            "Package.getVersion() should return loaded application version."
         );
     }
 
@@ -102,10 +100,10 @@ public class PackageTest
     {
         Package meta = new Package();
 
-        Assert.assertEquals(
-            "Package.getVersion() should automatically initialize metadata from default reosurce location.",
+        Assertions.assertEquals(
             "test",
-            meta.getVersion()
+            meta.getVersion(),
+            "Package.getVersion() should automatically initialize metadata from default resource location."
         );
     }
 }

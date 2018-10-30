@@ -7,19 +7,17 @@
 
 package test.pl.chilldev.commons.daemon;
 
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.mockito.Spy;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 import pl.chilldev.commons.daemon.AbstractDaemon;
 
+@ExtendWith(MockitoExtension.class)
 public class AbstractDaemonTest
 {
-    @Rule
-    public MockitoRule mockito = MockitoJUnit.rule();
-
     @Spy
     private AbstractDaemon daemon = new AbstractDaemon()
     {
@@ -49,10 +47,14 @@ public class AbstractDaemonTest
         Mockito.verify(this.daemon).stop();
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void signalThrowsException() throws Exception
     {
         Mockito.doThrow(Exception.class).when(this.daemon).start();
-        this.daemon.signal();
+        Assertions.assertThrows(
+            Exception.class,
+            this.daemon::signal,
+            "AbstractDaemon.signal() should throw exception if re-starting daemon fails."
+        );
     }
 }

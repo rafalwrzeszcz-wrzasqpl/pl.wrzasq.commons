@@ -11,20 +11,17 @@ import java.util.Collections;
 import java.util.function.Consumer;
 
 import feign.Feign;
-import org.junit.Assert;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 import pl.chilldev.commons.client.FeignClientFactory;
 
+@ExtendWith(MockitoExtension.class)
 public class FeignClientFactoryTest
 {
-    @Rule
-    public MockitoRule mockito = MockitoJUnit.rule();
-
     @Mock
     private Feign.Builder builder;
 
@@ -53,10 +50,10 @@ public class FeignClientFactoryTest
         Mockito.verify(this.definedConfigurator).accept(this.builder);
         Mockito.verify(this.customConfigurator).accept(this.builder);
 
-        Assert.assertSame(
-            "FeignClientFactory.createClient() should return client instance created by the builder.",
+        Assertions.assertSame(
             this,
-            result
+            result,
+            "FeignClientFactory.createClient() should return client instance created by the builder."
         );
     }
 
@@ -78,10 +75,10 @@ public class FeignClientFactoryTest
         Mockito.verify(this.definedConfigurator).accept(this.builder);
         Mockito.verifyZeroInteractions(this.customConfigurator);
 
-        Assert.assertSame(
-            "FeignClientFactory.createClient() should return client instance created by the builder.",
+        Assertions.assertSame(
             this,
-            result
+            result,
+            "FeignClientFactory.createClient() should return client instance created by the builder."
         );
     }
 }

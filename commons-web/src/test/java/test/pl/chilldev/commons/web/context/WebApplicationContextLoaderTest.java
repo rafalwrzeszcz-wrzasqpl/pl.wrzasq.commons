@@ -11,24 +11,20 @@ import java.util.Collections;
 
 import javax.servlet.ServletContext;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.web.context.WebApplicationContext;
 import pl.chilldev.commons.web.context.WebApplicationContextLoader;
 
+@ExtendWith(MockitoExtension.class)
 public class WebApplicationContextLoaderTest
 {
-    @Rule
-    public MockitoRule mockito = MockitoJUnit.rule();
-
     // needed just for identity check
     private static final WebApplicationContextLoaderTest BEAN = new WebApplicationContextLoaderTest();
 
@@ -42,8 +38,7 @@ public class WebApplicationContextLoaderTest
     @Mock
     private ServletContext servletContext;
 
-    @Before
-    public void setUp()
+    private void setUpAttributes()
     {
         Mockito.when(this.servletContext.getInitParameterNames()).thenReturn(Collections.emptyEnumeration());
         Mockito.when(this.servletContext.getAttributeNames()).thenReturn(Collections.emptyEnumeration());
@@ -52,20 +47,22 @@ public class WebApplicationContextLoaderTest
     @Test
     public void initWebApplicationContext()
     {
+        this.setUpAttributes();
+
         WebApplicationContextLoader contextLoader = this.createWebApplicationContextLoader();
 
         WebApplicationContext applicationContext = contextLoader.initWebApplicationContext(this.servletContext);
 
         try {
-            Assert.assertArrayEquals(
-                "WebApplicationContextLoader.createWebApplicationContext() should set active profiles list.",
+            Assertions.assertArrayEquals(
                 new String[] {"test", "foo"},
-                applicationContext.getEnvironment().getActiveProfiles()
+                applicationContext.getEnvironment().getActiveProfiles(),
+                "WebApplicationContextLoader.createWebApplicationContext() should set active profiles list."
             );
-            Assert.assertSame(
-                "WebApplicationContextLoader.createWebApplicationContext() should register configuration class.",
+            Assertions.assertSame(
                 WebApplicationContextLoaderTest.BEAN,
-                applicationContext.getBean(WebApplicationContextLoaderTest.class)
+                applicationContext.getBean(WebApplicationContextLoaderTest.class),
+                "WebApplicationContextLoader.createWebApplicationContext() should register configuration class."
             );
         } finally {
             contextLoader.closeWebApplicationContext();
@@ -75,6 +72,8 @@ public class WebApplicationContextLoaderTest
     @Test
     public void closeWebApplicationContext()
     {
+        this.setUpAttributes();
+
         WebApplicationContextLoader contextLoader = this.createWebApplicationContextLoader();
 
         contextLoader.initWebApplicationContext(this.servletContext);
