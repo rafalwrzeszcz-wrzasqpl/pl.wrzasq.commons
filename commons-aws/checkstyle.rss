@@ -19,9 +19,9 @@ under the License.
 -->
 <rss version="0.91">
   <channel>
-    <title>ChillDev Commons AWS - Checkstyle report</title>
-    <link>https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-aws/</link>
-    <description>ChillDev Commons AWS - Checkstyle report</description>
+    <title>WrzasqPl Commons AWS - Checkstyle report</title>
+    <link>https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-aws/</link>
+    <description>WrzasqPl Commons AWS - Checkstyle report</description>
     <language>en-us</language>
     <copyright>&#169;2017 - 2019 Rafał Wrzeszcz - Wrzasq.pl</copyright>
     <item>
@@ -30,9 +30,9 @@ under the License.
              Warnings: 0,
              Infos: 0
       </title>
-            <link>https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-aws//checkstyle.html</link>
+            <link>https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-aws//checkstyle.html</link>
       <description>
-        <p>Click <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-aws//checkstyle.html">here</a> for the full Checkstyle report.</p>
+        <p>Click <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-aws//checkstyle.html">here</a> for the full Checkstyle report.</p>
 
         <table summary="Files" boder="1">
           <thead>
@@ -46,7 +46,7 @@ under the License.
           <tbody>
                           <tr>
                 <td>
-                  <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-aws//checkstyle.html#pl.chilldev.commons.aws.cloudformation.CustomResourceHandler.java">pl/chilldev/commons/aws/cloudformation/CustomResourceHandler.java</a>
+                  <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-aws//checkstyle.html#pl.wrzasq.commons.aws.cloudformation.CustomResourceHandler.java">pl/wrzasq/commons/aws/cloudformation/CustomResourceHandler.java</a>
                 </td>
                 <td>
                   0

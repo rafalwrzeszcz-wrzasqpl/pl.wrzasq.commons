@@ -1,4 +1,4 @@
-pl.chilldev.commons.aws
-pl.chilldev.commons.aws.cloudformation
-pl.chilldev.commons.aws.sns
-pl.chilldev.commons.aws.sqs
+pl.wrzasq.commons.aws
+pl.wrzasq.commons.aws.cloudformation
+pl.wrzasq.commons.aws.sns
+pl.wrzasq.commons.aws.sqs
