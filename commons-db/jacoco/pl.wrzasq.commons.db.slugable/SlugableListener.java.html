@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SlugableListener.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">WrzasqPl Commons DB</a> &gt; <a href="index.source.html" class="el_package">pl.wrzasq.commons.db.slugable</a> &gt; <span class="el_source">SlugableListener.java</span></div><h1>SlugableListener.java</h1><pre class="source lang-java linenums">/*
+ * This file is part of the pl.wrzasq.commons.
+ *
+ * @license http://mit-license.org/ The MIT license
+ * @copyright 2015 - 2016, 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
+ */
+
+package pl.wrzasq.commons.db.slugable;
+
+import java.lang.reflect.Field;
+
+import javax.inject.Inject;
+
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+
+import org.apache.commons.lang3.reflect.FieldUtils;
+
+import pl.wrzasq.commons.text.slugifier.SimpleSlugifier;
+import pl.wrzasq.commons.text.slugifier.Slugifier;
+
+/**
+ * Event listener for entities that should be identifiable by URL.
+ */
+<span class="fc" id="L25">public class SlugableListener</span>
+{
+    /**
+     * Slugifier to be used to generate slugs.
+     */
+    @Inject
+    private Slugifier slugifier;
+
+    /**
+     * Returns initializer.
+     *
+     * &lt;p&gt;
+     * - In CDI-capable environment it will return slugifier injected by the container.
+     * - In non-CDI environment it will initialize default slugifier.
+     * &lt;/p&gt;
+     *
+     * @return Slugifier.
+     */
+    private Slugifier getSlugifier()
+    {
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        if (this.slugifier == null) {</span>
+<span class="fc" id="L46">            this.slugifier = new SimpleSlugifier();</span>
+        }
+
+<span class="fc" id="L49">        return this.slugifier;</span>
+    }
+
+    /**
+     * Generate slug for give value.
+     *
+     * @param texts Initial value.
+     * @param options Slug generation configuration.
+     * @return Generated slug.
+     */
+    private String generateSlug(String[] texts, Slug options)
+    {
+        // acquire slugs generator
+<span class="fc" id="L62">        Slugifier slugifier = this.getSlugifier();</span>
+
+<span class="fc" id="L64">        return options.prefix() + slugifier.slugify(texts) + options.suffix();</span>
+    }
+
+    /**
+     * Fills slugs declared in given object.
+     *
+     * @param slugable Object to be handled.
+     * @param update Whether it's first save of slugs need to be only re-created.
+     * @throws IllegalAccessException When accessing source field is impossible.
+     */
+    private void fillSlugs(Object slugable, boolean update)
+        throws
+            IllegalAccessException
+    {
+<span class="fc" id="L78">        Class&lt;?&gt; type = slugable.getClass();</span>
+
+<span class="fc bfc" id="L80" title="All 2 branches covered.">        for (Field field : FieldUtils.getAllFields(type)) {</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">            if (field.isAnnotationPresent(Slug.class)) {</span>
+<span class="fc" id="L82">                this.fillSlug(field, slugable, update);</span>
+            }
+        }
+<span class="fc" id="L85">    }</span>
+
+    /**
+     * Fills single slug declared in given object.
+     *
+     * @param field Slug field.
+     * @param slugable Object to be handled.
+     * @param update Whether it's first save of slugs need to be only re-created.
+     * @throws IllegalAccessException When accessing source field is impossible.
+     */
+    private void fillSlug(Field field, Object slugable, boolean update)
+        throws
+            IllegalAccessException
+    {
+        // get slug configuration
+<span class="fc" id="L100">        Slug options = field.getDeclaredAnnotation(Slug.class);</span>
+        int i;
+
+        // check if it should be updated
+<span class="fc bfc" id="L104" title="All 4 branches covered.">        if (!update || options.updatable()) {</span>
+            // find all source fields
+<span class="fc" id="L106">            String[] fields = options.value();</span>
+<span class="fc" id="L107">            String[] texts = new String[fields.length];</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">            for (i = 0; i &lt; fields.length; ++i) {</span>
+<span class="fc" id="L109">                texts[i] = FieldUtils.readField(slugable, fields[i], true).toString();</span>
+            }
+
+            // generate slug
+<span class="fc" id="L113">            FieldUtils.writeField(slugable, field.getName(), this.generateSlug(texts, options), true);</span>
+        }
+<span class="fc" id="L115">    }</span>
+
+    /**
+     * Fills slugs on object creation.
+     *
+     * @param slugable Object to be handled.
+     * @throws IllegalAccessException When accessing source field is impossible.
+     */
+    @PrePersist
+    public void createSlugs(Object slugable)
+        throws
+            IllegalAccessException
+    {
+<span class="fc" id="L128">        this.fillSlugs(slugable, false);</span>
+<span class="fc" id="L129">    }</span>
+
+    /**
+     * Updates slugs.
+     *
+     * @param slugable Object to be handled.
+     * @throws IllegalAccessException When accessing source field is impossible.
+     */
+    @PreUpdate
+    public void updateSlugs(Object slugable)
+        throws
+            IllegalAccessException
+    {
+<span class="fc" id="L142">        this.fillSlugs(slugable, true);</span>
+<span class="fc" id="L143">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

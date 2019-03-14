@@ -1,5 +1,5 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-ChillDev Commons DB,pl.chilldev.commons.db.timestampable,TimestampableListener,0,54,0,6,0,12,0,7,0,4
-ChillDev Commons DB,pl.chilldev.commons.db.timestampable,TimestampType,0,24,0,0,0,3,0,1,0,1
-ChillDev Commons DB,pl.chilldev.commons.db,AbstractEntity,2,70,1,13,0,18,1,12,0,6
-ChillDev Commons DB,pl.chilldev.commons.db.slugable,SlugableListener,0,117,0,12,0,23,0,13,0,7
+WrzasqPl Commons DB,pl.wrzasq.commons.db.timestampable,TimestampableListener,0,54,0,6,0,12,0,7,0,4
+WrzasqPl Commons DB,pl.wrzasq.commons.db.timestampable,TimestampType,0,24,0,0,0,3,0,1,0,1
+WrzasqPl Commons DB,pl.wrzasq.commons.db,AbstractEntity,2,70,1,13,0,18,1,12,0,6
+WrzasqPl Commons DB,pl.wrzasq.commons.db.slugable,SlugableListener,0,117,0,12,0,23,0,13,0,7
