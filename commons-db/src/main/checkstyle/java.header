@@ -1,8 +1,8 @@
 ^/\*$
-^ \* This file is part of the ChillDev-Commons\.$
+^ \* This file is part of the pl\.wrzasq\.commons\.$
 ^ \*$
 ^ \* @license http://mit-license\.org/ The MIT license$
 ^ \* @copyright \d{4}[0-9, -]* © by Rafał Wrzeszcz - Wrzasq\.pl\.$
 ^ \*/$
 
-^package pl\.chilldev\.commons\.db(\..+)?;$
+^package pl\.wrzasq\.commons\.db(\..+)?;$

@@ -1,8 +1,8 @@
 <!---
-# This file is part of the ChillDev-Commons.
+# This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2017 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2017, 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
 # General information
@@ -11,4 +11,4 @@ This library contains set of small integration/wrapper classes. The point is to 
 
 # Logging
 
-As usual in **Chillout Development** projects, [**SLF4J**](https://www.slf4j.org/) is used. For using with **AWS** lambda we recommend using [`io.symphonia:lambda-logging`](https://github.com/symphoniacloud/lambda-monitoring/tree/master/lambda-logging) as a backend.
+As usual in **Wrzasq.pl** projects, [**SLF4J**](https://www.slf4j.org/) is used. For using with **AWS** lambda we recommend using [`io.symphonia:lambda-logging`](https://github.com/symphoniacloud/lambda-monitoring/tree/master/lambda-logging) as a backend.

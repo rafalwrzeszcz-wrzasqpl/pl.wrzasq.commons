@@ -1,13 +1,13 @@
 <!---
-# This file is part of the ChillDev-Commons.
+# This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2015, 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
 # HTML utilities
 
-`pl.chilldev.commons.text.html.Utils` class provides utility methods for *HTML* text processing.
+`pl.wrzasq.commons.text.html.Utils` class provides utility methods for *HTML* text processing.
 
 ## `firstParagraph()`
 

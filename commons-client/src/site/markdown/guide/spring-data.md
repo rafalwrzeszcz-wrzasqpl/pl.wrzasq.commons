@@ -1,8 +1,8 @@
 <!---
-# This file is part of the ChillDev-Commons.
+# This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2017 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2017, 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
 If you build clients for **Spring Data**-backed services, you very often may need (and want) to paginate the data. [**Spring Data** web support](https://docs.spring.io/spring-data/commons/docs/current/reference/html/#core.web.basic.paging-and-sorting) handles URL-based paging and sorting based on the parameters. You can of course build URLs with all of these parameters:
@@ -16,7 +16,7 @@ interface YourClient
 }
 ```
 
-But it will require from you to put that into every pageable URL. With `pl.chilldev.commons.client.codec.SpringDataEncoder`, you can ommit that and rely on argument of type `Pageable`:
+But it will require from you to put that into every pageable URL. With `pl.wrzasq.commons.client.codec.SpringDataEncoder`, you can ommit that and rely on argument of type `Pageable`:
 
 ```java
 // put your current encoder as fallback to handle all other types
@@ -51,7 +51,7 @@ YourClient client = factory.createClient(YourClient.class, "http://your.service.
 
 ## `commons-data`
 
-Together with `pl.chilldev.commons:commons-data` package you can make it even more **Spring Data**-friendly by utilizing **Java 8** default methods:
+Together with `pl.wrzasq.commons.commons-data` package you can make it even more **Spring Data**-friendly by utilizing **Java 8** default methods:
 
 ```java
 interface YourClient

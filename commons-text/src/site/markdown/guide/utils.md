@@ -1,13 +1,13 @@
 <!---
-# This file is part of the ChillDev-Commons.
+# This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2016 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2016, 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
 ## TextUtils
 
-Useful text routines are provided by the class `pl.chilldev.commons.text.html.Utils`.
+Useful text routines are provided by the class `pl.wrzasq.commons.text.html.Utils`.
 
 ### truncate()
 

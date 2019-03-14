@@ -1,11 +1,11 @@
 <!---
-# This file is part of the ChillDev-Commons.
+# This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2017 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2017, 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
-When using **Feign** clients in **Spring** application you may find it convenient to rely on one set of exception classes. With `spring-web` package providing `HttpClientErrorException` and `HttpServerErrorException` classes you can easily detect and sometimes even handle more transparently **HTTP** error codes returned from clients. To automate the process you can apply `pl.chilldev.commons.client.codec.SpringErrorDecoder`:
+When using **Feign** clients in **Spring** application you may find it convenient to rely on one set of exception classes. With `spring-web` package providing `HttpClientErrorException` and `HttpServerErrorException` classes you can easily detect and sometimes even handle more transparently **HTTP** error codes returned from clients. To automate the process you can apply `pl.wrzasq.commons.client.codec.SpringErrorDecoder`:
 
 ```java
 Collection<Consumer<Feign.Builder>> yourConfigurators = new ArrayList<>();

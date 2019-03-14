@@ -1,17 +1,17 @@
 <!---
-# This file is part of the ChillDev-Commons.
+# This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2017 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2017, 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
 # Feign factory
 
-Entire `chilldev-client` package is oriented around [**Feign**](https://github.com/OpenFeign/feign). The main class to work with it is `pl.chilldev.commons.client.FeignClientFactory`. It provides a way to automate your `Feign.builder()` customization. It's mainly useful when you developer multi micro-service system with a lot of clients sharing same serialization handling, authorization flow etc.
+Entire `commons-client` package is oriented around [**Feign**](https://github.com/OpenFeign/feign). The main class to work with it is `pl.wrzasq.commons.client.FeignClientFactory`. It provides a way to automate your `Feign.builder()` customization. It's mainly useful when you developer multi micro-service system with a lot of clients sharing same serialization handling, authorization flow etc.
 
 ## `BaseFeignClientFactory`
 
-In most cases you can use `pl.chilldev.commons.client.BaseFeignClientFactory`, which creates uses `Feign.Builder`. Thanks to that all you need to do is to specify your configurators. Configurators are callbacks that operate on *Feign* client builder to set it up. By creating a factory with given set of configurators you are sure that all clients created by the factory will be configured the same way. For example if you always need to set your **HTTP** client as `ApacheHttpClient`, if you want to apply your custom error decoder:
+In most cases you can use `pl.wrzasq.commons.client.BaseFeignClientFactory`, which creates uses `Feign.Builder`. Thanks to that all you need to do is to specify your configurators. Configurators are callbacks that operate on *Feign* client builder to set it up. By creating a factory with given set of configurators you are sure that all clients created by the factory will be configured the same way. For example if you always need to set your **HTTP** client as `ApacheHttpClient`, if you want to apply your custom error decoder:
 
 ```java
 Collection<Consumer<Feign.Builder>> yourConfigurators = new ArrayList<>();

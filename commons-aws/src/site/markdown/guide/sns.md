@@ -1,13 +1,13 @@
 <!---
-# This file is part of the ChillDev-Commons.
+# This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2017 - 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2017 - 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
 # Publishing
 
-When you deal with [**SNS**](https://aws.amazon.com/sns/) you most likely transfer messages with the form of **JSON**. Also you usually work against specified SNS topic (which means it's ARN won't change). `pl.chilldev.commons.aws.sns.TopicClient` is a simple wrapper that wraps single topic communication and handles **JSON** conversion:
+When you deal with [**SNS**](https://aws.amazon.com/sns/) you most likely transfer messages with the form of **JSON**. Also you usually work against specified SNS topic (which means it's ARN won't change). `pl.wrzasq.commons.aws.sns.TopicClient` is a simple wrapper that wraps single topic communication and handles **JSON** conversion:
 
 ```java
 class MyPing
@@ -59,7 +59,7 @@ public class MyLambda
 
 # Handling events
 
-To process incoming events you can use `pl.chilldev.commons.aws.sns.NotificationHandler` class - it extracts **SNS** records from the event and invokes message handler for each of them:
+To process incoming events you can use `pl.wrzasq.commons.aws.sns.NotificationHandler` class - it extracts **SNS** records from the event and invokes message handler for each of them:
 
 ```java
 class MyConsumer

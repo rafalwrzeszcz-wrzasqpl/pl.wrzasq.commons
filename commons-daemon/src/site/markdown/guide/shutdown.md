@@ -1,20 +1,20 @@
 <!---
-# This file is part of the ChillDev-Commons.
+# This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2014 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2014, 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
 # Shutdown
 
-*Apache Commons Daemon* provides great framework for building native (not only *UNIX*) services with *Java*. However, as the daemons written with them have certain flow, in order to run daemon service thread directly from your application you need to take care about finalization flow (shutdown) - to automate this task, you can use `pl.chilldev.commons.daemon.lifecycle.Shutdown` class.
+*Apache Commons Daemon* provides great framework for building native (not only *UNIX*) services with *Java*. However, as the daemons written with them have certain flow, in order to run daemon service thread directly from your application you need to take care about finalization flow (shutdown) - to automate this task, you can use `pl.wrzasq.commons.daemon.lifecycle.Shutdown` class.
 
 It's a thread that you can just run manually, but then it's not so bit benefit from using it, as you can shutdown your service thread by hand also. As a thread it can be attached to current runtime environment as shutdown task for current VM and will be executed automatically when your application will be terminated.
 
 ```java
 import org.apache.commons.daemon.Daemon;
 
-import pl.chilldev.commons.daemon.lifecycle.Shutdown;
+import pl.wrzasq.commons.daemon.lifecycle.Shutdown;
 
 import my.package.ServiceDaemon;
 

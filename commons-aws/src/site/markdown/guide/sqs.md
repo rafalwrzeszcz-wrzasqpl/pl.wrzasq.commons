@@ -1,13 +1,13 @@
 <!---
-# This file is part of the ChillDev-Commons.
+# This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2017 - 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2017 - 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
 # Handling messages
 
-If you want your **Lambda** to process [**SQS**](https://aws.amazon.com/sqs/) messages you can use `pl.chilldev.commons.aws.sqs.QueueHandler` class. It takes care for iterating over fetched messages and and deletes processed messages from the queue:
+If you want your **Lambda** to process [**SQS**](https://aws.amazon.com/sqs/) messages you can use `pl.wrzasq.commons.aws.sqs.QueueHandler` class. It takes care for iterating over fetched messages and and deletes processed messages from the queue:
 
 ```java
 class MyConsumer

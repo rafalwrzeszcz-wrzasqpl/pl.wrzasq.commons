@@ -1,13 +1,13 @@
 <!---
-# This file is part of the ChillDev-Commons.
+# This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2015 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2015, 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
 # URL-friendly entities
 
-`commons-db` package provides easy way for making URLs for your entities. This task can be handled by `pl.chilldev.commons.db.slugable.SlugableListener`. To use it you have to define it as your **JPA** `@EntityListener` and annotate fields that should store URL fragments with `pl.chilldev.commons.db.slugable.Slug` annotation.
+`commons-db` package provides easy way for making URLs for your entities. This task can be handled by `pl.wrzasq.commons.db.slugable.SlugableListener`. To use it you have to define it as your **JPA** `@EntityListener` and annotate fields that should store URL fragments with `pl.wrzasq.commons.db.slugable.Slug` annotation.
 
 Here is a minimum example:
 
@@ -16,8 +16,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 
-import pl.chilldev.commons.db.slugable.Slug;
-import pl.chilldev.commons.db.slugable.SlugableListener;
+import pl.wrzasq.commons.db.slugable.Slug;
+import pl.wrzasq.commons.db.slugable.SlugableListener;
 
 @Entity
 @EntityListeners(SlugableListener.class)

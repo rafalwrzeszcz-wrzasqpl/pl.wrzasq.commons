@@ -1,13 +1,13 @@
 <!---
-# This file is part of the ChillDev-Commons.
+# This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2017 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2017, 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
 # Conversion utils
 
-Various conversion methods are provided by `pl.chilldev.commons.data.ConvertUtils` class as static methods.
+Various conversion methods are provided by `pl.wrzasq.commons.data.ConvertUtils` class as static methods.
 
 You can convert `org.springframework.data.domain.Sort` model into *URL* parameters using `extractSort()` method. It converts model into set of string parameters:
 

@@ -1,18 +1,18 @@
 <!---
-# This file is part of the ChillDev-Commons.
+# This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2014 - 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2014 - 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
-# ChillDev-Commons
+# WrzasqPl-Commons
 
-**ChillDev-Commons** is a general-purpose **Java library**.
+**WrzasqPl-Commons** is a general-purpose **Java library**.
 
-[![Build Status](https://travis-ci.com/chilloutdevelopment/pl.chilldev.commons.svg)](https://travis-ci.org/chilloutdevelopment/pl.chilldev.commons)
-[![Coverage Status](https://coveralls.io/repos/chilloutdevelopment/pl.chilldev.commons/badge.png?branch=develop)](https://coveralls.io/r/chilloutdevelopment/pl.chilldev.commons)
-[![Known Vulnerabilities](https://snyk.io/test/github/chilloutdevelopment/pl.chilldev.commons/badge.svg)](https://snyk.io/test/github/chilloutdevelopment/pl.chilldev.commons)
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/chilloutdevelopment/pl.chilldev.commons)
+[![Build Status](https://travis-ci.com/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons.svg)](https://travis-ci.org/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons)
+[![Coverage Status](https://coveralls.io/repos/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons/badge.png?branch=develop)](https://coveralls.io/r/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons)
+[![Known Vulnerabilities](https://snyk.io/test/github/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons/badge.svg)](https://snyk.io/test/github/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons)
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons)
 
 # Requirements
 
@@ -30,51 +30,51 @@ You can use libraries in your `pom.xml` by defining following dependencies:
 
 ```xml
 <dependency>
-    <groupId>pl.chilldev.commons</groupId>
+    <groupId>pl.wrzasq.commons</groupId>
     <artifactId>commons-aws</artifactId>
-    <version>${pl.chilldev.commons.version}</version>
+    <version>${pl.wrzasq.commons.version}</version>
 </dependency>
 
 <dependency>
-    <groupId>pl.chilldev.commons</groupId>
+    <groupId>pl.wrzasq.commons</groupId>
     <artifactId>commons-client</artifactId>
-    <version>${pl.chilldev.commons.version}</version>
+    <version>${pl.wrzasq.commons.version}</version>
 </dependency>
 
 <dependency>
-    <groupId>pl.chilldev.commons</groupId>
+    <groupId>pl.wrzasq.commons</groupId>
     <artifactId>commons-daemon</artifactId>
-    <version>${pl.chilldev.commons.version}</version>
+    <version>${pl.wrzasq.commons.version}</version>
 </dependency>
 
 <dependency>
-    <groupId>pl.chilldev.commons</groupId>
+    <groupId>pl.wrzasq.commons</groupId>
     <artifactId>commons-data</artifactId>
-    <version>${pl.chilldev.commons.version}</version>
+    <version>${pl.wrzasq.commons.version}</version>
 </dependency>
 
 <dependency>
-    <groupId>pl.chilldev.commons</groupId>
+    <groupId>pl.wrzasq.commons</groupId>
     <artifactId>commons-db</artifactId>
-    <version>${pl.chilldev.commons.version}</version>
+    <version>${pl.wrzasq.commons.version}</version>
 </dependency>
 
 <dependency>
-    <groupId>pl.chilldev.commons</groupId>
+    <groupId>pl.wrzasq.commons</groupId>
     <artifactId>commons-jwt</artifactId>
-    <version>${pl.chilldev.commons.version}</version>
+    <version>${pl.wrzasq.commons.version}</version>
 </dependency>
 
 <dependency>
-    <groupId>pl.chilldev.commons</groupId>
+    <groupId>pl.wrzasq.commons</groupId>
     <artifactId>commons-text</artifactId>
-    <version>${pl.chilldev.commons.version}</version>
+    <version>${pl.wrzasq.commons.version}</version>
 </dependency>
 
 <dependency>
-    <groupId>pl.chilldev.commons</groupId>
+    <groupId>pl.wrzasq.commons</groupId>
     <artifactId>commons-web</artifactId>
-    <version>${pl.chilldev.commons.version}</version>
+    <version>${pl.wrzasq.commons.version}</version>
 </dependency>
 ```
 
@@ -82,32 +82,32 @@ You can of course pick only those parts that you need directly.
 
 # Modules
 
-**ChillDev-Commons** consists of various sub-modules, each of which is a separate `.jar` library:
+**WrzasqPl-Commons** consists of various sub-modules, each of which is a separate `.jar` library:
 
--   [**AWS**](https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-aws/): helper routines for eorking with *Amazon Web Services*,
--   [**Client**](https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-client/): web service client building utilities,
--   [**Daemon**](https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-daemon/): helper routines for handling *Apache Commons Daemon* services,
--   [**Data**](https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-data/): helper routines for handling *Spring Data* structures,
--   [**DB**](https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-db/): base database and model-related structures and routines,
--   [**JWT**](https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-jwt/): *JSON Web Tokens* utilities,
--   [**Text**](https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-text/): various text processing utilities.
--   [**Web**](https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-web/): web-apps related stuff.
+-   [**AWS**](https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-aws/): helper routines for eorking with *Amazon Web Services*,
+-   [**Client**](https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-client/): web service client building utilities,
+-   [**Daemon**](https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-daemon/): helper routines for handling *Apache Commons Daemon* services,
+-   [**Data**](https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-data/): helper routines for handling *Spring Data* structures,
+-   [**DB**](https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-db/): base database and model-related structures and routines,
+-   [**JWT**](https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-jwt/): *JSON Web Tokens* utilities,
+-   [**Text**](https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-text/): various text processing utilities.
+-   [**Web**](https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-web/): web-apps related stuff.
 
 # Resources
 
--   [GitHub page with API documentation](https://chilloutdevelopment.github.io/pl.chilldev.commons)
--   [Contribution guide](https://github.com/chilloutdevelopment/pl.chilldev.commons/blob/develop/CONTRIBUTING.md)
--   [Issues tracker](https://github.com/chilloutdevelopment/pl.chilldev.commons/issues)
--   [Maven packages](https://search.maven.org/search?q=g:pl.chilldev.commons)
--   [Chillout Development @ GitHub](https://github.com/chilloutdevelopment)
--   [Chillout Development @ Facebook](https://www.facebook.com/chilldev)
+-   [GitHub page with API documentation](https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons)
+-   [Contribution guide](https://github.com/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons/blob/develop/CONTRIBUTING.md)
+-   [Issues tracker](https://github.com/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons/issues)
+-   [Maven packages](https://search.maven.org/search?q=g:pl.wrzasq.commons)
+-   [Wrzasq.pl @ GitHub](https://github.com/rafalwrzeszcz-wrzasqpl)
+-   [Wrzasq.pl @ Facebook](https://www.facebook.com/wrzasqpl)
 -   [Post on Wrzasq.pl](https://wrzasq.pl/blog/chilldev-commons-java-library.html)
 
 # Authors
 
-This project is published under [MIT license](https://github.com/chilloutdevelopment/pl.chilldev.commons/tree/master/LICENSE).
+This project is published under [MIT license](https://github.com/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons/tree/master/LICENSE).
 
-**pl.chilldev.commons** is brought to you by [Chillout Development](https://chilldev.pl).
+**pl.wrzasq.commons** is brought to you by [Rafał Wrzeszcz - Wrzasq.pl](https://wrzasq.pl).
 
 List of contributors:
 

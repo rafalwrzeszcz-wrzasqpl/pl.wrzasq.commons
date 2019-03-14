@@ -1,8 +1,8 @@
 <!---
-# This file is part of the ChillDev-Commons.
+# This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2018 - 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
 # Custom resources
@@ -14,7 +14,7 @@ function and then triggered when stack operation is executed.
 ## Handler
 
 To handle such actions, function need to be designed to work with **CloudFormation** request and response structure.
-`pl.chilldev.commons.aws.cloudformation.CustomResourceHandler` class covers interacting with **CloudFormation**
+`pl.wrzasq.commons.aws.cloudformation.CustomResourceHandler` class covers interacting with **CloudFormation**
 requests, leaving just actions implementation for you.
 
 There are three actions you need to provide for the handler, that corresponds to three **CloudFormation** request
@@ -89,7 +89,7 @@ Ok, what is `CustomResourceResponse`? You are mainly interested in returning the
 **CloudFormation** also takes some additional meta-information. The one you can actually interact with is
 `physicalResourceId` which identifies resource created by your handler.
 
-`pl.chilldev.commons.aws.cloudformation.CustomResourceResponse` just wraps your data together with resource information
+`pl.wrzasq.commons.aws.cloudformation.CustomResourceResponse` just wraps your data together with resource information
 (for the moment just physical ID).
 
 You can return response in two ways - if you are not interested in physical ID, just wrap your data (it will set ID to

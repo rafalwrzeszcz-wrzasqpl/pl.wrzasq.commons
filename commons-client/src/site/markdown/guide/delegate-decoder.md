@@ -1,15 +1,15 @@
 <!---
-# This file is part of the ChillDev-Commons.
+# This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2018 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2018 - 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
 Sometimes different API endpoints may return different media types (or maybe they can return negotiated content). With
 single decoder it's impossible to handle multiple response types. You would need to return plain `feign.Response` and
 operate on it.
 
-To help with this problem you can use `pl.chilldev.commons.client.codec.DelegateDecoder`. It allows you to register
+To help with this problem you can use `pl.wrzasq.commons.client.codec.DelegateDecoder`. It allows you to register
 type-specific decoders:
 
 ```java

@@ -1,15 +1,15 @@
 <!---
-# This file is part of the ChillDev-Commons.
+# This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2017 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2017, 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
 # Usage
 
 When working with micro-services having a common and scalable security layer across entire infrastructure is critical. For **HTTP** based services such security layer very often relies on `Authorization` layer (like **OAuth**, **JWT** and other technologies). As such security layer is often unified across your entire architecture, in some cases you may simply forward the incoming authorization string to access downstream resources. For instance if you have API gateway service in place that forwards the calls to downstream domain services it should be transparent for the client.
 
-`pl.chilldev.commons.client.interceptor.AuthorizationForwarder` class is designed to work with **Spring** application to execute downstream calls on behalf on enduser:
+`pl.wrzasq.commons.client.interceptor.AuthorizationForwarder` class is designed to work with **Spring** application to execute downstream calls on behalf on enduser:
 
 ```java
 interface UsersClient
@@ -65,7 +65,7 @@ interface UsersClient
 
 ```java
 @Configuration
-@ComponentScan("pl.chilldev.commons.client")
+@ComponentScan("pl.wrzasq.commons.client")
 public class FeignConfiguration
 {
 }
