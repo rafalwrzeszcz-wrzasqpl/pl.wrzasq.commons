@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../jacoco-resources/report.gif" type="image/gif"/><title>Package.java</title><link rel="stylesheet" href="../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../index.html" class="el_report">WrzasqPl Commons Web</a> &gt; <a href="../index.html" class="el_bundle">commons-daemon</a> &gt; <a href="index.source.html" class="el_package">pl.wrzasq.commons.daemon</a> &gt; <span class="el_source">Package.java</span></div><h1>Package.java</h1><pre class="source lang-java linenums">/*
+ * This file is part of the pl.wrzasq.commons.
+ *
+ * @license http://mit-license.org/ The MIT license
+ * @copyright 2015, 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
+ */
+
+package pl.wrzasq.commons.daemon;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.net.URL;
+
+import java.util.Properties;
+
+/**
+ * Class for maintaining core application metadata.
+ *
+ * &lt;p&gt;
+ * Note: This class was primarily designed for the needs that were very specific for Wrzasq.pl. The general
+ * usage of this class will probably be very limited, we put it here to move more of our codebase available publicly.
+ * &lt;/p&gt;
+ */
+<span class="fc" id="L25">public class Package</span>
+{
+    /**
+     * Default property name for version.
+     */
+    public static final String PROPERTY_VERSION = &quot;application.version&quot;;
+
+    /**
+     * Default core properties file path.
+     */
+    public static final String DEFAULT_RESOURCE = &quot;/META-INF/application.properties&quot;;
+
+    /**
+     * Default application package.
+     */
+<span class="fc" id="L40">    public static final Package DEFAULT_PACKAGE = new Package();</span>
+
+    /**
+     * Package version.
+     */
+    private String version;
+
+    /**
+     * Initialize with default properties resource.
+     */
+    public void init()
+    {
+<span class="fc" id="L52">        this.init(Package.class.getResource(Package.DEFAULT_RESOURCE));</span>
+<span class="fc" id="L53">    }</span>
+
+    /**
+     * Initialize properties from given resource.
+     *
+     * @param url Properties location.
+     */
+    public void init(URL url)
+    {
+        // default version - if production properties are not there
+<span class="fc" id="L63">        this.version = &quot;devel&quot;;</span>
+
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        if (url != null) {</span>
+<span class="fc" id="L66">            try (InputStream stream = url.openStream()) {</span>
+<span class="fc" id="L67">                this.init(stream);</span>
+<span class="fc" id="L68">            } catch (IOException error) {</span>
+                // it's not a critical problem in our case, just report it
+<span class="fc" id="L70">                this.version = &quot;error&quot;;</span>
+<span class="fc" id="L71">            }</span>
+        }
+<span class="fc" id="L73">    }</span>
+
+    /**
+     * Initialize properties from given resource.
+     *
+     * @param stream Properties stream.
+     * @throws IOException When I/O error occurs while loading properties from stream.
+     */
+    protected void init(InputStream stream)
+        throws
+            IOException
+    {
+<span class="fc" id="L85">        Properties properties = new Properties();</span>
+<span class="fc" id="L86">        properties.load(stream);</span>
+<span class="fc" id="L87">        this.version = properties.getProperty(Package.PROPERTY_VERSION);</span>
+<span class="fc" id="L88">    }</span>
+
+    /**
+     * Returns package version.
+     *
+     * @return Current version.
+     */
+    public synchronized String getVersion()
+    {
+        // first try to load the version from properties file
+<span class="fc bfc" id="L98" title="All 2 branches covered.">        if (this.version == null) {</span>
+<span class="fc" id="L99">            this.init();</span>
+        }
+
+<span class="fc" id="L102">        return this.version;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
