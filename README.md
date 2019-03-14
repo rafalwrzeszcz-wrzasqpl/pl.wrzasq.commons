@@ -9,8 +9,8 @@
 
 **WrzasqPl-Commons** is a general-purpose **Java library**.
 
-[![Build Status](https://travis-ci.com/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons.svg)](https://travis-ci.org/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons)
-[![Coverage Status](https://coveralls.io/repos/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons/badge.png?branch=develop)](https://coveralls.io/r/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons)
+[![Build Status](https://travis-ci.com/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons.svg)](https://travis-ci.com/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons)
+[![Coverage Status](https://coveralls.io/repos/github/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons/badge.svg?branch=develop)](https://coveralls.io/github/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons?branch=develop)
 [![Known Vulnerabilities](https://snyk.io/test/github/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons/badge.svg)](https://snyk.io/test/github/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons)
 
