@@ -19,9 +19,9 @@ under the License.
 -->
 <rss version="0.91">
   <channel>
-    <title>ChillDev Commons Client - Checkstyle report</title>
-    <link>https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-client/</link>
-    <description>ChillDev Commons Client - Checkstyle report</description>
+    <title>WrzasqPl Commons Client - Checkstyle report</title>
+    <link>https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-client/</link>
+    <description>WrzasqPl Commons Client - Checkstyle report</description>
     <language>en-us</language>
     <copyright>&#169;2017 - 2019 Rafał Wrzeszcz - Wrzasq.pl</copyright>
     <item>
@@ -30,9 +30,9 @@ under the License.
              Warnings: 0,
              Infos: 0
       </title>
-            <link>https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-client//checkstyle.html</link>
+            <link>https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-client//checkstyle.html</link>
       <description>
-        <p>Click <a href="https://chilloutdevelopment.github.io/pl.chilldev.commons/commons-client//checkstyle.html">here</a> for the full Checkstyle report.</p>
+        <p>Click <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-client//checkstyle.html">here</a> for the full Checkstyle report.</p>
 
         <table summary="Files" boder="1">
           <thead>
