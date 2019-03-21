@@ -91,7 +91,7 @@
         <dependency>
             <groupId>com.sunrun</groupId>
             <artifactId>cfn-response</artifactId>
-            <version>1.0.2</version>
+            <version>1.2.0</version>
         </dependency>
 
         <dependency>

@@ -9,7 +9,7 @@ package pl.wrzasq.commons.aws.cloudformation;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
+import java.util.function.BiFunction;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.sunrun.cfnresponse.CfnRequest;
@@ -39,7 +39,7 @@ public class CustomResourceHandler<InputType, OutputType>
     /**
      * Action handlers.
      */
-    private Map<String, Function<InputType, CustomResourceResponse<OutputType>>> actions = new HashMap<>();
+    private Map<String, BiFunction<InputType, String, CustomResourceResponse<OutputType>>> actions = new HashMap<>();
 
     /**
      * Initializes handler with all known current CloudFormation actions.
@@ -49,9 +49,9 @@ public class CustomResourceHandler<InputType, OutputType>
      * @param deleteAction Callback for resource deletion.
      */
     public CustomResourceHandler(
-        Function<InputType, CustomResourceResponse<OutputType>> createAction,
-        Function<InputType, CustomResourceResponse<OutputType>> updateAction,
-        Function<InputType, CustomResourceResponse<OutputType>> deleteAction
+        BiFunction<InputType, String, CustomResourceResponse<OutputType>> createAction,
+        BiFunction<InputType, String, CustomResourceResponse<OutputType>> updateAction,
+        BiFunction<InputType, String, CustomResourceResponse<OutputType>> deleteAction
     )
     {
         this.actions.put("Create", createAction);
@@ -68,17 +68,18 @@ public class CustomResourceHandler<InputType, OutputType>
     public void handle(CfnRequest<InputType> request, Context context)
     {
         this.logger.info(
-            "Incoming CloudFormation request {}: {} -> {} {} (response URL: {}).",
+            "Incoming CloudFormation request {}: {} -> {} {} ({}) (response URL: {}).",
             request.getRequestId(),
             request.getStackId(),
             request.getRequestType(),
             request.getLogicalResourceId(),
+            request.getPhysicalResourceId(),
             request.getResponseURL()
         );
 
         try {
             CustomResourceResponse<OutputType> response = this.actions.get(request.getRequestType())
-                .apply(request.getResourceProperties());
+                .apply(request.getResourceProperties(), request.getPhysicalResourceId());
 
             this.sender.send(
                 request,
