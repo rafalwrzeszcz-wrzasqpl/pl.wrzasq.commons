@@ -9,7 +9,7 @@ package pl.wrzasq.commons.aws.cloudformation;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
+import java.util.function.BiFunction;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.sunrun.cfnresponse.CfnRequest;
@@ -39,7 +39,7 @@ public class CustomResourceHandler&lt;InputType, OutputType&gt;
     /**
      * Action handlers.
      */
-<span class="fc" id="L42">    private Map&lt;String, Function&lt;InputType, CustomResourceResponse&lt;OutputType&gt;&gt;&gt; actions = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L42">    private Map&lt;String, BiFunction&lt;InputType, String, CustomResourceResponse&lt;OutputType&gt;&gt;&gt; actions = new HashMap&lt;&gt;();</span>
 
     /**
      * Initializes handler with all known current CloudFormation actions.
@@ -49,9 +49,9 @@ public class CustomResourceHandler&lt;InputType, OutputType&gt;
      * @param deleteAction Callback for resource deletion.
      */
     public CustomResourceHandler(
-        Function&lt;InputType, CustomResourceResponse&lt;OutputType&gt;&gt; createAction,
-        Function&lt;InputType, CustomResourceResponse&lt;OutputType&gt;&gt; updateAction,
-        Function&lt;InputType, CustomResourceResponse&lt;OutputType&gt;&gt; deleteAction
+        BiFunction&lt;InputType, String, CustomResourceResponse&lt;OutputType&gt;&gt; createAction,
+        BiFunction&lt;InputType, String, CustomResourceResponse&lt;OutputType&gt;&gt; updateAction,
+        BiFunction&lt;InputType, String, CustomResourceResponse&lt;OutputType&gt;&gt; deleteAction
     )
 <span class="fc" id="L56">    {</span>
 <span class="fc" id="L57">        this.actions.put(&quot;Create&quot;, createAction);</span>
@@ -68,40 +68,41 @@ public class CustomResourceHandler&lt;InputType, OutputType&gt;
     public void handle(CfnRequest&lt;InputType&gt; request, Context context)
     {
 <span class="fc" id="L70">        this.logger.info(</span>
-            &quot;Incoming CloudFormation request {}: {} -&gt; {} {} (response URL: {}).&quot;,
+            &quot;Incoming CloudFormation request {}: {} -&gt; {} {} ({}) (response URL: {}).&quot;,
 <span class="fc" id="L72">            request.getRequestId(),</span>
 <span class="fc" id="L73">            request.getStackId(),</span>
 <span class="fc" id="L74">            request.getRequestType(),</span>
 <span class="fc" id="L75">            request.getLogicalResourceId(),</span>
-<span class="fc" id="L76">            request.getResponseURL()</span>
+<span class="fc" id="L76">            request.getPhysicalResourceId(),</span>
+<span class="fc" id="L77">            request.getResponseURL()</span>
         );
 
         try {
-<span class="fc" id="L80">            CustomResourceResponse&lt;OutputType&gt; response = this.actions.get(request.getRequestType())</span>
-<span class="fc" id="L81">                .apply(request.getResourceProperties());</span>
+<span class="fc" id="L81">            CustomResourceResponse&lt;OutputType&gt; response = this.actions.get(request.getRequestType())</span>
+<span class="fc" id="L82">                .apply(request.getResourceProperties(), request.getPhysicalResourceId());</span>
 
-<span class="fc" id="L83">            this.sender.send(</span>
+<span class="fc" id="L84">            this.sender.send(</span>
                 request,
                 Status.SUCCESS,
                 context,
                 &quot;OK&quot;,
-<span class="fc" id="L88">                response.getData(),</span>
-<span class="fc" id="L89">                response.getPhysicalResourceId()</span>
+<span class="fc" id="L89">                response.getData(),</span>
+<span class="fc" id="L90">                response.getPhysicalResourceId()</span>
             );
             //CHECKSTYLE:OFF: IllegalCatchCheck
-<span class="fc" id="L92">        } catch (Exception error) {</span>
+<span class="fc" id="L93">        } catch (Exception error) {</span>
             //CHECKSTYLE:ON: IllegalCatchCheck
-<span class="fc" id="L94">            this.logger.error(&quot;Failed to handle resource action.&quot;, error);</span>
+<span class="fc" id="L95">            this.logger.error(&quot;Failed to handle resource action.&quot;, error);</span>
 
-<span class="fc" id="L96">            this.sender.send(</span>
+<span class="fc" id="L97">            this.sender.send(</span>
                 request,
                 Status.FAILED,
                 context,
-<span class="fc" id="L100">                error.getMessage(),</span>
+<span class="fc" id="L101">                error.getMessage(),</span>
                 null,
                 null
             );
-<span class="fc" id="L104">        }</span>
-<span class="fc" id="L105">    }</span>
+<span class="fc" id="L105">        }</span>
+<span class="fc" id="L106">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

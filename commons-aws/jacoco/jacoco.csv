@@ -1,7 +1,7 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 WrzasqPl Commons AWS,pl.wrzasq.commons.aws,MessageHandler,0,50,0,0,0,15,0,2,0,2
 WrzasqPl Commons AWS,pl.wrzasq.commons.aws.cloudformation,CustomResourceResponse,0,5,0,0,0,2,0,1,0,1
-WrzasqPl Commons AWS,pl.wrzasq.commons.aws.cloudformation,CustomResourceHandler,0,108,0,0,0,25,0,2,0,2
+WrzasqPl Commons AWS,pl.wrzasq.commons.aws.cloudformation,CustomResourceHandler,0,115,0,0,0,26,0,2,0,2
 WrzasqPl Commons AWS,pl.wrzasq.commons.aws.sns,NotificationHandler,0,9,0,0,0,2,0,1,0,1
 WrzasqPl Commons AWS,pl.wrzasq.commons.aws.sns,TypedNotificationHandler,0,10,0,0,0,2,0,1,0,1
 WrzasqPl Commons AWS,pl.wrzasq.commons.aws.sns,SimpleNotificationHandler,0,10,0,0,0,2,0,2,0,2
