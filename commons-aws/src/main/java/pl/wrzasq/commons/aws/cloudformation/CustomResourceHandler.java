@@ -100,7 +100,7 @@ public class CustomResourceHandler<InputType, OutputType>
                 context,
                 error.getMessage(),
                 null,
-                null
+                request.getPhysicalResourceId()
             );
         }
     }

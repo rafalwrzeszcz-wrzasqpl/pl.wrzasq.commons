@@ -86,7 +86,7 @@ public class CustomResourceHandlerTest
         handler.handle(request, this.context);
 
         Mockito.verify(this.action).apply(input, physicalId);
-        Mockito.verify(this.sender).send(request, Status.FAILED, this.context, output, null, null);
+        Mockito.verify(this.sender).send(request, Status.FAILED, this.context, output, null, physicalId);
     }
 
     private void setSender(CustomResourceHandler<?, ?> handler) throws NoSuchFieldException, IllegalAccessException
