@@ -33,14 +33,20 @@
     <dependencies>
         <dependency>
             <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-cloudformation</artifactId>
+            <version>1.11.528</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk-sns</artifactId>
-            <version>1.11.438</version>
+            <version>1.11.528</version>
         </dependency>
 
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk-sqs</artifactId>
-            <version>1.11.438</version>
+            <version>1.11.528</version>
         </dependency>
 
         <dependency>
