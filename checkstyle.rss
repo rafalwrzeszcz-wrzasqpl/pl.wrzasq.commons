@@ -25,8 +25,8 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2014 - 2019 Rafał Wrzeszcz - Wrzasq.pl</copyright>
     <item>
-      <title>File: 41,
-             Errors: 116,
+      <title>File: 43,
+             Errors: 145,
              Warnings: 0,
              Infos: 0
       </title>
@@ -368,6 +368,20 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.aws.cloudformation.StackSetHandler.java">pl/wrzasq/commons/aws/cloudformation/StackSetHandler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  29
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.data.ConvertUtils.java">pl/wrzasq/commons/data/ConvertUtils.java</a>
                 </td>
                 <td>
@@ -495,6 +509,20 @@ under the License.
                           <tr>
                 <td>
                   <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.text.slugifier.Slugifier.java">pl/wrzasq/commons/text/slugifier/Slugifier.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.aws.cloudformation.StackUtils.java">pl/wrzasq/commons/aws/cloudformation/StackUtils.java</a>
                 </td>
                 <td>
                   0
