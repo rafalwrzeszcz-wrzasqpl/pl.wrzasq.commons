@@ -20,14 +20,12 @@ import pl.wrzasq.commons.aws.sns.NotificationHandler;
 import pl.wrzasq.commons.aws.sns.SimpleNotificationHandler;
 
 @ExtendWith(MockitoExtension.class)
-public class SimpleNotificationHandlerTest
-{
+public class SimpleNotificationHandlerTest {
     @Mock
     private Consumer<String> messageHandler;
 
     @Test
-    public void process()
-    {
+    public void process() {
         SNSEvent.SNS message1 = new SNSEvent.SNS();
         message1.setMessage("msg1");
         SNSEvent.SNSRecord record1 = new SNSEvent.SNSRecord();

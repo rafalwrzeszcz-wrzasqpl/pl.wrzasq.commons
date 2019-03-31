@@ -16,8 +16,7 @@ import org.springframework.web.client.HttpServerErrorException;
 /**
  * Error decoder that, whenever possible, tries to construct meaningful Spring exception.
  */
-public class SpringErrorDecoder implements ErrorDecoder
-{
+public class SpringErrorDecoder implements ErrorDecoder {
     /**
      * Fallback error decoder.
      */
@@ -28,8 +27,7 @@ public class SpringErrorDecoder implements ErrorDecoder
      *
      * @param fallback Fallback decoder.
      */
-    public SpringErrorDecoder(ErrorDecoder fallback)
-    {
+    public SpringErrorDecoder(ErrorDecoder fallback) {
         this.fallback = fallback;
     }
 
@@ -37,8 +35,7 @@ public class SpringErrorDecoder implements ErrorDecoder
      * {@inheritDoc}
      */
     @Override
-    public Exception decode(String methodKey, Response response)
-    {
+    public Exception decode(String methodKey, Response response) {
         HttpStatus status = HttpStatus.valueOf(response.status());
         if (status.is5xxServerError()) {
             return new HttpServerErrorException(status, response.reason());

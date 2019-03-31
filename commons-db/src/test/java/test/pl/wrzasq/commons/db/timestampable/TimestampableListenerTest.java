@@ -15,10 +15,8 @@ import pl.wrzasq.commons.db.timestampable.Timestamp;
 import pl.wrzasq.commons.db.timestampable.TimestampType;
 import pl.wrzasq.commons.db.timestampable.TimestampableListener;
 
-public class TimestampableListenerTest
-{
-    public class TestEntity
-    {
+public class TimestampableListenerTest {
+    public class TestEntity {
         @Timestamp(TimestampType.CREATE)
         private OffsetDateTime createdAt;
 
@@ -32,8 +30,7 @@ public class TimestampableListenerTest
     @Test
     public void createTimestamps()
         throws
-            IllegalAccessException
-    {
+            IllegalAccessException {
         // just for code coverage
         TimestampType.valueOf("CREATE");
 
@@ -72,8 +69,7 @@ public class TimestampableListenerTest
     @Test
     public void updateTimestamps()
         throws
-            IllegalAccessException
-    {
+            IllegalAccessException {
         // build entity
         TimestampableListenerTest.TestEntity entity = new TimestampableListenerTest.TestEntity();
 

@@ -15,8 +15,7 @@ import pl.wrzasq.commons.text.formatter.FormatterInterface;
 /**
  * Text formats handler.
  */
-public class Formatter
-{
+public class Formatter {
     /**
      * All known format handlers.
      */
@@ -28,8 +27,7 @@ public class Formatter
      * @param format Format name.
      * @param handler Format handler.
      */
-    public void registerFormatter(String format, FormatterInterface handler)
-    {
+    public void registerFormatter(String format, FormatterInterface handler) {
         this.formatters.put(format, handler);
     }
 
@@ -43,8 +41,7 @@ public class Formatter
      */
     public String transform(String format, String text)
         throws
-            TextProcessingException
-    {
+            TextProcessingException {
         if (!this.formatters.containsKey(format)) {
             throw new TextProcessingException(String.format("No handler for format \"%s\" registred.", format));
         }

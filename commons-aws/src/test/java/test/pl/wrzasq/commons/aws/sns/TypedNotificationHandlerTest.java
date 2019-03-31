@@ -27,8 +27,7 @@ import pl.wrzasq.commons.aws.sns.TypedNotificationHandler;
 import test.pl.wrzasq.commons.aws.GenericMessage;
 
 @ExtendWith(MockitoExtension.class)
-public class TypedNotificationHandlerTest
-{
+public class TypedNotificationHandlerTest {
     @Mock
     private Consumer<String> messageHandler;
 
@@ -39,8 +38,7 @@ public class TypedNotificationHandlerTest
     private ArgumentCaptor<GenericMessage> genericMessage;
 
     @Test
-    public void process() throws JsonProcessingException
-    {
+    public void process() throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
 
         String content = "test";
@@ -64,8 +62,7 @@ public class TypedNotificationHandlerTest
     }
 
     @Test
-    public void processGeneric()
-    {
+    public void processGeneric() {
         ObjectMapper objectMapper = new ObjectMapper();
 
         UUID id0 = UUID.randomUUID();

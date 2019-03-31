@@ -12,7 +12,6 @@ import java.util.function.Consumer;
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.model.Message;
 import com.amazonaws.services.sqs.model.ReceiveMessageResult;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -22,8 +21,7 @@ import pl.wrzasq.commons.aws.sqs.QueueHandler;
 import pl.wrzasq.commons.aws.sqs.SimpleQueueHandler;
 
 @ExtendWith(MockitoExtension.class)
-public class SimpleQueueHandlerTest
-{
+public class SimpleQueueHandlerTest {
     @Mock
     private AmazonSQS sqs;
 
@@ -31,8 +29,7 @@ public class SimpleQueueHandlerTest
     private Consumer<String> messageHandler;
 
     @Test
-    public void process() throws JsonProcessingException
-    {
+    public void process() {
         // just for code coverage
         new SimpleQueueHandler(null, null);
 

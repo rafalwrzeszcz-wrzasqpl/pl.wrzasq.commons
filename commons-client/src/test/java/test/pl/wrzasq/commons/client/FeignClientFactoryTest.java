@@ -20,8 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import pl.wrzasq.commons.client.FeignClientFactory;
 
 @ExtendWith(MockitoExtension.class)
-public class FeignClientFactoryTest
-{
+public class FeignClientFactoryTest {
     @Mock
     private Feign.Builder builder;
 
@@ -32,8 +31,7 @@ public class FeignClientFactoryTest
     private Consumer<Feign.Builder> customConfigurator;
 
     @Test
-    public void createClient()
-    {
+    public void createClient() {
         FeignClientFactory factory = new FeignClientFactory(
             Collections.singleton(this.definedConfigurator),
             () -> this.builder
@@ -58,8 +56,7 @@ public class FeignClientFactoryTest
     }
 
     @Test
-    public void createClientWithoutCustom()
-    {
+    public void createClientWithoutCustom() {
         FeignClientFactory factory = new FeignClientFactory(
             Collections.singleton(this.definedConfigurator),
             () -> this.builder

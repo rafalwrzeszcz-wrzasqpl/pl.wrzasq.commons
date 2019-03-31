@@ -10,8 +10,7 @@ package pl.wrzasq.commons.text;
 /**
  * Error occuring during text processing.
  */
-public class TextProcessingException extends Exception
-{
+public class TextProcessingException extends Exception {
     /**
      * Serializable class ID.
      */
@@ -22,8 +21,7 @@ public class TextProcessingException extends Exception
      *
      * @param message Error message.
      */
-    public TextProcessingException(String message)
-    {
+    public TextProcessingException(String message) {
         super(message);
     }
 
@@ -33,8 +31,7 @@ public class TextProcessingException extends Exception
      * @param message Error message.
      * @param cause The underlying issue that caused the problem.
      */
-    public TextProcessingException(String message, Throwable cause)
-    {
+    public TextProcessingException(String message, Throwable cause) {
         super(message, cause);
     }
 }

@@ -16,8 +16,7 @@ import org.springframework.http.HttpHeaders;
  * Feign request interceptor that injects custom HTTP authorization with Bearer token.
  */
 @AllArgsConstructor
-public class BearerTokenAuthorizer implements RequestInterceptor
-{
+public class BearerTokenAuthorizer implements RequestInterceptor {
     /**
      * Bearer token prefix.
      */
@@ -32,8 +31,7 @@ public class BearerTokenAuthorizer implements RequestInterceptor
      * {@inheritDoc}
      */
     @Override
-    public void apply(RequestTemplate requestTemplate)
-    {
+    public void apply(RequestTemplate requestTemplate) {
         // set the same value as incoming request to execute requests on behalf of the user
         requestTemplate.header(HttpHeaders.AUTHORIZATION, BearerTokenAuthorizer.TYPE_BEARER + this.token);
     }

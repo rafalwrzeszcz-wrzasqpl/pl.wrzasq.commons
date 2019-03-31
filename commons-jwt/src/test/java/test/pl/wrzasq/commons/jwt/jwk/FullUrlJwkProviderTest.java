@@ -11,17 +11,14 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pl.wrzasq.commons.jwt.jwk.FullUrlJwkProvider;
 
-public class FullUrlJwkProviderTest
-{
+public class FullUrlJwkProviderTest {
     @Test
-    public void urlForIssuer()
-    {
+    public void urlForIssuer() {
         new FullUrlJwkProvider("https://chilldev.pl/test/");
     }
 
     @Test
-    public void urlForInvalidIssuer()
-    {
+    public void urlForInvalidIssuer() {
         Assertions.assertThrows(
             IllegalArgumentException.class,
             () -> new FullUrlJwkProvider("blah"),

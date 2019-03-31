@@ -17,8 +17,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public class CustomResourceResponse<OutputType>
-{
+public class CustomResourceResponse<OutputType> {
     /**
      * Response data.
      */
@@ -34,8 +33,7 @@ public class CustomResourceResponse<OutputType>
      *
      * @param data Response data.
      */
-    public CustomResourceResponse(OutputType data)
-    {
+    public CustomResourceResponse(OutputType data) {
         this(data, null);
     }
 }

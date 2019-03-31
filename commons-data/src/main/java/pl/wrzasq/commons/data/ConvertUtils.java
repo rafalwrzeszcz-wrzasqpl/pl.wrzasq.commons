@@ -19,16 +19,14 @@ import org.springframework.hateoas.PagedResources;
 /**
  * Conversion utils for Spring Data collections.
  */
-public class ConvertUtils
-{
+public class ConvertUtils {
     /**
      * Extracts URL string values from sorting model.
      *
      * @param sort Spring Data sort model.
      * @return URL values.
      */
-    public static Collection<String> extractSort(Sort sort)
-    {
+    public static Collection<String> extractSort(Sort sort) {
         if (sort == null) {
             return null;
         }
@@ -53,8 +51,7 @@ public class ConvertUtils
     public static <ResourceType> Page<ResourceType> buildPageFromResources(
         PagedResources<? extends ResourceType> resources,
         Pageable request
-    )
-    {
+    ) {
         return new PageImpl<>(
             new ArrayList<>(resources.getContent()),
             request,

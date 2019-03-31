@@ -23,8 +23,7 @@ import pl.wrzasq.commons.aws.cloudformation.CustomResourceHandler;
 import pl.wrzasq.commons.aws.cloudformation.CustomResourceResponse;
 
 @ExtendWith(MockitoExtension.class)
-public class CustomResourceHandlerTest
-{
+public class CustomResourceHandlerTest {
     @Mock
     private CfnResponseSender sender;
 
@@ -35,8 +34,7 @@ public class CustomResourceHandlerTest
     private BiFunction<Object, String, CustomResourceResponse<Object>> action;
 
     @Test
-    public void handle() throws NoSuchFieldException, IllegalAccessException
-    {
+    public void handle() throws NoSuchFieldException, IllegalAccessException {
         CustomResourceHandler<Object, Object> handler = new CustomResourceHandler<>(
             this.action,
             this.action,
@@ -63,8 +61,7 @@ public class CustomResourceHandlerTest
     }
 
     @Test
-    public void handleError() throws NoSuchFieldException, IllegalAccessException
-    {
+    public void handleError() throws NoSuchFieldException, IllegalAccessException {
         CustomResourceHandler<Object, Object> handler = new CustomResourceHandler<>(
             this.action,
             this.action,
@@ -89,8 +86,7 @@ public class CustomResourceHandlerTest
         Mockito.verify(this.sender).send(request, Status.FAILED, this.context, output, null, physicalId);
     }
 
-    private void setSender(CustomResourceHandler<?, ?> handler) throws NoSuchFieldException, IllegalAccessException
-    {
+    private void setSender(CustomResourceHandler<?, ?> handler) throws NoSuchFieldException, IllegalAccessException {
         Field hack = handler.getClass().getDeclaredField("sender");
         hack.setAccessible(true);
         hack.set(handler, this.sender);

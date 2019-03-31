@@ -13,8 +13,7 @@ import pl.wrzasq.commons.text.TextProcessingException;
  * Source format handler interface.
  */
 @FunctionalInterface
-public interface FormatterInterface
-{
+public interface FormatterInterface {
     /**
      * Transforms source text into (X)HTML.
      *

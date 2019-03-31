@@ -13,13 +13,11 @@ import pl.wrzasq.commons.text.TextProcessingException;
 import pl.wrzasq.commons.text.formatter.FormatterInterface;
 import pl.wrzasq.commons.text.formatter.MarkdownFormatter;
 
-public class MarkdownFormatterTest
-{
+public class MarkdownFormatterTest {
     @Test
     public void transform()
         throws
-            TextProcessingException
-    {
+            TextProcessingException {
         FormatterInterface textFormatter = new MarkdownFormatter();
 
         Assertions.assertEquals(

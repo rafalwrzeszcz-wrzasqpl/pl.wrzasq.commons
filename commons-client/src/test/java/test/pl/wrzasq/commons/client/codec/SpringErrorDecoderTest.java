@@ -25,8 +25,7 @@ import org.springframework.web.client.HttpStatusCodeException;
 import pl.wrzasq.commons.client.codec.SpringErrorDecoder;
 
 @ExtendWith(MockitoExtension.class)
-public class SpringErrorDecoderTest
-{
+public class SpringErrorDecoderTest {
     @Mock
     private ErrorDecoder fallback;
 
@@ -39,8 +38,7 @@ public class SpringErrorDecoderTest
     );
 
     @Test
-    public void decode4xx()
-    {
+    public void decode4xx() {
         Response response = Response.builder()
             .status(404)
             .reason("not found")
@@ -70,8 +68,7 @@ public class SpringErrorDecoderTest
     }
 
     @Test
-    public void decode5xx()
-    {
+    public void decode5xx() {
         Response response = Response.builder()
             .status(502)
             .reason("server error")
@@ -101,8 +98,7 @@ public class SpringErrorDecoderTest
     }
 
     @Test
-    public void decodeFallback()
-    {
+    public void decodeFallback() {
         Response response = Response.builder()
             .status(200)
             .reason("ok")

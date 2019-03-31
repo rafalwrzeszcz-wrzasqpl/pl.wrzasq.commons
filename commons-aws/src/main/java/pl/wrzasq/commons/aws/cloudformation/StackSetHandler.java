@@ -18,14 +18,12 @@ import org.slf4j.LoggerFactory;
 /**
  * CloudFormation stack set routines handler.
  */
-public class StackSetHandler
-{
+public class StackSetHandler {
     /**
      * Interface for a sleep function.
      */
     @FunctionalInterface
-    public interface SleepProvider
-    {
+    public interface SleepProvider {
         /**
          * Function should wait given period of time.
          *
@@ -67,8 +65,7 @@ public class StackSetHandler
      *
      * @param cloudFormation AWS CloudFormation client.
      */
-    public StackSetHandler(AmazonCloudFormation cloudFormation)
-    {
+    public StackSetHandler(AmazonCloudFormation cloudFormation) {
         this.cloudFormation = cloudFormation;
     }
 
@@ -78,8 +75,7 @@ public class StackSetHandler
      * @param stackSetName Stack set name.
      * @param operationId Operation ID.
      */
-    public void waitForStackSetOperation(String stackSetName, String operationId)
-    {
+    public void waitForStackSetOperation(String stackSetName, String operationId) {
         // wait until operation is finished
         StackSetOperation operation;
         do {
@@ -120,8 +116,7 @@ public class StackSetHandler
     /**
      * Performs a wait.
      */
-    private void sleep()
-    {
+    private void sleep() {
         try {
             this.sleepHandler.sleep(this.sleepInterval);
         } catch (InterruptedException error) {

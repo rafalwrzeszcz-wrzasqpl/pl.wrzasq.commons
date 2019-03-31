@@ -18,8 +18,7 @@ import lombok.AllArgsConstructor;
  * Topic-wrapped AWS SNS client.
  */
 @AllArgsConstructor
-public class TopicClient
-{
+public class TopicClient {
     /**
      * AWS SNS client.
      */
@@ -46,8 +45,7 @@ public class TopicClient
      * @param objectMapper JSON handler.
      * @param topicArn SNS topic ARN.
      */
-    public TopicClient(ObjectMapper objectMapper, String topicArn)
-    {
+    public TopicClient(ObjectMapper objectMapper, String topicArn) {
         this(AmazonSNSClientBuilder.standard().build(), objectMapper, topicArn);
     }
 
@@ -58,8 +56,7 @@ public class TopicClient
      * @return Operation results.
      * @throws JsonProcessingException When message could not be serialized.
      */
-    public PublishResult publish(Object message) throws JsonProcessingException
-    {
+    public PublishResult publish(Object message) throws JsonProcessingException {
         return this.sns.publish(this.topicArn, this.objectMapper.writeValueAsString(message));
     }
 }

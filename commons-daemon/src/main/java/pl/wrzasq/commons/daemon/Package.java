@@ -22,8 +22,7 @@ import java.util.Properties;
  * usage of this class will probably be very limited, we put it here to move more of our codebase available publicly.
  * </p>
  */
-public class Package
-{
+public class Package {
     /**
      * Default property name for version.
      */
@@ -47,8 +46,7 @@ public class Package
     /**
      * Initialize with default properties resource.
      */
-    public void init()
-    {
+    public void init() {
         this.init(Package.class.getResource(Package.DEFAULT_RESOURCE));
     }
 
@@ -57,8 +55,7 @@ public class Package
      *
      * @param url Properties location.
      */
-    public void init(URL url)
-    {
+    public void init(URL url) {
         // default version - if production properties are not there
         this.version = "devel";
 
@@ -80,8 +77,7 @@ public class Package
      */
     protected void init(InputStream stream)
         throws
-            IOException
-    {
+            IOException {
         Properties properties = new Properties();
         properties.load(stream);
         this.version = properties.getProperty(Package.PROPERTY_VERSION);
@@ -92,8 +88,7 @@ public class Package
      *
      * @return Current version.
      */
-    public synchronized String getVersion()
-    {
+    public synchronized String getVersion() {
         // first try to load the version from properties file
         if (this.version == null) {
             this.init();

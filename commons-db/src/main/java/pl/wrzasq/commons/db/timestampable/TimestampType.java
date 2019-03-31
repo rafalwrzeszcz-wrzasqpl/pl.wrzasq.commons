@@ -10,8 +10,7 @@ package pl.wrzasq.commons.db.timestampable;
 /**
  * Timestamp operation type.
  */
-public enum TimestampType
-{
+public enum TimestampType {
     /**
      * Creation timestamp.
      */

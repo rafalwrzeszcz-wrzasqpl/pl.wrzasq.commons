@@ -19,8 +19,7 @@ import org.slf4j.LoggerFactory;
  *
  * @param <Type> Message type.
  */
-public class MessageHandler<Type>
-{
+public class MessageHandler<Type> {
     /**
      * Logger.
      */
@@ -48,8 +47,7 @@ public class MessageHandler<Type>
      * @param messageHandler Single message consumer.
      * @param type Expected message content type.
      */
-    public MessageHandler(ObjectMapper objectMapper, Consumer<Type> messageHandler, Class<Type> type)
-    {
+    public MessageHandler(ObjectMapper objectMapper, Consumer<Type> messageHandler, Class<Type> type) {
         this.objectMapper = objectMapper;
         this.messageHandler = messageHandler;
         this.type = type;
@@ -60,8 +58,7 @@ public class MessageHandler<Type>
      *
      * @param message Message content.
      */
-    public void handle(String message)
-    {
+    public void handle(String message) {
         this.logger.info("Incoming message {}.", message);
 
         try {

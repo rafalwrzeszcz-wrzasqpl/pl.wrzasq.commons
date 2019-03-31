@@ -12,11 +12,9 @@ import java.util.Collections;
 import org.junit.jupiter.api.Test;
 import pl.wrzasq.commons.client.BaseFeignClientFactory;
 
-public class BaseFeignClientFactoryTest
-{
+public class BaseFeignClientFactoryTest {
     @Test
-    public void constructor()
-    {
+    public void constructor() {
         // for now just for code coverage - maybe some day we will have something to test
         new BaseFeignClientFactory(Collections.emptyList());
     }

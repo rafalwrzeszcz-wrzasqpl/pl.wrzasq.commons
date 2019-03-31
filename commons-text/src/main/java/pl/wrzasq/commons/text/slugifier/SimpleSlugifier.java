@@ -16,8 +16,7 @@ import lombok.Setter;
 /**
  * Simple implementation of slugifier.
  */
-public class SimpleSlugifier implements Slugifier
-{
+public class SimpleSlugifier implements Slugifier {
     /**
      * Default separator.
      */
@@ -33,8 +32,7 @@ public class SimpleSlugifier implements Slugifier
      * {@inheritDoc}
      */
     @Override
-    public String slugify(String text)
-    {
+    public String slugify(String text) {
         return Normalizer.normalize(text, Normalizer.Form.NFD)
             .replaceAll("[^\\p{ASCII}]", "")
             .replaceAll("\\W+", this.delimiter)
@@ -48,8 +46,7 @@ public class SimpleSlugifier implements Slugifier
      * {@inheritDoc}
      */
     @Override
-    public String slugify(String... texts)
-    {
+    public String slugify(String... texts) {
         return this.slugify(String.join(this.delimiter, texts));
     }
 }

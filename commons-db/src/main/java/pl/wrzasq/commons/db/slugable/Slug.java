@@ -17,8 +17,7 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Slug
-{
+public @interface Slug {
     /**
      * Fields to generate slug from.
      *

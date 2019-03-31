@@ -16,8 +16,7 @@ import pl.wrzasq.commons.aws.MessageHandler;
 /**
  * SQS queue handler that processes typed message.
  */
-public class TypedQueueHandler extends SimpleQueueHandler
-{
+public class TypedQueueHandler extends SimpleQueueHandler {
     /**
      * Initializes SQS handler.
      *
@@ -34,8 +33,7 @@ public class TypedQueueHandler extends SimpleQueueHandler
         ObjectMapper objectMapper,
         Consumer<Type> messageHandler,
         Class<Type> type
-    )
-    {
+    ) {
         super(sqs, queueUrl, new MessageHandler<>(objectMapper, messageHandler, type)::handle);
     }
 
@@ -58,8 +56,7 @@ public class TypedQueueHandler extends SimpleQueueHandler
         ObjectMapper objectMapper,
         Consumer<Type> messageHandler,
         Class<Type> type
-    )
-    {
+    ) {
         super(queueUrl, new MessageHandler<>(objectMapper, messageHandler, type)::handle);
     }
 }

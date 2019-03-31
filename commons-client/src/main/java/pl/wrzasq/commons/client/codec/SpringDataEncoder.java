@@ -17,8 +17,7 @@ import pl.wrzasq.commons.data.ConvertUtils;
 /**
  * Spring Data page specification handling in requests.
  */
-public class SpringDataEncoder implements Encoder
-{
+public class SpringDataEncoder implements Encoder {
     /**
      * Default parameter name for page number.
      */
@@ -62,8 +61,7 @@ public class SpringDataEncoder implements Encoder
      * @param paramSize URL parameter name for page size.
      * @param paramSort URL parameter name for sorting criteria.
      */
-    public SpringDataEncoder(Encoder fallback, String paramPage, String paramSize, String paramSort)
-    {
+    public SpringDataEncoder(Encoder fallback, String paramPage, String paramSize, String paramSort) {
         this.fallback = fallback;
         this.paramPage = paramPage;
         this.paramSize = paramSize;
@@ -79,8 +77,7 @@ public class SpringDataEncoder implements Encoder
      *
      * @param fallback Fallback encoder.
      */
-    public SpringDataEncoder(Encoder fallback)
-    {
+    public SpringDataEncoder(Encoder fallback) {
         this(
             fallback,
             SpringDataEncoder.DEFAULT_PARAM_PAGE,
@@ -93,8 +90,7 @@ public class SpringDataEncoder implements Encoder
      * {@inheritDoc}
      */
     @Override
-    public void encode(Object object, Type bodyType, RequestTemplate template)
-    {
+    public void encode(Object object, Type bodyType, RequestTemplate template) {
         if (object instanceof Pageable) {
             Pageable request = (Pageable) object;
 

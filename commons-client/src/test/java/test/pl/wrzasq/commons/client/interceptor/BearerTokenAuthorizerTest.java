@@ -16,11 +16,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import pl.wrzasq.commons.client.interceptor.BearerTokenAuthorizer;
 
-public class BearerTokenAuthorizerTest
-{
+public class BearerTokenAuthorizerTest {
     @Test
-    public void apply()
-    {
+    public void apply() {
         String token = "test";
         RequestTemplate template = new RequestTemplate();
 

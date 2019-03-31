@@ -16,13 +16,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import pl.wrzasq.commons.web.daemon.AbstractWebDaemon;
 
 @ExtendWith(MockitoExtension.class)
-public class AbstractWebDaemonTest
-{
-    protected static class TestServer extends Server
-    {
+public class AbstractWebDaemonTest {
+    protected static class TestServer extends Server {
         @Override
-        public void doStart()
-        {
+        public void doStart() {
             // dummy method
         }
     }
@@ -31,40 +28,34 @@ public class AbstractWebDaemonTest
     private AbstractWebDaemonTest.TestServer server = new AbstractWebDaemonTest.TestServer();
 
     @Spy
-    private AbstractWebDaemon daemon = new AbstractWebDaemon()
-    {
+    private AbstractWebDaemon daemon = new AbstractWebDaemon() {
         @Override
-        protected Server createServer()
-        {
+        protected Server createServer() {
             return AbstractWebDaemonTest.this.server;
         }
 
         @Override
-        protected void stopServer()
-        {
+        protected void stopServer() {
             // dummy method
         }
     };
 
     @Test
-    public void start() throws Exception
-    {
+    public void start() {
         this.daemon.start();
 
         Mockito.verify(this.server).doStart();
     }
 
     @Test
-    public void startWithException() throws Exception
-    {
+    public void startWithException() {
         Mockito.doThrow(RuntimeException.class).when(this.server).doStart();
 
         this.daemon.start();
     }
 
     @Test
-    public void stop() throws InterruptedException
-    {
+    public void stop() throws InterruptedException {
         this.daemon.start();
         this.daemon.stop();
 
@@ -72,16 +63,14 @@ public class AbstractWebDaemonTest
     }
 
     @Test
-    public void stopWithoutServer() throws InterruptedException
-    {
+    public void stopWithoutServer() throws InterruptedException {
         this.daemon.stop();
 
         Mockito.verify(this.server, Mockito.never()).join();
     }
 
     @Test
-    public void stopWithInterruptedException() throws InterruptedException
-    {
+    public void stopWithInterruptedException() throws InterruptedException {
         this.daemon.start();
 
         Mockito.doThrow(InterruptedException.class).when(this.server).join();

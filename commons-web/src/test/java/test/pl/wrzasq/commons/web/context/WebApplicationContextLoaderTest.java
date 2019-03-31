@@ -23,30 +23,26 @@ import org.springframework.web.context.WebApplicationContext;
 import pl.wrzasq.commons.web.context.WebApplicationContextLoader;
 
 @ExtendWith(MockitoExtension.class)
-public class WebApplicationContextLoaderTest
-{
+public class WebApplicationContextLoaderTest {
     // needed just for identity check
     private static final WebApplicationContextLoaderTest BEAN = new WebApplicationContextLoaderTest();
 
     @Bean
     @Primary
-    public WebApplicationContextLoaderTest bean()
-    {
+    public WebApplicationContextLoaderTest bean() {
         return WebApplicationContextLoaderTest.BEAN;
     }
 
     @Mock
     private ServletContext servletContext;
 
-    private void setUpAttributes()
-    {
+    private void setUpAttributes() {
         Mockito.when(this.servletContext.getInitParameterNames()).thenReturn(Collections.emptyEnumeration());
         Mockito.when(this.servletContext.getAttributeNames()).thenReturn(Collections.emptyEnumeration());
     }
 
     @Test
-    public void initWebApplicationContext()
-    {
+    public void initWebApplicationContext() {
         this.setUpAttributes();
 
         WebApplicationContextLoader contextLoader = this.createWebApplicationContextLoader();
@@ -70,8 +66,7 @@ public class WebApplicationContextLoaderTest
     }
 
     @Test
-    public void closeWebApplicationContext()
-    {
+    public void closeWebApplicationContext() {
         this.setUpAttributes();
 
         WebApplicationContextLoader contextLoader = this.createWebApplicationContextLoader();
@@ -86,8 +81,7 @@ public class WebApplicationContextLoaderTest
     }
 
     @Test
-    public void closeWebApplicationContextNotRunning()
-    {
+    public void closeWebApplicationContextNotRunning() {
         WebApplicationContextLoader contextLoader = this.createWebApplicationContextLoader();
 
         contextLoader.closeWebApplicationContext();
@@ -97,8 +91,7 @@ public class WebApplicationContextLoaderTest
             .removeAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
     }
 
-    private WebApplicationContextLoader createWebApplicationContextLoader()
-    {
+    private WebApplicationContextLoader createWebApplicationContextLoader() {
         return new WebApplicationContextLoader(this.getClass(), "test", "foo");
     }
 }

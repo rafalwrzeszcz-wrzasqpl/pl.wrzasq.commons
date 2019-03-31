@@ -17,8 +17,7 @@ import java.util.stream.Collectors;
 /**
  * Custom utility routines for dealing with CloudFormation data operations.
  */
-public class StackUtils
-{
+public class StackUtils {
     /**
      * Converts key-value mapping into SDK data structure.
      *
@@ -30,8 +29,7 @@ public class StackUtils
     public static <Type> Collection<Type> buildSdkList(
         Map<String, String> input,
         BiFunction<String, String, Type> converter
-    )
-    {
+    ) {
         return Optional.ofNullable(input)
             .orElse(Collections.emptyMap())
             .entrySet()

@@ -15,8 +15,7 @@ import pl.wrzasq.commons.aws.MessageHandler;
 /**
  * SNS notifications handler that processes typed message.
  */
-public class TypedNotificationHandler extends SimpleNotificationHandler
-{
+public class TypedNotificationHandler extends SimpleNotificationHandler {
     /**
      * Initializes SNS handler.
      *
@@ -29,8 +28,7 @@ public class TypedNotificationHandler extends SimpleNotificationHandler
         ObjectMapper objectMapper,
         Consumer<Type> messageHandler,
         Class<Type> type
-    )
-    {
+    ) {
         super(new MessageHandler<>(objectMapper, messageHandler, type)::handle);
     }
 }

@@ -17,16 +17,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import pl.wrzasq.commons.daemon.lifecycle.Runner;
 
 @ExtendWith(MockitoExtension.class)
-public class RunnerTest
-{
+public class RunnerTest {
     @Mock
     private Daemon daemon;
 
     @Test
     public void run()
         throws
-            Exception
-    {
+            Exception {
         new Runner().run(this.daemon);
 
         Mockito.verify(this.daemon).init(null);
@@ -36,8 +34,7 @@ public class RunnerTest
     @Test
     public void runWithException()
         throws
-            Exception
-    {
+            Exception {
         Mockito.doThrow(new RuntimeException("test")).when(this.daemon).init(null);
 
         Assertions.assertThrows(

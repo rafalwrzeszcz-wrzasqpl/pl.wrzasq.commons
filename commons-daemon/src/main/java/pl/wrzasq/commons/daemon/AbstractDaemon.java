@@ -16,8 +16,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Generic daemon application stub.
  */
-public abstract class AbstractDaemon implements Daemon, DaemonUserSignal
-{
+public abstract class AbstractDaemon implements Daemon, DaemonUserSignal {
     /**
      * Logger.
      */
@@ -27,8 +26,7 @@ public abstract class AbstractDaemon implements Daemon, DaemonUserSignal
      * {@inheritDoc}
      */
     @Override
-    public void signal()
-    {
+    public void signal() {
         this.logger.info("Handling configuration reload.");
 
         // no deep in-sight for now, but at least JVM bootstrapping is avoided
@@ -48,8 +46,7 @@ public abstract class AbstractDaemon implements Daemon, DaemonUserSignal
      * {@inheritDoc}
      */
     @Override
-    public void init(DaemonContext context)
-    {
+    public void init(DaemonContext context) {
         // diagnostic info
         this.logger.info(
             "Started {} daemon v.{} on {} {} ({}) / Java {} ({}).",
@@ -67,8 +64,7 @@ public abstract class AbstractDaemon implements Daemon, DaemonUserSignal
      * {@inheritDoc}
      */
     @Override
-    public void destroy()
-    {
+    public void destroy() {
         // dummy method; not used - needed by org.apache.commons.daemon.Daemon
     }
 }

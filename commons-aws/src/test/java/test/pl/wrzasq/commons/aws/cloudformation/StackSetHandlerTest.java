@@ -26,8 +26,7 @@ import org.mockito.stubbing.OngoingStubbing;
 import pl.wrzasq.commons.aws.cloudformation.StackSetHandler;
 
 @ExtendWith(MockitoExtension.class)
-public class StackSetHandlerTest
-{
+public class StackSetHandlerTest {
     private static final String STACK_SET_NAME = "test-stack-set";
 
     private static final String OPERATION_ID = "test-operation";
@@ -42,8 +41,7 @@ public class StackSetHandlerTest
     ArgumentCaptor<DescribeStackSetOperationRequest> describeOperationRequest;
 
     @Test
-    public void waitForStackSetOperationSucceeds()
-    {
+    public void waitForStackSetOperationSucceeds() {
         this.runDescribeOperationRequestsSequence(
             new DescribeStackSetOperationResult()
                 .withStackSetOperation(
@@ -61,8 +59,7 @@ public class StackSetHandlerTest
     }
 
     @Test
-    public void waitForStackSetOperationFails()
-    {
+    public void waitForStackSetOperationFails() {
         Assertions.assertThrows(
             IllegalStateException.class,
             () -> this.runDescribeOperationRequestsSequence(
@@ -84,8 +81,7 @@ public class StackSetHandlerTest
     }
 
     @Test
-    public void waitForStackSetOperationStops()
-    {
+    public void waitForStackSetOperationStops() {
         Assertions.assertThrows(
             IllegalStateException.class,
             () -> this.runDescribeOperationRequestsSequence(
@@ -112,8 +108,7 @@ public class StackSetHandlerTest
     }
 
     @Test
-    public void waitForStackSetOperationInterrupted() throws InterruptedException
-    {
+    public void waitForStackSetOperationInterrupted() throws InterruptedException {
         Mockito
             .doThrow(InterruptedException.class)
             .when(this.sleepProvider)
@@ -146,8 +141,7 @@ public class StackSetHandlerTest
             .describeStackSetOperation(Mockito.any(DescribeStackSetOperationRequest.class));
     }
 
-    private void runDescribeOperationRequestsSequence(DescribeStackSetOperationResult... results)
-    {
+    private void runDescribeOperationRequestsSequence(DescribeStackSetOperationResult... results) {
         StackSetHandler handler = new StackSetHandler(this.cloudFormation);
         handler.setSleepInterval(1);
 
@@ -164,8 +158,7 @@ public class StackSetHandlerTest
         );
     }
 
-    private void verifyDescribeOperationRequestsArguments(int count)
-    {
+    private void verifyDescribeOperationRequestsArguments(int count) {
         List<DescribeStackSetOperationRequest> requests = this.describeOperationRequest.getAllValues();
 
         Assertions.assertEquals(

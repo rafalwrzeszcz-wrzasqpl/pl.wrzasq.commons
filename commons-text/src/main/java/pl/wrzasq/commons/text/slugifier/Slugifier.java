@@ -11,16 +11,14 @@ package pl.wrzasq.commons.text.slugifier;
  * Interface for URL slug generators.
  */
 @FunctionalInterface
-public interface Slugifier
-{
+public interface Slugifier {
     /**
      * Generates URL slug for given text.
      *
      * @param text Plain text value.
      * @return URL-friendly slug.
      */
-    default String slugify(String text)
-    {
+    default String slugify(String text) {
         return this.slugify(new String[] {text});
     }
 

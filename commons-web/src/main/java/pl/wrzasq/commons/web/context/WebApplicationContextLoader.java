@@ -18,8 +18,7 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 /**
  * Initializes web application applicationContext.
  */
-public class WebApplicationContextLoader extends ContextLoader
-{
+public class WebApplicationContextLoader extends ContextLoader {
     /**
      * Application configuration class.
      */
@@ -41,8 +40,7 @@ public class WebApplicationContextLoader extends ContextLoader
      * @param configurationClass Configuration class to be loaded on startup.
      * @param profiles List of Spring profiles to activate.
      */
-    public WebApplicationContextLoader(Class<?> configurationClass, String... profiles)
-    {
+    public WebApplicationContextLoader(Class<?> configurationClass, String... profiles) {
         this.configurationClass = configurationClass;
         this.profiles = profiles;
     }
@@ -51,8 +49,7 @@ public class WebApplicationContextLoader extends ContextLoader
      * {@inheritDoc}
      */
     @Override
-    protected WebApplicationContext createWebApplicationContext(ServletContext servletContext)
-    {
+    protected WebApplicationContext createWebApplicationContext(ServletContext servletContext) {
         AnnotationConfigWebApplicationContext applicationContext = new AnnotationConfigWebApplicationContext();
         applicationContext.getEnvironment().setActiveProfiles(this.profiles);
         applicationContext.register(this.configurationClass);
@@ -63,16 +60,14 @@ public class WebApplicationContextLoader extends ContextLoader
      * {@inheritDoc}
      */
     @Override
-    public WebApplicationContext initWebApplicationContext(ServletContext servletContext)
-    {
+    public WebApplicationContext initWebApplicationContext(ServletContext servletContext) {
         return this.applicationContext = super.initWebApplicationContext(servletContext);
     }
 
     /**
      * Closes applicationContext of previously created web application.
      */
-    public void closeWebApplicationContext()
-    {
+    public void closeWebApplicationContext() {
         Optional.ofNullable(this.applicationContext)
             .map(WebApplicationContext::getServletContext)
             .ifPresent(this::closeWebApplicationContext);

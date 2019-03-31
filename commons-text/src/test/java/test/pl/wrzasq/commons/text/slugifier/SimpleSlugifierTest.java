@@ -12,11 +12,9 @@ import org.junit.jupiter.api.Test;
 import pl.wrzasq.commons.text.slugifier.SimpleSlugifier;
 import pl.wrzasq.commons.text.slugifier.Slugifier;
 
-public class SimpleSlugifierTest
-{
+public class SimpleSlugifierTest {
     @Test
-    public void setDelimiter()
-    {
+    public void setDelimiter() {
         SimpleSlugifier slugifier = new SimpleSlugifier();
 
         slugifier.setDelimiter("::");
@@ -29,8 +27,7 @@ public class SimpleSlugifierTest
     }
 
     @Test
-    public void slugify()
-    {
+    public void slugify() {
         Slugifier slugifier = new SimpleSlugifier();
 
         Assertions.assertEquals(
@@ -41,8 +38,7 @@ public class SimpleSlugifierTest
     }
 
     @Test
-    public void slugifyNonAscii()
-    {
+    public void slugifyNonAscii() {
         Slugifier slugifier = new SimpleSlugifier();
 
         Assertions.assertEquals(
@@ -53,8 +49,7 @@ public class SimpleSlugifierTest
     }
 
     @Test
-    public void slugifyNonLetters()
-    {
+    public void slugifyNonLetters() {
         Slugifier slugifier = new SimpleSlugifier();
 
         Assertions.assertEquals(
@@ -65,8 +60,7 @@ public class SimpleSlugifierTest
     }
 
     @Test
-    public void slugifySpaces()
-    {
+    public void slugifySpaces() {
         Slugifier slugifier = new SimpleSlugifier();
 
         Assertions.assertEquals(
@@ -77,8 +71,7 @@ public class SimpleSlugifierTest
     }
 
     @Test
-    public void slugifyLeading()
-    {
+    public void slugifyLeading() {
         Slugifier slugifier = new SimpleSlugifier();
 
         Assertions.assertEquals(
@@ -89,8 +82,7 @@ public class SimpleSlugifierTest
     }
 
     @Test
-    public void slugifyTrailing()
-    {
+    public void slugifyTrailing() {
         Slugifier slugifier = new SimpleSlugifier();
 
         Assertions.assertEquals(
@@ -101,8 +93,7 @@ public class SimpleSlugifierTest
     }
 
     @Test
-    public void slugifyLowercase()
-    {
+    public void slugifyLowercase() {
         Slugifier slugifier = new SimpleSlugifier();
 
         Assertions.assertEquals(
@@ -113,8 +104,7 @@ public class SimpleSlugifierTest
     }
 
     @Test
-    public void slugifyMultiple()
-    {
+    public void slugifyMultiple() {
         Slugifier slugifier = new SimpleSlugifier();
 
         Assertions.assertEquals(

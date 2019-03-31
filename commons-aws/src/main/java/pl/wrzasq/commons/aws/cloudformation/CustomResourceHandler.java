@@ -24,8 +24,7 @@ import org.slf4j.LoggerFactory;
  * @param <InputType> Structure of custom resource configuration.
  * @param <OutputType> Structure of custom resource returner properties.
  */
-public class CustomResourceHandler<InputType, OutputType>
-{
+public class CustomResourceHandler<InputType, OutputType> {
     /**
      * Logger.
      */
@@ -52,8 +51,7 @@ public class CustomResourceHandler<InputType, OutputType>
         BiFunction<InputType, String, CustomResourceResponse<OutputType>> createAction,
         BiFunction<InputType, String, CustomResourceResponse<OutputType>> updateAction,
         BiFunction<InputType, String, CustomResourceResponse<OutputType>> deleteAction
-    )
-    {
+    ) {
         this.actions.put("Create", createAction);
         this.actions.put("Update", updateAction);
         this.actions.put("Delete", deleteAction);
@@ -65,8 +63,7 @@ public class CustomResourceHandler<InputType, OutputType>
      * @param request CloudFormation request.
      * @param context AWS Lambda context.
      */
-    public void handle(CfnRequest<InputType> request, Context context)
-    {
+    public void handle(CfnRequest<InputType> request, Context context) {
         this.logger.info(
             "Incoming CloudFormation request {}: {} -> {} {} ({}) (response URL: {}).",
             request.getRequestId(),

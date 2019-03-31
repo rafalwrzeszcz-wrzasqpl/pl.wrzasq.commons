@@ -13,11 +13,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pl.wrzasq.commons.db.AbstractEntity;
 
-public class AbstractEntityTest
-{
+public class AbstractEntityTest {
     @Test
-    public void getId()
-    {
+    public void getId() {
         AbstractEntity entity = new Entity();
 
         Assertions.assertNull(
@@ -27,8 +25,7 @@ public class AbstractEntityTest
     }
 
     @Test
-    public void setId()
-    {
+    public void setId() {
         UUID id = UUID.randomUUID();
         AbstractEntity entity = new Entity();
         entity.setId(id);
@@ -41,8 +38,7 @@ public class AbstractEntityTest
     }
 
     @Test
-    public void equalsSame()
-    {
+    public void equalsSame() {
         AbstractEntity entity = new Entity();
         Assertions.assertEquals(
             entity,
@@ -52,8 +48,7 @@ public class AbstractEntityTest
     }
 
     @Test
-    public void equalsNull()
-    {
+    public void equalsNull() {
         AbstractEntity entity = new Entity();
         Assertions.assertNotEquals(
             entity,
@@ -63,8 +58,7 @@ public class AbstractEntityTest
     }
 
     @Test
-    public void equalsNotEntity()
-    {
+    public void equalsNotEntity() {
         UUID id = UUID.randomUUID();
         AbstractEntity entity = new Entity();
         Assertions.assertNotEquals(
@@ -75,8 +69,7 @@ public class AbstractEntityTest
     }
 
     @Test
-    public void equalsWithoutIds()
-    {
+    public void equalsWithoutIds() {
         AbstractEntity entity = new Entity();
         AbstractEntity other = new Entity();
 
@@ -88,8 +81,7 @@ public class AbstractEntityTest
     }
 
     @Test
-    public void equalsWithoutOwnId()
-    {
+    public void equalsWithoutOwnId() {
         UUID id = UUID.randomUUID();
 
         AbstractEntity entity = new Entity();
@@ -105,8 +97,7 @@ public class AbstractEntityTest
     }
 
     @Test
-    public void equalsWithoutOther()
-    {
+    public void equalsWithoutOther() {
         UUID id = UUID.randomUUID();
 
         AbstractEntity entity = new Entity();
@@ -122,8 +113,7 @@ public class AbstractEntityTest
     }
 
     @Test
-    public void equals()
-    {
+    public void equals() {
         UUID id = UUID.randomUUID();
 
         AbstractEntity same = new Entity();
@@ -149,8 +139,7 @@ public class AbstractEntityTest
     }
 
     @Test
-    public void hashCodeWithoutId()
-    {
+    public void hashCodeWithoutId() {
         AbstractEntity entity = new Entity();
         AbstractEntity other = new Entity();
 
@@ -162,8 +151,7 @@ public class AbstractEntityTest
     }
 
     @Test
-    public void hashCodeSame()
-    {
+    public void hashCodeSame() {
         UUID id = UUID.randomUUID();
 
         AbstractEntity entity = new Entity();
@@ -180,8 +168,7 @@ public class AbstractEntityTest
     }
 
     @Test
-    public void hashCodeDifferent()
-    {
+    public void hashCodeDifferent() {
         AbstractEntity entity = new Entity();
         entity.setId(UUID.randomUUID());
 
@@ -196,6 +183,5 @@ public class AbstractEntityTest
     }
 }
 
-class Entity extends AbstractEntity
-{
+class Entity extends AbstractEntity {
 }

@@ -16,8 +16,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Handles application shutdown.
  */
-public class Shutdown extends Thread
-{
+public class Shutdown extends Thread {
     /**
      * Logger.
      */
@@ -33,8 +32,7 @@ public class Shutdown extends Thread
      *
      * @param daemon Running application.
      */
-    public Shutdown(Daemon daemon)
-    {
+    public Shutdown(Daemon daemon) {
         this.daemon = daemon;
     }
 
@@ -42,8 +40,7 @@ public class Shutdown extends Thread
      * Shut application down.
      */
     @Override
-    public void run()
-    {
+    public void run() {
         try {
             this.daemon.stop();
             this.daemon.destroy();

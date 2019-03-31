@@ -24,8 +24,7 @@ import pl.wrzasq.commons.web.context.WebApplicationContextLoader;
 import pl.wrzasq.commons.web.daemon.AbstractSpringWebDaemon;
 
 @ExtendWith(MockitoExtension.class)
-public class AbstractSpringWebDaemonTest extends AbstractSpringWebDaemon
-{
+public class AbstractSpringWebDaemonTest extends AbstractSpringWebDaemon {
     private static final String DUMMY_BEAN_ID = "called!";
 
     @Spy
@@ -37,8 +36,7 @@ public class AbstractSpringWebDaemonTest extends AbstractSpringWebDaemon
     @Mock
     private WebApplicationContext applicationContext;
 
-    private void setUpInitialization()
-    {
+    private void setUpInitialization() {
         Mockito.when(this.mockContextLoader.initWebApplicationContext(Mockito.isA(ServletContext.class)))
             .thenReturn(this.applicationContext);
         Mockito.doReturn(this.server)
@@ -48,8 +46,7 @@ public class AbstractSpringWebDaemonTest extends AbstractSpringWebDaemon
     }
 
     @Test
-    public void createServletContextTest()
-    {
+    public void createServletContextTest() {
         ServletContextHandler servlet = this.createServletContext();
 
         Assertions.assertNotNull(
@@ -64,8 +61,7 @@ public class AbstractSpringWebDaemonTest extends AbstractSpringWebDaemon
     }
 
     @Test
-    public void createServerTest()
-    {
+    public void createServerTest() {
         this.setUpInitialization();
 
         Server server = this.createServer();
@@ -81,8 +77,7 @@ public class AbstractSpringWebDaemonTest extends AbstractSpringWebDaemon
     }
 
     @Test
-    public void stopServerRunning()
-    {
+    public void stopServerRunning() {
         this.setUpInitialization();
 
         this.createServer();
@@ -92,22 +87,19 @@ public class AbstractSpringWebDaemonTest extends AbstractSpringWebDaemon
     }
 
     @Test
-    public void stopServerNotRunning()
-    {
+    public void stopServerNotRunning() {
         this.stopServer();
 
         Mockito.verify(this.mockContextLoader, Mockito.never()).closeWebApplicationContext();
     }
 
     @Override
-    protected WebApplicationContextLoader createContextLoader()
-    {
+    protected WebApplicationContextLoader createContextLoader() {
         return this.mockContextLoader;
     }
 
     @Override
-    protected void configureServletContext(ServletContextHandler servlet, BeanFactory beanFactory)
-    {
+    protected void configureServletContext(ServletContextHandler servlet, BeanFactory beanFactory) {
         beanFactory.getBean(AbstractSpringWebDaemonTest.DUMMY_BEAN_ID);
         // dummy method
     }

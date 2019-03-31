@@ -18,8 +18,7 @@ import pl.wrzasq.commons.text.TextProcessingException;
 /**
  * Various HTML text processing utilities.
  */
-public class Utils
-{
+public class Utils {
     /**
      * Default suffix.
      */
@@ -49,8 +48,7 @@ public class Utils
      * @param text HTML snippet.
      * @return First paragrapth.
      */
-    public static String firstParagraph(String text)
-    {
+    public static String firstParagraph(String text) {
         Matcher match = Utils.REGEX_FIRSTPARAGRAPH.matcher(text);
 
         return match.find() ? match.group(1) : "";
@@ -65,8 +63,7 @@ public class Utils
      * @param wordBounds Whether to look for word end or not.
      * @return Translated message.
      */
-    public static String truncate(String text, int length, String suffix, boolean wordBounds)
-    {
+    public static String truncate(String text, int length, String suffix, boolean wordBounds) {
         // nothing to do here
         if (text.length() <= length) {
             return text;
@@ -94,8 +91,7 @@ public class Utils
      * @param suffix Suffix to be used at the end of truncated text.
      * @return Translated message.
      */
-    public static String truncate(String text, int length, String suffix)
-    {
+    public static String truncate(String text, int length, String suffix) {
         return Utils.truncate(text, length, suffix, true);
     }
 
@@ -107,8 +103,7 @@ public class Utils
      * @param wordBounds Whether to look for word end or not.
      * @return Trucnated text.
      */
-    public static String truncate(String text, int length, boolean wordBounds)
-    {
+    public static String truncate(String text, int length, boolean wordBounds) {
         return Utils.truncate(text, length, Utils.SUFFIX_DEFAULT, wordBounds);
     }
 
@@ -119,8 +114,7 @@ public class Utils
      * @param length Maximum text length.
      * @return Trucnated text.
      */
-    public static String truncate(String text, int length)
-    {
+    public static String truncate(String text, int length) {
         return Utils.truncate(text, length, Utils.SUFFIX_DEFAULT, true);
     }
 
@@ -129,8 +123,7 @@ public class Utils
      *
      * @param formatter Formatter.
      */
-    public static void setFormatter(Formatter formatter)
-    {
+    public static void setFormatter(Formatter formatter) {
         Utils.formatter = formatter;
     }
 
@@ -143,8 +136,7 @@ public class Utils
      * @throws TextProcessingException When text processing fails.
      */
     public static String format(String format, String text)
-        throws TextProcessingException
-    {
+        throws TextProcessingException {
         return Utils.formatter.transform(format, text);
     }
 
@@ -156,8 +148,7 @@ public class Utils
      * @throws UnsupportedEncodingException Should never happen.
      */
     public static String urlEncode(String value)
-        throws UnsupportedEncodingException
-    {
+        throws UnsupportedEncodingException {
         return URLEncoder.encode(value, "UTF-8");
     }
 }

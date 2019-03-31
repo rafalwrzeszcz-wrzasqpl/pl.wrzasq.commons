@@ -22,8 +22,7 @@ import org.springframework.web.context.annotation.RequestScope;
  */
 @Service
 @RequestScope
-public class AuthorizationForwarder implements RequestInterceptor
-{
+public class AuthorizationForwarder implements RequestInterceptor {
     /**
      * Current HTTP upstream request.
      */
@@ -35,8 +34,7 @@ public class AuthorizationForwarder implements RequestInterceptor
      * {@inheritDoc}
      */
     @Override
-    public void apply(RequestTemplate requestTemplate)
-    {
+    public void apply(RequestTemplate requestTemplate) {
         // do not override header if already explicitly specified
         if (!requestTemplate.headers().containsKey(HttpHeaders.AUTHORIZATION)) {
             // set the same value as incoming request to execute requests on behalf of the user

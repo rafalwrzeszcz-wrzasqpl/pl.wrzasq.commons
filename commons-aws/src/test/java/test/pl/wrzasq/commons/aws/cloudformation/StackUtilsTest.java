@@ -21,14 +21,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import pl.wrzasq.commons.aws.cloudformation.StackUtils;
 
 @ExtendWith(MockitoExtension.class)
-public class StackUtilsTest
-{
+public class StackUtilsTest {
     @Mock
     private BiFunction<String, String, Object> converter;
 
     @Test
-    public void buildSdkList()
-    {
+    public void buildSdkList() {
         String key1 = "foo";
         String key2 = "bar";
         String value1 = "baz";
@@ -72,8 +70,7 @@ public class StackUtilsTest
     }
 
     @Test
-    public void buildSdkListNull()
-    {
+    public void buildSdkListNull() {
         Assertions.assertEquals(
             0,
             StackUtils.buildSdkList(null, this.converter).size(),

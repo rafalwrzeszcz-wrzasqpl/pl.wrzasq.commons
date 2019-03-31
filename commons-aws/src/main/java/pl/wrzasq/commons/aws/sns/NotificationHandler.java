@@ -16,8 +16,7 @@ import lombok.AllArgsConstructor;
  * SNS notifications handler.
  */
 @AllArgsConstructor
-public class NotificationHandler
-{
+public class NotificationHandler {
     /**
      * Message consumer.
      */
@@ -28,8 +27,7 @@ public class NotificationHandler
      *
      * @param event Notification message.
      */
-    public void process(SNSEvent event)
-    {
+    public void process(SNSEvent event) {
         // SNS event for lambda always contain one record, but keep it uniform
         event.getRecords().stream()
             .map(SNSEvent.SNSRecord::getSNS)

@@ -16,8 +16,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Handles application shutdown.
  */
-public class Runner
-{
+public class Runner {
     /**
      * Logger.
      */
@@ -36,8 +35,7 @@ public class Runner
      *
      * @param daemon Daemon application.
      */
-    public void run(Daemon daemon)
-    {
+    public void run(Daemon daemon) {
         try {
             // perform initialization and start daemon
             daemon.init(null);

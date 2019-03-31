@@ -16,27 +16,22 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import pl.wrzasq.commons.daemon.AbstractDaemon;
 
 @ExtendWith(MockitoExtension.class)
-public class AbstractDaemonTest
-{
+public class AbstractDaemonTest {
     @Spy
-    private AbstractDaemon daemon = new AbstractDaemon()
-    {
+    private AbstractDaemon daemon = new AbstractDaemon() {
         @Override
-        public void start() throws Exception
-        {
+        public void start() throws Exception {
             // dummy method
         }
 
         @Override
-        public void stop() throws Exception
-        {
+        public void stop() throws Exception {
             // dummy method
         }
     };
 
     @Test
-    public void signal() throws Exception
-    {
+    public void signal() throws Exception {
         // just for code coverate
         this.daemon.init(null);
         this.daemon.destroy();
@@ -48,8 +43,7 @@ public class AbstractDaemonTest
     }
 
     @Test
-    public void signalThrowsException() throws Exception
-    {
+    public void signalThrowsException() throws Exception {
         Mockito.doThrow(Exception.class).when(this.daemon).start();
         Assertions.assertThrows(
             Exception.class,

@@ -17,8 +17,7 @@ import feign.Feign;
 /**
  * Generic factory for REST services clients.
  */
-public class FeignClientFactory
-{
+public class FeignClientFactory {
     /**
      * Collection of all custom client modifiers.
      */
@@ -38,8 +37,7 @@ public class FeignClientFactory
     public FeignClientFactory(
         Collection<Consumer<Feign.Builder>> configurators,
         Supplier<Feign.Builder> feignBuilderSource
-    )
-    {
+    ) {
         this.configurators = configurators;
         this.feignBuilderSource = feignBuilderSource;
     }
@@ -57,8 +55,7 @@ public class FeignClientFactory
         Class<? extends ClientType> clientType,
         String url,
         Collection<Consumer<Feign.Builder>> configurators
-    )
-    {
+    ) {
         Feign.Builder builder = this.feignBuilderSource.get();
 
         // pre-defined configurators
@@ -80,8 +77,7 @@ public class FeignClientFactory
     public <ClientType> ClientType createClient(
         Class<? extends ClientType> clientType,
         String url
-    )
-    {
+    ) {
         return this.createClient(clientType, url, Collections.emptyList());
     }
 }

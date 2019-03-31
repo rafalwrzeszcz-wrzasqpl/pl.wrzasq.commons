@@ -13,8 +13,7 @@ import pl.wrzasq.commons.daemon.AbstractDaemon;
 /**
  * Base class for web application daemons.
  */
-public abstract class AbstractWebDaemon extends AbstractDaemon
-{
+public abstract class AbstractWebDaemon extends AbstractDaemon {
     /**
      * Catch-all servlet context path.
      */
@@ -46,8 +45,7 @@ public abstract class AbstractWebDaemon extends AbstractDaemon
      * {@inheritDoc}
      */
     @Override
-    public void start()
-    {
+    public void start() {
         // run the server created by the application
         this.server = this.createServer();
 
@@ -70,8 +68,7 @@ public abstract class AbstractWebDaemon extends AbstractDaemon
      * {@inheritDoc}
      */
     @Override
-    public void stop()
-    {
+    public void stop() {
         this.logger.info("Stopping…");
 
         try {

@@ -21,8 +21,7 @@ import org.springframework.http.HttpHeaders;
 /**
  * Content-Type-sensitive decoder.
  */
-public class DelegateDecoder implements Decoder
-{
+public class DelegateDecoder implements Decoder {
     /**
      * Fallback decoder for not-supported types.
      */
@@ -38,8 +37,7 @@ public class DelegateDecoder implements Decoder
      *
      * @param fallback Default fallback decoder.
      */
-    public DelegateDecoder(Decoder fallback)
-    {
+    public DelegateDecoder(Decoder fallback) {
         this.fallback = fallback;
     }
 
@@ -50,8 +48,7 @@ public class DelegateDecoder implements Decoder
      * @param decoder Type handler.
      * @return Self instance.
      */
-    public DelegateDecoder registerTypeDecoder(String mimeType, Decoder decoder)
-    {
+    public DelegateDecoder registerTypeDecoder(String mimeType, Decoder decoder) {
         this.delegates.put(mimeType, decoder);
 
         return this;
@@ -61,8 +58,7 @@ public class DelegateDecoder implements Decoder
      * {@inheritDoc}
      */
     @Override
-    public Object decode(Response response, Type type) throws IOException, FeignException
-    {
+    public Object decode(Response response, Type type) throws IOException, FeignException {
         return this.delegates.getOrDefault(
             response.headers().getOrDefault(HttpHeaders.CONTENT_TYPE, Collections.emptyList())
                 .stream()

@@ -13,8 +13,7 @@ import org.pegdown.PegDownProcessor;
 /**
  * Markdown format handler.
  */
-public class MarkdownFormatter implements FormatterInterface
-{
+public class MarkdownFormatter implements FormatterInterface {
     /**
      * Markdown processor with all available extras.
      */
@@ -24,8 +23,7 @@ public class MarkdownFormatter implements FormatterInterface
      * {@inheritDoc}
      */
     @Override
-    public String transform(String text)
-    {
+    public String transform(String text) {
         return this.markdownProcessor.markdownToHtml(text);
     }
 }

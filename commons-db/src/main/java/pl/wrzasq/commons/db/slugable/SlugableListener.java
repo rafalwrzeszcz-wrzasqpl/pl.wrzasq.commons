@@ -22,8 +22,7 @@ import pl.wrzasq.commons.text.slugifier.Slugifier;
 /**
  * Event listener for entities that should be identifiable by URL.
  */
-public class SlugableListener
-{
+public class SlugableListener {
     /**
      * Slugifier to be used to generate slugs.
      */
@@ -40,8 +39,7 @@ public class SlugableListener
      *
      * @return Slugifier.
      */
-    private Slugifier getSlugifier()
-    {
+    private Slugifier getSlugifier() {
         if (this.slugifier == null) {
             this.slugifier = new SimpleSlugifier();
         }
@@ -56,8 +54,7 @@ public class SlugableListener
      * @param options Slug generation configuration.
      * @return Generated slug.
      */
-    private String generateSlug(String[] texts, Slug options)
-    {
+    private String generateSlug(String[] texts, Slug options) {
         // acquire slugs generator
         Slugifier slugifier = this.getSlugifier();
 
@@ -73,8 +70,7 @@ public class SlugableListener
      */
     private void fillSlugs(Object slugable, boolean update)
         throws
-            IllegalAccessException
-    {
+            IllegalAccessException {
         Class<?> type = slugable.getClass();
 
         for (Field field : FieldUtils.getAllFields(type)) {
@@ -94,8 +90,7 @@ public class SlugableListener
      */
     private void fillSlug(Field field, Object slugable, boolean update)
         throws
-            IllegalAccessException
-    {
+            IllegalAccessException {
         // get slug configuration
         Slug options = field.getDeclaredAnnotation(Slug.class);
         int i;
@@ -123,8 +118,7 @@ public class SlugableListener
     @PrePersist
     public void createSlugs(Object slugable)
         throws
-            IllegalAccessException
-    {
+            IllegalAccessException {
         this.fillSlugs(slugable, false);
     }
 
@@ -137,8 +131,7 @@ public class SlugableListener
     @PreUpdate
     public void updateSlugs(Object slugable)
         throws
-            IllegalAccessException
-    {
+            IllegalAccessException {
         this.fillSlugs(slugable, true);
     }
 }

@@ -10,14 +10,12 @@ package pl.wrzasq.commons.text.formatter;
 /**
  * (X)HTML format handler.
  */
-public class HtmlFormatter implements FormatterInterface
-{
+public class HtmlFormatter implements FormatterInterface {
     /**
      * {@inheritDoc}
      */
     @Override
-    public String transform(String text)
-    {
+    public String transform(String text) {
         // this is already our desired format
         return text;
     }

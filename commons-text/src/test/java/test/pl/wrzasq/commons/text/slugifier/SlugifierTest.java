@@ -11,16 +11,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pl.wrzasq.commons.text.slugifier.Slugifier;
 
-public class SlugifierTest
-{
+public class SlugifierTest {
     @Test
-    public void slugify()
-    {
-        Slugifier slugifier = new Slugifier()
-        {
+    public void slugify() {
+        Slugifier slugifier = new Slugifier() {
             @Override
-            public String slugify(String... texts)
-            {
+            public String slugify(String... texts) {
                 return "foo";
             }
         };

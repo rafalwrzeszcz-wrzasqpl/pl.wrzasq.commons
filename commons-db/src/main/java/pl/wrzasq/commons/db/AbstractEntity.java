@@ -29,8 +29,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
-public abstract class AbstractEntity
-{
+public abstract class AbstractEntity {
     /**
      * UUID field length.
      */

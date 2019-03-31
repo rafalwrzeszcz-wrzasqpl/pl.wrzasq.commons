@@ -28,8 +28,7 @@ import pl.wrzasq.commons.aws.sqs.TypedQueueHandler;
 import test.pl.wrzasq.commons.aws.GenericMessage;
 
 @ExtendWith(MockitoExtension.class)
-public class TypedQueueHandlerTest
-{
+public class TypedQueueHandlerTest {
     @Mock
     private AmazonSQS sqs;
 
@@ -43,8 +42,7 @@ public class TypedQueueHandlerTest
     private ArgumentCaptor<GenericMessage> genericMessage;
 
     @Test
-    public void process() throws JsonProcessingException
-    {
+    public void process() throws JsonProcessingException {
         // just for code coverage
         new TypedQueueHandler(null, null, null, Object.class);
 
@@ -74,8 +72,7 @@ public class TypedQueueHandlerTest
     }
 
     @Test
-    public void processGeneric()
-    {
+    public void processGeneric() {
         ObjectMapper objectMapper = new ObjectMapper();
 
         UUID id0 = UUID.randomUUID();

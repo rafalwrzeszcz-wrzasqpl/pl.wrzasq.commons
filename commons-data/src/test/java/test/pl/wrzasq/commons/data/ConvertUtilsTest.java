@@ -20,11 +20,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.hateoas.PagedResources;
 import pl.wrzasq.commons.data.ConvertUtils;
 
-public class ConvertUtilsTest
-{
+public class ConvertUtilsTest {
     @Test
-    public void extractSort()
-    {
+    public void extractSort() {
         // just for code coverage
         new ConvertUtils();
 
@@ -52,8 +50,7 @@ public class ConvertUtilsTest
     }
 
     @Test
-    public void extractSortNull()
-    {
+    public void extractSortNull() {
         Assertions.assertNull(
             ConvertUtils.extractSort(null),
             "ConvertUtils.extractSort() should return NULL value for NULL input."
@@ -61,8 +58,7 @@ public class ConvertUtilsTest
     }
 
     @Test
-    public void buildPageFromResources()
-    {
+    public void buildPageFromResources() {
         Object object1 = new Object();
         Object object2 = new Object();
         int size = 2;

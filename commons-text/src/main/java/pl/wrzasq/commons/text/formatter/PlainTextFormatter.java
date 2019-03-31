@@ -12,14 +12,12 @@ import org.apache.commons.text.StringEscapeUtils;
 /**
  * Plain text format handler.
  */
-public class PlainTextFormatter implements FormatterInterface
-{
+public class PlainTextFormatter implements FormatterInterface {
     /**
      * {@inheritDoc}
      */
     @Override
-    public String transform(String text)
-    {
+    public String transform(String text) {
         return StringEscapeUtils.ESCAPE_XML10.translate(text).replaceAll("\n", "<br/>");
     }
 }

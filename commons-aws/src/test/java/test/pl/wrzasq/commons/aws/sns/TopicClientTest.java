@@ -20,8 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import pl.wrzasq.commons.aws.sns.TopicClient;
 
 @ExtendWith(MockitoExtension.class)
-public class TopicClientTest
-{
+public class TopicClientTest {
     @Mock
     private AmazonSNS sns;
 
@@ -29,8 +28,7 @@ public class TopicClientTest
     private ObjectMapper objectMapper;
 
     @Test
-    public void publish() throws JsonProcessingException
-    {
+    public void publish() throws JsonProcessingException {
         // just for code coverage
         new TopicClient(this.objectMapper, null);
 

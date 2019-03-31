@@ -21,14 +21,12 @@ import pl.wrzasq.commons.text.formatter.FormatterInterface;
 import pl.wrzasq.commons.text.html.Utils;
 
 @ExtendWith(MockitoExtension.class)
-public class UtilsTest
-{
+public class UtilsTest {
     @Mock
     private FormatterInterface formatHandler;
 
     @Test
-    public void firstParagraph()
-    {
+    public void firstParagraph() {
         // just for code coverage
         new Utils();
 
@@ -43,8 +41,7 @@ public class UtilsTest
     }
 
     @Test
-    public void firstParagraphEmpty()
-    {
+    public void firstParagraphEmpty() {
         String value = "foo <span>bar</span>\n<em>baz</em>";
 
         Assertions.assertEquals(
@@ -55,8 +52,7 @@ public class UtilsTest
     }
 
     @Test
-    public void truncateShortText()
-    {
+    public void truncateShortText() {
         // just for code coverage
         new Utils();
 
@@ -70,8 +66,7 @@ public class UtilsTest
     }
 
     @Test
-    public void truncate()
-    {
+    public void truncate() {
         String text = "Hello world!";
 
         Assertions.assertEquals(
@@ -82,8 +77,7 @@ public class UtilsTest
     }
 
     @Test
-    public void truncateWordBounds()
-    {
+    public void truncateWordBounds() {
         String text = "Hello world!";
 
         Assertions.assertEquals(
@@ -94,8 +88,7 @@ public class UtilsTest
     }
 
     @Test
-    public void truncateWordBoundsNoWord()
-    {
+    public void truncateWordBoundsNoWord() {
         String text = "Helloworld!";
 
         Assertions.assertEquals(
@@ -106,8 +99,7 @@ public class UtilsTest
     }
 
     @Test
-    public void truncateSuffix()
-    {
+    public void truncateSuffix() {
         String text = "Hello world!";
 
         Assertions.assertEquals(
@@ -118,8 +110,7 @@ public class UtilsTest
     }
 
     @Test
-    public void truncateSuffixWordBounds()
-    {
+    public void truncateSuffixWordBounds() {
         String text = "Hello world!";
 
         Assertions.assertEquals(
@@ -131,8 +122,7 @@ public class UtilsTest
 
     @Test
     public void format()
-        throws TextProcessingException
-    {
+        throws TextProcessingException {
         Formatter formatter = new Formatter();
         formatter.registerFormatter("foo", this.formatHandler);
 
@@ -154,8 +144,7 @@ public class UtilsTest
 
     @Test
     public void urlEncode()
-        throws UnsupportedEncodingException
-    {
+        throws UnsupportedEncodingException {
         Assertions.assertEquals(
             "foo+bar%2F%E2%80%A6",
             Utils.urlEncode("foo bar/…"),

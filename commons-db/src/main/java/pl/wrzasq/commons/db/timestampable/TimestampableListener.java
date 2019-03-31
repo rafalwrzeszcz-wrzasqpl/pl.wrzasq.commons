@@ -20,8 +20,7 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 /**
  * Handler for timestampable annotations.
  */
-public class TimestampableListener
-{
+public class TimestampableListener {
     /**
      * Fills all marked fields with timestamps.
      *
@@ -31,8 +30,7 @@ public class TimestampableListener
      */
     private void generateTimestamps(Object timestampable, TimestampType timestampType)
         throws
-            IllegalAccessException
-    {
+            IllegalAccessException {
         Class<?> type = timestampable.getClass();
 
         for (Field field : FieldUtils.getAllFields(type)) {
@@ -58,8 +56,7 @@ public class TimestampableListener
     @PrePersist
     public void createTimestamps(Object timestampable)
         throws
-            IllegalAccessException
-    {
+            IllegalAccessException {
         this.generateTimestamps(timestampable, TimestampType.CREATE);
     }
 
@@ -72,8 +69,7 @@ public class TimestampableListener
     @PreUpdate
     public void updateTimestamps(Object timestampable)
         throws
-            IllegalAccessException
-    {
+            IllegalAccessException {
         this.generateTimestamps(timestampable, TimestampType.UPDATE);
     }
 }

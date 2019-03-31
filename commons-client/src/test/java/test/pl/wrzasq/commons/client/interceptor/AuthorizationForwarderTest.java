@@ -22,14 +22,12 @@ import org.springframework.http.HttpHeaders;
 import pl.wrzasq.commons.client.interceptor.AuthorizationForwarder;
 
 @ExtendWith(MockitoExtension.class)
-public class AuthorizationForwarderTest
-{
+public class AuthorizationForwarderTest {
     @Mock
     private HttpServletRequest request;
 
     @Test
-    public void apply()
-    {
+    public void apply() {
         Mockito.when(this.request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn("foo");
 
         RequestTemplate template = new RequestTemplate();
@@ -52,8 +50,7 @@ public class AuthorizationForwarderTest
     }
 
     @Test
-    public void applyWithHeader()
-    {
+    public void applyWithHeader() {
         RequestTemplate template = new RequestTemplate();
         AuthorizationForwarder interceptor = new AuthorizationForwarder();
         interceptor.setRequest(this.request);

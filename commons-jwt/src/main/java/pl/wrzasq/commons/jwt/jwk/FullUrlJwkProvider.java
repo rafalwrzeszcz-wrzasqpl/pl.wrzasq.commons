@@ -15,15 +15,13 @@ import com.auth0.jwk.UrlJwkProvider;
 /**
  * Wrapper for URL-based JWK provider that does support keys in deeper locations.
  */
-public class FullUrlJwkProvider extends UrlJwkProvider
-{
+public class FullUrlJwkProvider extends UrlJwkProvider {
     /**
      * Initializes JWK provider for given issue URL.
      *
      * @param issuer Issuer URL.
      */
-    public FullUrlJwkProvider(String issuer)
-    {
+    public FullUrlJwkProvider(String issuer) {
         super(FullUrlJwkProvider.urlForIssuer(issuer));
     }
 
@@ -33,8 +31,7 @@ public class FullUrlJwkProvider extends UrlJwkProvider
      * @param issuer Issuer URL.
      * @return JWKS file URL.
      */
-    private static URL urlForIssuer(String issuer)
-    {
+    private static URL urlForIssuer(String issuer) {
         try {
             return new URL(issuer + "/.well-known/jwks.json");
         } catch (MalformedURLException error) {

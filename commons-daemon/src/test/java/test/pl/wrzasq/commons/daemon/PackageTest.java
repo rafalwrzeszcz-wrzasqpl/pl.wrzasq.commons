@@ -15,11 +15,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pl.wrzasq.commons.daemon.Package;
 
-public class PackageTest
-{
+public class PackageTest {
     @Test
-    public void init()
-    {
+    public void init() {
         Package meta = new Package();
         meta.init(Package.class.getResource(Package.DEFAULT_RESOURCE));
 
@@ -33,8 +31,7 @@ public class PackageTest
     @Test
     public void initOpenError()
         throws
-            IOException
-    {
+            IOException {
         Package meta = new Package();
         meta.init(new URL("file:///unexisting/"));
 
@@ -46,10 +43,7 @@ public class PackageTest
     }
 
     @Test
-    public void initReadError()
-        throws
-            IOException
-    {
+    public void initReadError() {
         Package meta = new Package()
         {
             @Override
@@ -70,8 +64,7 @@ public class PackageTest
     }
 
     @Test
-    public void initNull()
-    {
+    public void initNull() {
         Package meta = new Package();
         meta.init(null);
 
@@ -83,8 +76,7 @@ public class PackageTest
     }
 
     @Test
-    public void getVersion()
-    {
+    public void getVersion() {
         Package meta = new Package();
         meta.init();
 
@@ -96,8 +88,7 @@ public class PackageTest
     }
 
     @Test
-    public void getVersionInit()
-    {
+    public void getVersionInit() {
         Package meta = new Package();
 
         Assertions.assertEquals(

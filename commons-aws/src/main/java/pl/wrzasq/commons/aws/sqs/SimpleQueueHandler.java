@@ -15,8 +15,7 @@ import com.amazonaws.services.sqs.model.Message;
 /**
  * SQS queue handler that simply processes message body.
  */
-public class SimpleQueueHandler extends QueueHandler
-{
+public class SimpleQueueHandler extends QueueHandler {
     /**
      * Initializes handler.
      *
@@ -24,8 +23,7 @@ public class SimpleQueueHandler extends QueueHandler
      * @param queueUrl SQS queue URL.
      * @param messageBodyHandler Single message consumer.
      */
-    public SimpleQueueHandler(AmazonSQS sqs, String queueUrl, Consumer<String> messageBodyHandler)
-    {
+    public SimpleQueueHandler(AmazonSQS sqs, String queueUrl, Consumer<String> messageBodyHandler) {
         super(sqs, queueUrl, (Message message) -> messageBodyHandler.accept(message.getBody()));
     }
 
@@ -40,8 +38,7 @@ public class SimpleQueueHandler extends QueueHandler
      * @param queueUrl SQS queue URL.
      * @param messageBodyHandler Single message consumer.
      */
-    public SimpleQueueHandler(String queueUrl, Consumer<String> messageBodyHandler)
-    {
+    public SimpleQueueHandler(String queueUrl, Consumer<String> messageBodyHandler) {
         super(queueUrl, (Message message) -> messageBodyHandler.accept(message.getBody()));
     }
 }

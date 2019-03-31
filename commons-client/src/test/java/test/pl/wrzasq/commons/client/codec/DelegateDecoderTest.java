@@ -25,8 +25,7 @@ import org.springframework.http.MediaType;
 import pl.wrzasq.commons.client.codec.DelegateDecoder;
 
 @ExtendWith(MockitoExtension.class)
-public class DelegateDecoderTest
-{
+public class DelegateDecoderTest {
     @Mock
     private Decoder fallback;
 
@@ -42,8 +41,7 @@ public class DelegateDecoderTest
     );
 
     @Test
-    public void decode() throws IOException
-    {
+    public void decode() throws IOException {
         Response response = Response.builder()
             .status(200)
             .reason("ok")
@@ -73,8 +71,7 @@ public class DelegateDecoderTest
     }
 
     @Test
-    public void decodeWithExtraParameters() throws IOException
-    {
+    public void decodeWithExtraParameters() throws IOException {
         Response response = Response.builder()
             .status(200)
             .reason("ok")
@@ -104,8 +101,7 @@ public class DelegateDecoderTest
     }
 
     @Test
-    public void decodeWithoutType() throws IOException
-    {
+    public void decodeWithoutType() throws IOException {
         Response response = Response.builder()
             .status(200)
             .reason("ok")
@@ -132,8 +128,7 @@ public class DelegateDecoderTest
     }
 
     @Test
-    public void decodeFallback() throws IOException
-    {
+    public void decodeFallback() throws IOException {
         Response response = Response.builder()
             .status(200)
             .reason("ok")

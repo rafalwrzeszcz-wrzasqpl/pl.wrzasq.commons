@@ -24,14 +24,12 @@ import org.springframework.data.domain.Sort;
 import pl.wrzasq.commons.client.codec.SpringDataEncoder;
 
 @ExtendWith(MockitoExtension.class)
-public class SpringDataEncoderTest
-{
+public class SpringDataEncoderTest {
     @Mock
     private Encoder fallback;
 
     @Test
-    public void encode()
-    {
+    public void encode() {
         SpringDataEncoder encoder = new SpringDataEncoder(this.fallback);
         RequestTemplate template = new RequestTemplate();
         Pageable request = PageRequest.of(2, 3, Sort.Direction.ASC, "foo", "bar");
@@ -75,8 +73,7 @@ public class SpringDataEncoderTest
     }
 
     @Test
-    public void encodeCustomNames()
-    {
+    public void encodeCustomNames() {
         SpringDataEncoder encoder = new SpringDataEncoder(this.fallback, "a", "b", "c");
         RequestTemplate template = new RequestTemplate();
         Pageable request = PageRequest.of(2, 3, Sort.Direction.ASC, "foo");
@@ -116,8 +113,7 @@ public class SpringDataEncoderTest
     }
 
     @Test
-    public void encodeFallback()
-    {
+    public void encodeFallback() {
         SpringDataEncoder encoder = new SpringDataEncoder(this.fallback);
         RequestTemplate template = new RequestTemplate();
 

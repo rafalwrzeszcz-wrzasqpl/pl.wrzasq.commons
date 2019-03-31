@@ -19,14 +19,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import pl.wrzasq.commons.aws.sns.NotificationHandler;
 
 @ExtendWith(MockitoExtension.class)
-public class NotificationHandlerTest
-{
+public class NotificationHandlerTest {
     @Mock
     private Consumer<SNSEvent.SNS> messageHandler;
 
     @Test
-    public void process()
-    {
+    public void process() {
         SNSEvent.SNS message1 = new SNSEvent.SNS();
         message1.setMessage("msg1");
         SNSEvent.SNSRecord record1 = new SNSEvent.SNSRecord();

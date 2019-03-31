@@ -15,7 +15,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class GenericMessage
-{
+public class GenericMessage {
     private List<UUID> ids;
 }

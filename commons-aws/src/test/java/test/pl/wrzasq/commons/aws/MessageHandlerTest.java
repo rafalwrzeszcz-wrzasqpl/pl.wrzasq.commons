@@ -20,14 +20,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import pl.wrzasq.commons.aws.MessageHandler;
 
 @ExtendWith(MockitoExtension.class)
-public class MessageHandlerTest
-{
+public class MessageHandlerTest {
     @Mock
     private Consumer<Integer> messageHandler;
 
     @Test
-    public void handle() throws JsonProcessingException
-    {
+    public void handle() throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
 
         MessageHandler<Integer> messageHandler = new MessageHandler<>(
@@ -43,8 +41,7 @@ public class MessageHandlerTest
     }
 
     @Test
-    public void handleInvalidJson()
-    {
+    public void handleInvalidJson() {
         ObjectMapper objectMapper = new ObjectMapper();
 
         MessageHandler<Integer> messageHandler = new MessageHandler<>(

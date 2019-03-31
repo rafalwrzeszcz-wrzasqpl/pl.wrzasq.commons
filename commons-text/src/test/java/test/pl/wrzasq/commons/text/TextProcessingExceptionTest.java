@@ -11,11 +11,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pl.wrzasq.commons.text.TextProcessingException;
 
-public class TextProcessingExceptionTest
-{
+public class TextProcessingExceptionTest {
     @Test
-    public void constructor()
-    {
+    public void constructor() {
         TextProcessingException exception = new TextProcessingException("foo");
 
         Assertions.assertEquals(
@@ -26,8 +24,7 @@ public class TextProcessingExceptionTest
     }
 
     @Test
-    public void constructorWithCause()
-    {
+    public void constructorWithCause() {
         Exception cause = new Exception();
         TextProcessingException exception = new TextProcessingException("foo", cause);
 

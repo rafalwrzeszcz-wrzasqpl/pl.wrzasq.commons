@@ -18,8 +18,7 @@ import lombok.AllArgsConstructor;
  * SQS queue handler.
  */
 @AllArgsConstructor
-public class QueueHandler
-{
+public class QueueHandler {
     /**
      * AWS SQS client.
      */
@@ -46,16 +45,14 @@ public class QueueHandler
      * @param queueUrl SQS queue URL.
      * @param messageHandler Single message consumer.
      */
-    public QueueHandler(String queueUrl, Consumer<Message> messageHandler)
-    {
+    public QueueHandler(String queueUrl, Consumer<Message> messageHandler) {
         this(AmazonSQSClientBuilder.standard().build(), queueUrl, messageHandler);
     }
 
     /**
      * Processes queue messages.
      */
-    public void process()
-    {
+    public void process() {
         for (Message message : this.sqs.receiveMessage(this.queueUrl).getMessages()) {
             this.messageHandler.accept(message);
             this.sqs.deleteMessage(this.queueUrl, message.getReceiptHandle());

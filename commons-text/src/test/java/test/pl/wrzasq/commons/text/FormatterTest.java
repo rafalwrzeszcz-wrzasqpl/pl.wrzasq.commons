@@ -13,13 +13,11 @@ import pl.wrzasq.commons.text.Formatter;
 import pl.wrzasq.commons.text.TextProcessingException;
 import pl.wrzasq.commons.text.formatter.HtmlFormatter;
 
-public class FormatterTest
-{
+public class FormatterTest {
     @Test
     public void transform()
         throws
-            TextProcessingException
-    {
+            TextProcessingException {
         Formatter formatter = new Formatter();
         formatter.registerFormatter("html", new HtmlFormatter());
 
@@ -31,10 +29,7 @@ public class FormatterTest
     }
 
     @Test
-    public void transformUnknownException()
-        throws
-            TextProcessingException
-    {
+    public void transformUnknownException() {
         Formatter formatter = new Formatter();
 
         Assertions.assertThrows(

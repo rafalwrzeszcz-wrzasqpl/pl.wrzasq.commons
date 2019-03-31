@@ -16,16 +16,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import pl.wrzasq.commons.daemon.lifecycle.Shutdown;
 
 @ExtendWith(MockitoExtension.class)
-public class ShutdownTest
-{
+public class ShutdownTest {
     @Mock
     private Daemon daemon;
 
     @Test
     public void run()
         throws
-            Exception
-    {
+            Exception {
         Shutdown shutdown = new Shutdown(this.daemon);
 
         shutdown.run();
@@ -37,8 +35,7 @@ public class ShutdownTest
     @Test
     public void runWithException()
         throws
-            Exception
-    {
+            Exception {
         Exception error = new Exception("error");
 
         Mockito.doThrow(error).when(this.daemon).stop();

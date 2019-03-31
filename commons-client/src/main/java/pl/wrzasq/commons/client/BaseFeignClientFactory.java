@@ -18,16 +18,14 @@ import org.springframework.stereotype.Service;
  * Feign factory for standard, pure Feign.
  */
 @Service
-public class BaseFeignClientFactory extends FeignClientFactory
-{
+public class BaseFeignClientFactory extends FeignClientFactory {
     /**
      * Collection of all custom client modifiers.
      *
      * @param configurators Feign builder configurators.
      */
     @Autowired(required = false)
-    public BaseFeignClientFactory(Collection<Consumer<Feign.Builder>> configurators)
-    {
+    public BaseFeignClientFactory(Collection<Consumer<Feign.Builder>> configurators) {
         super(configurators, Feign::builder);
     }
 }

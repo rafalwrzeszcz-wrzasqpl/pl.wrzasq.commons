@@ -16,8 +16,7 @@ import pl.wrzasq.commons.web.context.WebApplicationContextLoader;
 /**
  * Base class for Spring-based web application daemons.
  */
-public abstract class AbstractSpringWebDaemon extends AbstractWebDaemon
-{
+public abstract class AbstractSpringWebDaemon extends AbstractWebDaemon {
     /**
      * Spring application synchronizer.
      */
@@ -35,8 +34,7 @@ public abstract class AbstractSpringWebDaemon extends AbstractWebDaemon
      *
      * @return Servlet context handler.
      */
-    protected ServletContextHandler createServletContext()
-    {
+    protected ServletContextHandler createServletContext() {
         // servlet context initialization
         ServletContextHandler servlet = new ServletContextHandler();
         servlet.setLogger(Log.getLogger(AbstractWebDaemon.ROOT_CONTEXT_PATH));
@@ -61,8 +59,7 @@ public abstract class AbstractSpringWebDaemon extends AbstractWebDaemon
      * {@inheritDoc}
      */
     @Override
-    protected Server createServer()
-    {
+    protected Server createServer() {
         // initialize all of the resources
         this.contextLoader = this.createContextLoader();
         ServletContextHandler servlet = this.createServletContext();
@@ -81,8 +78,7 @@ public abstract class AbstractSpringWebDaemon extends AbstractWebDaemon
      * {@inheritDoc}
      */
     @Override
-    protected void stopServer()
-    {
+    protected void stopServer() {
         if (this.contextLoader != null) {
             this.contextLoader.closeWebApplicationContext();
         }

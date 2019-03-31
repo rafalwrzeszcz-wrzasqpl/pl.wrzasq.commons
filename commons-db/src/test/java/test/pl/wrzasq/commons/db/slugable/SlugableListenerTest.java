@@ -12,10 +12,8 @@ import org.junit.jupiter.api.Test;
 import pl.wrzasq.commons.db.slugable.Slug;
 import pl.wrzasq.commons.db.slugable.SlugableListener;
 
-public class SlugableListenerTest
-{
-    public class TestEntity
-    {
+public class SlugableListenerTest {
+    public class TestEntity {
         private String name;
 
         private Integer value;
@@ -33,8 +31,7 @@ public class SlugableListenerTest
     @Test
     public void createSlugs()
         throws
-            IllegalAccessException
-    {
+            IllegalAccessException {
         // build entity
         SlugableListenerTest.TestEntity entity = new SlugableListenerTest.TestEntity();
         entity.name = "Chillout Development";
@@ -66,8 +63,7 @@ public class SlugableListenerTest
     @Test
     public void updateSlugs()
         throws
-            IllegalAccessException
-    {
+            IllegalAccessException {
         // build entity
         SlugableListenerTest.TestEntity entity = new SlugableListenerTest.TestEntity();
         entity.name = "Chillout Development";
