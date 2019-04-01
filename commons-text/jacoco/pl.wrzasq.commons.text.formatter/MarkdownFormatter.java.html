@@ -13,20 +13,18 @@ import org.pegdown.PegDownProcessor;
 /**
  * Markdown format handler.
  */
-<span class="fc" id="L16">public class MarkdownFormatter implements FormatterInterface</span>
-{
+<span class="fc" id="L16">public class MarkdownFormatter implements FormatterInterface {</span>
     /**
      * Markdown processor with all available extras.
      */
-<span class="fc" id="L21">    private PegDownProcessor markdownProcessor = new PegDownProcessor(Extensions.ALL);</span>
+<span class="fc" id="L20">    private PegDownProcessor markdownProcessor = new PegDownProcessor(Extensions.ALL);</span>
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String transform(String text)
-    {
-<span class="fc" id="L29">        return this.markdownProcessor.markdownToHtml(text);</span>
+    public String transform(String text) {
+<span class="fc" id="L27">        return this.markdownProcessor.markdownToHtml(text);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
