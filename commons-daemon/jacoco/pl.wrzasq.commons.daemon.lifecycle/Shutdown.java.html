@@ -16,12 +16,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Handles application shutdown.
  */
-public class Shutdown extends Thread
-{
+public class Shutdown extends Thread {
     /**
      * Logger.
      */
-<span class="fc" id="L24">    private Logger logger = LoggerFactory.getLogger(Shutdown.class);</span>
+<span class="fc" id="L23">    private Logger logger = LoggerFactory.getLogger(Shutdown.class);</span>
 
     /**
      * Application service.
@@ -33,26 +32,24 @@ public class Shutdown extends Thread
      *
      * @param daemon Running application.
      */
-    public Shutdown(Daemon daemon)
-<span class="fc" id="L37">    {</span>
-<span class="fc" id="L38">        this.daemon = daemon;</span>
-<span class="fc" id="L39">    }</span>
+<span class="fc" id="L35">    public Shutdown(Daemon daemon) {</span>
+<span class="fc" id="L36">        this.daemon = daemon;</span>
+<span class="fc" id="L37">    }</span>
 
     /**
      * Shut application down.
      */
     @Override
-    public void run()
-    {
+    public void run() {
         try {
-<span class="fc" id="L48">            this.daemon.stop();</span>
-<span class="fc" id="L49">            this.daemon.destroy();</span>
-<span class="fc" id="L50">            this.logger.trace(&quot;Good bye!&quot;);</span>
+<span class="fc" id="L45">            this.daemon.stop();</span>
+<span class="fc" id="L46">            this.daemon.destroy();</span>
+<span class="fc" id="L47">            this.logger.trace(&quot;Good bye!&quot;);</span>
             //CHECKSTYLE:OFF: IllegalCatchCheck
-<span class="fc" id="L52">        } catch (Exception error) {</span>
+<span class="fc" id="L49">        } catch (Exception error) {</span>
             //CHECKSTYLE:ON: IllegalCatchCheck
-<span class="fc" id="L54">            this.logger.error(&quot;Error while stopping dameon {}.&quot;, error.getMessage(), error);</span>
-<span class="fc" id="L55">        }</span>
-<span class="fc" id="L56">    }</span>
+<span class="fc" id="L51">            this.logger.error(&quot;Error while stopping dameon {}.&quot;, error.getMessage(), error);</span>
+<span class="fc" id="L52">        }</span>
+<span class="fc" id="L53">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

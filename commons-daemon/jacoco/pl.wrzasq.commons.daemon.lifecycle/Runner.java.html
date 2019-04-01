@@ -16,12 +16,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Handles application shutdown.
  */
-<span class="fc" id="L19">public class Runner</span>
-{
+<span class="fc" id="L19">public class Runner {</span>
     /**
      * Logger.
      */
-<span class="fc" id="L24">    private Logger logger = LoggerFactory.getLogger(Runner.class);</span>
+<span class="fc" id="L23">    private Logger logger = LoggerFactory.getLogger(Runner.class);</span>
 
     /**
      * Runs application.
@@ -36,25 +35,24 @@ import org.slf4j.LoggerFactory;
      *
      * @param daemon Daemon application.
      */
-    public void run(Daemon daemon)
-    {
+    public void run(Daemon daemon) {
         try {
             // perform initialization and start daemon
-<span class="fc" id="L43">            daemon.init(null);</span>
-<span class="fc" id="L44">            daemon.start();</span>
+<span class="fc" id="L41">            daemon.init(null);</span>
+<span class="fc" id="L42">            daemon.start();</span>
 
             // schedule shutdown hook for daemon cleanup
-<span class="fc" id="L47">            Runtime.getRuntime().addShutdownHook(new Shutdown(daemon));</span>
+<span class="fc" id="L45">            Runtime.getRuntime().addShutdownHook(new Shutdown(daemon));</span>
             //CHECKSTYLE:OFF: IllegalCatchCheck
-<span class="fc" id="L49">        } catch (Exception error) {</span>
+<span class="fc" id="L47">        } catch (Exception error) {</span>
             //CHECKSTYLE:ON: IllegalCatchCheck
-<span class="fc" id="L51">            this.logger.error(&quot;Fatal error {}.&quot;, error.getMessage(), error);</span>
+<span class="fc" id="L49">            this.logger.error(&quot;Fatal error {}.&quot;, error.getMessage(), error);</span>
 
-<span class="fc" id="L53">            throw new RuntimeException(</span>
-<span class="fc" id="L54">                String.format(&quot;Fatal error: %s&quot;, error.getMessage()),</span>
+<span class="fc" id="L51">            throw new RuntimeException(</span>
+<span class="fc" id="L52">                String.format(&quot;Fatal error: %s&quot;, error.getMessage()),</span>
                 error
             );
-<span class="fc" id="L57">        }</span>
-<span class="fc" id="L58">    }</span>
+<span class="fc" id="L55">        }</span>
+<span class="fc" id="L56">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
