@@ -15,12 +15,11 @@ import pl.wrzasq.commons.text.formatter.FormatterInterface;
 /**
  * Text formats handler.
  */
-<span class="fc" id="L18">public class Formatter</span>
-{
+<span class="fc" id="L18">public class Formatter {</span>
     /**
      * All known format handlers.
      */
-<span class="fc" id="L23">    private Map&lt;String, FormatterInterface&gt; formatters = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L22">    private Map&lt;String, FormatterInterface&gt; formatters = new HashMap&lt;&gt;();</span>
 
     /**
      * Registers format handler.
@@ -28,10 +27,9 @@ import pl.wrzasq.commons.text.formatter.FormatterInterface;
      * @param format Format name.
      * @param handler Format handler.
      */
-    public void registerFormatter(String format, FormatterInterface handler)
-    {
-<span class="fc" id="L33">        this.formatters.put(format, handler);</span>
-<span class="fc" id="L34">    }</span>
+    public void registerFormatter(String format, FormatterInterface handler) {
+<span class="fc" id="L31">        this.formatters.put(format, handler);</span>
+<span class="fc" id="L32">    }</span>
 
     /**
      * Transforms text from given form.
@@ -43,13 +41,12 @@ import pl.wrzasq.commons.text.formatter.FormatterInterface;
      */
     public String transform(String format, String text)
         throws
-            TextProcessingException
-    {
-<span class="fc bfc" id="L48" title="All 2 branches covered.">        if (!this.formatters.containsKey(format)) {</span>
-<span class="fc" id="L49">            throw new TextProcessingException(String.format(&quot;No handler for format \&quot;%s\&quot; registred.&quot;, format));</span>
+            TextProcessingException {
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        if (!this.formatters.containsKey(format)) {</span>
+<span class="fc" id="L46">            throw new TextProcessingException(String.format(&quot;No handler for format \&quot;%s\&quot; registred.&quot;, format));</span>
         }
 
-<span class="fc" id="L52">        return this.formatters.get(format).transform(text);</span>
+<span class="fc" id="L49">        return this.formatters.get(format).transform(text);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

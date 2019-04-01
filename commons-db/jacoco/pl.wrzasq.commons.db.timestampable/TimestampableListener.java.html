@@ -20,8 +20,7 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 /**
  * Handler for timestampable annotations.
  */
-<span class="fc" id="L23">public class TimestampableListener</span>
-{
+<span class="fc" id="L23">public class TimestampableListener {</span>
     /**
      * Fills all marked fields with timestamps.
      *
@@ -31,23 +30,22 @@ import org.apache.commons.lang3.reflect.FieldUtils;
      */
     private void generateTimestamps(Object timestampable, TimestampType timestampType)
         throws
-            IllegalAccessException
-    {
-<span class="fc" id="L36">        Class&lt;?&gt; type = timestampable.getClass();</span>
+            IllegalAccessException {
+<span class="fc" id="L34">        Class&lt;?&gt; type = timestampable.getClass();</span>
 
-<span class="fc bfc" id="L38" title="All 2 branches covered.">        for (Field field : FieldUtils.getAllFields(type)) {</span>
-<span class="fc bfc" id="L39" title="All 2 branches covered.">            if (field.isAnnotationPresent(Timestamp.class)) {</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">        for (Field field : FieldUtils.getAllFields(type)) {</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">            if (field.isAnnotationPresent(Timestamp.class)) {</span>
                 // get timestamp configuration
-<span class="fc" id="L41">                Timestamp options = field.getDeclaredAnnotation(Timestamp.class);</span>
+<span class="fc" id="L39">                Timestamp options = field.getDeclaredAnnotation(Timestamp.class);</span>
 
                 // verify timestamp type
-<span class="fc bfc" id="L44" title="All 2 branches covered.">                if (ArrayUtils.contains(options.value(), timestampType)) {</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">                if (ArrayUtils.contains(options.value(), timestampType)) {</span>
                     // generate timestamp
-<span class="fc" id="L46">                    FieldUtils.writeField(timestampable, field.getName(), OffsetDateTime.now(), true);</span>
+<span class="fc" id="L44">                    FieldUtils.writeField(timestampable, field.getName(), OffsetDateTime.now(), true);</span>
                 }
             }
         }
-<span class="fc" id="L50">    }</span>
+<span class="fc" id="L48">    }</span>
 
     /**
      * Saves timestamps marked for entity creation creation.
@@ -58,10 +56,9 @@ import org.apache.commons.lang3.reflect.FieldUtils;
     @PrePersist
     public void createTimestamps(Object timestampable)
         throws
-            IllegalAccessException
-    {
-<span class="fc" id="L63">        this.generateTimestamps(timestampable, TimestampType.CREATE);</span>
-<span class="fc" id="L64">    }</span>
+            IllegalAccessException {
+<span class="fc" id="L60">        this.generateTimestamps(timestampable, TimestampType.CREATE);</span>
+<span class="fc" id="L61">    }</span>
 
     /**
      * Saves timestamps marked for entity update creation.
@@ -72,9 +69,8 @@ import org.apache.commons.lang3.reflect.FieldUtils;
     @PreUpdate
     public void updateTimestamps(Object timestampable)
         throws
-            IllegalAccessException
-    {
-<span class="fc" id="L77">        this.generateTimestamps(timestampable, TimestampType.UPDATE);</span>
-<span class="fc" id="L78">    }</span>
+            IllegalAccessException {
+<span class="fc" id="L73">        this.generateTimestamps(timestampable, TimestampType.UPDATE);</span>
+<span class="fc" id="L74">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

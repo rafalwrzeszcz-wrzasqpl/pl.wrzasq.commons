@@ -22,8 +22,7 @@ import pl.wrzasq.commons.text.slugifier.Slugifier;
 /**
  * Event listener for entities that should be identifiable by URL.
  */
-<span class="fc" id="L25">public class SlugableListener</span>
-{
+<span class="fc" id="L25">public class SlugableListener {</span>
     /**
      * Slugifier to be used to generate slugs.
      */
@@ -40,13 +39,12 @@ import pl.wrzasq.commons.text.slugifier.Slugifier;
      *
      * @return Slugifier.
      */
-    private Slugifier getSlugifier()
-    {
-<span class="fc bfc" id="L45" title="All 2 branches covered.">        if (this.slugifier == null) {</span>
-<span class="fc" id="L46">            this.slugifier = new SimpleSlugifier();</span>
+    private Slugifier getSlugifier() {
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        if (this.slugifier == null) {</span>
+<span class="fc" id="L44">            this.slugifier = new SimpleSlugifier();</span>
         }
 
-<span class="fc" id="L49">        return this.slugifier;</span>
+<span class="fc" id="L47">        return this.slugifier;</span>
     }
 
     /**
@@ -56,12 +54,11 @@ import pl.wrzasq.commons.text.slugifier.Slugifier;
      * @param options Slug generation configuration.
      * @return Generated slug.
      */
-    private String generateSlug(String[] texts, Slug options)
-    {
+    private String generateSlug(String[] texts, Slug options) {
         // acquire slugs generator
-<span class="fc" id="L62">        Slugifier slugifier = this.getSlugifier();</span>
+<span class="fc" id="L59">        Slugifier slugifier = this.getSlugifier();</span>
 
-<span class="fc" id="L64">        return options.prefix() + slugifier.slugify(texts) + options.suffix();</span>
+<span class="fc" id="L61">        return options.prefix() + slugifier.slugify(texts) + options.suffix();</span>
     }
 
     /**
@@ -73,16 +70,15 @@ import pl.wrzasq.commons.text.slugifier.Slugifier;
      */
     private void fillSlugs(Object slugable, boolean update)
         throws
-            IllegalAccessException
-    {
-<span class="fc" id="L78">        Class&lt;?&gt; type = slugable.getClass();</span>
+            IllegalAccessException {
+<span class="fc" id="L74">        Class&lt;?&gt; type = slugable.getClass();</span>
 
-<span class="fc bfc" id="L80" title="All 2 branches covered.">        for (Field field : FieldUtils.getAllFields(type)) {</span>
-<span class="fc bfc" id="L81" title="All 2 branches covered.">            if (field.isAnnotationPresent(Slug.class)) {</span>
-<span class="fc" id="L82">                this.fillSlug(field, slugable, update);</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        for (Field field : FieldUtils.getAllFields(type)) {</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">            if (field.isAnnotationPresent(Slug.class)) {</span>
+<span class="fc" id="L78">                this.fillSlug(field, slugable, update);</span>
             }
         }
-<span class="fc" id="L85">    }</span>
+<span class="fc" id="L81">    }</span>
 
     /**
      * Fills single slug declared in given object.
@@ -94,25 +90,24 @@ import pl.wrzasq.commons.text.slugifier.Slugifier;
      */
     private void fillSlug(Field field, Object slugable, boolean update)
         throws
-            IllegalAccessException
-    {
+            IllegalAccessException {
         // get slug configuration
-<span class="fc" id="L100">        Slug options = field.getDeclaredAnnotation(Slug.class);</span>
+<span class="fc" id="L95">        Slug options = field.getDeclaredAnnotation(Slug.class);</span>
         int i;
 
         // check if it should be updated
-<span class="fc bfc" id="L104" title="All 4 branches covered.">        if (!update || options.updatable()) {</span>
+<span class="fc bfc" id="L99" title="All 4 branches covered.">        if (!update || options.updatable()) {</span>
             // find all source fields
-<span class="fc" id="L106">            String[] fields = options.value();</span>
-<span class="fc" id="L107">            String[] texts = new String[fields.length];</span>
-<span class="fc bfc" id="L108" title="All 2 branches covered.">            for (i = 0; i &lt; fields.length; ++i) {</span>
-<span class="fc" id="L109">                texts[i] = FieldUtils.readField(slugable, fields[i], true).toString();</span>
+<span class="fc" id="L101">            String[] fields = options.value();</span>
+<span class="fc" id="L102">            String[] texts = new String[fields.length];</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">            for (i = 0; i &lt; fields.length; ++i) {</span>
+<span class="fc" id="L104">                texts[i] = FieldUtils.readField(slugable, fields[i], true).toString();</span>
             }
 
             // generate slug
-<span class="fc" id="L113">            FieldUtils.writeField(slugable, field.getName(), this.generateSlug(texts, options), true);</span>
+<span class="fc" id="L108">            FieldUtils.writeField(slugable, field.getName(), this.generateSlug(texts, options), true);</span>
         }
-<span class="fc" id="L115">    }</span>
+<span class="fc" id="L110">    }</span>
 
     /**
      * Fills slugs on object creation.
@@ -123,10 +118,9 @@ import pl.wrzasq.commons.text.slugifier.Slugifier;
     @PrePersist
     public void createSlugs(Object slugable)
         throws
-            IllegalAccessException
-    {
-<span class="fc" id="L128">        this.fillSlugs(slugable, false);</span>
-<span class="fc" id="L129">    }</span>
+            IllegalAccessException {
+<span class="fc" id="L122">        this.fillSlugs(slugable, false);</span>
+<span class="fc" id="L123">    }</span>
 
     /**
      * Updates slugs.
@@ -137,9 +131,8 @@ import pl.wrzasq.commons.text.slugifier.Slugifier;
     @PreUpdate
     public void updateSlugs(Object slugable)
         throws
-            IllegalAccessException
-    {
-<span class="fc" id="L142">        this.fillSlugs(slugable, true);</span>
-<span class="fc" id="L143">    }</span>
+            IllegalAccessException {
+<span class="fc" id="L135">        this.fillSlugs(slugable, true);</span>
+<span class="fc" id="L136">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
