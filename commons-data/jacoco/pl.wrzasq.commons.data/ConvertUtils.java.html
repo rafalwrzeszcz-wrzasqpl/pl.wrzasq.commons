@@ -19,27 +19,25 @@ import org.springframework.hateoas.PagedResources;
 /**
  * Conversion utils for Spring Data collections.
  */
-<span class="fc" id="L22">public class ConvertUtils</span>
-{
+<span class="fc" id="L22">public class ConvertUtils {</span>
     /**
      * Extracts URL string values from sorting model.
      *
      * @param sort Spring Data sort model.
      * @return URL values.
      */
-    public static Collection&lt;String&gt; extractSort(Sort sort)
-    {
-<span class="fc bfc" id="L32" title="All 2 branches covered.">        if (sort == null) {</span>
-<span class="fc" id="L33">            return null;</span>
+    public static Collection&lt;String&gt; extractSort(Sort sort) {
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        if (sort == null) {</span>
+<span class="fc" id="L31">            return null;</span>
         }
 
-<span class="fc" id="L36">        Collection&lt;String&gt; values = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L34">        Collection&lt;String&gt; values = new ArrayList&lt;&gt;();</span>
 
-<span class="fc bfc" id="L38" title="All 2 branches covered.">        for (Sort.Order criteria : sort) {</span>
-<span class="fc" id="L39">            values.add(criteria.getProperty() + &quot;,&quot; + criteria.getDirection().name());</span>
-<span class="fc" id="L40">        }</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">        for (Sort.Order criteria : sort) {</span>
+<span class="fc" id="L37">            values.add(criteria.getProperty() + &quot;,&quot; + criteria.getDirection().name());</span>
+<span class="fc" id="L38">        }</span>
 
-<span class="fc" id="L42">        return values;</span>
+<span class="fc" id="L40">        return values;</span>
     }
 
     /**
@@ -53,12 +51,11 @@ import org.springframework.hateoas.PagedResources;
     public static &lt;ResourceType&gt; Page&lt;ResourceType&gt; buildPageFromResources(
         PagedResources&lt;? extends ResourceType&gt; resources,
         Pageable request
-    )
-    {
-<span class="fc" id="L58">        return new PageImpl&lt;&gt;(</span>
-<span class="fc" id="L59">            new ArrayList&lt;&gt;(resources.getContent()),</span>
+    ) {
+<span class="fc" id="L55">        return new PageImpl&lt;&gt;(</span>
+<span class="fc" id="L56">            new ArrayList&lt;&gt;(resources.getContent()),</span>
             request,
-<span class="fc" id="L61">            resources.getMetadata().getTotalElements()</span>
+<span class="fc" id="L58">            resources.getMetadata().getTotalElements()</span>
         );
     }
 }
