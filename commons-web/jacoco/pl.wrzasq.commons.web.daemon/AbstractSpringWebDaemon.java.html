@@ -16,8 +16,7 @@ import pl.wrzasq.commons.web.context.WebApplicationContextLoader;
 /**
  * Base class for Spring-based web application daemons.
  */
-<span class="fc" id="L19">public abstract class AbstractSpringWebDaemon extends AbstractWebDaemon</span>
-{
+<span class="fc" id="L19">public abstract class AbstractSpringWebDaemon extends AbstractWebDaemon {</span>
     /**
      * Spring application synchronizer.
      */
@@ -35,13 +34,12 @@ import pl.wrzasq.commons.web.context.WebApplicationContextLoader;
      *
      * @return Servlet context handler.
      */
-    protected ServletContextHandler createServletContext()
-    {
+    protected ServletContextHandler createServletContext() {
         // servlet context initialization
-<span class="fc" id="L41">        ServletContextHandler servlet = new ServletContextHandler();</span>
-<span class="fc" id="L42">        servlet.setLogger(Log.getLogger(AbstractWebDaemon.ROOT_CONTEXT_PATH));</span>
-<span class="fc" id="L43">        servlet.setContextPath(AbstractWebDaemon.ROOT_CONTEXT_PATH);</span>
-<span class="fc" id="L44">        return servlet;</span>
+<span class="fc" id="L39">        ServletContextHandler servlet = new ServletContextHandler();</span>
+<span class="fc" id="L40">        servlet.setLogger(Log.getLogger(AbstractWebDaemon.ROOT_CONTEXT_PATH));</span>
+<span class="fc" id="L41">        servlet.setContextPath(AbstractWebDaemon.ROOT_CONTEXT_PATH);</span>
+<span class="fc" id="L42">        return servlet;</span>
     }
 
     /**
@@ -61,31 +59,29 @@ import pl.wrzasq.commons.web.context.WebApplicationContextLoader;
      * {@inheritDoc}
      */
     @Override
-    protected Server createServer()
-    {
+    protected Server createServer() {
         // initialize all of the resources
-<span class="fc" id="L67">        this.contextLoader = this.createContextLoader();</span>
-<span class="fc" id="L68">        ServletContextHandler servlet = this.createServletContext();</span>
-<span class="fc" id="L69">        BeanFactory beanFactory = this.contextLoader.initWebApplicationContext(servlet.getServletContext());</span>
+<span class="fc" id="L64">        this.contextLoader = this.createContextLoader();</span>
+<span class="fc" id="L65">        ServletContextHandler servlet = this.createServletContext();</span>
+<span class="fc" id="L66">        BeanFactory beanFactory = this.contextLoader.initWebApplicationContext(servlet.getServletContext());</span>
 
         // apply custom hook
-<span class="fc" id="L72">        this.configureServletContext(servlet, beanFactory);</span>
+<span class="fc" id="L69">        this.configureServletContext(servlet, beanFactory);</span>
 
         // run the server with the application
-<span class="fc" id="L75">        Server server = beanFactory.getBean(Server.class);</span>
-<span class="fc" id="L76">        server.setHandler(servlet);</span>
-<span class="fc" id="L77">        return server;</span>
+<span class="fc" id="L72">        Server server = beanFactory.getBean(Server.class);</span>
+<span class="fc" id="L73">        server.setHandler(servlet);</span>
+<span class="fc" id="L74">        return server;</span>
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected void stopServer()
-    {
-<span class="fc bfc" id="L86" title="All 2 branches covered.">        if (this.contextLoader != null) {</span>
-<span class="fc" id="L87">            this.contextLoader.closeWebApplicationContext();</span>
+    protected void stopServer() {
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        if (this.contextLoader != null) {</span>
+<span class="fc" id="L83">            this.contextLoader.closeWebApplicationContext();</span>
         }
-<span class="fc" id="L89">    }</span>
+<span class="fc" id="L85">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

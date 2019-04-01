@@ -13,8 +13,7 @@ import pl.wrzasq.commons.daemon.AbstractDaemon;
 /**
  * Base class for web application daemons.
  */
-<span class="fc" id="L16">public abstract class AbstractWebDaemon extends AbstractDaemon</span>
-{
+<span class="fc" id="L16">public abstract class AbstractWebDaemon extends AbstractDaemon {</span>
     /**
      * Catch-all servlet context path.
      */
@@ -46,45 +45,43 @@ import pl.wrzasq.commons.daemon.AbstractDaemon;
      * {@inheritDoc}
      */
     @Override
-    public void start()
-    {
+    public void start() {
         // run the server created by the application
-<span class="fc" id="L52">        this.server = this.createServer();</span>
+<span class="fc" id="L50">        this.server = this.createServer();</span>
 
         try {
-<span class="fc" id="L55">            this.server.start();</span>
+<span class="fc" id="L53">            this.server.start();</span>
             //CHECKSTYLE:OFF: IllegalCatchCheck
-<span class="fc" id="L57">        } catch (Exception error) {</span>
+<span class="fc" id="L55">        } catch (Exception error) {</span>
             //CHECKSTYLE:ON: IllegalCatchCheck
-<span class="fc" id="L59">            this.logger.error(</span>
+<span class="fc" id="L57">            this.logger.error(</span>
                 &quot;Not starting because of {}.&quot;,
-<span class="fc" id="L61">                error.getMessage(),</span>
+<span class="fc" id="L59">                error.getMessage(),</span>
                 error
             );
-<span class="fc" id="L64">        }</span>
+<span class="fc" id="L62">        }</span>
 
-<span class="fc" id="L66">        this.logger.trace(&quot;Working.&quot;);</span>
-<span class="fc" id="L67">    }</span>
+<span class="fc" id="L64">        this.logger.trace(&quot;Working.&quot;);</span>
+<span class="fc" id="L65">    }</span>
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void stop()
-    {
-<span class="fc" id="L75">        this.logger.info(&quot;Stopping…&quot;);</span>
+    public void stop() {
+<span class="fc" id="L72">        this.logger.info(&quot;Stopping…&quot;);</span>
 
         try {
-<span class="fc bfc" id="L78" title="All 2 branches covered.">            if (this.server != null) {</span>
-<span class="fc" id="L79">                this.stopServer();</span>
-<span class="fc" id="L80">                this.server.join();</span>
-<span class="fc" id="L81">                this.server = null;</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">            if (this.server != null) {</span>
+<span class="fc" id="L76">                this.stopServer();</span>
+<span class="fc" id="L77">                this.server.join();</span>
+<span class="fc" id="L78">                this.server = null;</span>
             } else {
-<span class="fc" id="L83">                this.logger.trace(&quot;Server was not running.&quot;);</span>
+<span class="fc" id="L80">                this.logger.trace(&quot;Server was not running.&quot;);</span>
             }
-<span class="fc" id="L85">        } catch (InterruptedException error) {</span>
-<span class="fc" id="L86">            this.logger.error(&quot;Had to interrupt while waiting for Jetty server.&quot;, error);</span>
-<span class="fc" id="L87">        }</span>
-<span class="fc" id="L88">    }</span>
+<span class="fc" id="L82">        } catch (InterruptedException error) {</span>
+<span class="fc" id="L83">            this.logger.error(&quot;Had to interrupt while waiting for Jetty server.&quot;, error);</span>
+<span class="fc" id="L84">        }</span>
+<span class="fc" id="L85">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
