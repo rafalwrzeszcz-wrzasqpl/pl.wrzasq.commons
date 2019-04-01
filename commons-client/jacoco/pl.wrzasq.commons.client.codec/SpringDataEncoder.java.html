@@ -17,8 +17,7 @@ import pl.wrzasq.commons.data.ConvertUtils;
 /**
  * Spring Data page specification handling in requests.
  */
-public class SpringDataEncoder implements Encoder
-{
+public class SpringDataEncoder implements Encoder {
     /**
      * Default parameter name for page number.
      */
@@ -62,13 +61,12 @@ public class SpringDataEncoder implements Encoder
      * @param paramSize URL parameter name for page size.
      * @param paramSort URL parameter name for sorting criteria.
      */
-    public SpringDataEncoder(Encoder fallback, String paramPage, String paramSize, String paramSort)
-<span class="fc" id="L66">    {</span>
-<span class="fc" id="L67">        this.fallback = fallback;</span>
-<span class="fc" id="L68">        this.paramPage = paramPage;</span>
-<span class="fc" id="L69">        this.paramSize = paramSize;</span>
-<span class="fc" id="L70">        this.paramSort = paramSort;</span>
-<span class="fc" id="L71">    }</span>
+<span class="fc" id="L64">    public SpringDataEncoder(Encoder fallback, String paramPage, String paramSize, String paramSort) {</span>
+<span class="fc" id="L65">        this.fallback = fallback;</span>
+<span class="fc" id="L66">        this.paramPage = paramPage;</span>
+<span class="fc" id="L67">        this.paramSize = paramSize;</span>
+<span class="fc" id="L68">        this.paramSort = paramSort;</span>
+<span class="fc" id="L69">    }</span>
 
     /**
      * Initializes object with fallback encoder.
@@ -79,32 +77,30 @@ public class SpringDataEncoder implements Encoder
      *
      * @param fallback Fallback encoder.
      */
-    public SpringDataEncoder(Encoder fallback)
-    {
-<span class="fc" id="L84">        this(</span>
+    public SpringDataEncoder(Encoder fallback) {
+<span class="fc" id="L81">        this(</span>
             fallback,
             SpringDataEncoder.DEFAULT_PARAM_PAGE,
             SpringDataEncoder.DEFAULT_PARAM_SIZE,
             SpringDataEncoder.DEFAULT_PARAM_SORT
         );
-<span class="fc" id="L90">    }</span>
+<span class="fc" id="L87">    }</span>
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void encode(Object object, Type bodyType, RequestTemplate template)
-    {
-<span class="fc bfc" id="L98" title="All 2 branches covered.">        if (object instanceof Pageable) {</span>
-<span class="fc" id="L99">            Pageable request = (Pageable) object;</span>
+    public void encode(Object object, Type bodyType, RequestTemplate template) {
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        if (object instanceof Pageable) {</span>
+<span class="fc" id="L95">            Pageable request = (Pageable) object;</span>
 
-<span class="fc" id="L101">            template</span>
-<span class="fc" id="L102">                .query(this.paramPage, String.valueOf(request.getPageNumber()))</span>
-<span class="fc" id="L103">                .query(this.paramSize, String.valueOf(request.getPageSize()))</span>
-<span class="fc" id="L104">                .query(this.paramSort, ConvertUtils.extractSort(request.getSort()));</span>
-<span class="fc" id="L105">        } else {</span>
-<span class="fc" id="L106">            this.fallback.encode(object, bodyType, template);</span>
+<span class="fc" id="L97">            template</span>
+<span class="fc" id="L98">                .query(this.paramPage, String.valueOf(request.getPageNumber()))</span>
+<span class="fc" id="L99">                .query(this.paramSize, String.valueOf(request.getPageSize()))</span>
+<span class="fc" id="L100">                .query(this.paramSort, ConvertUtils.extractSort(request.getSort()));</span>
+<span class="fc" id="L101">        } else {</span>
+<span class="fc" id="L102">            this.fallback.encode(object, bodyType, template);</span>
         }
-<span class="fc" id="L108">    }</span>
+<span class="fc" id="L104">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
