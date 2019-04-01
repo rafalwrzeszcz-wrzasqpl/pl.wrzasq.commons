@@ -14,16 +14,14 @@ import com.amazonaws.services.lambda.runtime.events.SNSEvent;
 /**
  * SNS notifications handler that simply processes notification body.
  */
-public class SimpleNotificationHandler extends NotificationHandler
-{
+public class SimpleNotificationHandler extends NotificationHandler {
     /**
      * Initializes notification handler.
      *
      * @param messageBodyHandler SNS message handler
      */
-    public SimpleNotificationHandler(Consumer&lt;String&gt; messageBodyHandler)
-    {
-<span class="fc" id="L26">        super((SNSEvent.SNS data) -&gt; messageBodyHandler.accept(data.getMessage()));</span>
-<span class="fc" id="L27">    }</span>
+    public SimpleNotificationHandler(Consumer&lt;String&gt; messageBodyHandler) {
+<span class="fc" id="L24">        super((SNSEvent.SNS data) -&gt; messageBodyHandler.accept(data.getMessage()));</span>
+<span class="fc" id="L25">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

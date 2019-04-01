@@ -17,8 +17,7 @@ import java.util.stream.Collectors;
 /**
  * Custom utility routines for dealing with CloudFormation data operations.
  */
-<span class="fc" id="L20">public class StackUtils</span>
-{
+<span class="fc" id="L20">public class StackUtils {</span>
     /**
      * Converts key-value mapping into SDK data structure.
      *
@@ -30,16 +29,15 @@ import java.util.stream.Collectors;
     public static &lt;Type&gt; Collection&lt;Type&gt; buildSdkList(
         Map&lt;String, String&gt; input,
         BiFunction&lt;String, String, Type&gt; converter
-    )
-    {
-<span class="fc" id="L35">        return Optional.ofNullable(input)</span>
-<span class="fc" id="L36">            .orElse(Collections.emptyMap())</span>
-<span class="fc" id="L37">            .entrySet()</span>
-<span class="fc" id="L38">            .stream()</span>
-<span class="fc" id="L39">            .map(</span>
-<span class="fc" id="L40">                (Map.Entry&lt;String, String&gt; entry) -&gt; converter.apply(entry.getKey(), entry.getValue())</span>
+    ) {
+<span class="fc" id="L33">        return Optional.ofNullable(input)</span>
+<span class="fc" id="L34">            .orElse(Collections.emptyMap())</span>
+<span class="fc" id="L35">            .entrySet()</span>
+<span class="fc" id="L36">            .stream()</span>
+<span class="fc" id="L37">            .map(</span>
+<span class="fc" id="L38">                (Map.Entry&lt;String, String&gt; entry) -&gt; converter.apply(entry.getKey(), entry.getValue())</span>
             )
-<span class="fc" id="L42">            .collect(Collectors.toList());</span>
+<span class="fc" id="L40">            .collect(Collectors.toList());</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

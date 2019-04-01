@@ -15,8 +15,7 @@ import com.amazonaws.services.sqs.model.Message;
 /**
  * SQS queue handler that simply processes message body.
  */
-public class SimpleQueueHandler extends QueueHandler
-{
+public class SimpleQueueHandler extends QueueHandler {
     /**
      * Initializes handler.
      *
@@ -24,10 +23,9 @@ public class SimpleQueueHandler extends QueueHandler
      * @param queueUrl SQS queue URL.
      * @param messageBodyHandler Single message consumer.
      */
-    public SimpleQueueHandler(AmazonSQS sqs, String queueUrl, Consumer&lt;String&gt; messageBodyHandler)
-    {
-<span class="fc" id="L29">        super(sqs, queueUrl, (Message message) -&gt; messageBodyHandler.accept(message.getBody()));</span>
-<span class="fc" id="L30">    }</span>
+    public SimpleQueueHandler(AmazonSQS sqs, String queueUrl, Consumer&lt;String&gt; messageBodyHandler) {
+<span class="fc" id="L27">        super(sqs, queueUrl, (Message message) -&gt; messageBodyHandler.accept(message.getBody()));</span>
+<span class="fc" id="L28">    }</span>
 
     /**
      * Initializes handler with the default SQS client.
@@ -40,9 +38,8 @@ public class SimpleQueueHandler extends QueueHandler
      * @param queueUrl SQS queue URL.
      * @param messageBodyHandler Single message consumer.
      */
-    public SimpleQueueHandler(String queueUrl, Consumer&lt;String&gt; messageBodyHandler)
-    {
-<span class="pc" id="L45">        super(queueUrl, (Message message) -&gt; messageBodyHandler.accept(message.getBody()));</span>
-<span class="fc" id="L46">    }</span>
+    public SimpleQueueHandler(String queueUrl, Consumer&lt;String&gt; messageBodyHandler) {
+<span class="pc" id="L42">        super(queueUrl, (Message message) -&gt; messageBodyHandler.accept(message.getBody()));</span>
+<span class="fc" id="L43">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

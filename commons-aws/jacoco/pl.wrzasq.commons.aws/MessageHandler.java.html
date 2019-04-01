@@ -19,12 +19,11 @@ import org.slf4j.LoggerFactory;
  *
  * @param &lt;Type&gt; Message type.
  */
-public class MessageHandler&lt;Type&gt;
-{
+public class MessageHandler&lt;Type&gt; {
     /**
      * Logger.
      */
-<span class="fc" id="L27">    private Logger logger = LoggerFactory.getLogger(MessageHandler.class);</span>
+<span class="fc" id="L26">    private Logger logger = LoggerFactory.getLogger(MessageHandler.class);</span>
 
     /**
      * JSON (de-)serialization handler.
@@ -48,30 +47,28 @@ public class MessageHandler&lt;Type&gt;
      * @param messageHandler Single message consumer.
      * @param type Expected message content type.
      */
-    public MessageHandler(ObjectMapper objectMapper, Consumer&lt;Type&gt; messageHandler, Class&lt;Type&gt; type)
-<span class="fc" id="L52">    {</span>
-<span class="fc" id="L53">        this.objectMapper = objectMapper;</span>
-<span class="fc" id="L54">        this.messageHandler = messageHandler;</span>
-<span class="fc" id="L55">        this.type = type;</span>
-<span class="fc" id="L56">    }</span>
+<span class="fc" id="L50">    public MessageHandler(ObjectMapper objectMapper, Consumer&lt;Type&gt; messageHandler, Class&lt;Type&gt; type) {</span>
+<span class="fc" id="L51">        this.objectMapper = objectMapper;</span>
+<span class="fc" id="L52">        this.messageHandler = messageHandler;</span>
+<span class="fc" id="L53">        this.type = type;</span>
+<span class="fc" id="L54">    }</span>
 
     /**
      * Handles message conversion.
      *
      * @param message Message content.
      */
-    public void handle(String message)
-    {
-<span class="fc" id="L65">        this.logger.info(&quot;Incoming message {}.&quot;, message);</span>
+    public void handle(String message) {
+<span class="fc" id="L62">        this.logger.info(&quot;Incoming message {}.&quot;, message);</span>
 
         try {
-<span class="fc" id="L68">            Type data = this.objectMapper.readValue(message, this.type);</span>
-<span class="fc" id="L69">            this.messageHandler.accept(data);</span>
-<span class="fc" id="L70">            this.logger.debug(&quot;Task processed.&quot;);</span>
-<span class="fc" id="L71">        } catch (IOException error) {</span>
-<span class="fc" id="L72">            this.logger.error(&quot;Failed to parse event data.&quot;, error);</span>
-<span class="fc" id="L73">            throw new IllegalArgumentException(&quot;Could not parse event data.&quot;, error);</span>
-<span class="fc" id="L74">        }</span>
-<span class="fc" id="L75">    }</span>
+<span class="fc" id="L65">            Type data = this.objectMapper.readValue(message, this.type);</span>
+<span class="fc" id="L66">            this.messageHandler.accept(data);</span>
+<span class="fc" id="L67">            this.logger.debug(&quot;Task processed.&quot;);</span>
+<span class="fc" id="L68">        } catch (IOException error) {</span>
+<span class="fc" id="L69">            this.logger.error(&quot;Failed to parse event data.&quot;, error);</span>
+<span class="fc" id="L70">            throw new IllegalArgumentException(&quot;Could not parse event data.&quot;, error);</span>
+<span class="fc" id="L71">        }</span>
+<span class="fc" id="L72">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

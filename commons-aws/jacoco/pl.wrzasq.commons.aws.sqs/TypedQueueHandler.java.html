@@ -16,8 +16,7 @@ import pl.wrzasq.commons.aws.MessageHandler;
 /**
  * SQS queue handler that processes typed message.
  */
-public class TypedQueueHandler extends SimpleQueueHandler
-{
+public class TypedQueueHandler extends SimpleQueueHandler {
     /**
      * Initializes SQS handler.
      *
@@ -34,10 +33,9 @@ public class TypedQueueHandler extends SimpleQueueHandler
         ObjectMapper objectMapper,
         Consumer&lt;Type&gt; messageHandler,
         Class&lt;Type&gt; type
-    )
-    {
-<span class="fc" id="L39">        super(sqs, queueUrl, new MessageHandler&lt;&gt;(objectMapper, messageHandler, type)::handle);</span>
-<span class="fc" id="L40">    }</span>
+    ) {
+<span class="fc" id="L37">        super(sqs, queueUrl, new MessageHandler&lt;&gt;(objectMapper, messageHandler, type)::handle);</span>
+<span class="fc" id="L38">    }</span>
 
     /**
      * Initializes SQS handler.
@@ -58,9 +56,8 @@ public class TypedQueueHandler extends SimpleQueueHandler
         ObjectMapper objectMapper,
         Consumer&lt;Type&gt; messageHandler,
         Class&lt;Type&gt; type
-    )
-    {
-<span class="fc" id="L63">        super(queueUrl, new MessageHandler&lt;&gt;(objectMapper, messageHandler, type)::handle);</span>
-<span class="fc" id="L64">    }</span>
+    ) {
+<span class="fc" id="L60">        super(queueUrl, new MessageHandler&lt;&gt;(objectMapper, messageHandler, type)::handle);</span>
+<span class="fc" id="L61">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
