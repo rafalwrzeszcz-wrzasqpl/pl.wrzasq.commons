@@ -10,7 +10,7 @@
 **WrzasqPl-Commons** is a general-purpose **Java library**.
 
 [![Build Status](https://travis-ci.com/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons.svg)](https://travis-ci.com/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons)
-[![Coverage Status](https://coveralls.io/repos/github/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons/badge.svg?branch=develop)](https://coveralls.io/github/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons?branch=develop)
+[![Coverage Status](https://coveralls.io/repos/github/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons/badge.svg)](https://coveralls.io/github/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons)
 [![Known Vulnerabilities](https://snyk.io/test/github/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons/badge.svg)](https://snyk.io/test/github/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons)
 
@@ -96,7 +96,7 @@ You can of course pick only those parts that you need directly.
 # Resources
 
 -   [GitHub page with API documentation](https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons)
--   [Contribution guide](https://github.com/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons/blob/develop/CONTRIBUTING.md)
+-   [Contribution guide](https://github.com/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons/blob/master/CONTRIBUTING.md)
 -   [Issues tracker](https://github.com/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons/issues)
 -   [Maven packages](https://search.maven.org/search?q=g:pl.wrzasq.commons)
 -   [Wrzasq.pl @ GitHub](https://github.com/rafalwrzeszcz-wrzasqpl)
