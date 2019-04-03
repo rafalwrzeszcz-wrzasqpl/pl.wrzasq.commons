@@ -94,6 +94,7 @@ script: "mvn -e verify site"
 
 after_script: "mvn -e coveralls:report"
 
+before_deploy:
     - "eval \"$(ssh-agent -s)\""
     - "git config user.name \"Travis CI\""
     - "git config user.email \"office@wrzasq.pl\""
