@@ -22,8 +22,6 @@ Whenever any of contained libraries need to do anything related with logging the
 
 Anything else? Well, you need *Git* and *Maven* to checkout snapshot sources if you want to work on the project. But if you want to use the library, then there are no other dependencies.
 
-Only one exception is `commons-daemon` library which depends on [*Apache Commons Daemon*](https://commons.apache.org/proper/commons-daemon/) but it makes no sense to build it without that.
-
 # Installation
 
 You can use libraries in your `pom.xml` by defining following dependencies:
@@ -43,19 +41,7 @@ You can use libraries in your `pom.xml` by defining following dependencies:
 
 <dependency>
     <groupId>pl.wrzasq.commons</groupId>
-    <artifactId>commons-daemon</artifactId>
-    <version>${pl.wrzasq.commons.version}</version>
-</dependency>
-
-<dependency>
-    <groupId>pl.wrzasq.commons</groupId>
     <artifactId>commons-data</artifactId>
-    <version>${pl.wrzasq.commons.version}</version>
-</dependency>
-
-<dependency>
-    <groupId>pl.wrzasq.commons</groupId>
-    <artifactId>commons-db</artifactId>
     <version>${pl.wrzasq.commons.version}</version>
 </dependency>
 
@@ -70,12 +56,6 @@ You can use libraries in your `pom.xml` by defining following dependencies:
     <artifactId>commons-text</artifactId>
     <version>${pl.wrzasq.commons.version}</version>
 </dependency>
-
-<dependency>
-    <groupId>pl.wrzasq.commons</groupId>
-    <artifactId>commons-web</artifactId>
-    <version>${pl.wrzasq.commons.version}</version>
-</dependency>
 ```
 
 You can of course pick only those parts that you need directly.
@@ -86,12 +66,9 @@ You can of course pick only those parts that you need directly.
 
 -   [**AWS**](https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-aws/): helper routines for eorking with *Amazon Web Services*,
 -   [**Client**](https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-client/): web service client building utilities,
--   [**Daemon**](https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-daemon/): helper routines for handling *Apache Commons Daemon* services,
 -   [**Data**](https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-data/): helper routines for handling *Spring Data* structures,
--   [**DB**](https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-db/): base database and model-related structures and routines,
 -   [**JWT**](https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-jwt/): *JSON Web Tokens* utilities,
 -   [**Text**](https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-text/): various text processing utilities.
--   [**Web**](https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-web/): web-apps related stuff.
 
 # Resources
 
