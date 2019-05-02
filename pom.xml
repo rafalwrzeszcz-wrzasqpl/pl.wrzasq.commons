@@ -122,7 +122,6 @@
         <module>commons-aws</module>
         <module>commons-client</module>
         <module>commons-data</module>
-        <module>commons-jwt</module>
         <module>commons-text</module>
     </modules>
 </project>

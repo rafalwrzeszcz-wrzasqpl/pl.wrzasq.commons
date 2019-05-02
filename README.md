@@ -47,12 +47,6 @@ You can use libraries in your `pom.xml` by defining following dependencies:
 
 <dependency>
     <groupId>pl.wrzasq.commons</groupId>
-    <artifactId>commons-jwt</artifactId>
-    <version>${pl.wrzasq.commons.version}</version>
-</dependency>
-
-<dependency>
-    <groupId>pl.wrzasq.commons</groupId>
     <artifactId>commons-text</artifactId>
     <version>${pl.wrzasq.commons.version}</version>
 </dependency>
@@ -67,7 +61,6 @@ You can of course pick only those parts that you need directly.
 -   [**AWS**](https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-aws/): helper routines for eorking with *Amazon Web Services*,
 -   [**Client**](https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-client/): web service client building utilities,
 -   [**Data**](https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-data/): helper routines for handling *Spring Data* structures,
--   [**JWT**](https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-jwt/): *JSON Web Tokens* utilities,
 -   [**Text**](https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-text/): various text processing utilities.
 
 # Resources
