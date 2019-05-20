@@ -19,7 +19,7 @@
     <parent>
         <groupId>pl.wrzasq.commons</groupId>
         <artifactId>commons</artifactId>
-        <version>1.0.16</version>
+        <version>1.0.17-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
 
