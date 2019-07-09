@@ -16,6 +16,7 @@
 
         <menu name="Guide">
             <item name="General information" href="guide/general.html"/>
+            <item name="Lambda" href="guide/lambda.html"/>
             <item name="SQS" href="guide/sqs.html"/>
             <item name="SNS" href="guide/sns.html"/>
             <item name="CloudFormation" href="guide/cloudformation.html"/>
