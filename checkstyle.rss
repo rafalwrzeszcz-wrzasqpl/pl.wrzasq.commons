@@ -25,8 +25,8 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2014 - 2019 Rafał Wrzeszcz - Wrzasq.pl</copyright>
     <item>
-      <title>File: 29,
-             Errors: 80,
+      <title>File: 31,
+             Errors: 86,
              Warnings: 0,
              Infos: 0
       </title>
@@ -200,6 +200,20 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.aws.lambda.MultiHandler.java">pl/wrzasq/commons/aws/lambda/MultiHandler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  6
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.text.Formatter.java">pl/wrzasq/commons/text/Formatter.java</a>
                 </td>
                 <td>
@@ -327,6 +341,20 @@ under the License.
                           <tr>
                 <td>
                   <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.text.slugifier.Slugifier.java">pl/wrzasq/commons/text/slugifier/Slugifier.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.aws.lambda.HeartbeatHandler.java">pl/wrzasq/commons/aws/lambda/HeartbeatHandler.java</a>
                 </td>
                 <td>
                   0
