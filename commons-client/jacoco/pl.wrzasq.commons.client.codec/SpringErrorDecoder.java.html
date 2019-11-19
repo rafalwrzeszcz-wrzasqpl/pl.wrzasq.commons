@@ -36,7 +36,7 @@ public class SpringErrorDecoder implements ErrorDecoder {
      */
     @Override
     public Exception decode(String methodKey, Response response) {
-<span class="fc" id="L39">        HttpStatus status = HttpStatus.valueOf(response.status());</span>
+<span class="fc" id="L39">        var status = HttpStatus.valueOf(response.status());</span>
 <span class="fc bfc" id="L40" title="All 2 branches covered.">        if (status.is5xxServerError()) {</span>
 <span class="fc" id="L41">            return new HttpServerErrorException(status, response.reason());</span>
 <span class="fc bfc" id="L42" title="All 2 branches covered.">        } else if (status.is4xxClientError()) {</span>
@@ -46,4 +46,4 @@ public class SpringErrorDecoder implements ErrorDecoder {
         }
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

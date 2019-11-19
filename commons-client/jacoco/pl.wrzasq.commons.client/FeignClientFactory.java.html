@@ -56,12 +56,12 @@ public class FeignClientFactory {
         String url,
         Collection&lt;Consumer&lt;Feign.Builder&gt;&gt; configurators
     ) {
-<span class="fc" id="L59">        Feign.Builder builder = this.feignBuilderSource.get();</span>
+<span class="fc" id="L59">        var builder = this.feignBuilderSource.get();</span>
 
         // pre-defined configurators
-<span class="fc" id="L62">        this.configurators.forEach((Consumer&lt;Feign.Builder&gt; configurator) -&gt; configurator.accept(builder));</span>
+<span class="fc" id="L62">        this.configurators.forEach(configurator -&gt; configurator.accept(builder));</span>
         // custom configurators
-<span class="fc" id="L64">        configurators.forEach((Consumer&lt;Feign.Builder&gt; configurator) -&gt; configurator.accept(builder));</span>
+<span class="fc" id="L64">        configurators.forEach(configurator -&gt; configurator.accept(builder));</span>
 
 <span class="fc" id="L66">        return builder.target(clientType, url);</span>
     }
@@ -81,4 +81,4 @@ public class FeignClientFactory {
 <span class="fc" id="L81">        return this.createClient(clientType, url, Collections.emptyList());</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

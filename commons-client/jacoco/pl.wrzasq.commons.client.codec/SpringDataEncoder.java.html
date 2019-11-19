@@ -92,7 +92,7 @@ public class SpringDataEncoder implements Encoder {
     @Override
     public void encode(Object object, Type bodyType, RequestTemplate template) {
 <span class="fc bfc" id="L94" title="All 2 branches covered.">        if (object instanceof Pageable) {</span>
-<span class="fc" id="L95">            Pageable request = (Pageable) object;</span>
+<span class="fc" id="L95">            var request = (Pageable) object;</span>
 
 <span class="fc" id="L97">            template</span>
 <span class="fc" id="L98">                .query(this.paramPage, String.valueOf(request.getPageNumber()))</span>
@@ -103,4 +103,4 @@ public class SpringDataEncoder implements Encoder {
         }
 <span class="fc" id="L104">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

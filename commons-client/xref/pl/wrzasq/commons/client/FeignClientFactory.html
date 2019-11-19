@@ -64,12 +64,12 @@
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>          String url,
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>          Collection&lt;Consumer&lt;Feign.Builder&gt;&gt; configurators
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>      ) {
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>          Feign.Builder builder = <strong class="jxr_keyword">this</strong>.feignBuilderSource.get();
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>          <strong class="jxr_keyword">var</strong> builder = <strong class="jxr_keyword">this</strong>.feignBuilderSource.get();
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>  
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>          <em class="jxr_comment">// pre-defined configurators</em>
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>          <strong class="jxr_keyword">this</strong>.configurators.forEach((Consumer&lt;Feign.Builder&gt; configurator) -&gt; configurator.accept(builder));
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>          <strong class="jxr_keyword">this</strong>.configurators.forEach(configurator -&gt; configurator.accept(builder));
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>          <em class="jxr_comment">// custom configurators</em>
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>          configurators.forEach((Consumer&lt;Feign.Builder&gt; configurator) -&gt; configurator.accept(builder));
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>          configurators.forEach(configurator -&gt; configurator.accept(builder));
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>  
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>          <strong class="jxr_keyword">return</strong> builder.target(clientType, url);
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>      }
