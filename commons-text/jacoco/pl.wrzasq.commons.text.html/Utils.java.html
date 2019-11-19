@@ -7,9 +7,8 @@
 
 package pl.wrzasq.commons.text.html;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.regex.Matcher;
+import java.nio.charset.StandardCharsets;
 import java.util.regex.Pattern;
 
 import pl.wrzasq.commons.text.Formatter;
@@ -18,7 +17,7 @@ import pl.wrzasq.commons.text.TextProcessingException;
 /**
  * Various HTML text processing utilities.
  */
-<span class="fc" id="L21">public class Utils {</span>
+<span class="fc" id="L20">public class Utils {</span>
     /**
      * Default suffix.
      */
@@ -27,12 +26,12 @@ import pl.wrzasq.commons.text.TextProcessingException;
     /**
      * Word bound matchind regexp.
      */
-<span class="fc" id="L30">    public static final Pattern WORDBOUND_PATTERN = Pattern.compile(&quot;\\S\\s+\\S*?$&quot;, Pattern.UNICODE_CASE);</span>
+<span class="fc" id="L29">    public static final Pattern WORDBOUND_PATTERN = Pattern.compile(&quot;\\S\\s+\\S*?$&quot;, Pattern.UNICODE_CASE);</span>
 
     /**
      * First paragraph pattern.
      */
-<span class="fc" id="L35">    public static final Pattern REGEX_FIRSTPARAGRAPH = Pattern.compile(</span>
+<span class="fc" id="L34">    public static final Pattern REGEX_FIRSTPARAGRAPH = Pattern.compile(</span>
         &quot;&lt;p(?: [^&gt;]*)?&gt;(.*?)&lt;/p&gt;&quot;,
         Pattern.DOTALL
     );
@@ -40,7 +39,7 @@ import pl.wrzasq.commons.text.TextProcessingException;
     /**
      * Text formatter (dummy default instance to prevent NPE).
      */
-<span class="fc" id="L43">    private static Formatter formatter = new Formatter();</span>
+<span class="fc" id="L42">    private static Formatter formatter = new Formatter();</span>
 
     /**
      * Fetches first paragraph of text.
@@ -49,9 +48,9 @@ import pl.wrzasq.commons.text.TextProcessingException;
      * @return First paragrapth.
      */
     public static String firstParagraph(String text) {
-<span class="fc" id="L52">        Matcher match = Utils.REGEX_FIRSTPARAGRAPH.matcher(text);</span>
+<span class="fc" id="L51">        var match = Utils.REGEX_FIRSTPARAGRAPH.matcher(text);</span>
 
-<span class="fc bfc" id="L54" title="All 2 branches covered.">        return match.find() ? match.group(1) : &quot;&quot;;</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        return match.find() ? match.group(1) : &quot;&quot;;</span>
     }
 
     /**
@@ -65,22 +64,22 @@ import pl.wrzasq.commons.text.TextProcessingException;
      */
     public static String truncate(String text, int length, String suffix, boolean wordBounds) {
         // nothing to do here
-<span class="fc bfc" id="L68" title="All 2 branches covered.">        if (text.length() &lt;= length) {</span>
-<span class="fc" id="L69">            return text;</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        if (text.length() &lt;= length) {</span>
+<span class="fc" id="L68">            return text;</span>
         }
 
         // look for last possible word
-<span class="fc bfc" id="L73" title="All 2 branches covered.">        if (wordBounds) {</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        if (wordBounds) {</span>
             // look for last word-break
-<span class="fc" id="L75">            String part = text.substring(0, length + 2);</span>
-<span class="fc" id="L76">            Matcher matcher = Utils.WORDBOUND_PATTERN.matcher(part);</span>
-<span class="fc bfc" id="L77" title="All 2 branches covered.">            if (matcher.find()) {</span>
+<span class="fc" id="L74">            var part = text.substring(0, length + 2);</span>
+<span class="fc" id="L75">            var matcher = Utils.WORDBOUND_PATTERN.matcher(part);</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">            if (matcher.find()) {</span>
                 // we add 1 as second parameter is exclusive
-<span class="fc" id="L79">                length = matcher.start() + 1;</span>
+<span class="fc" id="L78">                length = matcher.start() + 1;</span>
             }
         }
 
-<span class="fc" id="L83">        return text.substring(0, length).trim() + suffix;</span>
+<span class="fc" id="L82">        return text.substring(0, length).trim() + suffix;</span>
     }
 
     /**
@@ -92,7 +91,7 @@ import pl.wrzasq.commons.text.TextProcessingException;
      * @return Translated message.
      */
     public static String truncate(String text, int length, String suffix) {
-<span class="fc" id="L95">        return Utils.truncate(text, length, suffix, true);</span>
+<span class="fc" id="L94">        return Utils.truncate(text, length, suffix, true);</span>
     }
 
     /**
@@ -104,7 +103,7 @@ import pl.wrzasq.commons.text.TextProcessingException;
      * @return Trucnated text.
      */
     public static String truncate(String text, int length, boolean wordBounds) {
-<span class="fc" id="L107">        return Utils.truncate(text, length, Utils.SUFFIX_DEFAULT, wordBounds);</span>
+<span class="fc" id="L106">        return Utils.truncate(text, length, Utils.SUFFIX_DEFAULT, wordBounds);</span>
     }
 
     /**
@@ -115,7 +114,7 @@ import pl.wrzasq.commons.text.TextProcessingException;
      * @return Trucnated text.
      */
     public static String truncate(String text, int length) {
-<span class="fc" id="L118">        return Utils.truncate(text, length, Utils.SUFFIX_DEFAULT, true);</span>
+<span class="fc" id="L117">        return Utils.truncate(text, length, Utils.SUFFIX_DEFAULT, true);</span>
     }
 
     /**
@@ -124,8 +123,8 @@ import pl.wrzasq.commons.text.TextProcessingException;
      * @param formatter Formatter.
      */
     public static void setFormatter(Formatter formatter) {
-<span class="fc" id="L127">        Utils.formatter = formatter;</span>
-<span class="fc" id="L128">    }</span>
+<span class="fc" id="L126">        Utils.formatter = formatter;</span>
+<span class="fc" id="L127">    }</span>
 
     /**
      * Formats the text.
@@ -137,7 +136,7 @@ import pl.wrzasq.commons.text.TextProcessingException;
      */
     public static String format(String format, String text)
         throws TextProcessingException {
-<span class="fc" id="L140">        return Utils.formatter.transform(format, text);</span>
+<span class="fc" id="L139">        return Utils.formatter.transform(format, text);</span>
     }
 
     /**
@@ -145,11 +144,9 @@ import pl.wrzasq.commons.text.TextProcessingException;
      *
      * @param value URL part.
      * @return URL-encoded part.
-     * @throws UnsupportedEncodingException Should never happen.
      */
-    public static String urlEncode(String value)
-        throws UnsupportedEncodingException {
-<span class="fc" id="L152">        return URLEncoder.encode(value, &quot;UTF-8&quot;);</span>
+    public static String urlEncode(String value) {
+<span class="fc" id="L149">        return URLEncoder.encode(value, StandardCharsets.UTF_8);</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
