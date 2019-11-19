@@ -14,17 +14,12 @@ import pl.wrzasq.commons.text.slugifier.Slugifier;
 public class SlugifierTest {
     @Test
     public void slugify() {
-        Slugifier slugifier = new Slugifier() {
-            @Override
-            public String slugify(String... texts) {
-                return "foo";
-            }
-        };
+        Slugifier slugifier = texts -> "foo";
 
         Assertions.assertEquals(
             "foo",
             slugifier.slugify("test"),
-            "Slugifier.slugify() should by default apply slugifier logic on sinle-elemene array."
+            "Slugifier.slugify() should by default apply slugifier logic on single-element array."
         );
     }
 }

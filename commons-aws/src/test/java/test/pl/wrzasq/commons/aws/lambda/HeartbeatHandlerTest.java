@@ -8,7 +8,6 @@
 package test.pl.wrzasq.commons.aws.lambda;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pl.wrzasq.commons.aws.lambda.HeartbeatHandler;
@@ -26,7 +25,7 @@ public class HeartbeatHandlerTest {
 
     @Test
     public void handleDifferentDiscriminator() {
-        ObjectNode node = HeartbeatHandlerTest.objectMapper.createObjectNode();
+        var node = HeartbeatHandlerTest.objectMapper.createObjectNode();
         node.put("wrzasqpl:event:type", "test");
 
         Assertions.assertFalse(
@@ -37,7 +36,7 @@ public class HeartbeatHandlerTest {
 
     @Test
     public void handle() {
-        ObjectNode node = HeartbeatHandlerTest.objectMapper.createObjectNode();
+        var node = HeartbeatHandlerTest.objectMapper.createObjectNode();
         node.put("wrzasqpl:event:type", "wrzasqpl:heartbeat");
 
         Assertions.assertTrue(
@@ -48,10 +47,10 @@ public class HeartbeatHandlerTest {
 
     @Test
     public void handleDifferentValues() {
-        String fieldName = "eventType";
-        String fieldValue = "pre-warm";
+        var fieldName = "eventType";
+        var fieldValue = "pre-warm";
 
-        ObjectNode node = HeartbeatHandlerTest.objectMapper.createObjectNode();
+        var node = HeartbeatHandlerTest.objectMapper.createObjectNode();
         node.put(fieldName, fieldValue);
 
         Assertions.assertTrue(

@@ -62,7 +62,7 @@ public class MessageHandler<Type> {
         this.logger.info("Incoming message {}.", message);
 
         try {
-            Type data = this.objectMapper.readValue(message, this.type);
+            var data = this.objectMapper.readValue(message, this.type);
             this.messageHandler.accept(data);
             this.logger.debug("Task processed.");
         } catch (IOException error) {

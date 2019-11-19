@@ -9,6 +9,7 @@ package pl.wrzasq.commons.data;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -31,13 +32,9 @@ public class ConvertUtils {
             return null;
         }
 
-        Collection<String> values = new ArrayList<>();
-
-        for (Sort.Order criteria : sort) {
-            values.add(criteria.getProperty() + "," + criteria.getDirection().name());
-        }
-
-        return values;
+        return sort.stream()
+            .map(criteria -> criteria.getProperty() + "," + criteria.getDirection().name())
+            .collect(Collectors.toList());
     }
 
     /**

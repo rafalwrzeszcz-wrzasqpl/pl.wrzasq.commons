@@ -86,11 +86,11 @@ public class MultiHandler {
      * @throws IOException When JSON loading/dumping fails.
      */
     public void handle(InputStream inputStream, OutputStream outputStream) throws IOException {
-        try {
-            JsonNode root = this.objectMapper.readTree(inputStream);
+        try (outputStream) {
+            var root = this.objectMapper.readTree(inputStream);
 
             // tries all handlers until any matches
-            for (MultiHandler.CallHandler handler : this.handlers) {
+            for (var handler : this.handlers) {
                 this.logger.trace("Attempting {} to handle payload.", handlers.getClass().getName());
                 if (handler.handle(root, outputStream)) {
                     this.logger.trace("Handled.");
@@ -101,8 +101,6 @@ public class MultiHandler {
             }
 
             this.logger.error("No handler was able to handle payload {}.", this.objectMapper.writeValueAsBytes(root));
-        } finally {
-            outputStream.close();
         }
     }
 }

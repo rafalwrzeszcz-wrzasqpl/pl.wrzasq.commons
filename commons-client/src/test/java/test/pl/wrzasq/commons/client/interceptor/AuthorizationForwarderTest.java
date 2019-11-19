@@ -7,8 +7,6 @@
 
 package test.pl.wrzasq.commons.client.interceptor;
 
-import java.util.Collection;
-
 import javax.servlet.http.HttpServletRequest;
 
 import feign.RequestTemplate;
@@ -30,15 +28,15 @@ public class AuthorizationForwarderTest {
     public void apply() {
         Mockito.when(this.request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn("foo");
 
-        RequestTemplate template = new RequestTemplate();
-        AuthorizationForwarder interceptor = new AuthorizationForwarder();
+        var template = new RequestTemplate();
+        var interceptor = new AuthorizationForwarder();
         interceptor.setRequest(this.request);
 
         interceptor.apply(template);
 
         Mockito.verify(this.request).getHeader(HttpHeaders.AUTHORIZATION);
 
-        Collection<String> values = template.headers().get(HttpHeaders.AUTHORIZATION);
+        var values = template.headers().get(HttpHeaders.AUTHORIZATION);
         Assertions.assertEquals(
             1, values.size(),
             "AuthorizationForwarder.apply() should set Authorization HTTP header."
@@ -51,8 +49,8 @@ public class AuthorizationForwarderTest {
 
     @Test
     public void applyWithHeader() {
-        RequestTemplate template = new RequestTemplate();
-        AuthorizationForwarder interceptor = new AuthorizationForwarder();
+        var template = new RequestTemplate();
+        var interceptor = new AuthorizationForwarder();
         interceptor.setRequest(this.request);
 
         template.header(HttpHeaders.AUTHORIZATION, "bar");
@@ -61,7 +59,7 @@ public class AuthorizationForwarderTest {
 
         Mockito.verify(this.request, Mockito.never()).getHeader(HttpHeaders.AUTHORIZATION);
 
-        Collection<String> values = template.headers().get(HttpHeaders.AUTHORIZATION);
+        var values = template.headers().get(HttpHeaders.AUTHORIZATION);
         Assertions.assertEquals(
             1,
             values.size(),

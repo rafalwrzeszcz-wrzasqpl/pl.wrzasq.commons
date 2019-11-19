@@ -10,7 +10,6 @@ package pl.wrzasq.commons.aws.sqs;
 import java.util.function.Consumer;
 
 import com.amazonaws.services.sqs.AmazonSQS;
-import com.amazonaws.services.sqs.model.Message;
 
 /**
  * SQS queue handler that simply processes message body.
@@ -24,7 +23,7 @@ public class SimpleQueueHandler extends QueueHandler {
      * @param messageBodyHandler Single message consumer.
      */
     public SimpleQueueHandler(AmazonSQS sqs, String queueUrl, Consumer<String> messageBodyHandler) {
-        super(sqs, queueUrl, (Message message) -> messageBodyHandler.accept(message.getBody()));
+        super(sqs, queueUrl, message -> messageBodyHandler.accept(message.getBody()));
     }
 
     /**
@@ -39,6 +38,6 @@ public class SimpleQueueHandler extends QueueHandler {
      * @param messageBodyHandler Single message consumer.
      */
     public SimpleQueueHandler(String queueUrl, Consumer<String> messageBodyHandler) {
-        super(queueUrl, (Message message) -> messageBodyHandler.accept(message.getBody()));
+        super(queueUrl, message -> messageBodyHandler.accept(message.getBody()));
     }
 }

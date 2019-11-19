@@ -7,9 +7,8 @@
 
 package pl.wrzasq.commons.text.html;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.regex.Matcher;
+import java.nio.charset.StandardCharsets;
 import java.util.regex.Pattern;
 
 import pl.wrzasq.commons.text.Formatter;
@@ -49,7 +48,7 @@ public class Utils {
      * @return First paragrapth.
      */
     public static String firstParagraph(String text) {
-        Matcher match = Utils.REGEX_FIRSTPARAGRAPH.matcher(text);
+        var match = Utils.REGEX_FIRSTPARAGRAPH.matcher(text);
 
         return match.find() ? match.group(1) : "";
     }
@@ -72,8 +71,8 @@ public class Utils {
         // look for last possible word
         if (wordBounds) {
             // look for last word-break
-            String part = text.substring(0, length + 2);
-            Matcher matcher = Utils.WORDBOUND_PATTERN.matcher(part);
+            var part = text.substring(0, length + 2);
+            var matcher = Utils.WORDBOUND_PATTERN.matcher(part);
             if (matcher.find()) {
                 // we add 1 as second parameter is exclusive
                 length = matcher.start() + 1;
@@ -145,10 +144,8 @@ public class Utils {
      *
      * @param value URL part.
      * @return URL-encoded part.
-     * @throws UnsupportedEncodingException Should never happen.
      */
-    public static String urlEncode(String value)
-        throws UnsupportedEncodingException {
-        return URLEncoder.encode(value, "UTF-8");
+    public static String urlEncode(String value) {
+        return URLEncoder.encode(value, StandardCharsets.UTF_8);
     }
 }

@@ -36,7 +36,7 @@ public class SpringErrorDecoder implements ErrorDecoder {
      */
     @Override
     public Exception decode(String methodKey, Response response) {
-        HttpStatus status = HttpStatus.valueOf(response.status());
+        var status = HttpStatus.valueOf(response.status());
         if (status.is5xxServerError()) {
             return new HttpServerErrorException(status, response.reason());
         } else if (status.is4xxClientError()) {

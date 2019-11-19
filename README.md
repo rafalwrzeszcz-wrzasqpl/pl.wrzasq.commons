@@ -15,7 +15,7 @@
 
 # Requirements
 
-**Note:** These libraries require **Java 8**.
+**Note:** These libraries require **Java 11**.
 
 Whenever any of contained libraries need to do anything related with logging they rely on [*SLF4J*](https://www.slf4j.org/), so you need to include logging facility implementation in your project (we recommend [*Logback*](https://logback.qos.ch/)).
 

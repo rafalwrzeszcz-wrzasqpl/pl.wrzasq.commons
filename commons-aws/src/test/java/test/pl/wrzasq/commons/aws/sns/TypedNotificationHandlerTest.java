@@ -22,7 +22,6 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import pl.wrzasq.commons.aws.sns.NotificationHandler;
 import pl.wrzasq.commons.aws.sns.TypedNotificationHandler;
 import test.pl.wrzasq.commons.aws.GenericMessage;
 
@@ -39,19 +38,19 @@ public class TypedNotificationHandlerTest {
 
     @Test
     public void process() throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
+        var objectMapper = new ObjectMapper();
 
-        String content = "test";
+        var content = "test";
 
-        SNSEvent.SNS message = new SNSEvent.SNS();
+        var message = new SNSEvent.SNS();
         message.setMessage(objectMapper.writeValueAsString(content));
-        SNSEvent.SNSRecord record = new SNSEvent.SNSRecord();
+        var record = new SNSEvent.SNSRecord();
         record.setSns(message);
 
-        SNSEvent event = new SNSEvent();
+        var event = new SNSEvent();
         event.setRecords(Collections.singletonList(record));
 
-        NotificationHandler handler = new TypedNotificationHandler(
+        var handler = new TypedNotificationHandler(
             objectMapper,
             this.messageHandler,
             String.class
@@ -63,12 +62,12 @@ public class TypedNotificationHandlerTest {
 
     @Test
     public void processGeneric() {
-        ObjectMapper objectMapper = new ObjectMapper();
+        var objectMapper = new ObjectMapper();
 
-        UUID id0 = UUID.randomUUID();
-        UUID id1 = UUID.randomUUID();
+        var id0 = UUID.randomUUID();
+        var id1 = UUID.randomUUID();
 
-        String content = String.format(
+        var content = String.format(
             "{"
                 + "\"ids\":["
                 + "\"%s\","
@@ -78,15 +77,15 @@ public class TypedNotificationHandlerTest {
             id1.toString()
         );
 
-        SNSEvent.SNS message = new SNSEvent.SNS();
+        var message = new SNSEvent.SNS();
         message.setMessage(content);
-        SNSEvent.SNSRecord record = new SNSEvent.SNSRecord();
+        var record = new SNSEvent.SNSRecord();
         record.setSns(message);
 
-        SNSEvent event = new SNSEvent();
+        var event = new SNSEvent();
         event.setRecords(Collections.singletonList(record));
 
-        NotificationHandler handler = new TypedNotificationHandler(
+        var handler = new TypedNotificationHandler(
             objectMapper,
             this.genericMessageHandler,
             GenericMessage.class
@@ -94,7 +93,7 @@ public class TypedNotificationHandlerTest {
         handler.process(event);
 
         Mockito.verify(this.genericMessageHandler).accept(this.genericMessage.capture());
-        GenericMessage genericMessage = this.genericMessage.getValue();
+        var genericMessage = this.genericMessage.getValue();
 
         Assertions.assertEquals(
             id0,

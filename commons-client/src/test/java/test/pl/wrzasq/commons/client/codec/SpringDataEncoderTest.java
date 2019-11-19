@@ -7,9 +7,6 @@
 
 package test.pl.wrzasq.commons.client.codec;
 
-import java.util.Collection;
-import java.util.Map;
-
 import feign.RequestTemplate;
 import feign.codec.Encoder;
 import org.junit.jupiter.api.Assertions;
@@ -30,15 +27,15 @@ public class SpringDataEncoderTest {
 
     @Test
     public void encode() {
-        SpringDataEncoder encoder = new SpringDataEncoder(this.fallback);
-        RequestTemplate template = new RequestTemplate();
-        Pageable request = PageRequest.of(2, 3, Sort.Direction.ASC, "foo", "bar");
+        var encoder = new SpringDataEncoder(this.fallback);
+        var template = new RequestTemplate();
+        var request = PageRequest.of(2, 3, Sort.Direction.ASC, "foo", "bar");
 
         encoder.encode(request, Pageable.class, template);
 
         Mockito.verifyZeroInteractions(this.fallback);
 
-        Map<String, Collection<String>> queries = template.queries();
+        var queries = template.queries();
 
         Assertions.assertTrue(
             queries.containsKey("page"),
@@ -74,15 +71,15 @@ public class SpringDataEncoderTest {
 
     @Test
     public void encodeCustomNames() {
-        SpringDataEncoder encoder = new SpringDataEncoder(this.fallback, "a", "b", "c");
-        RequestTemplate template = new RequestTemplate();
-        Pageable request = PageRequest.of(2, 3, Sort.Direction.ASC, "foo");
+        var encoder = new SpringDataEncoder(this.fallback, "a", "b", "c");
+        var template = new RequestTemplate();
+        var request = PageRequest.of(2, 3, Sort.Direction.ASC, "foo");
 
         encoder.encode(request, Pageable.class, template);
 
         Mockito.verifyZeroInteractions(this.fallback);
 
-        Map<String, Collection<String>> queries = template.queries();
+        var queries = template.queries();
 
         Assertions.assertTrue(
             queries.containsKey("a"),
@@ -114,8 +111,8 @@ public class SpringDataEncoderTest {
 
     @Test
     public void encodeFallback() {
-        SpringDataEncoder encoder = new SpringDataEncoder(this.fallback);
-        RequestTemplate template = new RequestTemplate();
+        var encoder = new SpringDataEncoder(this.fallback);
+        var template = new RequestTemplate();
 
         encoder.encode(this, this.getClass(), template);
 

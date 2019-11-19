@@ -32,14 +32,14 @@ public class FeignClientFactoryTest {
 
     @Test
     public void createClient() {
-        FeignClientFactory factory = new FeignClientFactory(
+        var factory = new FeignClientFactory(
             Collections.singleton(this.definedConfigurator),
             () -> this.builder
         );
 
         Mockito.when(this.builder.target(FeignClientFactoryTest.class, "foo")).thenReturn(this);
 
-        FeignClientFactoryTest result = factory.createClient(
+        var result = factory.createClient(
             FeignClientFactoryTest.class,
             "foo",
             Collections.singleton(this.customConfigurator)
@@ -57,14 +57,14 @@ public class FeignClientFactoryTest {
 
     @Test
     public void createClientWithoutCustom() {
-        FeignClientFactory factory = new FeignClientFactory(
+        var factory = new FeignClientFactory(
             Collections.singleton(this.definedConfigurator),
             () -> this.builder
         );
 
         Mockito.when(this.builder.target(FeignClientFactoryTest.class, "foo")).thenReturn(this);
 
-        FeignClientFactoryTest result = factory.createClient(
+        var result = factory.createClient(
             FeignClientFactoryTest.class,
             "foo"
         );

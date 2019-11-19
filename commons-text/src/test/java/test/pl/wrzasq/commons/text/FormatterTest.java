@@ -18,7 +18,7 @@ public class FormatterTest {
     public void transform()
         throws
             TextProcessingException {
-        Formatter formatter = new Formatter();
+        var formatter = new Formatter();
         formatter.registerFormatter("html", new HtmlFormatter());
 
         Assertions.assertEquals(
@@ -30,7 +30,7 @@ public class FormatterTest {
 
     @Test
     public void transformUnknownException() {
-        Formatter formatter = new Formatter();
+        var formatter = new Formatter();
 
         Assertions.assertThrows(
             TextProcessingException.class,

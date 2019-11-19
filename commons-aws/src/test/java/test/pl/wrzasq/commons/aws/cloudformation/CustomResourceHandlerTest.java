@@ -7,7 +7,6 @@
 
 package test.pl.wrzasq.commons.aws.cloudformation;
 
-import java.lang.reflect.Field;
 import java.util.function.BiFunction;
 
 import com.amazonaws.services.lambda.runtime.Context;
@@ -35,19 +34,19 @@ public class CustomResourceHandlerTest {
 
     @Test
     public void handle() throws NoSuchFieldException, IllegalAccessException {
-        CustomResourceHandler<Object, Object> handler = new CustomResourceHandler<>(
+        var handler = new CustomResourceHandler<>(
             this.action,
             this.action,
             this.action
         );
         this.setSender(handler);
 
-        Object input = new Object();
-        Object output = new Object();
-        String id = "test";
-        String physicalId = "arn:test";
+        var input = new Object();
+        var output = new Object();
+        var id = "test";
+        var physicalId = "arn:test";
 
-        CfnRequest<Object> request = new CfnRequest<>();
+        var request = new CfnRequest<>();
         request.setRequestType("Create");
         request.setResourceProperties(input);
         request.setPhysicalResourceId(physicalId);
@@ -62,18 +61,18 @@ public class CustomResourceHandlerTest {
 
     @Test
     public void handleError() throws NoSuchFieldException, IllegalAccessException {
-        CustomResourceHandler<Object, Object> handler = new CustomResourceHandler<>(
+        var handler = new CustomResourceHandler<>(
             this.action,
             this.action,
             this.action
         );
         this.setSender(handler);
 
-        Object input = new Object();
-        String output = "Oh no!";
-        String physicalId = "arn:test";
+        var input = new Object();
+        var output = "Oh no!";
+        var physicalId = "arn:test";
 
-        CfnRequest<Object> request = new CfnRequest<>();
+        var request = new CfnRequest<>();
         request.setRequestType("Create");
         request.setResourceProperties(input);
         request.setPhysicalResourceId(physicalId);
@@ -87,7 +86,7 @@ public class CustomResourceHandlerTest {
     }
 
     private void setSender(CustomResourceHandler<?, ?> handler) throws NoSuchFieldException, IllegalAccessException {
-        Field hack = handler.getClass().getDeclaredField("sender");
+        var hack = handler.getClass().getDeclaredField("sender");
         hack.setAccessible(true);
         hack.set(handler, this.sender);
     }

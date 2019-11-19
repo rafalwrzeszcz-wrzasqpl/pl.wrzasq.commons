@@ -17,7 +17,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import pl.wrzasq.commons.aws.sqs.QueueHandler;
 import pl.wrzasq.commons.aws.sqs.SimpleQueueHandler;
 
 @ExtendWith(MockitoExtension.class)
@@ -36,12 +35,12 @@ public class SimpleQueueHandlerTest {
         Message message1 = new Message().withBody("body1").withReceiptHandle("msg1");
         Message message2 = new Message().withBody("body2").withReceiptHandle("msg2");
 
-        String queue = "http://test";
+        var queue = "http://test";
 
         Mockito.when(this.sqs.receiveMessage(queue))
             .thenReturn(new ReceiveMessageResult().withMessages(message1, message2));
 
-        QueueHandler handler = new SimpleQueueHandler(this.sqs, queue, this.messageHandler);
+        var handler = new SimpleQueueHandler(this.sqs, queue, this.messageHandler);
         handler.process();
 
         Mockito.verify(this.sqs).receiveMessage(queue);

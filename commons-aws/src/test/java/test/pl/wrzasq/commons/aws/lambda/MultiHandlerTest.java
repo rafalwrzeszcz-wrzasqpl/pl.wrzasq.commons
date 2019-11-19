@@ -43,7 +43,7 @@ public class MultiHandlerTest {
 
     @Test
     public void handle() throws IOException {
-        MultiHandler handler = this.createMultiHandler();
+        var handler = this.createMultiHandler();
 
         Mockito
             .when(this.objectMapper.readTree(this.inputStream))
@@ -63,7 +63,7 @@ public class MultiHandlerTest {
 
     @Test
     public void handleSecond() throws IOException {
-        MultiHandler handler = this.createMultiHandler();
+        var handler = this.createMultiHandler();
 
         Mockito
             .when(this.objectMapper.readTree(this.inputStream))
@@ -87,7 +87,7 @@ public class MultiHandlerTest {
 
     @Test
     public void handleNoMatch() throws IOException {
-        MultiHandler handler = this.createMultiHandler();
+        var handler = this.createMultiHandler();
 
         Mockito
             .when(this.objectMapper.readTree(this.inputStream))
@@ -111,7 +111,7 @@ public class MultiHandlerTest {
 
     @Test
     public void handleCloseOnError() throws IOException {
-        MultiHandler handler = this.createMultiHandler();
+        var handler = this.createMultiHandler();
 
         Mockito
             .when(this.objectMapper.readTree(this.inputStream))
@@ -130,7 +130,7 @@ public class MultiHandlerTest {
     }
 
     private MultiHandler createMultiHandler() {
-        MultiHandler handler = new MultiHandler(this.objectMapper);
+        var handler = new MultiHandler(this.objectMapper);
         handler.registerHandler(this.handler1);
         handler.registerHandler(this.handler2);
         return handler;

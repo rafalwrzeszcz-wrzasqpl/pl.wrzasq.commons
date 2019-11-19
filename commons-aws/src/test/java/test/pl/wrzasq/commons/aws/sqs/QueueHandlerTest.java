@@ -32,15 +32,15 @@ public class QueueHandlerTest {
         // just for code coverage
         new QueueHandler(null, null);
 
-        Message message1 = new Message().withReceiptHandle("msg1");
-        Message message2 = new Message().withReceiptHandle("msg2");
+        var message1 = new Message().withReceiptHandle("msg1");
+        var message2 = new Message().withReceiptHandle("msg2");
 
-        String queue = "http://test";
+        var queue = "http://test";
 
         Mockito.when(this.sqs.receiveMessage(queue))
             .thenReturn(new ReceiveMessageResult().withMessages(message1, message2));
 
-        QueueHandler handler = new QueueHandler(this.sqs, queue, this.messageHandler);
+        var handler = new QueueHandler(this.sqs, queue, this.messageHandler);
         handler.process();
 
         Mockito.verify(this.sqs).receiveMessage(queue);

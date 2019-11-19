@@ -34,9 +34,7 @@ public class StackUtils {
             .orElse(Collections.emptyMap())
             .entrySet()
             .stream()
-            .map(
-                (Map.Entry<String, String> entry) -> converter.apply(entry.getKey(), entry.getValue())
-            )
+            .map(entry -> converter.apply(entry.getKey(), entry.getValue()))
             .collect(Collectors.toList());
     }
 }

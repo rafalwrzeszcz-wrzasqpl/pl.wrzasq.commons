@@ -10,12 +10,11 @@ package test.pl.wrzasq.commons.text.slugifier;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pl.wrzasq.commons.text.slugifier.SimpleSlugifier;
-import pl.wrzasq.commons.text.slugifier.Slugifier;
 
 public class SimpleSlugifierTest {
     @Test
     public void setDelimiter() {
-        SimpleSlugifier slugifier = new SimpleSlugifier();
+        var slugifier = new SimpleSlugifier();
 
         slugifier.setDelimiter("::");
 
@@ -28,7 +27,7 @@ public class SimpleSlugifierTest {
 
     @Test
     public void slugify() {
-        Slugifier slugifier = new SimpleSlugifier();
+        var slugifier = new SimpleSlugifier();
 
         Assertions.assertEquals(
             "rafal",
@@ -39,7 +38,7 @@ public class SimpleSlugifierTest {
 
     @Test
     public void slugifyNonAscii() {
-        Slugifier slugifier = new SimpleSlugifier();
+        var slugifier = new SimpleSlugifier();
 
         Assertions.assertEquals(
             "chilloutdevelopment",
@@ -50,7 +49,7 @@ public class SimpleSlugifierTest {
 
     @Test
     public void slugifyNonLetters() {
-        Slugifier slugifier = new SimpleSlugifier();
+        var slugifier = new SimpleSlugifier();
 
         Assertions.assertEquals(
             "chillout-development",
@@ -61,7 +60,7 @@ public class SimpleSlugifierTest {
 
     @Test
     public void slugifySpaces() {
-        Slugifier slugifier = new SimpleSlugifier();
+        var slugifier = new SimpleSlugifier();
 
         Assertions.assertEquals(
             "chillout-development",
@@ -72,7 +71,7 @@ public class SimpleSlugifierTest {
 
     @Test
     public void slugifyLeading() {
-        Slugifier slugifier = new SimpleSlugifier();
+        var slugifier = new SimpleSlugifier();
 
         Assertions.assertEquals(
             "chillout-development",
@@ -83,7 +82,7 @@ public class SimpleSlugifierTest {
 
     @Test
     public void slugifyTrailing() {
-        Slugifier slugifier = new SimpleSlugifier();
+        var slugifier = new SimpleSlugifier();
 
         Assertions.assertEquals(
             "chillout-development",
@@ -94,7 +93,7 @@ public class SimpleSlugifierTest {
 
     @Test
     public void slugifyLowercase() {
-        Slugifier slugifier = new SimpleSlugifier();
+        var slugifier = new SimpleSlugifier();
 
         Assertions.assertEquals(
             "chillout-development",
@@ -105,7 +104,7 @@ public class SimpleSlugifierTest {
 
     @Test
     public void slugifyMultiple() {
-        Slugifier slugifier = new SimpleSlugifier();
+        var slugifier = new SimpleSlugifier();
 
         Assertions.assertEquals(
             "chillout-development",

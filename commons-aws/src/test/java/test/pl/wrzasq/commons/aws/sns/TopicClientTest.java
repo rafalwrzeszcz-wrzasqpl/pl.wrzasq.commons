@@ -32,12 +32,12 @@ public class TopicClientTest {
         // just for code coverage
         new TopicClient(this.objectMapper, null);
 
-        String topic = "arn:test";
-        Object input = new Object();
-        String message = "{}";
-        PublishResult result = new PublishResult();
+        var topic = "arn:test";
+        var input = new Object();
+        var message = "{}";
+        var result = new PublishResult();
 
-        TopicClient client = new TopicClient(this.sns, this.objectMapper, topic);
+        var client = new TopicClient(this.sns, this.objectMapper, topic);
 
         Mockito.when(this.objectMapper.writeValueAsString(input)).thenReturn(message);
         Mockito.when(this.sns.publish(topic, message)).thenReturn(result);

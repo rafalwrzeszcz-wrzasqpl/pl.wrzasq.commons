@@ -89,7 +89,7 @@ public class StackSetHandler {
             switch (StackSetOperationStatus.fromValue(operation.getStatus())) {
                 case FAILED:
                 case STOPPED:
-                    this.logger.error("Stack operation {} failed with status.", operationId, operation.getStatus());
+                    this.logger.error("Stack operation {} failed with status {}.", operationId, operation.getStatus());
                     throw new IllegalStateException(
                         String.format(
                             "Stack operation %s (%s) for stack %s failed with status %s.",

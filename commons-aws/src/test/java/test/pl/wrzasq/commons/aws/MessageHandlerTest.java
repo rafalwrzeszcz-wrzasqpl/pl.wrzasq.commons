@@ -26,15 +26,15 @@ public class MessageHandlerTest {
 
     @Test
     public void handle() throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
+        var objectMapper = new ObjectMapper();
 
-        MessageHandler<Integer> messageHandler = new MessageHandler<>(
+        var messageHandler = new MessageHandler<>(
             objectMapper,
             this.messageHandler,
             Integer.TYPE
         );
 
-        Integer message = 44;
+        var message = 44;
         messageHandler.handle(objectMapper.writeValueAsString(message));
 
         Mockito.verify(this.messageHandler).accept(message);
@@ -42,9 +42,9 @@ public class MessageHandlerTest {
 
     @Test
     public void handleInvalidJson() {
-        ObjectMapper objectMapper = new ObjectMapper();
+        var objectMapper = new ObjectMapper();
 
-        MessageHandler<Integer> messageHandler = new MessageHandler<>(
+        var messageHandler = new MessageHandler<>(
             objectMapper,
             this.messageHandler,
             Integer.TYPE

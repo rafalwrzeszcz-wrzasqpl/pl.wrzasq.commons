@@ -42,7 +42,7 @@ public class DelegateDecoderTest {
 
     @Test
     public void decode() throws IOException {
-        Response response = Response.builder()
+        var response = Response.builder()
             .status(200)
             .reason("ok")
             .headers(
@@ -53,11 +53,11 @@ public class DelegateDecoderTest {
             )
             .request(this.request)
             .build();
-        Object result = this;
+        var result = this;
 
         Mockito.when(this.typed.decode(response, String.class)).thenReturn(result);
 
-        DelegateDecoder decoder = new DelegateDecoder(this.fallback);
+        var decoder = new DelegateDecoder(this.fallback);
         decoder.registerTypeDecoder(MediaType.APPLICATION_JSON_VALUE, this.typed);
 
         Assertions.assertSame(
@@ -72,7 +72,7 @@ public class DelegateDecoderTest {
 
     @Test
     public void decodeWithExtraParameters() throws IOException {
-        Response response = Response.builder()
+        var response = Response.builder()
             .status(200)
             .reason("ok")
             .headers(
@@ -83,11 +83,11 @@ public class DelegateDecoderTest {
             )
             .request(this.request)
             .build();
-        Object result = this;
+        var result = this;
 
         Mockito.when(this.typed.decode(response, String.class)).thenReturn(result);
 
-        DelegateDecoder decoder = new DelegateDecoder(this.fallback);
+        var decoder = new DelegateDecoder(this.fallback);
         decoder.registerTypeDecoder(MediaType.APPLICATION_JSON_VALUE, this.typed);
 
         Assertions.assertSame(
@@ -102,7 +102,7 @@ public class DelegateDecoderTest {
 
     @Test
     public void decodeWithoutType() throws IOException {
-        Response response = Response.builder()
+        var response = Response.builder()
             .status(200)
             .reason("ok")
             .headers(
@@ -110,11 +110,11 @@ public class DelegateDecoderTest {
             )
             .request(this.request)
             .build();
-        Object result = this;
+        var result = this;
 
         Mockito.when(this.fallback.decode(response, String.class)).thenReturn(result);
 
-        DelegateDecoder decoder = new DelegateDecoder(this.fallback);
+        var decoder = new DelegateDecoder(this.fallback);
         decoder.registerTypeDecoder(MediaType.APPLICATION_JSON_VALUE, this.typed);
 
         Assertions.assertSame(
@@ -129,7 +129,7 @@ public class DelegateDecoderTest {
 
     @Test
     public void decodeFallback() throws IOException {
-        Response response = Response.builder()
+        var response = Response.builder()
             .status(200)
             .reason("ok")
             .headers(
@@ -140,11 +140,11 @@ public class DelegateDecoderTest {
             )
             .request(this.request)
             .build();
-        Object result = this;
+        var result = this;
 
         Mockito.when(this.fallback.decode(response, String.class)).thenReturn(result);
 
-        DelegateDecoder decoder = new DelegateDecoder(this.fallback);
+        var decoder = new DelegateDecoder(this.fallback);
         decoder.registerTypeDecoder(MediaType.APPLICATION_JSON_VALUE, this.typed);
 
         Assertions.assertSame(

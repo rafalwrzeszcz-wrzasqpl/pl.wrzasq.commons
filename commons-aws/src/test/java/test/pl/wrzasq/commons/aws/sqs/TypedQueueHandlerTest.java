@@ -23,7 +23,6 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import pl.wrzasq.commons.aws.sqs.QueueHandler;
 import pl.wrzasq.commons.aws.sqs.TypedQueueHandler;
 import test.pl.wrzasq.commons.aws.GenericMessage;
 
@@ -46,18 +45,15 @@ public class TypedQueueHandlerTest {
         // just for code coverage
         new TypedQueueHandler(null, null, null, Object.class);
 
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        String content = "test";
-
-        Message message = new Message().withBody(objectMapper.writeValueAsString(content)).withReceiptHandle("msg");
-
-        String queue = "http://test";
+        var objectMapper = new ObjectMapper();
+        var content = "test";
+        var message = new Message().withBody(objectMapper.writeValueAsString(content)).withReceiptHandle("msg");
+        var queue = "http://test";
 
         Mockito.when(this.sqs.receiveMessage(queue))
             .thenReturn(new ReceiveMessageResult().withMessages(message));
 
-        QueueHandler handler = new TypedQueueHandler(
+        var handler = new TypedQueueHandler(
             this.sqs,
             queue,
             objectMapper,
@@ -73,12 +69,12 @@ public class TypedQueueHandlerTest {
 
     @Test
     public void processGeneric() {
-        ObjectMapper objectMapper = new ObjectMapper();
+        var objectMapper = new ObjectMapper();
 
-        UUID id0 = UUID.randomUUID();
-        UUID id1 = UUID.randomUUID();
+        var id0 = UUID.randomUUID();
+        var id1 = UUID.randomUUID();
 
-        String content = String.format(
+        var content = String.format(
             "{"
                 + "\"ids\":["
                 + "\"%s\","
@@ -88,14 +84,13 @@ public class TypedQueueHandlerTest {
             id1.toString()
         );
 
-        Message message = new Message().withBody(content).withReceiptHandle("msg");
-
-        String queue = "http://test";
+        var message = new Message().withBody(content).withReceiptHandle("msg");
+        var queue = "http://test";
 
         Mockito.when(this.sqs.receiveMessage(queue))
             .thenReturn(new ReceiveMessageResult().withMessages(message));
 
-        QueueHandler handler = new TypedQueueHandler(
+        var handler = new TypedQueueHandler(
             this.sqs,
             queue,
             objectMapper,
@@ -108,7 +103,7 @@ public class TypedQueueHandlerTest {
         Mockito.verify(this.sqs).deleteMessage(queue, message.getReceiptHandle());
         Mockito.verify(this.genericMessageHandler).accept(this.genericMessage.capture());
 
-        GenericMessage genericMessage = this.genericMessage.getValue();
+        var genericMessage = this.genericMessage.getValue();
 
         Assertions.assertEquals(
             id0,

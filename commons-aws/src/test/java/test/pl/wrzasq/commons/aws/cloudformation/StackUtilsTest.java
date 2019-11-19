@@ -7,7 +7,6 @@
 
 package test.pl.wrzasq.commons.aws.cloudformation;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -27,12 +26,12 @@ public class StackUtilsTest {
 
     @Test
     public void buildSdkList() {
-        String key1 = "foo";
-        String key2 = "bar";
-        String value1 = "baz";
-        String value2 = "quux";
-        Object object1 = new Object();
-        Object object2 = new Object();
+        var key1 = "foo";
+        var key2 = "bar";
+        var value1 = "baz";
+        var value2 = "quux";
+        var object1 = new Object();
+        var object2 = new Object();
 
         Mockito
             .when(this.converter.apply(Mockito.anyString(), Mockito.anyString()))
@@ -45,7 +44,7 @@ public class StackUtilsTest {
         input.put(key1, value1);
         input.put(key2, value2);
 
-        Collection<Object> result = StackUtils.buildSdkList(input, this.converter);
+        var result = StackUtils.buildSdkList(input, this.converter);
 
         Mockito
             .verify(this.converter)

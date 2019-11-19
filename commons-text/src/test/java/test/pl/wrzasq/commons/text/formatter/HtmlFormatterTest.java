@@ -9,16 +9,12 @@ package test.pl.wrzasq.commons.text.formatter;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import pl.wrzasq.commons.text.TextProcessingException;
-import pl.wrzasq.commons.text.formatter.FormatterInterface;
 import pl.wrzasq.commons.text.formatter.HtmlFormatter;
 
 public class HtmlFormatterTest {
     @Test
-    public void transform()
-        throws
-            TextProcessingException {
-        FormatterInterface textFormatter = new HtmlFormatter();
+    public void transform() {
+        var textFormatter = new HtmlFormatter();
 
         Assertions.assertEquals(
             "<span>foo</span>",

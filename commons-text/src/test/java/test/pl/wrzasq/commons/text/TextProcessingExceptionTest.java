@@ -14,7 +14,7 @@ import pl.wrzasq.commons.text.TextProcessingException;
 public class TextProcessingExceptionTest {
     @Test
     public void constructor() {
-        TextProcessingException exception = new TextProcessingException("foo");
+        var exception = new TextProcessingException("foo");
 
         Assertions.assertEquals(
             "foo",
@@ -25,8 +25,8 @@ public class TextProcessingExceptionTest {
 
     @Test
     public void constructorWithCause() {
-        Exception cause = new Exception();
-        TextProcessingException exception = new TextProcessingException("foo", cause);
+        var cause = new Exception();
+        var exception = new TextProcessingException("foo", cause);
 
         Assertions.assertEquals(
             "foo",

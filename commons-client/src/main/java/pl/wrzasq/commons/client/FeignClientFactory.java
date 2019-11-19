@@ -56,12 +56,12 @@ public class FeignClientFactory {
         String url,
         Collection<Consumer<Feign.Builder>> configurators
     ) {
-        Feign.Builder builder = this.feignBuilderSource.get();
+        var builder = this.feignBuilderSource.get();
 
         // pre-defined configurators
-        this.configurators.forEach((Consumer<Feign.Builder> configurator) -> configurator.accept(builder));
+        this.configurators.forEach(configurator -> configurator.accept(builder));
         // custom configurators
-        configurators.forEach((Consumer<Feign.Builder> configurator) -> configurator.accept(builder));
+        configurators.forEach(configurator -> configurator.accept(builder));
 
         return builder.target(clientType, url);
     }

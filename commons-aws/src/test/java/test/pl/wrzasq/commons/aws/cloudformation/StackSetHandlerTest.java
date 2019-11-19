@@ -7,8 +7,6 @@
 
 package test.pl.wrzasq.commons.aws.cloudformation;
 
-import java.util.List;
-
 import com.amazonaws.services.cloudformation.AmazonCloudFormation;
 import com.amazonaws.services.cloudformation.model.DescribeStackSetOperationRequest;
 import com.amazonaws.services.cloudformation.model.DescribeStackSetOperationResult;
@@ -22,7 +20,6 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.stubbing.OngoingStubbing;
 import pl.wrzasq.commons.aws.cloudformation.StackSetHandler;
 
 @ExtendWith(MockitoExtension.class)
@@ -128,7 +125,7 @@ public class StackSetHandlerTest {
                     )
             );
 
-        StackSetHandler handler = new StackSetHandler(this.cloudFormation);
+        var handler = new StackSetHandler(this.cloudFormation);
         handler.setSleepHandler(this.sleepProvider);
         handler.waitForStackSetOperation(null, null);
 
@@ -142,13 +139,13 @@ public class StackSetHandlerTest {
     }
 
     private void runDescribeOperationRequestsSequence(DescribeStackSetOperationResult... results) {
-        StackSetHandler handler = new StackSetHandler(this.cloudFormation);
+        var handler = new StackSetHandler(this.cloudFormation);
         handler.setSleepInterval(1);
 
-        OngoingStubbing<DescribeStackSetOperationResult> stubbing = Mockito
+        var stubbing = Mockito
             .when(this.cloudFormation.describeStackSetOperation(this.describeOperationRequest.capture()));
 
-        for (DescribeStackSetOperationResult result : results) {
+        for (var result : results) {
             stubbing = stubbing.thenReturn(result);
         }
 
@@ -159,7 +156,7 @@ public class StackSetHandlerTest {
     }
 
     private void verifyDescribeOperationRequestsArguments(int count) {
-        List<DescribeStackSetOperationRequest> requests = this.describeOperationRequest.getAllValues();
+        var requests = this.describeOperationRequest.getAllValues();
 
         Assertions.assertEquals(
             count,
@@ -168,7 +165,7 @@ public class StackSetHandlerTest {
         );
 
         requests.forEach(
-            (DescribeStackSetOperationRequest request) -> {
+            request -> {
                 Assertions.assertEquals(
                     StackSetHandlerTest.STACK_SET_NAME,
                     request.getStackSetName(),

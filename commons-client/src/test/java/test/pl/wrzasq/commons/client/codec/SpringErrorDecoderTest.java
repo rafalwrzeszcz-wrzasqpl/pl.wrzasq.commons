@@ -39,15 +39,15 @@ public class SpringErrorDecoderTest {
 
     @Test
     public void decode4xx() {
-        Response response = Response.builder()
+        var response = Response.builder()
             .status(404)
             .reason("not found")
             .headers(Collections.emptyMap())
             .request(this.request)
             .build();
 
-        SpringErrorDecoder decoder = new SpringErrorDecoder(this.fallback);
-        Exception decoded = decoder.decode("test", response);
+        var decoder = new SpringErrorDecoder(this.fallback);
+        var decoded = decoder.decode("test", response);
 
         Assertions.assertTrue(
             decoded instanceof HttpClientErrorException,
@@ -69,15 +69,15 @@ public class SpringErrorDecoderTest {
 
     @Test
     public void decode5xx() {
-        Response response = Response.builder()
+        var response = Response.builder()
             .status(502)
             .reason("server error")
             .headers(Collections.emptyMap())
             .request(this.request)
             .build();
 
-        SpringErrorDecoder decoder = new SpringErrorDecoder(this.fallback);
-        Exception decoded = decoder.decode("test", response);
+        var decoder = new SpringErrorDecoder(this.fallback);
+        var decoded = decoder.decode("test", response);
 
         Assertions.assertTrue(
             decoded instanceof HttpServerErrorException,
@@ -99,18 +99,18 @@ public class SpringErrorDecoderTest {
 
     @Test
     public void decodeFallback() {
-        Response response = Response.builder()
+        var response = Response.builder()
             .status(200)
             .reason("ok")
             .headers(Collections.emptyMap())
             .request(this.request)
             .build();
-        Exception error = new Exception();
+        var error = new Exception();
 
         Mockito.when(this.fallback.decode("test", response)).thenReturn(error);
 
-        SpringErrorDecoder decoder = new SpringErrorDecoder(this.fallback);
-        Exception decoded = decoder.decode("test", response);
+        var decoder = new SpringErrorDecoder(this.fallback);
+        var decoded = decoder.decode("test", response);
 
         Assertions.assertSame(
             error,

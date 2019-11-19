@@ -8,7 +8,6 @@
 package test.pl.wrzasq.commons.client.interceptor;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 import feign.RequestTemplate;
 import org.junit.jupiter.api.Assertions;
@@ -19,12 +18,12 @@ import pl.wrzasq.commons.client.interceptor.BearerTokenAuthorizer;
 public class BearerTokenAuthorizerTest {
     @Test
     public void apply() {
-        String token = "test";
-        RequestTemplate template = new RequestTemplate();
+        var token = "test";
+        var template = new RequestTemplate();
 
         new BearerTokenAuthorizer(token).apply(template);
 
-        Collection<String> values = template.headers().get(HttpHeaders.AUTHORIZATION);
+        var values = template.headers().get(HttpHeaders.AUTHORIZATION);
         Assertions.assertEquals(
             "Bearer test",
             new ArrayList<>(values).get(0),

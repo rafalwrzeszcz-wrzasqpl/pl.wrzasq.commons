@@ -25,19 +25,19 @@ public class NotificationHandlerTest {
 
     @Test
     public void process() {
-        SNSEvent.SNS message1 = new SNSEvent.SNS();
+        var message1 = new SNSEvent.SNS();
         message1.setMessage("msg1");
-        SNSEvent.SNSRecord record1 = new SNSEvent.SNSRecord();
+        var record1 = new SNSEvent.SNSRecord();
         record1.setSns(message1);
-        SNSEvent.SNS message2 = new SNSEvent.SNS();
+        var message2 = new SNSEvent.SNS();
         message2.setMessage("msg2");
-        SNSEvent.SNSRecord record2 = new SNSEvent.SNSRecord();
+        var record2 = new SNSEvent.SNSRecord();
         record2.setSns(message2);
 
-        SNSEvent event = new SNSEvent();
+        var event = new SNSEvent();
         event.setRecords(Arrays.asList(record1, record2));
 
-        NotificationHandler handler = new NotificationHandler(this.messageHandler);
+        var handler = new NotificationHandler(this.messageHandler);
         handler.process(event);
 
         Mockito.verify(this.messageHandler).accept(message1);

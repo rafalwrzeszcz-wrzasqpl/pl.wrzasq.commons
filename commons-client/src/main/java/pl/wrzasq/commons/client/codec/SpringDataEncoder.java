@@ -92,7 +92,7 @@ public class SpringDataEncoder implements Encoder {
     @Override
     public void encode(Object object, Type bodyType, RequestTemplate template) {
         if (object instanceof Pageable) {
-            Pageable request = (Pageable) object;
+            var request = (Pageable) object;
 
             template
                 .query(this.paramPage, String.valueOf(request.getPageNumber()))

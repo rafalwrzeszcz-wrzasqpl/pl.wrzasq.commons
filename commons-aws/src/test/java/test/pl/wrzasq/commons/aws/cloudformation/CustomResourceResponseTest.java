@@ -14,9 +14,9 @@ import pl.wrzasq.commons.aws.cloudformation.CustomResourceResponse;
 public class CustomResourceResponseTest {
     @Test
     public void nullPhysicalResourceId() {
-        Object data = new Object();
+        var data = new Object();
 
-        CustomResourceResponse<Object> response = new CustomResourceResponse<>(data);
+        var response = new CustomResourceResponse<>(data);
 
         Assertions.assertSame(
             data,

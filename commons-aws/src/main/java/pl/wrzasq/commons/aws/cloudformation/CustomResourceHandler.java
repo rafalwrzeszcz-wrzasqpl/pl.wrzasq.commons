@@ -75,7 +75,7 @@ public class CustomResourceHandler<InputType, OutputType> {
         );
 
         try {
-            CustomResourceResponse<OutputType> response = this.actions.get(request.getRequestType())
+            var response = this.actions.get(request.getRequestType())
                 .apply(request.getResourceProperties(), request.getPhysicalResourceId());
 
             this.sender.send(

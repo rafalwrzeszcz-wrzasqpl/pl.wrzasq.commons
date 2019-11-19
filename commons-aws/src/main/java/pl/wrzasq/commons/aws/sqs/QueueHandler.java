@@ -53,7 +53,7 @@ public class QueueHandler {
      * Processes queue messages.
      */
     public void process() {
-        for (Message message : this.sqs.receiveMessage(this.queueUrl).getMessages()) {
+        for (var message : this.sqs.receiveMessage(this.queueUrl).getMessages()) {
             this.messageHandler.accept(message);
             this.sqs.deleteMessage(this.queueUrl, message.getReceiptHandle());
         }

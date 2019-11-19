@@ -7,14 +7,10 @@
 
 package test.pl.wrzasq.commons.data;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.hateoas.PagedResources;
@@ -26,7 +22,7 @@ public class ConvertUtilsTest {
         // just for code coverage
         new ConvertUtils();
 
-        Collection<String> extracted = ConvertUtils.extractSort(
+        var extracted = ConvertUtils.extractSort(
             Sort.by(
                 new Sort.Order(Sort.Direction.DESC, "id"),
                 new Sort.Order(Sort.Direction.ASC, "name")
@@ -59,17 +55,17 @@ public class ConvertUtilsTest {
 
     @Test
     public void buildPageFromResources() {
-        Object object1 = new Object();
-        Object object2 = new Object();
-        int size = 2;
-        int number = 1;
-        int total = 10;
+        var object1 = new Object();
+        var object2 = new Object();
+        var size = 2;
+        var number = 1;
+        var total = 10;
 
-        PagedResources<Object> resources = new PagedResources<>(
-            Stream.of(object1, object2).collect(Collectors.toList()),
+        var resources = new PagedResources<>(
+            List.of(object1, object2),
             new PagedResources.PageMetadata(size, number, total)
         );
-        Page<Object> page = ConvertUtils.buildPageFromResources(resources, PageRequest.of(number, size));
+        var page = ConvertUtils.buildPageFromResources(resources, PageRequest.of(number, size));
 
         // verify converted value
         Assertions.assertEquals(
@@ -89,7 +85,7 @@ public class ConvertUtilsTest {
         );
 
         // verify content
-        List<Object> content = page.getContent();
+        var content = page.getContent();
         Assertions.assertSame(
             object1,
             content.get(0),

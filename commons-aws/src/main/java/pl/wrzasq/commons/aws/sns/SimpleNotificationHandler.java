@@ -9,8 +9,6 @@ package pl.wrzasq.commons.aws.sns;
 
 import java.util.function.Consumer;
 
-import com.amazonaws.services.lambda.runtime.events.SNSEvent;
-
 /**
  * SNS notifications handler that simply processes notification body.
  */
@@ -21,6 +19,6 @@ public class SimpleNotificationHandler extends NotificationHandler {
      * @param messageBodyHandler SNS message handler
      */
     public SimpleNotificationHandler(Consumer<String> messageBodyHandler) {
-        super((SNSEvent.SNS data) -> messageBodyHandler.accept(data.getMessage()));
+        super(data -> messageBodyHandler.accept(data.getMessage()));
     }
 }

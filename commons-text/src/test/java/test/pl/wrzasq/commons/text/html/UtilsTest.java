@@ -7,8 +7,6 @@
 
 package test.pl.wrzasq.commons.text.html;
 
-import java.io.UnsupportedEncodingException;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,8 +28,8 @@ public class UtilsTest {
         // just for code coverage
         new Utils();
 
-        String value = "foo <span>bar</span>\n<em>baz</em>";
-        String html = "<p>" + value + "</p> <p>\nquux</p>";
+        var value = "foo <span>bar</span>\n<em>baz</em>";
+        var html = "<p>" + value + "</p> <p>\nquux</p>";
 
         Assertions.assertEquals(
             value,
@@ -42,7 +40,7 @@ public class UtilsTest {
 
     @Test
     public void firstParagraphEmpty() {
-        String value = "foo <span>bar</span>\n<em>baz</em>";
+        var value = "foo <span>bar</span>\n<em>baz</em>";
 
         Assertions.assertEquals(
             "",
@@ -53,10 +51,7 @@ public class UtilsTest {
 
     @Test
     public void truncateShortText() {
-        // just for code coverage
-        new Utils();
-
-        String text = "Hello";
+        var text = "Hello";
 
         Assertions.assertEquals(
             text,
@@ -67,7 +62,7 @@ public class UtilsTest {
 
     @Test
     public void truncate() {
-        String text = "Hello world!";
+        var text = "Hello world!";
 
         Assertions.assertEquals(
             "Hello…",
@@ -78,7 +73,7 @@ public class UtilsTest {
 
     @Test
     public void truncateWordBounds() {
-        String text = "Hello world!";
+        var text = "Hello world!";
 
         Assertions.assertEquals(
             "Hello w…",
@@ -89,7 +84,7 @@ public class UtilsTest {
 
     @Test
     public void truncateWordBoundsNoWord() {
-        String text = "Helloworld!";
+        var text = "Helloworld!";
 
         Assertions.assertEquals(
             "Hellowo…",
@@ -100,7 +95,7 @@ public class UtilsTest {
 
     @Test
     public void truncateSuffix() {
-        String text = "Hello world!";
+        var text = "Hello world!";
 
         Assertions.assertEquals(
             "Hello.",
@@ -111,7 +106,7 @@ public class UtilsTest {
 
     @Test
     public void truncateSuffixWordBounds() {
-        String text = "Hello world!";
+        var text = "Hello world!";
 
         Assertions.assertEquals(
             "Hello w.",
@@ -123,11 +118,11 @@ public class UtilsTest {
     @Test
     public void format()
         throws TextProcessingException {
-        Formatter formatter = new Formatter();
+        var formatter = new Formatter();
         formatter.registerFormatter("foo", this.formatHandler);
 
-        String input = "bar";
-        String result = "baz";
+        var input = "bar";
+        var result = "baz";
 
         Mockito.when(this.formatHandler.transform(input)).thenReturn(result);
 
@@ -143,8 +138,7 @@ public class UtilsTest {
     }
 
     @Test
-    public void urlEncode()
-        throws UnsupportedEncodingException {
+    public void urlEncode() {
         Assertions.assertEquals(
             "foo+bar%2F%E2%80%A6",
             Utils.urlEncode("foo bar/…"),
