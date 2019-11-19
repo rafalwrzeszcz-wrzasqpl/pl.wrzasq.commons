@@ -75,7 +75,7 @@ public class CustomResourceHandler&lt;InputType, OutputType&gt; {
         );
 
         try {
-<span class="fc" id="L78">            CustomResourceResponse&lt;OutputType&gt; response = this.actions.get(request.getRequestType())</span>
+<span class="fc" id="L78">            var response = this.actions.get(request.getRequestType())</span>
 <span class="fc" id="L79">                .apply(request.getResourceProperties(), request.getPhysicalResourceId());</span>
 
 <span class="fc" id="L81">            this.sender.send(</span>
@@ -102,4 +102,4 @@ public class CustomResourceHandler&lt;InputType, OutputType&gt; {
 <span class="fc" id="L102">        }</span>
 <span class="fc" id="L103">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

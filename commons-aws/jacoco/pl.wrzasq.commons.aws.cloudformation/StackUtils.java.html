@@ -34,10 +34,8 @@ import java.util.stream.Collectors;
 <span class="fc" id="L34">            .orElse(Collections.emptyMap())</span>
 <span class="fc" id="L35">            .entrySet()</span>
 <span class="fc" id="L36">            .stream()</span>
-<span class="fc" id="L37">            .map(</span>
-<span class="fc" id="L38">                (Map.Entry&lt;String, String&gt; entry) -&gt; converter.apply(entry.getKey(), entry.getValue())</span>
-            )
-<span class="fc" id="L40">            .collect(Collectors.toList());</span>
+<span class="fc" id="L37">            .map(entry -&gt; converter.apply(entry.getKey(), entry.getValue()))</span>
+<span class="fc" id="L38">            .collect(Collectors.toList());</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

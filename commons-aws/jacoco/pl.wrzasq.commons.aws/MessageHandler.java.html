@@ -62,7 +62,7 @@ public class MessageHandler&lt;Type&gt; {
 <span class="fc" id="L62">        this.logger.info(&quot;Incoming message {}.&quot;, message);</span>
 
         try {
-<span class="fc" id="L65">            Type data = this.objectMapper.readValue(message, this.type);</span>
+<span class="fc" id="L65">            var data = this.objectMapper.readValue(message, this.type);</span>
 <span class="fc" id="L66">            this.messageHandler.accept(data);</span>
 <span class="fc" id="L67">            this.logger.debug(&quot;Task processed.&quot;);</span>
 <span class="fc" id="L68">        } catch (IOException error) {</span>
@@ -71,4 +71,4 @@ public class MessageHandler&lt;Type&gt; {
 <span class="fc" id="L71">        }</span>
 <span class="fc" id="L72">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

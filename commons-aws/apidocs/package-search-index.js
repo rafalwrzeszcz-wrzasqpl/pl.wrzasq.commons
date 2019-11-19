@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"pl.wrzasq.commons.aws"},{"l":"pl.wrzasq.commons.aws.cloudformation"},{"l":"pl.wrzasq.commons.aws.lambda"},{"l":"pl.wrzasq.commons.aws.sns"},{"l":"pl.wrzasq.commons.aws.sqs"}]

@@ -10,7 +10,6 @@ package pl.wrzasq.commons.aws.sqs;
 import java.util.function.Consumer;
 
 import com.amazonaws.services.sqs.AmazonSQS;
-import com.amazonaws.services.sqs.model.Message;
 
 /**
  * SQS queue handler that simply processes message body.
@@ -24,8 +23,8 @@ public class SimpleQueueHandler extends QueueHandler {
      * @param messageBodyHandler Single message consumer.
      */
     public SimpleQueueHandler(AmazonSQS sqs, String queueUrl, Consumer&lt;String&gt; messageBodyHandler) {
-<span class="fc" id="L27">        super(sqs, queueUrl, (Message message) -&gt; messageBodyHandler.accept(message.getBody()));</span>
-<span class="fc" id="L28">    }</span>
+<span class="fc" id="L26">        super(sqs, queueUrl, message -&gt; messageBodyHandler.accept(message.getBody()));</span>
+<span class="fc" id="L27">    }</span>
 
     /**
      * Initializes handler with the default SQS client.
@@ -39,7 +38,7 @@ public class SimpleQueueHandler extends QueueHandler {
      * @param messageBodyHandler Single message consumer.
      */
     public SimpleQueueHandler(String queueUrl, Consumer&lt;String&gt; messageBodyHandler) {
-<span class="pc" id="L42">        super(queueUrl, (Message message) -&gt; messageBodyHandler.accept(message.getBody()));</span>
-<span class="fc" id="L43">    }</span>
+<span class="pc" id="L41">        super(queueUrl, message -&gt; messageBodyHandler.accept(message.getBody()));</span>
+<span class="fc" id="L42">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
