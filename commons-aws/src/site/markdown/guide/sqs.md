@@ -115,3 +115,72 @@ public class MyLambda
 
 1.  In your logic you get your unserialized data model.
 1.  All you need to do is to plug your entry point.
+
+# Event handling
+
+It's also possible to use **SQS** as an event source to build reactive **Lambda** functions. Flow here is similar to
+handling **SNS** notifications. In such flow, your **Lambda** is called with an SQS event as an argument:
+
+```java
+public class MyLambda
+{
+    private static EventHandler handler;
+
+    static {
+        // all you have is plain string
+        MyLambda.handler = new SimpleEventHandler(
+            (String content) -> System.out.println(content)
+        );
+    }
+
+    public static void entryPoint(SQSEvent event)
+    {
+        MyLambda.handler.process(event);
+    }
+}
+```
+
+**Note:** Single SQS event can contain multiple messages - your handler will be called for each of the messages.
+
+You can also use typed handler:
+
+```java
+class MyPojo
+{
+    public String name;
+    public String email;
+}
+
+class MyConsumer
+{
+    public void consume(MyPojo payload)
+    {
+        // (1)
+    }
+}
+
+public class MyLambda
+{
+    private static EventHandler handler;
+
+    static {
+        ObjectMapper objectMapper = new ObjectMapper();
+        // configure your object mapper
+
+        MyConsumer consumer = new MyConsumer();
+        // configure your consumer
+
+        // (2)
+        MyLambda.handler = new TypedEventHandler(
+            objectMapper,
+            consumer::consume,
+            MyPojo.class
+        );
+    }
+
+    public static void entryPoint(SQSEvent event)
+    {
+        MyLambda.handler.process(event);
+    }
+}
+```
