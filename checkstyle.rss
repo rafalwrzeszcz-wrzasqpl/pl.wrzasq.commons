@@ -25,8 +25,8 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2014 - 2019 Rafał Wrzeszcz - Wrzasq.pl</copyright>
     <item>
-      <title>File: 31,
-             Errors: 86,
+      <title>File: 34,
+             Errors: 91,
              Warnings: 0,
              Infos: 0
       </title>
@@ -284,6 +284,20 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.aws.sqs.SimpleEventHandler.java">pl/wrzasq/commons/aws/sqs/SimpleEventHandler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.aws.sqs.QueueHandler.java">pl/wrzasq/commons/aws/sqs/QueueHandler.java</a>
                 </td>
                 <td>
@@ -382,6 +396,20 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.aws.sqs.EventHandler.java">pl/wrzasq/commons/aws/sqs/EventHandler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  5
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.aws.sns.TopicClient.java">pl/wrzasq/commons/aws/sns/TopicClient.java</a>
                 </td>
                 <td>
@@ -439,6 +467,20 @@ under the License.
                           <tr>
                 <td>
                   <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.client.FeignClientFactory.java">pl/wrzasq/commons/client/FeignClientFactory.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.aws.sqs.TypedEventHandler.java">pl/wrzasq/commons/aws/sqs/TypedEventHandler.java</a>
                 </td>
                 <td>
                   0
