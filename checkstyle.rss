@@ -23,10 +23,10 @@ under the License.
     <link>https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons</link>
     <description>WrzasqPl Commons - Checkstyle report</description>
     <language>en-us</language>
-    <copyright>&#169;2014 - 2019 Rafał Wrzeszcz - Wrzasq.pl</copyright>
+    <copyright>&#169;2014 - 2020 Rafał Wrzeszcz - Wrzasq.pl</copyright>
     <item>
-      <title>File: 34,
-             Errors: 91,
+      <title>File: 40,
+             Errors: 190,
              Warnings: 0,
              Infos: 0
       </title>
@@ -75,6 +75,20 @@ under the License.
                           <tr>
                 <td>
                   <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.aws.sns.SimpleNotificationHandler.java">pl/wrzasq/commons/aws/sns/SimpleNotificationHandler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.aws.cloudformation.macro.TemplateDefinition.java">pl/wrzasq/commons/aws/cloudformation/macro/TemplateDefinition.java</a>
                 </td>
                 <td>
                   0
@@ -270,6 +284,20 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.aws.cloudformation.macro.ResourcesDefinition.java">pl/wrzasq/commons/aws/cloudformation/macro/ResourcesDefinition.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  35
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.text.formatter.PlainTextFormatter.java">pl/wrzasq/commons/text/formatter/PlainTextFormatter.java</a>
                 </td>
                 <td>
@@ -368,6 +396,20 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.aws.cloudformation.macro.CloudFormationMacroRequest.java">pl/wrzasq/commons/aws/cloudformation/macro/CloudFormationMacroRequest.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  24
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.aws.lambda.HeartbeatHandler.java">pl/wrzasq/commons/aws/lambda/HeartbeatHandler.java</a>
                 </td>
                 <td>
@@ -397,6 +439,20 @@ under the License.
                           <tr>
                 <td>
                   <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.aws.sqs.EventHandler.java">pl/wrzasq/commons/aws/sqs/EventHandler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  5
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.aws.cloudformation.macro.MacroHandler.java">pl/wrzasq/commons/aws/cloudformation/macro/MacroHandler.java</a>
                 </td>
                 <td>
                   0
@@ -466,6 +522,20 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.aws.cloudformation.macro.TemplateUtils.java">pl/wrzasq/commons/aws/cloudformation/macro/TemplateUtils.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.client.FeignClientFactory.java">pl/wrzasq/commons/client/FeignClientFactory.java</a>
                 </td>
                 <td>
@@ -476,6 +546,20 @@ under the License.
                 </td>
                 <td>
                   0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.aws.cloudformation.macro.CloudFormationMacroResponse.java">pl/wrzasq/commons/aws/cloudformation/macro/CloudFormationMacroResponse.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  35
                 </td>
               </tr>
                           <tr>
