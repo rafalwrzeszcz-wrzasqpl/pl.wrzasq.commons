@@ -7,6 +7,7 @@
 
 package pl.wrzasq.commons.aws.cloudformation.macro;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -108,6 +109,17 @@ public class TemplateUtils {
      */
     public static Map<String, Object> ref(String reference) {
         return Collections.singletonMap("Ref", reference);
+    }
+
+    /**
+     * Returns !GetAtt reference call.
+     *
+     * @param resource Resource object ID.
+     * @param attribute Attribute name.
+     * @return !GetAtt call.
+     */
+    public static Map<String, Object> getAtt(String resource, String attribute) {
+        return Collections.singletonMap("Fn::GetAtt", Arrays.asList(resource, attribute));
     }
 
     /**

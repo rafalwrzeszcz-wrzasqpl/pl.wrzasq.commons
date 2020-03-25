@@ -7,6 +7,7 @@
 
 package test.pl.wrzasq.commons.aws.cloudformation.macro;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.function.Consumer;
 
@@ -127,6 +128,17 @@ public class TemplateUtilsTest {
         Assertions.assertEquals(1, output.size());
         Assertions.assertTrue(output.containsKey("Ref"));
         Assertions.assertEquals(reference, output.get("Ref"));
+    }
+
+    @Test
+    public void getAtt() {
+        var reference = "Foo";
+        var attribute = "Outputs.SubReturn";
+        var output = TemplateUtils.getAtt(reference, attribute);
+
+        Assertions.assertEquals(1, output.size());
+        Assertions.assertTrue(output.containsKey("Fn::GetAtt"));
+        Assertions.assertEquals(Arrays.asList(reference, attribute), output.get("Fn::GetAtt"));
     }
 
     @Test
