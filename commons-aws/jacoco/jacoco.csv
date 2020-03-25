@@ -16,5 +16,5 @@ WrzasqPl Commons AWS,pl.wrzasq.commons.aws.sqs,SimpleEventHandler,0,10,0,0,0,2,0
 WrzasqPl Commons AWS,pl.wrzasq.commons.aws.sqs,SimpleQueueHandler,5,18,0,0,0,4,1,3,1,3
 WrzasqPl Commons AWS,pl.wrzasq.commons.aws.sqs,QueueHandler,0,37,0,2,0,7,0,3,0,2
 WrzasqPl Commons AWS,pl.wrzasq.commons.aws.sqs,EventHandler,0,6,0,0,0,2,0,1,0,1
-WrzasqPl Commons AWS,pl.wrzasq.commons.aws.cloudformation.macro,TemplateUtils,0,97,0,14,0,22,0,13,0,6
+WrzasqPl Commons AWS,pl.wrzasq.commons.aws.cloudformation.macro,TemplateUtils,0,111,0,14,0,23,0,14,0,7
 WrzasqPl Commons AWS,pl.wrzasq.commons.aws.cloudformation.macro,MacroHandler,0,14,0,0,0,1,0,1,0,1
