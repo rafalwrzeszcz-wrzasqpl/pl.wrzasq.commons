@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.hateoas.PagedResources;
+import org.springframework.hateoas.PagedModel;
 import pl.wrzasq.commons.client.data.ConvertUtils;
 
 public class ConvertUtilsTest {
@@ -61,9 +61,9 @@ public class ConvertUtilsTest {
         var number = 1;
         var total = 10;
 
-        var resources = new PagedResources<>(
+        var resources = PagedModel.of(
             List.of(object1, object2),
-            new PagedResources.PageMetadata(size, number, total)
+            new PagedModel.PageMetadata(size, number, total)
         );
         var page = ConvertUtils.buildPageFromResources(resources, PageRequest.of(number, size));
 

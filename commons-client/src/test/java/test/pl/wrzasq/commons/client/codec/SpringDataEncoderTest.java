@@ -2,7 +2,7 @@
  * This file is part of the pl.wrzasq.commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2017 - 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2017 - 2020 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.wrzasq.commons.client.codec;
@@ -33,7 +33,7 @@ public class SpringDataEncoderTest {
 
         encoder.encode(request, Pageable.class, template);
 
-        Mockito.verifyZeroInteractions(this.fallback);
+        Mockito.verifyNoMoreInteractions(this.fallback);
 
         var queries = template.queries();
 
@@ -77,7 +77,7 @@ public class SpringDataEncoderTest {
 
         encoder.encode(request, Pageable.class, template);
 
-        Mockito.verifyZeroInteractions(this.fallback);
+        Mockito.verifyNoMoreInteractions(this.fallback);
 
         var queries = template.queries();
 

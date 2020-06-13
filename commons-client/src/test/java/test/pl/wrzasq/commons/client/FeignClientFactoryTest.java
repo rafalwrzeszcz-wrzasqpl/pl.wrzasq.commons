@@ -2,7 +2,7 @@
  * This file is part of the pl.wrzasq.commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2017 - 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2017 - 2020 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.wrzasq.commons.client;
@@ -70,7 +70,7 @@ public class FeignClientFactoryTest {
         );
 
         Mockito.verify(this.definedConfigurator).accept(this.builder);
-        Mockito.verifyZeroInteractions(this.customConfigurator);
+        Mockito.verifyNoMoreInteractions(this.customConfigurator);
 
         Assertions.assertSame(
             this,

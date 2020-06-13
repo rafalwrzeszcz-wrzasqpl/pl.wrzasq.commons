@@ -2,7 +2,7 @@
  * This file is part of the pl.wrzasq.commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2018 - 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2018 - 2020 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.wrzasq.commons.client.codec;
@@ -37,7 +37,8 @@ public class DelegateDecoderTest {
         "/",
         Collections.emptyMap(),
         new byte[] {},
-        StandardCharsets.UTF_8
+        StandardCharsets.UTF_8,
+        null
     );
 
     @Test
@@ -66,7 +67,7 @@ public class DelegateDecoderTest {
             "DelegateDecoder.decode() should return result of decoder assigned to specified type."
         );
 
-        Mockito.verifyZeroInteractions(this.fallback);
+        Mockito.verifyNoMoreInteractions(this.fallback);
         Mockito.verify(this.typed).decode(response, String.class);
     }
 
@@ -78,7 +79,7 @@ public class DelegateDecoderTest {
             .headers(
                 Collections.singletonMap(
                     HttpHeaders.CONTENT_TYPE,
-                    Collections.singleton(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                    Collections.singleton(MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
                 )
             )
             .request(this.request)
@@ -96,7 +97,7 @@ public class DelegateDecoderTest {
             "DelegateDecoder.decode() should return result of decoder, ignoring extra type parameters."
         );
 
-        Mockito.verifyZeroInteractions(this.fallback);
+        Mockito.verifyNoMoreInteractions(this.fallback);
         Mockito.verify(this.typed).decode(response, String.class);
     }
 
@@ -124,7 +125,7 @@ public class DelegateDecoderTest {
         );
 
         Mockito.verify(this.fallback).decode(response, String.class);
-        Mockito.verifyZeroInteractions(this.typed);
+        Mockito.verifyNoMoreInteractions(this.typed);
     }
 
     @Test
@@ -154,6 +155,6 @@ public class DelegateDecoderTest {
         );
 
         Mockito.verify(this.fallback).decode(response, String.class);
-        Mockito.verifyZeroInteractions(this.typed);
+        Mockito.verifyNoMoreInteractions(this.typed);
     }
 }

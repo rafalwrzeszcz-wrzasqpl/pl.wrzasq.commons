@@ -2,7 +2,7 @@
  * This file is part of the pl.wrzasq.commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2017 - 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2017 - 2020 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.wrzasq.commons.client.codec;
@@ -34,7 +34,8 @@ public class SpringErrorDecoderTest {
         "/",
         Collections.emptyMap(),
         new byte[] {},
-        StandardCharsets.UTF_8
+        StandardCharsets.UTF_8,
+        null
     );
 
     @Test
@@ -64,7 +65,7 @@ public class SpringErrorDecoderTest {
             "SpringErrorDecoder.decode() should preserve HTTP reason message."
         );
 
-        Mockito.verifyZeroInteractions(this.fallback);
+        Mockito.verifyNoMoreInteractions(this.fallback);
     }
 
     @Test
@@ -94,7 +95,7 @@ public class SpringErrorDecoderTest {
             "SpringErrorDecoder.decode() should preserve HTTP reason message."
         );
 
-        Mockito.verifyZeroInteractions(this.fallback);
+        Mockito.verifyNoMoreInteractions(this.fallback);
     }
 
     @Test

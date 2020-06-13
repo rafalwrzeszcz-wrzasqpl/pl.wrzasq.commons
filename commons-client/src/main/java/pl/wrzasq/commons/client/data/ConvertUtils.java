@@ -9,13 +9,14 @@ package pl.wrzasq.commons.client.data;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.hateoas.PagedResources;
+import org.springframework.hateoas.PagedModel;
 
 /**
  * Conversion utils for Spring Data collections.
@@ -46,13 +47,13 @@ public class ConvertUtils {
      * @return Paged result.
      */
     public static <ResourceType> Page<ResourceType> buildPageFromResources(
-        PagedResources<? extends ResourceType> resources,
+        PagedModel<? extends ResourceType> resources,
         Pageable request
     ) {
         return new PageImpl<>(
             new ArrayList<>(resources.getContent()),
             request,
-            resources.getMetadata().getTotalElements()
+            Optional.ofNullable(resources.getMetadata()).map(PagedModel.PageMetadata::getTotalElements).orElse(0L)
         );
     }
 }

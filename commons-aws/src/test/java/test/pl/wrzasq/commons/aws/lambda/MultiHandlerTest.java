@@ -2,7 +2,7 @@
  * This file is part of the pl.wrzasq.commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2019 - 2020 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.wrzasq.commons.aws.lambda;
@@ -56,7 +56,7 @@ public class MultiHandlerTest {
         handler.handle(this.inputStream, this.outputStream);
 
         Mockito.verify(this.handler1).handle(this.root, this.outputStream);
-        Mockito.verifyZeroInteractions(this.handler2);
+        Mockito.verifyNoMoreInteractions(this.handler2);
         Mockito.verify(this.objectMapper, Mockito.never()).writeValueAsBytes(this.root);
         Mockito.verify(this.outputStream).close();
     }
@@ -123,8 +123,8 @@ public class MultiHandlerTest {
             "MultiHandler.handle() should expose exception thrown by sub-handler."
         );
 
-        Mockito.verifyZeroInteractions(this.handler1);
-        Mockito.verifyZeroInteractions(this.handler2);
+        Mockito.verifyNoMoreInteractions(this.handler1);
+        Mockito.verifyNoMoreInteractions(this.handler2);
         Mockito.verify(this.objectMapper, Mockito.never()).writeValueAsBytes(this.root);
         Mockito.verify(this.outputStream).close();
     }
