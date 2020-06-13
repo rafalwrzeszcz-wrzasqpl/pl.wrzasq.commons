@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"pl.wrzasq.commons.dynamodb"},{"l":"pl.wrzasq.commons.dynamodb.mapper"}]
