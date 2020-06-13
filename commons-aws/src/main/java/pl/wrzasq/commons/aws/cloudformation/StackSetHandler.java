@@ -2,7 +2,7 @@
  * This file is part of the pl.wrzasq.commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2019 - 2020 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.wrzasq.commons.aws.cloudformation;
@@ -100,6 +100,7 @@ public class StackSetHandler {
                         )
                     );
 
+                case QUEUED:
                 case RUNNING:
                 case STOPPING:
                     this.logger.info("Stack operation {} in progress.", operationId);
