@@ -1,3 +1,4 @@
 pl.wrzasq.commons.client
 pl.wrzasq.commons.client.codec
+pl.wrzasq.commons.client.data
 pl.wrzasq.commons.client.interceptor
