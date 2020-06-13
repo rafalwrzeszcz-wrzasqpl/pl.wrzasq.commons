@@ -2,7 +2,7 @@
  * This file is part of the pl.wrzasq.commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2017, 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2017, 2019 - 2020 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.wrzasq.commons.client.codec;
@@ -12,7 +12,7 @@ import java.lang.reflect.Type;
 import feign.RequestTemplate;
 import feign.codec.Encoder;
 import org.springframework.data.domain.Pageable;
-import pl.wrzasq.commons.data.ConvertUtils;
+import pl.wrzasq.commons.client.data.ConvertUtils;
 
 /**
  * Spring Data page specification handling in requests.

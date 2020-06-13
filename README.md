@@ -2,7 +2,7 @@
 # This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2014 - 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2014 - 2020 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
 # WrzasqPl-Commons
@@ -40,7 +40,13 @@ You can use libraries in your `pom.xml` by defining following dependencies:
 
 <dependency>
     <groupId>pl.wrzasq.commons</groupId>
-    <artifactId>commons-data</artifactId>
+    <artifactId>commons-dynamodb</artifactId>
+    <version>${pl.wrzasq.commons.version}</version>
+</dependency>
+
+<dependency>
+    <groupId>pl.wrzasq.commons</groupId>
+    <artifactId>commons-json</artifactId>
     <version>${pl.wrzasq.commons.version}</version>
 </dependency>
 
@@ -59,7 +65,8 @@ You can of course pick only those parts that you need directly.
 
 -   [**AWS**](https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-aws/): helper routines for eorking with *Amazon Web Services*,
 -   [**Client**](https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-client/): web service client building utilities,
--   [**Data**](https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-data/): helper routines for handling *Spring Data* structures,
+-   [**DynamoDB**](https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-dynamodb/): things that help with common **DynamoDB** routines,
+-   [**JSON**](https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-json/): default setup for **Jackson**,
 -   [**Text**](https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/commons-text/): various text processing utilities.
 
 # Resources

@@ -3,7 +3,7 @@
 # This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2014 - 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2014 - 2020 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 <project
     xmlns="http://maven.apache.org/POM/4.0.0"
@@ -121,7 +121,8 @@
     <modules>
         <module>commons-aws</module>
         <module>commons-client</module>
-        <module>commons-data</module>
+        <module>commons-dynamodb</module>
+        <module>commons-json</module>
         <module>commons-text</module>
     </modules>
 </project>
