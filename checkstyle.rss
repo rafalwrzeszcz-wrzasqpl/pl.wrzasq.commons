@@ -25,8 +25,8 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2014 - 2020 Rafał Wrzeszcz - Wrzasq.pl</copyright>
     <item>
-      <title>File: 40,
-             Errors: 190,
+      <title>File: 43,
+             Errors: 191,
              Warnings: 0,
              Infos: 0
       </title>
@@ -89,6 +89,20 @@ under the License.
                           <tr>
                 <td>
                   <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.aws.cloudformation.macro.TemplateDefinition.java">pl/wrzasq/commons/aws/cloudformation/macro/TemplateDefinition.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.dynamodb.DynamoDbMapperFactory.java">pl/wrzasq/commons/dynamodb/DynamoDbMapperFactory.java</a>
                 </td>
                 <td>
                   0
@@ -228,6 +242,20 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.json.ObjectMapperFactory.java">pl/wrzasq/commons/json/ObjectMapperFactory.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.text.Formatter.java">pl/wrzasq/commons/text/Formatter.java</a>
                 </td>
                 <td>
@@ -256,6 +284,20 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.client.data.ConvertUtils.java">pl/wrzasq/commons/client/data/ConvertUtils.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.aws.cloudformation.StackSetHandler.java">pl/wrzasq/commons/aws/cloudformation/StackSetHandler.java</a>
                 </td>
                 <td>
@@ -265,21 +307,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  22
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.data.ConvertUtils.java">pl/wrzasq/commons/data/ConvertUtils.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
+                  23
                 </td>
               </tr>
                           <tr>
@@ -602,6 +630,20 @@ under the License.
                 </td>
                 <td>
                   5
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.dynamodb.mapper.OffsetDateTimeMapper.java">pl/wrzasq/commons/dynamodb/mapper/OffsetDateTimeMapper.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
               </tr>
                       </tbody>
