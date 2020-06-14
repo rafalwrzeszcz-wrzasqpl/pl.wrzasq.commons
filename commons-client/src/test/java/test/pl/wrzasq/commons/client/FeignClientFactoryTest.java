@@ -70,7 +70,7 @@ public class FeignClientFactoryTest {
         );
 
         Mockito.verify(this.definedConfigurator).accept(this.builder);
-        Mockito.verifyNoMoreInteractions(this.customConfigurator);
+        Mockito.verifyNoInteractions(this.customConfigurator);
 
         Assertions.assertSame(
             this,

@@ -33,7 +33,7 @@ public class SpringDataEncoderTest {
 
         encoder.encode(request, Pageable.class, template);
 
-        Mockito.verifyNoMoreInteractions(this.fallback);
+        Mockito.verifyNoInteractions(this.fallback);
 
         var queries = template.queries();
 
@@ -77,7 +77,7 @@ public class SpringDataEncoderTest {
 
         encoder.encode(request, Pageable.class, template);
 
-        Mockito.verifyNoMoreInteractions(this.fallback);
+        Mockito.verifyNoInteractions(this.fallback);
 
         var queries = template.queries();
 

@@ -65,7 +65,7 @@ public class SpringErrorDecoderTest {
             "SpringErrorDecoder.decode() should preserve HTTP reason message."
         );
 
-        Mockito.verifyNoMoreInteractions(this.fallback);
+        Mockito.verifyNoInteractions(this.fallback);
     }
 
     @Test
@@ -95,7 +95,7 @@ public class SpringErrorDecoderTest {
             "SpringErrorDecoder.decode() should preserve HTTP reason message."
         );
 
-        Mockito.verifyNoMoreInteractions(this.fallback);
+        Mockito.verifyNoInteractions(this.fallback);
     }
 
     @Test

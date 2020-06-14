@@ -56,7 +56,7 @@ public class MultiHandlerTest {
         handler.handle(this.inputStream, this.outputStream);
 
         Mockito.verify(this.handler1).handle(this.root, this.outputStream);
-        Mockito.verifyNoMoreInteractions(this.handler2);
+        Mockito.verifyNoInteractions(this.handler2);
         Mockito.verify(this.objectMapper, Mockito.never()).writeValueAsBytes(this.root);
         Mockito.verify(this.outputStream).close();
     }
@@ -123,8 +123,8 @@ public class MultiHandlerTest {
             "MultiHandler.handle() should expose exception thrown by sub-handler."
         );
 
-        Mockito.verifyNoMoreInteractions(this.handler1);
-        Mockito.verifyNoMoreInteractions(this.handler2);
+        Mockito.verifyNoInteractions(this.handler1);
+        Mockito.verifyNoInteractions(this.handler2);
         Mockito.verify(this.objectMapper, Mockito.never()).writeValueAsBytes(this.root);
         Mockito.verify(this.outputStream).close();
     }

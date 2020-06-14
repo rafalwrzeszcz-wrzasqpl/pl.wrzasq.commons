@@ -67,7 +67,7 @@ public class DelegateDecoderTest {
             "DelegateDecoder.decode() should return result of decoder assigned to specified type."
         );
 
-        Mockito.verifyNoMoreInteractions(this.fallback);
+        Mockito.verifyNoInteractions(this.fallback);
         Mockito.verify(this.typed).decode(response, String.class);
     }
 
@@ -97,7 +97,7 @@ public class DelegateDecoderTest {
             "DelegateDecoder.decode() should return result of decoder, ignoring extra type parameters."
         );
 
-        Mockito.verifyNoMoreInteractions(this.fallback);
+        Mockito.verifyNoInteractions(this.fallback);
         Mockito.verify(this.typed).decode(response, String.class);
     }
 
@@ -125,7 +125,7 @@ public class DelegateDecoderTest {
         );
 
         Mockito.verify(this.fallback).decode(response, String.class);
-        Mockito.verifyNoMoreInteractions(this.typed);
+        Mockito.verifyNoInteractions(this.typed);
     }
 
     @Test
@@ -155,6 +155,6 @@ public class DelegateDecoderTest {
         );
 
         Mockito.verify(this.fallback).decode(response, String.class);
-        Mockito.verifyNoMoreInteractions(this.typed);
+        Mockito.verifyNoInteractions(this.typed);
     }
 }
