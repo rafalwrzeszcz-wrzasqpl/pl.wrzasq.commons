@@ -25,8 +25,8 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2014 - 2020 Rafał Wrzeszcz - Wrzasq.pl</copyright>
     <item>
-      <title>File: 43,
-             Errors: 191,
+      <title>File: 37,
+             Errors: 176,
              Warnings: 0,
              Infos: 0
       </title>
@@ -44,20 +44,6 @@ under the License.
             </tr>
           </thead>
           <tbody>
-                          <tr>
-                <td>
-                  <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.client.BaseFeignClientFactory.java">pl/wrzasq/commons/client/BaseFeignClientFactory.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
                           <tr>
                 <td>
                   <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.text.TextProcessingException.java">pl/wrzasq/commons/text/TextProcessingException.java</a>
@@ -116,7 +102,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.client.codec.SpringErrorDecoder.java">pl/wrzasq/commons/client/codec/SpringErrorDecoder.java</a>
+                  <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.aws.sqs.QueueClient.java">pl/wrzasq/commons/aws/sqs/QueueClient.java</a>
                 </td>
                 <td>
                   0
@@ -144,35 +130,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.client.interceptor.AuthorizationForwarder.java">pl/wrzasq/commons/client/interceptor/AuthorizationForwarder.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  4
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.text.formatter.HtmlFormatter.java">pl/wrzasq/commons/text/formatter/HtmlFormatter.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.aws.sqs.SimpleQueueHandler.java">pl/wrzasq/commons/aws/sqs/SimpleQueueHandler.java</a>
                 </td>
                 <td>
                   0
@@ -214,7 +172,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.client.codec.SpringDataEncoder.java">pl/wrzasq/commons/client/codec/SpringDataEncoder.java</a>
+                  <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.json.ObjectMapperFactory.java">pl/wrzasq/commons/json/ObjectMapperFactory.java</a>
                 </td>
                 <td>
                   0
@@ -242,20 +200,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.json.ObjectMapperFactory.java">pl/wrzasq/commons/json/ObjectMapperFactory.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.text.Formatter.java">pl/wrzasq/commons/text/Formatter.java</a>
                 </td>
                 <td>
@@ -271,20 +215,6 @@ under the License.
                           <tr>
                 <td>
                   <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.client.codec.DelegateDecoder.java">pl/wrzasq/commons/client/codec/DelegateDecoder.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.client.data.ConvertUtils.java">pl/wrzasq/commons/client/data/ConvertUtils.java</a>
                 </td>
                 <td>
                   0
@@ -354,20 +284,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.aws.sqs.QueueHandler.java">pl/wrzasq/commons/aws/sqs/QueueHandler.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  7
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.text.formatter.FormatterInterface.java">pl/wrzasq/commons/text/formatter/FormatterInterface.java</a>
                 </td>
                 <td>
@@ -383,6 +299,20 @@ under the License.
                           <tr>
                 <td>
                   <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.aws.sns.TypedNotificationHandler.java">pl/wrzasq/commons/aws/sns/TypedNotificationHandler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.aws.MessageDispatcher.java">pl/wrzasq/commons/aws/MessageDispatcher.java</a>
                 </td>
                 <td>
                   0
@@ -503,7 +433,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  6
+                  0
                 </td>
               </tr>
                           <tr>
@@ -606,20 +536,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.aws.sqs.TypedQueueHandler.java">pl/wrzasq/commons/aws/sqs/TypedQueueHandler.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/checkstyle.html#pl.wrzasq.commons.client.interceptor.BearerTokenAuthorizer.java">pl/wrzasq/commons/client/interceptor/BearerTokenAuthorizer.java</a>
                 </td>
                 <td>
@@ -629,7 +545,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  5
+                  7
                 </td>
               </tr>
                           <tr>
