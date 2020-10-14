@@ -2,7 +2,7 @@
  * This file is part of the pl.wrzasq.commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2018 - 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2018 - 2020 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.wrzasq.commons.client.codec;
@@ -16,12 +16,16 @@ import java.util.Map;
 import feign.FeignException;
 import feign.Response;
 import feign.codec.Decoder;
-import org.springframework.http.HttpHeaders;
 
 /**
  * Content-Type-sensitive decoder.
  */
 public class DelegateDecoder implements Decoder {
+    /**
+     * HTTP header name.
+     */
+    private static final String HEADER_NAME_CONTENT_TYPE = "Content-Type";
+
     /**
      * Fallback decoder for not-supported types.
      */
@@ -60,7 +64,7 @@ public class DelegateDecoder implements Decoder {
     @Override
     public Object decode(Response response, Type type) throws IOException, FeignException {
         return this.delegates.getOrDefault(
-            response.headers().getOrDefault(HttpHeaders.CONTENT_TYPE, Collections.emptyList())
+            response.headers().getOrDefault(DelegateDecoder.HEADER_NAME_CONTENT_TYPE, Collections.emptyList())
                 .stream()
                 .findFirst()
                 .orElse("")

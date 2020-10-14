@@ -2,7 +2,7 @@
  * This file is part of the pl.wrzasq.commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2016, 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2016, 2019 - 2020 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.wrzasq.commons.text;
@@ -43,7 +43,7 @@ public class Formatter {
         throws
             TextProcessingException {
         if (!this.formatters.containsKey(format)) {
-            throw new TextProcessingException(String.format("No handler for format \"%s\" registred.", format));
+            throw new TextProcessingException(String.format("No handler for format \"%s\" registered.", format));
         }
 
         return this.formatters.get(format).transform(text);

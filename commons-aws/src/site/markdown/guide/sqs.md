@@ -2,123 +2,66 @@
 # This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2017 - 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2017 - 2020 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
+
+# Publishing
+
+You can use `pl.wrzasq.commons.aws.sqs.QueueClient` to bind target queue URL with a client and avoid passing
+excessive information around. `QueueClient` also handles **JSON** serialization of the payload:
+
+```java
+class MyPing
+{
+    public String message;
+    public String callback;
+
+    public MyPing(String message, String callback)
+    {
+        this.message = message;
+        this.callback = callback;
+    }
+}
+
+class MyProducer
+{
+    private TopicClient client;
+
+    public MyProducer(QueueClient client)
+    {
+        this.client = client;
+    }
+
+    public void produce()
+    {
+        // (2)
+        this.client.send(new MyPing("hello", "http://localhost/ping"));
+    }
+}
+
+public class MyLambda
+{
+    private static MyProducer producer = new MyProducer(
+        // (1)
+        new QueueClient("https://target/")
+    );
+
+    public static void entryPoint()
+    {
+        // (3)
+        MyLambda.producer.produce();
+    }
+}
+```
+
+1.  You can initialize `QueueClient` with custom **Jackson** `ObjectMapper` to handle your custom types/strategies.
+1.  Note that you don't need to pass queue URL around - it's wrapped in the client.
+1.  See that your logic has now no call-time parameters, it's all covered by underlying client.
 
 # Handling messages
 
-If you want your **Lambda** to process [**SQS**](https://aws.amazon.com/sqs/) messages you can use `pl.wrzasq.commons.aws.sqs.QueueHandler` class. It takes care for iterating over fetched messages and and deletes processed messages from the queue:
-
-```java
-class MyConsumer
-{
-    public void consume(Message message)
-    {
-        // handle single message
-    }
-}
-
-public class MyLambda
-{
-    private static QueueHandler handler;
-
-    static {
-        MyConsumer consumer = new MyConsumer();
-
-        // (1)
-        MyLambda.handler = new QueueHandler(
-            System.getenv("MY_QUEUE_URL"),
-            consumer::consume
-        );
-    }
-
-    public static void entryPoint()
-    {
-        // (2)
-        MyLambda.handler.process();
-    }
-}
-```
-
-1.  All you expose to the handler is single message consumer method, you keep your components separated.
-1.  Your **Lambda** entry point gets lean.
-
-## Simple messages handling
-
-If you are only interested in message body handling, you can use even simpler wrapper `SimpleMessageHandler`, which also extracts message body, giving you just it's content:
-
-```java
-public class MyLambda
-{
-    private static QueueHandler handler;
-
-    static {
-        // all you have is plain string
-        MyLambda.handler = new SimpleQueueHandler(
-            System.getenv("MY_QUEUE_URL"),
-            (String content) -> System.out.println(content)
-        );
-    }
-
-    public static void entryPoint()
-    {
-        MyLambda.handler.process();
-    }
-}
-```
-
-## Typed messages
-
-If you work with serialized structures, you can also automate this by using `TypedQueueHandler` which deserializes **JSON** for you:
-
-```java
-class MyPojo
-{
-    public String name;
-    public String email;
-}
-
-class MyConsumer
-{
-    public void consume(MyPojo payload)
-    {
-        // (1)
-    }
-}
-
-public class MyLambda
-{
-    private static QueueHandler handler;
-
-    static {
-        ObjectMapper objectMapper = new ObjectMapper();
-        // configure your object mapper
-
-        MyConsumer consumer = new MyConsumer();
-        // configure your consumer
-
-        // (2)
-        MyLambda.handler = new TypedQueueHandler(
-            System.getenv("MY_QUEUE_URL"),
-            objectMapper,
-            consumer::consume,
-            MyPojo.class
-        );
-    }
-
-    public static void entryPoint()
-    {
-        MyLambda.handler.process();
-    }
-}
-```
-
-1.  In your logic you get your unserialized data model.
-1.  All you need to do is to plug your entry point.
-
-# Event handling
-
-It's also possible to use **SQS** as an event source to build reactive **Lambda** functions. Flow here is similar to
+If you want your **Lambda** to process [**SQS**](https://aws.amazon.com/sqs/) messages you can use
+`pl.wrzasq.commons.aws.sqs.EventHandler` class to implement your function as an event source. Flow here is similar to
 handling **SNS** notifications. In such flow, your **Lambda** is called with an SQS event as an argument:
 
 ```java

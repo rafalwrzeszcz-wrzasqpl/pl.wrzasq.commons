@@ -2,7 +2,7 @@
 # This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2017 - 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2017 - 2020 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
 # Publishing
@@ -34,7 +34,7 @@ class MyProducer
     public void produce()
     {
         // (2)
-        this.client.publish(new MyPing("hello", "http://localhost/ping"));
+        this.client.send(new MyPing("hello", "http://localhost/ping"));
     }
 }
 
@@ -42,7 +42,7 @@ public class MyLambda
 {
     private static MyProducer producer = new MyProducer(
         // (1)
-        new TopicClient(new ObjectMapper(), "arn:test")
+        new TopicClient("arn:test")
     );
 
     public static void entryPoint()

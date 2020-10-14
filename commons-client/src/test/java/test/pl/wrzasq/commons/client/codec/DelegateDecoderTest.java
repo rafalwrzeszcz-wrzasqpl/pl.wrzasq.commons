@@ -20,12 +20,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import pl.wrzasq.commons.client.codec.DelegateDecoder;
 
 @ExtendWith(MockitoExtension.class)
 public class DelegateDecoderTest {
+    private static final String MEDIA_TYPE_APPLICATION_JSON = "application/json";
+    private static final String MEDIA_TYPE_TEXT_PLAIN = "text/plain";
+
     @Mock
     private Decoder fallback;
 
@@ -48,8 +49,8 @@ public class DelegateDecoderTest {
             .reason("ok")
             .headers(
                 Collections.singletonMap(
-                    HttpHeaders.CONTENT_TYPE,
-                    Collections.singleton(MediaType.APPLICATION_JSON_VALUE)
+                    "Content-Type",
+                    Collections.singleton(DelegateDecoderTest.MEDIA_TYPE_APPLICATION_JSON)
                 )
             )
             .request(this.request)
@@ -59,7 +60,7 @@ public class DelegateDecoderTest {
         Mockito.when(this.typed.decode(response, String.class)).thenReturn(result);
 
         var decoder = new DelegateDecoder(this.fallback);
-        decoder.registerTypeDecoder(MediaType.APPLICATION_JSON_VALUE, this.typed);
+        decoder.registerTypeDecoder(DelegateDecoderTest.MEDIA_TYPE_APPLICATION_JSON, this.typed);
 
         Assertions.assertSame(
             result,
@@ -78,8 +79,8 @@ public class DelegateDecoderTest {
             .reason("ok")
             .headers(
                 Collections.singletonMap(
-                    HttpHeaders.CONTENT_TYPE,
-                    Collections.singleton(MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
+                    "Content-Type",
+                    Collections.singleton(DelegateDecoderTest.MEDIA_TYPE_APPLICATION_JSON + ";charset=UTF-8")
                 )
             )
             .request(this.request)
@@ -89,7 +90,7 @@ public class DelegateDecoderTest {
         Mockito.when(this.typed.decode(response, String.class)).thenReturn(result);
 
         var decoder = new DelegateDecoder(this.fallback);
-        decoder.registerTypeDecoder(MediaType.APPLICATION_JSON_VALUE, this.typed);
+        decoder.registerTypeDecoder(DelegateDecoderTest.MEDIA_TYPE_APPLICATION_JSON, this.typed);
 
         Assertions.assertSame(
             result,
@@ -116,7 +117,7 @@ public class DelegateDecoderTest {
         Mockito.when(this.fallback.decode(response, String.class)).thenReturn(result);
 
         var decoder = new DelegateDecoder(this.fallback);
-        decoder.registerTypeDecoder(MediaType.APPLICATION_JSON_VALUE, this.typed);
+        decoder.registerTypeDecoder(DelegateDecoderTest.MEDIA_TYPE_APPLICATION_JSON, this.typed);
 
         Assertions.assertSame(
             result,
@@ -135,8 +136,8 @@ public class DelegateDecoderTest {
             .reason("ok")
             .headers(
                 Collections.singletonMap(
-                    HttpHeaders.CONTENT_TYPE,
-                    Collections.singleton(MediaType.TEXT_PLAIN_VALUE)
+                    "Content-Type",
+                    Collections.singleton(DelegateDecoderTest.MEDIA_TYPE_TEXT_PLAIN)
                 )
             )
             .request(this.request)
@@ -146,7 +147,7 @@ public class DelegateDecoderTest {
         Mockito.when(this.fallback.decode(response, String.class)).thenReturn(result);
 
         var decoder = new DelegateDecoder(this.fallback);
-        decoder.registerTypeDecoder(MediaType.APPLICATION_JSON_VALUE, this.typed);
+        decoder.registerTypeDecoder(DelegateDecoderTest.MEDIA_TYPE_APPLICATION_JSON, this.typed);
 
         Assertions.assertSame(
             result,

@@ -3,7 +3,7 @@
 # This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2017 - 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2017 - 2020 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 <project
     xmlns="http://maven.apache.org/DECORATION/1.4.0"
@@ -16,10 +16,7 @@
 
         <menu name="Guide">
             <item name="Factory" href="guide/factory.html"/>
-            <item name="Spring Data" href="guide/spring-data.html"/>
-            <item name="Spring Errors" href="guide/spring-errors.html"/>
             <item name="Content-Type delegation" href="guide/delegate-decoder.html"/>
-            <item name="Authorization" href="guide/authorization.html"/>
         </menu>
 
         <menu ref="reports"/>

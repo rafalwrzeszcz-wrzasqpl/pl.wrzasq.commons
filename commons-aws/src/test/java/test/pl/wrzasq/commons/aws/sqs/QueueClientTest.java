@@ -2,13 +2,13 @@
  * This file is part of the pl.wrzasq.commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2017 - 2020 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2020 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
-package test.pl.wrzasq.commons.aws.sns;
+package test.pl.wrzasq.commons.aws.sqs;
 
-import com.amazonaws.services.sns.AmazonSNS;
-import com.amazonaws.services.sns.model.PublishResult;
+import com.amazonaws.services.sqs.AmazonSQS;
+import com.amazonaws.services.sqs.model.SendMessageResult;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
@@ -17,12 +17,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import pl.wrzasq.commons.aws.sns.TopicClient;
+import pl.wrzasq.commons.aws.sqs.QueueClient;
 
 @ExtendWith(MockitoExtension.class)
-public class TopicClientTest {
+public class QueueClientTest {
     @Mock
-    private AmazonSNS sns;
+    private AmazonSQS sqs;
 
     @Mock
     private ObjectMapper objectMapper;
@@ -30,22 +30,22 @@ public class TopicClientTest {
     @Test
     public void send() throws JsonProcessingException {
         // just for code coverage
-        new TopicClient(null);
+        new QueueClient(null);
 
-        var topic = "arn:test";
+        var queue = "https://test";
         var input = new Object();
         var message = "{}";
-        var result = new PublishResult();
+        var result = new SendMessageResult();
 
-        var client = new TopicClient(this.objectMapper, this.sns, topic);
+        var client = new QueueClient(this.objectMapper, this.sqs, queue);
 
         Mockito.when(this.objectMapper.writeValueAsString(input)).thenReturn(message);
-        Mockito.when(this.sns.publish(topic, message)).thenReturn(result);
+        Mockito.when(this.sqs.sendMessage(queue, message)).thenReturn(result);
 
         Assertions.assertSame(
             result,
             client.send(input),
-            "TopicClient.send() should send serialized message to configured topic."
+            "QueueClient.send() should send serialized message to configured queue."
         );
     }
 }

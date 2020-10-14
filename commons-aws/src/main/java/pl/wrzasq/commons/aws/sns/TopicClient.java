@@ -2,7 +2,7 @@
  * This file is part of the pl.wrzasq.commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2017, 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2017, 2019 - 2020 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.wrzasq.commons.aws.sns;
@@ -10,53 +10,31 @@ package pl.wrzasq.commons.aws.sns;
 import com.amazonaws.services.sns.AmazonSNS;
 import com.amazonaws.services.sns.AmazonSNSClientBuilder;
 import com.amazonaws.services.sns.model.PublishResult;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AllArgsConstructor;
+import pl.wrzasq.commons.aws.MessageDispatcher;
+import pl.wrzasq.commons.json.ObjectMapperFactory;
 
 /**
  * Topic-wrapped AWS SNS client.
  */
-@AllArgsConstructor
-public class TopicClient {
+public class TopicClient extends MessageDispatcher<PublishResult> {
     /**
-     * AWS SNS client.
-     */
-    private AmazonSNS sns;
-
-    /**
-     * JSON (de-)serialization handler.
-     */
-    private ObjectMapper objectMapper;
-
-    /**
-     * Topic ARN.
-     */
-    private String topicArn;
-
-    /**
-     * Initializes client wrapper with the default SNS client.
-     *
-     * <p>
-     *     This is a simplified version for AWS internal services, like AWS Lambda, which relies on environment
-     *     permissions.
-     * </p>
+     * Initializes queue dispatcher.
      *
      * @param objectMapper JSON handler.
-     * @param topicArn SNS topic ARN.
+     * @param sns SNS client.
+     * @param topicArn Destination topic ARN.
      */
-    public TopicClient(ObjectMapper objectMapper, String topicArn) {
-        this(AmazonSNSClientBuilder.standard().build(), objectMapper, topicArn);
+    public TopicClient(ObjectMapper objectMapper, AmazonSNS sns, String topicArn) {
+        super(objectMapper, (String payload) -> sns.publish(topicArn, payload));
     }
 
     /**
-     * Publishes message to associated SNS topic.
+     * Initializes client with default handlers.
      *
-     * @param message Message to publish (will always be serialized to JSON, even if it's plain string).
-     * @return Operation results.
-     * @throws JsonProcessingException When message could not be serialized.
+     * @param topicArn Destination topic ARN.
      */
-    public PublishResult publish(Object message) throws JsonProcessingException {
-        return this.sns.publish(this.topicArn, this.objectMapper.writeValueAsString(message));
+    public TopicClient(String topicArn) {
+        this(ObjectMapperFactory.createObjectMapper(), AmazonSNSClientBuilder.standard().build(), topicArn);
     }
 }
