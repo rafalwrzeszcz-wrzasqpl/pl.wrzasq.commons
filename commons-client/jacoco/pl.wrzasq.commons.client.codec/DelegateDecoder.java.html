@@ -2,7 +2,7 @@
  * This file is part of the pl.wrzasq.commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2018 - 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2018 - 2020 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.wrzasq.commons.client.codec;
@@ -16,12 +16,16 @@ import java.util.Map;
 import feign.FeignException;
 import feign.Response;
 import feign.codec.Decoder;
-import org.springframework.http.HttpHeaders;
 
 /**
  * Content-Type-sensitive decoder.
  */
 public class DelegateDecoder implements Decoder {
+    /**
+     * HTTP header name.
+     */
+    private static final String HEADER_NAME_CONTENT_TYPE = &quot;Content-Type&quot;;
+
     /**
      * Fallback decoder for not-supported types.
      */
@@ -30,16 +34,16 @@ public class DelegateDecoder implements Decoder {
     /**
      * Content-Type mapping for custom delegated decoders.
      */
-<span class="fc" id="L33">    private Map&lt;String, Decoder&gt; delegates = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L37">    private Map&lt;String, Decoder&gt; delegates = new HashMap&lt;&gt;();</span>
 
     /**
      * Initializes decoder.
      *
      * @param fallback Default fallback decoder.
      */
-<span class="fc" id="L40">    public DelegateDecoder(Decoder fallback) {</span>
-<span class="fc" id="L41">        this.fallback = fallback;</span>
-<span class="fc" id="L42">    }</span>
+<span class="fc" id="L44">    public DelegateDecoder(Decoder fallback) {</span>
+<span class="fc" id="L45">        this.fallback = fallback;</span>
+<span class="fc" id="L46">    }</span>
 
     /**
      * Registers handler for given MIME type.
@@ -49,9 +53,9 @@ public class DelegateDecoder implements Decoder {
      * @return Self instance.
      */
     public DelegateDecoder registerTypeDecoder(String mimeType, Decoder decoder) {
-<span class="fc" id="L52">        this.delegates.put(mimeType, decoder);</span>
+<span class="fc" id="L56">        this.delegates.put(mimeType, decoder);</span>
 
-<span class="fc" id="L54">        return this;</span>
+<span class="fc" id="L58">        return this;</span>
     }
 
     /**
@@ -59,15 +63,15 @@ public class DelegateDecoder implements Decoder {
      */
     @Override
     public Object decode(Response response, Type type) throws IOException, FeignException {
-<span class="fc" id="L62">        return this.delegates.getOrDefault(</span>
-<span class="fc" id="L63">            response.headers().getOrDefault(HttpHeaders.CONTENT_TYPE, Collections.emptyList())</span>
-<span class="fc" id="L64">                .stream()</span>
-<span class="fc" id="L65">                .findFirst()</span>
-<span class="fc" id="L66">                .orElse(&quot;&quot;)</span>
-<span class="fc" id="L67">                .split(&quot;;&quot;)[0],</span>
+<span class="fc" id="L66">        return this.delegates.getOrDefault(</span>
+<span class="fc" id="L67">            response.headers().getOrDefault(DelegateDecoder.HEADER_NAME_CONTENT_TYPE, Collections.emptyList())</span>
+<span class="fc" id="L68">                .stream()</span>
+<span class="fc" id="L69">                .findFirst()</span>
+<span class="fc" id="L70">                .orElse(&quot;&quot;)</span>
+<span class="fc" id="L71">                .split(&quot;;&quot;)[0],</span>
             this.fallback
         )
-<span class="fc" id="L70">            .decode(response, type);</span>
+<span class="fc" id="L74">            .decode(response, type);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
