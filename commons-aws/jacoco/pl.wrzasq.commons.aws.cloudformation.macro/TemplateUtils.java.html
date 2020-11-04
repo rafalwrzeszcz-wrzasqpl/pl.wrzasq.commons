@@ -33,6 +33,11 @@ import java.util.function.Consumer;
     public static final String SECTION_RESOURCES = &quot;Resources&quot;;
 
     /**
+     * Resources section key.
+     */
+    public static final String SECTION_OUTPUTS = &quot;Outputs&quot;;
+
+    /**
      * Property key &quot;Type&quot;.
      */
     public static final String PROPERTY_KEY_TYPE = &quot;Type&quot;;
@@ -66,13 +71,13 @@ import java.util.function.Consumer;
         Consumer&lt;Object&gt; then,
         Object defaultValue
     ) {
-<span class="fc bfc" id="L69" title="All 2 branches covered.">        if (properties.containsKey(key)) {</span>
-<span class="fc" id="L70">            then.accept(properties.get(key));</span>
-<span class="fc" id="L71">            properties.remove(key);</span>
-<span class="fc bfc" id="L72" title="All 2 branches covered.">        } else if (defaultValue != null) {</span>
-<span class="fc" id="L73">            then.accept(defaultValue);</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        if (properties.containsKey(key)) {</span>
+<span class="fc" id="L75">            then.accept(properties.get(key));</span>
+<span class="fc" id="L76">            properties.remove(key);</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        } else if (defaultValue != null) {</span>
+<span class="fc" id="L78">            then.accept(defaultValue);</span>
         }
-<span class="fc" id="L75">    }</span>
+<span class="fc" id="L80">    }</span>
 
     /**
      * Creates resource definition structure.
@@ -87,18 +92,18 @@ import java.util.function.Consumer;
         Map&lt;String, Object&gt; properties,
         String condition
     ) {
-<span class="fc" id="L90">        var resource = new HashMap&lt;String, Object&gt;();</span>
-<span class="fc" id="L91">        resource.put(TemplateUtils.PROPERTY_KEY_TYPE, String.format(&quot;AWS::%s&quot;, type));</span>
+<span class="fc" id="L95">        var resource = new HashMap&lt;String, Object&gt;();</span>
+<span class="fc" id="L96">        resource.put(TemplateUtils.PROPERTY_KEY_TYPE, String.format(&quot;AWS::%s&quot;, type));</span>
 
-<span class="fc bfc" id="L93" title="All 2 branches covered.">        if (!properties.isEmpty()) {</span>
-<span class="fc" id="L94">            resource.put(TemplateUtils.PROPERTY_KEY_PROPERTIES, properties);</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">        if (!properties.isEmpty()) {</span>
+<span class="fc" id="L99">            resource.put(TemplateUtils.PROPERTY_KEY_PROPERTIES, properties);</span>
         }
 
-<span class="fc bfc" id="L97" title="All 4 branches covered.">        if (condition != null &amp;&amp; !condition.isEmpty()) {</span>
-<span class="fc" id="L98">            resource.put(TemplateUtils.PROPERTY_KEY_CONDITION, condition);</span>
+<span class="fc bfc" id="L102" title="All 4 branches covered.">        if (condition != null &amp;&amp; !condition.isEmpty()) {</span>
+<span class="fc" id="L103">            resource.put(TemplateUtils.PROPERTY_KEY_CONDITION, condition);</span>
         }
 
-<span class="fc" id="L101">        return resource;</span>
+<span class="fc" id="L106">        return resource;</span>
     }
 
     /**
@@ -108,7 +113,7 @@ import java.util.function.Consumer;
      * @return !Ref call.
      */
     public static Map&lt;String, Object&gt; ref(String reference) {
-<span class="fc" id="L111">        return Collections.singletonMap(&quot;Ref&quot;, reference);</span>
+<span class="fc" id="L116">        return Collections.singletonMap(&quot;Ref&quot;, reference);</span>
     }
 
     /**
@@ -119,7 +124,7 @@ import java.util.function.Consumer;
      * @return !GetAtt call.
      */
     public static Map&lt;String, Object&gt; getAtt(String resource, String attribute) {
-<span class="fc" id="L122">        return Collections.singletonMap(&quot;Fn::GetAtt&quot;, Arrays.asList(resource, attribute));</span>
+<span class="fc" id="L127">        return Collections.singletonMap(&quot;Fn::GetAtt&quot;, Arrays.asList(resource, attribute));</span>
     }
 
     /**
@@ -129,7 +134,7 @@ import java.util.function.Consumer;
      * @return !Sub call.
      */
     public static Map&lt;String, Object&gt; sub(Object params) {
-<span class="fc" id="L132">        return Collections.singletonMap(&quot;Fn::Sub&quot;, params);</span>
+<span class="fc" id="L137">        return Collections.singletonMap(&quot;Fn::Sub&quot;, params);</span>
     }
 
     /**
@@ -139,15 +144,15 @@ import java.util.function.Consumer;
      * @return Typed map.
      */
     public static Map&lt;String, Object&gt; asMap(Object value) {
-<span class="fc" id="L142">        var output = new HashMap&lt;String, Object&gt;();</span>
+<span class="fc" id="L147">        var output = new HashMap&lt;String, Object&gt;();</span>
 
-<span class="fc bfc" id="L144" title="All 2 branches covered.">        if (value instanceof Map) {</span>
-<span class="fc bfc" id="L145" title="All 2 branches covered.">            for (var entry : ((Map&lt;?, ?&gt;) value).entrySet()) {</span>
-<span class="fc" id="L146">                output.put(entry.getKey().toString(), entry.getValue());</span>
-<span class="fc" id="L147">            }</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">        if (value instanceof Map) {</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">            for (var entry : ((Map&lt;?, ?&gt;) value).entrySet()) {</span>
+<span class="fc" id="L151">                output.put(entry.getKey().toString(), entry.getValue());</span>
+<span class="fc" id="L152">            }</span>
         }
 
-<span class="fc" id="L150">        return output;</span>
+<span class="fc" id="L155">        return output;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
