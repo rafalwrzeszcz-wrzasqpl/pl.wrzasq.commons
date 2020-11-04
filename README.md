@@ -77,6 +77,7 @@ You can of course pick only those parts that you need directly.
 -   [Maven packages](https://search.maven.org/search?q=g:pl.wrzasq.commons)
 -   [Wrzasq.pl @ GitHub](https://github.com/rafalwrzeszcz-wrzasqpl)
 -   [Wrzasq.pl @ Facebook](https://www.facebook.com/wrzasqpl)
+-   [Wrzasq.pl @ LinkedIn](https://www.linkedin.com/company/wrzasq-pl/)
 -   [Post on Wrzasq.pl](https://wrzasq.pl/blog/chilldev-commons-java-library.html)
 
 # Authors

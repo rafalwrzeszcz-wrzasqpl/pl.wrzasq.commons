@@ -33,6 +33,11 @@ public class TemplateUtils {
     public static final String SECTION_RESOURCES = "Resources";
 
     /**
+     * Resources section key.
+     */
+    public static final String SECTION_OUTPUTS = "Outputs";
+
+    /**
      * Property key "Type".
      */
     public static final String PROPERTY_KEY_TYPE = "Type";
