@@ -3,7 +3,7 @@
 # This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2017 - 2020 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2017 - 2021 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 <project
     xmlns="http://maven.apache.org/POM/4.0.0"
@@ -35,12 +35,6 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>commons-json</artifactId>
             <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk-cloudformation</artifactId>
-            <version>1.11.802</version>
         </dependency>
 
         <dependency>
