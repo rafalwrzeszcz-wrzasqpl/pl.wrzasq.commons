@@ -3,7 +3,6 @@ WrzasqPl Commons AWS,pl.wrzasq.commons.aws,MessageHandler,0,50,0,0,0,15,0,2,0,2
 WrzasqPl Commons AWS,pl.wrzasq.commons.aws,MessageDispatcher,0,46,0,0,0,13,0,2,0,2
 WrzasqPl Commons AWS,pl.wrzasq.commons.aws.lambda,HeartbeatHandler,0,40,0,4,0,12,0,5,0,3
 WrzasqPl Commons AWS,pl.wrzasq.commons.aws.lambda,MultiHandler,0,75,1,5,0,19,1,5,0,3
-WrzasqPl Commons AWS,pl.wrzasq.commons.aws.cloudformation,StackSetHandler,0,101,1,5,0,21,1,6,0,3
 WrzasqPl Commons AWS,pl.wrzasq.commons.aws.cloudformation,CustomResourceHandler,0,116,0,0,0,27,0,2,0,2
 WrzasqPl Commons AWS,pl.wrzasq.commons.aws.cloudformation,StackUtils,0,26,0,0,0,7,0,3,0,3
 WrzasqPl Commons AWS,pl.wrzasq.commons.aws.cloudformation,CustomResourceResponse,0,5,0,0,0,2,0,1,0,1
