@@ -2,7 +2,7 @@
 # This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2015, 2019 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2015, 2019, 2021 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
 # HTML utilities
@@ -13,10 +13,12 @@
 
 Returns content of the first paragraph (`<p>` element content, without wrapping `<p></p>` tags) in given *HTML* snippet:
 
-```java
-String shortContent = Utils.firstParagraph(siteContent);
+```kotlin
+import pl.wrzasq.commons.text.html.Utils
 
-System.out.println("<p class=\"short\">" + shortContent + "</p>");
+val shortContent = Utils.firstParagraph(siteContent)
+
+println("<p class=\"short\">${shortContent}</p>")
 ```
 
 When no paragraph can be found in provided snippet this method returns empty string.

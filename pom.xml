@@ -3,7 +3,7 @@
 # This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2014 - 2020 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2014 - 2021 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 <project
     xmlns="http://maven.apache.org/POM/4.0.0"
@@ -17,11 +17,11 @@
     <groupId>pl.wrzasq.commons</groupId>
     <artifactId>commons</artifactId>
     <packaging>pom</packaging>
-    <version>1.2.7-SNAPSHOT</version>
+    <version>2.0.0-SNAPSHOT</version>
     <parent>
         <groupId>pl.wrzasq.parent</groupId>
         <artifactId>parent-opensource</artifactId>
-        <version>1.2.0</version>
+        <version>2.0.4</version>
     </parent>
 
     <!-- project meta info -->
@@ -75,13 +75,12 @@
     </issueManagement>
 
     <ciManagement>
-        <system>Travis CI</system>
-        <url>https://travis-ci.org/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons</url>
+        <system>GitHub Actions</system>
+        <url>https://github.com/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons/actions</url>
     </ciManagement>
 
     <scm>
         <connection>scm:git:https://github.com/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons.git</connection>
-        <developerConnection>scm:git:git@github.com:rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons.git</developerConnection>
         <url>https://github.com/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons</url>
     </scm>
 
@@ -120,8 +119,6 @@
     <!-- components of WrzasqPl-Commons project -->
     <modules>
         <module>commons-aws</module>
-        <module>commons-client</module>
-        <module>commons-dynamodb</module>
         <module>commons-json</module>
         <module>commons-text</module>
     </modules>
