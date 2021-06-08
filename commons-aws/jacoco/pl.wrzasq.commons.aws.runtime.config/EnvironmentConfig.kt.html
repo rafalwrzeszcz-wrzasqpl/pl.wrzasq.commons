@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EnvironmentConfig.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">WrzasqPl Commons AWS</a> &gt; <a href="index.source.html" class="el_package">pl.wrzasq.commons.aws.runtime.config</a> &gt; <span class="el_source">EnvironmentConfig.kt</span></div><h1>EnvironmentConfig.kt</h1><pre class="source lang-java linenums">/*
+ * This file is part of the pl.wrzasq.commons.
+ *
+ * @license http://mit-license.org/ The MIT license
+ * @copyright 2021 © by Rafał Wrzeszcz - Wrzasq.pl.
+ */
+
+package pl.wrzasq.commons.aws.runtime.config
+
+import java.lang.System.getenv
+import java.net.URL
+import java.net.URLConnection
+
+<span class="nc" id="L14">private fun defaultConnectionFactory(url: String): URLConnection = URL(url).openConnection()</span>
+
+/**
+ * AWS Lambda environment variables configuration.
+ */
+<span class="fc" id="L19">class EnvironmentConfig : LambdaRuntimeConfig {</span>
+<span class="pc" id="L20">    private val runtimeApi by lazy { getenv(&quot;AWS_LAMBDA_RUNTIME_API&quot;) }</span>
+
+<span class="pc" id="L22">    override val baseUrl: String by lazy { &quot;http://${runtimeApi}/2018-06-01/runtime/&quot; }</span>
+<span class="pc" id="L23">    override val logGroupName: String by lazy { getenv(&quot;AWS_LAMBDA_LOG_GROUP_NAME&quot;) }</span>
+<span class="pc" id="L24">    override val logStreamName: String by lazy { getenv(&quot;AWS_LAMBDA_LOG_STREAM_NAME&quot;) }</span>
+<span class="pc" id="L25">    override val functionName: String by lazy { getenv(&quot;AWS_LAMBDA_FUNCTION_NAME&quot;) }</span>
+<span class="pc" id="L26">    override val functionVersion: String by lazy { getenv(&quot;AWS_LAMBDA_FUNCTION_VERSION&quot;) }</span>
+<span class="pc bnc" id="L27" title="All 2 branches missed.">    override val memoryLimit: Int by lazy { getenv(&quot;AWS_LAMBDA_FUNCTION_MEMORY_SIZE&quot;).toIntOrNull() ?: 0 }</span>
+<span class="pc" id="L28">    override val connectionFactory: (String) -&gt; URLConnection = ::defaultConnectionFactory</span>
+<span class="pc" id="L29">    override val errorLogger: (String) -&gt; Unit = ::println</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

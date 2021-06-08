@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"pl.wrzasq.commons.client.interceptor","l":"BearerTokenAuthorizer"},{"p":"pl.wrzasq.commons.client.codec","l":"DelegateDecoder"},{"p":"pl.wrzasq.commons.client","l":"FeignClientFactory"}]

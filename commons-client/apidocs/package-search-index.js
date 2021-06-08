@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"pl.wrzasq.commons.client"},{"l":"pl.wrzasq.commons.client.codec"},{"l":"pl.wrzasq.commons.client.interceptor"}]

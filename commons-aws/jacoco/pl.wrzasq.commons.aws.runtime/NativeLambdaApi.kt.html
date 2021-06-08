@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NativeLambdaApi.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">WrzasqPl Commons AWS</a> &gt; <a href="index.source.html" class="el_package">pl.wrzasq.commons.aws.runtime</a> &gt; <span class="el_source">NativeLambdaApi.kt</span></div><h1>NativeLambdaApi.kt</h1><pre class="source lang-java linenums">/*
+ * This file is part of the pl.wrzasq.commons.
+ *
+ * @license http://mit-license.org/ The MIT license
+ * @copyright 2021 © by Rafał Wrzeszcz - Wrzasq.pl.
+ */
+
+package pl.wrzasq.commons.aws.runtime
+
+import com.amazonaws.services.lambda.runtime.ClientContext
+import com.amazonaws.services.lambda.runtime.CognitoIdentity
+import com.amazonaws.services.lambda.runtime.Context
+import com.amazonaws.services.lambda.runtime.LambdaRuntime
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
+import kotlinx.coroutines.runBlocking
+import pl.wrzasq.commons.aws.runtime.config.EnvironmentConfig
+import pl.wrzasq.commons.aws.runtime.config.LambdaRuntimeConfig
+import pl.wrzasq.commons.aws.runtime.model.LambdaRuntimeError
+import java.io.InputStream
+import java.io.OutputStream
+import java.lang.Exception
+import java.net.HttpURLConnection
+
+/**
+ * Header name for request ID.
+ */
+const val HEADER_NAME_AWS_REQUEST_ID = &quot;Lambda-Runtime-Aws-Request-Id&quot;
+
+/**
+ * Header name for function ARN.
+ */
+const val HEADER_NAME_INVOKED_FUNCTION_ARN = &quot;Lambda-Runtime-Invoked-Function-Arn&quot;
+
+/**
+ * Header name for serialized Cognito identity.
+ */
+const val HEADER_NAME_COGNITO_IDENTITY = &quot;Lambda-Runtime-Cognito-Identity&quot;
+
+/**
+ * Header name for serialized client context.
+ */
+const val HEADER_NAME_CLIENT_CONTEXT = &quot;Lambda-Runtime-Client-Context&quot;
+
+/**
+ * Header name for running deadline.
+ */
+const val HEADER_NAME_DEADLINE_MS = &quot;Lambda-Runtime-Deadline-Ms&quot;
+
+/**
+ * Native (&quot;provided&quot;) Lambda API handler.
+ *
+ * @param objectMapper JSON serialization handler.
+ * @param config Function configuration.
+ */
+<span class="fc" id="L56">class NativeLambdaApi(</span>
+<span class="fc" id="L57">    private val objectMapper: ObjectMapper,</span>
+<span class="fc" id="L58">    private val config: LambdaRuntimeConfig = EnvironmentConfig()</span>
+) {
+    /**
+     * Runs Lambda native handler.
+     *
+     * @param handler Lambda entry point.
+     */
+<span class="fc" id="L65">    fun run(handler: (InputStream, OutputStream, Context) -&gt; Unit) = runBlocking {</span>
+<span class="fc" id="L66">        try {</span>
+<span class="fc" id="L67">            while (true) {</span>
+<span class="fc" id="L68">                val requestConnection = config.connectionFactory(&quot;${config.baseUrl}invocation/next&quot;)</span>
+<span class="pc" id="L69">                requestConnection.getInputStream().use {</span>
+<span class="fc" id="L70">                    val requestId = requestConnection.getHeaderField(HEADER_NAME_AWS_REQUEST_ID)</span>
+<span class="fc" id="L71">                    try {</span>
+<span class="fc" id="L72">                        sendResponse(&quot;${config.baseUrl}invocation/${requestId}/response&quot;) { output -&gt;</span>
+<span class="fc" id="L73">                            handler(it, output, buildContext(requestId, requestConnection as HttpURLConnection))</span>
+<span class="fc" id="L74">                        }</span>
+<span class="fc" id="L75">                    } catch (error: Exception) {</span>
+                        // TODO: handle X-Ray tracing ID to handle propagation
+                        // TODO: handle case when Lambda handler itself returns LambdaRuntimeError
+<span class="fc" id="L78">                        sendErrorResponse(</span>
+<span class="fc" id="L79">                            &quot;${config.baseUrl}invocation/${requestId}/error&quot;,</span>
+<span class="fc" id="L80">                            &quot;Failed to run Lambda.&quot;,</span>
+<span class="fc" id="L81">                            error</span>
+                        )
+                    }
+<span class="fc" id="L84">                }</span>
+            }
+<span class="fc" id="L86">        } catch (error: Exception) {</span>
+<span class="fc" id="L87">            try {</span>
+<span class="fc" id="L88">                sendErrorResponse(&quot;${config.baseUrl}init/error&quot;, &quot;Failed to initialize Lambda.&quot;, error)</span>
+<span class="fc" id="L89">            } catch (innerError: Exception) {</span>
+<span class="fc" id="L90">                logError(&quot;Failed to report init error.&quot;, innerError)</span>
+            }
+        }
+<span class="fc" id="L93">    }</span>
+
+    private fun sendResponse(url: String, handler: (OutputStream) -&gt; Unit) {
+<span class="fc" id="L96">        val responseConnection = config.connectionFactory(url) as HttpURLConnection</span>
+<span class="fc" id="L97">        responseConnection.doOutput = true</span>
+<span class="fc" id="L98">        responseConnection.requestMethod = &quot;POST&quot;</span>
+<span class="fc" id="L99">        handler(responseConnection.outputStream)</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">        while (responseConnection.inputStream.read() != -1) {</span>
+            // drain
+        }
+<span class="fc" id="L103">    }</span>
+
+    private fun sendErrorResponse(url: String, message: String, error: Exception) {
+<span class="fc" id="L106">        logError(message, error)</span>
+
+<span class="fc" id="L108">        sendResponse(url) {</span>
+<span class="fc" id="L109">            objectMapper.writeValue(</span>
+<span class="fc" id="L110">                it,</span>
+<span class="fc" id="L111">                LambdaRuntimeError(</span>
+<span class="fc" id="L112">                    error.javaClass.name,</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">                    error.message ?: message,</span>
+<span class="fc" id="L114">                    error.stackTrace.map(StackTraceElement::toString)</span>
+                )
+            )
+<span class="fc" id="L117">        }</span>
+<span class="fc" id="L118">    }</span>
+
+    private fun logError(message: String, error: Exception) {
+<span class="fc" id="L121">        config.errorLogger(message)</span>
+<span class="fc" id="L122">        config.errorLogger(error.stackTraceToString())</span>
+<span class="fc" id="L123">    }</span>
+
+<span class="fc" id="L125">    private fun buildContext(awsRequestId: String, request: HttpURLConnection): Context = StaticContext(</span>
+<span class="fc" id="L126">        awsRequestId = awsRequestId,</span>
+<span class="fc" id="L127">        logGroupName = config.logGroupName,</span>
+<span class="fc" id="L128">        logStreamName = config.logStreamName,</span>
+<span class="fc" id="L129">        functionName = config.functionName,</span>
+<span class="fc" id="L130">        functionVersion = config.functionVersion,</span>
+<span class="fc" id="L131">        invokedFunctionArn = request.getHeaderField(HEADER_NAME_INVOKED_FUNCTION_ARN),</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">        cognitoIdentity = request.getHeaderField(HEADER_NAME_COGNITO_IDENTITY)</span>
+<span class="fc" id="L133">            ?.let&lt;String, CognitoIdentity&gt;(objectMapper::readValue),</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">        clientContext = request.getHeaderField(HEADER_NAME_CLIENT_CONTEXT)</span>
+<span class="fc" id="L135">            ?.let&lt;String, ClientContext&gt;(objectMapper::readValue),</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">        runtimeDeadlineMs = request.getHeaderField(HEADER_NAME_DEADLINE_MS)?.let(String::toLong) ?: 0,</span>
+<span class="fc" id="L137">        memoryLimitInMB = config.memoryLimit,</span>
+<span class="fc" id="L138">        logger = LambdaRuntime.getLogger()</span>
+<span class="fc" id="L139">    )</span>
+<span class="fc" id="L140">}</span>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

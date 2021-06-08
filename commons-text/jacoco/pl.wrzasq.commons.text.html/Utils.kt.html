@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Utils.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">WrzasqPl Commons Text</a> &gt; <a href="index.source.html" class="el_package">pl.wrzasq.commons.text.html</a> &gt; <span class="el_source">Utils.kt</span></div><h1>Utils.kt</h1><pre class="source lang-java linenums">/*
+ * This file is part of the pl.wrzasq.commons.
+ *
+ * @license http://mit-license.org/ The MIT license
+ * @copyright 2015 - 2016, 2018 - 2019, 2021 © by Rafał Wrzeszcz - Wrzasq.pl.
+ */
+
+package pl.wrzasq.commons.text.html
+
+import pl.wrzasq.commons.text.TextProcessingException
+import java.net.URLEncoder
+import pl.wrzasq.commons.text.Formatter
+import java.nio.charset.StandardCharsets
+import java.util.regex.Pattern
+
+private const val SUFFIX_DEFAULT = &quot;…&quot;
+<span class="fc" id="L17">private val WORDBOUND_PATTERN = Pattern.compile(&quot;\\S\\s+\\S*?$&quot;, Pattern.UNICODE_CASE)</span>
+<span class="fc" id="L18">private val REGEX_FIRSTPARAGRAPH = Pattern.compile(</span>
+<span class="fc" id="L19">    &quot;&lt;p(?: [^&gt;]*)?&gt;(.*?)&lt;/p&gt;&quot;,</span>
+<span class="fc" id="L20">    Pattern.DOTALL</span>
+)
+
+/**
+ * Various HTML text processing utilities.
+ */
+object Utils {
+<span class="fc" id="L27">    private var formatter = Formatter()</span>
+
+    /**
+     * Fetches first paragraph of text.
+     *
+     * @param text HTML snippet.
+     * @return First paragraph.
+     */
+    fun firstParagraph(text: String): String {
+<span class="fc" id="L36">        val match = REGEX_FIRSTPARAGRAPH.matcher(text)</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">        return if (match.find()) match.group(1) else &quot;&quot;</span>
+    }
+
+    /**
+     * Truncates text.
+     *
+     * @param text Text to be truncated.
+     * @param length Maximum text length.
+     * @param suffix Suffix to be used at the end of truncated text.
+     * @param bound Whether to look for word end or not.
+     * @return Translated message.
+     */
+    fun truncate(text: String, length: Int, suffix: String, bound: Boolean): String {
+        // nothing to do here
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        if (text.length &lt;= length) {</span>
+<span class="fc" id="L52">            return text</span>
+        }
+
+        // look for last possible word
+<span class="fc" id="L56">        var position = length</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        if (bound) {</span>
+            // look for last word-break
+<span class="fc" id="L59">            val part = text.substring(0, length + 2)</span>
+<span class="fc" id="L60">            val matcher = WORDBOUND_PATTERN.matcher(part)</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">            if (matcher.find()) {</span>
+                // we add 1 as second parameter is exclusive
+<span class="fc" id="L63">                position = matcher.start() + 1</span>
+            }
+        }
+<span class="fc" id="L66">        return text.substring(0, position).trim() + suffix</span>
+    }
+
+    /**
+     * Truncates text.
+     *
+     * @param text Text to be truncated.
+     * @param length Maximum text length.
+     * @param suffix Suffix to be used at the end of truncated text.
+     * @return Translated message.
+     */
+<span class="fc" id="L77">    fun truncate(text: String, length: Int, suffix: String): String = truncate(text, length, suffix, true)</span>
+
+    /**
+     * Truncates text.
+     *
+     * @param text Text to be truncated.
+     * @param length Maximum text length.
+     * @param bound Whether to look for word end or not.
+     * @return Truncated text.
+     */
+<span class="fc" id="L87">    fun truncate(text: String, length: Int, bound: Boolean): String = truncate(text, length, SUFFIX_DEFAULT, bound)</span>
+
+    /**
+     * Truncates text.
+     *
+     * @param text Text to be truncated.
+     * @param length Maximum text length.
+     * @return Truncated text.
+     */
+<span class="fc" id="L96">    fun truncate(text: String, length: Int): String = truncate(text, length, SUFFIX_DEFAULT, true)</span>
+
+    /**
+     * Registers new text formatting handler.
+     *
+     * @param formatter Formatter.
+     */
+    @JvmStatic
+    fun setFormatter(formatter: Formatter) {
+<span class="fc" id="L105">        Utils.formatter = formatter</span>
+<span class="fc" id="L106">    }</span>
+
+    /**
+     * Formats the text.
+     *
+     * @param format Format name.
+     * @param text Source text.
+     * @return Formatted text.
+     * @throws TextProcessingException When text processing fails.
+     */
+<span class="fc" id="L116">    fun format(format: String, text: String): String = formatter.transform(format, text)</span>
+
+    /**
+     * Wrapper function that encodes URLs using UTF-8 encoding.
+     *
+     * @param value URL part.
+     * @return URL-encoded part.
+     */
+<span class="fc" id="L124">    fun urlEncode(value: String): String = URLEncoder.encode(value, StandardCharsets.UTF_8)</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

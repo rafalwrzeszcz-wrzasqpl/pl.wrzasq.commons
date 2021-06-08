@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StaticContext.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">WrzasqPl Commons AWS</a> &gt; <a href="index.source.html" class="el_package">pl.wrzasq.commons.aws.runtime</a> &gt; <span class="el_source">StaticContext.kt</span></div><h1>StaticContext.kt</h1><pre class="source lang-java linenums">/*
+ * This file is part of the pl.wrzasq.commons.
+ *
+ * @license http://mit-license.org/ The MIT license
+ * @copyright 2021 © by Rafał Wrzeszcz - Wrzasq.pl.
+ */
+
+package pl.wrzasq.commons.aws.runtime
+
+import com.amazonaws.services.lambda.runtime.ClientContext
+import com.amazonaws.services.lambda.runtime.CognitoIdentity
+import com.amazonaws.services.lambda.runtime.Context
+import com.amazonaws.services.lambda.runtime.LambdaLogger
+import java.lang.System.currentTimeMillis
+
+/**
+ * Value-based implementation of Lambda context.
+ */
+<span class="fc" id="L19">data class StaticContext(</span>
+<span class="fc" id="L20">    private val awsRequestId: String,</span>
+<span class="fc" id="L21">    private val logGroupName: String,</span>
+<span class="fc" id="L22">    private val logStreamName: String,</span>
+<span class="fc" id="L23">    private val functionName: String,</span>
+<span class="fc" id="L24">    private val functionVersion: String,</span>
+<span class="fc" id="L25">    private val invokedFunctionArn: String,</span>
+<span class="fc" id="L26">    private var cognitoIdentity: CognitoIdentity? = null,</span>
+<span class="fc" id="L27">    private var clientContext: ClientContext? = null,</span>
+<span class="fc" id="L28">    private var runtimeDeadlineMs: Long = 0,</span>
+<span class="fc" id="L29">    private val memoryLimitInMB: Int,</span>
+<span class="fc" id="L30">    private val logger: LambdaLogger</span>
+) : Context {
+<span class="fc" id="L32">    override fun getAwsRequestId() = awsRequestId</span>
+
+<span class="fc" id="L34">    override fun getLogGroupName() = logGroupName</span>
+
+<span class="fc" id="L36">    override fun getLogStreamName() = logStreamName</span>
+
+<span class="fc" id="L38">    override fun getFunctionName() = functionName</span>
+
+<span class="fc" id="L40">    override fun getFunctionVersion() = functionVersion</span>
+
+<span class="fc" id="L42">    override fun getInvokedFunctionArn() = invokedFunctionArn</span>
+
+<span class="fc" id="L44">    override fun getIdentity() = cognitoIdentity</span>
+
+<span class="fc" id="L46">    override fun getClientContext() = clientContext</span>
+
+<span class="fc" id="L48">    override fun getRemainingTimeInMillis() = (runtimeDeadlineMs - currentTimeMillis()).toInt()</span>
+
+<span class="fc" id="L50">    override fun getMemoryLimitInMB() = memoryLimitInMB</span>
+
+<span class="fc" id="L52">    override fun getLogger() = logger</span>
+<span class="fc" id="L53">}</span>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

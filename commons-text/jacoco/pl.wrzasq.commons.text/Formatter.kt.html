@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Formatter.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">WrzasqPl Commons Text</a> &gt; <a href="index.source.html" class="el_package">pl.wrzasq.commons.text</a> &gt; <span class="el_source">Formatter.kt</span></div><h1>Formatter.kt</h1><pre class="source lang-java linenums">/*
+ * This file is part of the pl.wrzasq.commons.
+ *
+ * @license http://mit-license.org/ The MIT license
+ * @copyright 2016, 2019 - 2021 © by Rafał Wrzeszcz - Wrzasq.pl.
+ */
+
+package pl.wrzasq.commons.text
+
+import pl.wrzasq.commons.text.formatter.FormatterInterface
+
+/**
+ * Text formats handler.
+ *
+ * @param formatters All known format handlers.
+ */
+<span class="fc" id="L17">class Formatter(</span>
+<span class="fc" id="L18">    private val formatters: MutableMap&lt;String, FormatterInterface&gt; = mutableMapOf()</span>
+) {
+    /**
+     * Registers format handler.
+     *
+     * @param format Format name.
+     * @param handler Format handler.
+     */
+    fun registerFormatter(format: String, handler: FormatterInterface) {
+<span class="fc" id="L27">        formatters[format] = handler</span>
+<span class="fc" id="L28">    }</span>
+
+    /**
+     * Transforms text from given form.
+     *
+     * @param format Format name.
+     * @param text Source text.
+     * @return Generated markup snippet.
+     * @throws TextProcessingException When specified format can't be handled or handler throws exception.
+     */
+    fun transform(format: String, text: String): String = (
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        formatters[format] ?: throw TextProcessingException(&quot;No handler for format \&quot;${format}\&quot; registered.&quot;)</span>
+<span class="fc" id="L40">        ).transform(text)</span>
+<span class="fc" id="L41">}</span>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

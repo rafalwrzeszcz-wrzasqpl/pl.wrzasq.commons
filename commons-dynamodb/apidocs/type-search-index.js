@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"pl.wrzasq.commons.dynamodb","l":"DynamoDbMapperFactory"},{"p":"pl.wrzasq.commons.dynamodb.mapper","l":"OffsetDateTimeMapper"}]
