@@ -119,6 +119,7 @@
     <!-- components of WrzasqPl-Commons project -->
     <modules>
         <module>commons-aws</module>
+        <module>commons-client</module>
         <module>commons-json</module>
         <module>commons-text</module>
     </modules>
