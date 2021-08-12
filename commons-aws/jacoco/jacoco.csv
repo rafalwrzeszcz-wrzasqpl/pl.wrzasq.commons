@@ -2,8 +2,8 @@ GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_
 WrzasqPl Commons AWS,pl.wrzasq.commons.aws.runtime,NativeLambdaApi.buildContext.stub_for_inlining..inlined.readValue.new TypeReference() {...},0,3,0,0,0,1,0,1,0,1
 WrzasqPl Commons AWS,pl.wrzasq.commons.aws.runtime,NativeLambdaApi.buildContext.stub_for_inlining-0..inlined.readValue.new TypeReference() {...},0,3,0,0,0,1,0,1,0,1
 WrzasqPl Commons AWS,pl.wrzasq.commons.aws.runtime,NativeLambdaApi.sendErrorResponse.new Function1() {...},0,60,0,2,0,7,0,2,0,1
-WrzasqPl Commons AWS,pl.wrzasq.commons.aws.runtime,NativeLambdaApi,0,244,0,8,0,33,0,11,0,7
 WrzasqPl Commons AWS,pl.wrzasq.commons.aws.runtime,NativeLambdaApi.run.1.1.new Function1() {...},0,29,0,0,0,2,0,1,0,1
+WrzasqPl Commons AWS,pl.wrzasq.commons.aws.runtime,NativeLambdaApi,0,244,0,8,0,33,0,11,0,7
 WrzasqPl Commons AWS,pl.wrzasq.commons.aws.runtime,StaticContext,0,122,0,0,0,24,0,13,0,13
 WrzasqPl Commons AWS,pl.wrzasq.commons.aws.runtime,NativeLambdaApi.run.new Function2() {...},5,116,0,0,0,19,0,1,0,1
 WrzasqPl Commons AWS,pl.wrzasq.commons.aws.runtime.config,EnvironmentConfig,90,50,0,0,0,10,9,2,9,2
