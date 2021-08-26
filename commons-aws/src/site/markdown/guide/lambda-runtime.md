@@ -34,3 +34,5 @@ fun main() {
     api.run(handler::handleRequest)
 }
 ```
+
+**Note:** `NativeLambdaApi` also handles **X-Ray** trace ID and exposes it to AWS SDK via system property.

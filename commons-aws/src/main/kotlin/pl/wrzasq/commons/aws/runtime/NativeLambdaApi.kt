@@ -28,6 +28,11 @@ import java.net.HttpURLConnection
 const val HEADER_NAME_AWS_REQUEST_ID = "Lambda-Runtime-Aws-Request-Id"
 
 /**
+ * Header name for X-Ray trace ID.
+ */
+const val HEADER_NAME_TRACE_ID = "Lambda-Runtime-Trace-Id"
+
+/**
  * Header name for function ARN.
  */
 const val HEADER_NAME_INVOKED_FUNCTION_ARN = "Lambda-Runtime-Invoked-Function-Arn"
@@ -46,6 +51,11 @@ const val HEADER_NAME_CLIENT_CONTEXT = "Lambda-Runtime-Client-Context"
  * Header name for running deadline.
  */
 const val HEADER_NAME_DEADLINE_MS = "Lambda-Runtime-Deadline-Ms"
+
+/**
+ * System property under which the X-Ray trace ID is propagated.
+ */
+const val PROPERTY_TRACE_ID = "com.amazonaws.xray.traceHeader"
 
 /**
  * Native ("provided") Lambda API handler.
@@ -68,12 +78,20 @@ class NativeLambdaApi(
                 val requestConnection = config.connectionFactory("${config.baseUrl}invocation/next")
                 requestConnection.getInputStream().use {
                     val requestId = requestConnection.getHeaderField(HEADER_NAME_AWS_REQUEST_ID)
+
+                    // we handle both cases to clean up previous execution
+                    val traceId = requestConnection.getHeaderField(HEADER_NAME_TRACE_ID)
+                    if (traceId.isNullOrEmpty()) {
+                        System.clearProperty(PROPERTY_TRACE_ID)
+                    } else {
+                        System.setProperty(PROPERTY_TRACE_ID, traceId)
+                    }
+
                     try {
                         sendResponse("${config.baseUrl}invocation/${requestId}/response") { output ->
                             handler(it, output, buildContext(requestId, requestConnection as HttpURLConnection))
                         }
                     } catch (error: Exception) {
-                        // TODO: handle X-Ray tracing ID to handle propagation
                         // TODO: handle case when Lambda handler itself returns LambdaRuntimeError
                         sendErrorResponse(
                             "${config.baseUrl}invocation/${requestId}/error",

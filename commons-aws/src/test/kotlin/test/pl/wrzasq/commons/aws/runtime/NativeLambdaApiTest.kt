@@ -19,6 +19,7 @@ import io.mockk.junit5.MockKExtension
 import io.mockk.just
 import io.mockk.runs
 import io.mockk.verify
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertSame
 import org.junit.jupiter.api.BeforeEach
@@ -29,7 +30,9 @@ import pl.wrzasq.commons.aws.runtime.HEADER_NAME_CLIENT_CONTEXT
 import pl.wrzasq.commons.aws.runtime.HEADER_NAME_COGNITO_IDENTITY
 import pl.wrzasq.commons.aws.runtime.HEADER_NAME_DEADLINE_MS
 import pl.wrzasq.commons.aws.runtime.HEADER_NAME_INVOKED_FUNCTION_ARN
+import pl.wrzasq.commons.aws.runtime.HEADER_NAME_TRACE_ID
 import pl.wrzasq.commons.aws.runtime.NativeLambdaApi
+import pl.wrzasq.commons.aws.runtime.PROPERTY_TRACE_ID
 import pl.wrzasq.commons.aws.runtime.config.LambdaRuntimeConfig
 import pl.wrzasq.commons.aws.runtime.model.LambdaRuntimeError
 import java.io.ByteArrayInputStream
@@ -40,6 +43,7 @@ import java.lang.RuntimeException
 import java.net.HttpURLConnection
 import java.net.URLConnection
 
+private const val TRACE_ID = "1234abcd"
 private const val BASE_URL = "http://localhost/"
 private const val HTTP_METHOD = "POST"
 private const val CONTENT = "{}"
@@ -92,6 +96,9 @@ class NativeLambdaApiTest {
 
     @Test
     fun run() {
+        // we need to set it upfront to make sure it's cleared in this case - we mock no header
+        System.setProperty(PROPERTY_TRACE_ID, TRACE_ID)
+
         every {
             connectionFactory(URL_NEXT_REQUEST)
         } returns requestConnection andThenThrows RuntimeException() // second invocation to end loop
@@ -102,6 +109,7 @@ class NativeLambdaApiTest {
 
         every { requestConnection.inputStream } returns input
         every { requestConnection.getHeaderField(HEADER_NAME_AWS_REQUEST_ID) } returns AWS_REQUEST_ID
+        every { requestConnection.getHeaderField(HEADER_NAME_TRACE_ID) } returns null
         every { requestConnection.getHeaderField(HEADER_NAME_INVOKED_FUNCTION_ARN) } returns FUNCTION_ARN
         every { requestConnection.getHeaderField(HEADER_NAME_COGNITO_IDENTITY) } returns null
         every { requestConnection.getHeaderField(HEADER_NAME_CLIENT_CONTEXT) } returns null
@@ -132,6 +140,7 @@ class NativeLambdaApiTest {
 
         assertNull(context.captured.identity)
         assertNull(context.captured.clientContext)
+        assertNull(System.getProperty(PROPERTY_TRACE_ID))
     }
 
     @Test
@@ -149,6 +158,7 @@ class NativeLambdaApiTest {
 
         every { requestConnection.inputStream } returns input
         every { requestConnection.getHeaderField(HEADER_NAME_AWS_REQUEST_ID) } returns AWS_REQUEST_ID
+        every { requestConnection.getHeaderField(HEADER_NAME_TRACE_ID) } returns TRACE_ID
         every { requestConnection.getHeaderField(HEADER_NAME_INVOKED_FUNCTION_ARN) } returns FUNCTION_ARN
         every { requestConnection.getHeaderField(HEADER_NAME_COGNITO_IDENTITY) } returns cognitoIdentityJson
         every { requestConnection.getHeaderField(HEADER_NAME_CLIENT_CONTEXT) } returns clientContextJson
@@ -184,6 +194,7 @@ class NativeLambdaApiTest {
 
         assertSame(cognitoIdentity, context.captured.identity)
         assertSame(clientContext, context.captured.clientContext)
+        assertEquals(TRACE_ID, System.getProperty(PROPERTY_TRACE_ID))
     }
 
     @Test
@@ -199,6 +210,7 @@ class NativeLambdaApiTest {
 
         every { requestConnection.inputStream } returns input
         every { requestConnection.getHeaderField(HEADER_NAME_AWS_REQUEST_ID) } returns AWS_REQUEST_ID
+        every { requestConnection.getHeaderField(HEADER_NAME_TRACE_ID) } returns ""
 
         val output = ByteArrayOutputStream()
 
