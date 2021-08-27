@@ -5,7 +5,7 @@ WrzasqPl Commons AWS,pl.wrzasq.commons.aws.runtime,NativeLambdaApi.sendErrorResp
 WrzasqPl Commons AWS,pl.wrzasq.commons.aws.runtime,NativeLambdaApi.run.1.1.new Function1() {...},0,29,0,0,0,2,0,1,0,1
 WrzasqPl Commons AWS,pl.wrzasq.commons.aws.runtime,NativeLambdaApi,0,244,0,8,0,33,0,11,0,7
 WrzasqPl Commons AWS,pl.wrzasq.commons.aws.runtime,StaticContext,0,122,0,0,0,24,0,13,0,13
-WrzasqPl Commons AWS,pl.wrzasq.commons.aws.runtime,NativeLambdaApi.run.new Function2() {...},5,116,0,0,0,19,0,1,0,1
+WrzasqPl Commons AWS,pl.wrzasq.commons.aws.runtime,NativeLambdaApi.run.new Function2() {...},5,144,0,6,0,23,0,4,0,1
 WrzasqPl Commons AWS,pl.wrzasq.commons.aws.runtime.config,EnvironmentConfig,90,50,0,0,0,10,9,2,9,2
 WrzasqPl Commons AWS,pl.wrzasq.commons.aws.runtime.config,EnvironmentConfig.memoryLimit.new Function0() {...},16,0,2,0,1,0,2,0,1,0
 WrzasqPl Commons AWS,pl.wrzasq.commons.aws.runtime.config,EnvironmentConfig.logGroupName.new Function0() {...},3,0,0,0,1,0,1,0,1,0
