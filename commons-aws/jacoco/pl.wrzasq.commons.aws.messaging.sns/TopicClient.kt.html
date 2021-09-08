@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TopicClient.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">WrzasqPl Commons AWS</a> &gt; <a href="index.source.html" class="el_package">pl.wrzasq.commons.aws.messaging.sns</a> &gt; <span class="el_source">TopicClient.kt</span></div><h1>TopicClient.kt</h1><pre class="source lang-java linenums">/*
+ * This file is part of the pl.wrzasq.commons.
+ *
+ * @license http://mit-license.org/ The MIT license
+ * @copyright 2017, 2019 - 2021 © by Rafał Wrzeszcz - Wrzasq.pl.
+ */
+
+package pl.wrzasq.commons.aws.messaging.sns
+
+import com.fasterxml.jackson.databind.ObjectMapper
+import pl.wrzasq.commons.aws.messaging.MessageDispatcher
+import pl.wrzasq.commons.json.ObjectMapperFactory.createObjectMapper
+import software.amazon.awssdk.services.sns.SnsClient
+import software.amazon.awssdk.services.sns.model.PublishResponse
+
+/**
+ * Topic-wrapped AWS SNS client.
+ *
+ * @param objectMapper JSON handler.
+ * @param sns SNS client.
+ * @param topicArn Destination topic ARN.
+ */
+<span class="fc" id="L23">class TopicClient(</span>
+<span class="fc" id="L24">    objectMapper: ObjectMapper = createObjectMapper(),</span>
+<span class="fc" id="L25">    sns: SnsClient = SnsClient.create(),</span>
+    topicArn: String
+<span class="fc" id="L27">) : MessageDispatcher&lt;PublishResponse&gt;(</span>
+<span class="fc" id="L28">    objectMapper,</span>
+<span class="fc" id="L29">    { payload -&gt; sns.publish { it.topicArn(topicArn).message(payload) }}</span>
+<span class="fc" id="L30">)</span>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
