@@ -16,6 +16,8 @@
 
         <menu name="Guide">
             <item name="Lambda native runtime" href="guide/lambda-runtime.html"/>
+            <item name="SQS" href="guide/sqs.html"/>
+            <item name="SNS" href="guide/sns.html"/>
         </menu>
 
         <menu ref="reports"/>
