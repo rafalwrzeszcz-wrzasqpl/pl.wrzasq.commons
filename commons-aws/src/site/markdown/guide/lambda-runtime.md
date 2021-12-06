@@ -36,3 +36,26 @@ fun main() {
 ```
 
 **Note:** `NativeLambdaApi` also handles **X-Ray** trace ID and exposes it to AWS SDK via system property.
+
+## Off-loading bootstrapping to AWS
+
+You can also utilize `pl.wrzasq.commons.aws.runtime.Runner` as a main class of your deployable and define handler in AWS
+Lambda to point to resources factory, that needs to implement `pl.wrzasq.commons.aws.runtime.config.ResourcesFactory`
+interface:
+
+```kotlin
+class LambdaResourcesFactory: ResourcesFactory {
+    private val objectMapper: ObjectMapper by lazy {
+        ObjectMapperFactory.createObjectMapper()
+            .disable(MapperFeature.DEFAULT_VIEW_INCLUSION)
+    }
+
+    private val customerDao = DynamoDbCustomerDao()
+
+    override val lambdaApi = NativeLambdaApi(objectMapper)
+
+    override val lambdaCallback = Handler(objectMapper, customerDao)::handle
+}
+```
+
+Then you need to specify just a class name `your.package.LambdaResourcesFactory` as Lambda handler.

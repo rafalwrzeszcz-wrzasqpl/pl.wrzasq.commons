@@ -16,11 +16,14 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import kotlinx.coroutines.runBlocking
 import pl.wrzasq.commons.aws.runtime.config.EnvironmentConfig
 import pl.wrzasq.commons.aws.runtime.config.LambdaRuntimeConfig
+import pl.wrzasq.commons.aws.runtime.config.ResourcesFactory
 import pl.wrzasq.commons.aws.runtime.model.LambdaRuntimeError
 import java.io.InputStream
 import java.io.OutputStream
 import java.lang.Exception
+import java.lang.RuntimeException
 import java.net.HttpURLConnection
+import kotlin.reflect.full.createInstance
 
 /**
  * Header name for request ID.
@@ -58,6 +61,11 @@ const val HEADER_NAME_DEADLINE_MS = "Lambda-Runtime-Deadline-Ms"
 const val PROPERTY_TRACE_ID = "com.amazonaws.xray.traceHeader"
 
 /**
+ * Lambda handler callback.
+ */
+typealias LambdaCallback = (InputStream, OutputStream, Context) -> Unit
+
+/**
  * Native ("provided") Lambda API handler.
  *
  * @param objectMapper JSON serialization handler.
@@ -72,7 +80,7 @@ class NativeLambdaApi(
      *
      * @param handler Lambda entry point.
      */
-    fun run(handler: (InputStream, OutputStream, Context) -> Unit) = runBlocking {
+    fun run(handler: LambdaCallback) = runBlocking {
         try {
             while (true) {
                 val requestConnection = config.connectionFactory("${config.baseUrl}invocation/next")
@@ -155,4 +163,20 @@ class NativeLambdaApi(
         memoryLimitInMB = config.memoryLimit,
         logger = LambdaRuntime.getLogger()
     )
+
+    companion object {
+        /**
+         * Reflection entry point.
+         *
+         * @param handler Factory type name.
+         */
+        fun runFromFactory(handler: String) {
+            val factory = Class.forName(handler).kotlin.createInstance()
+            if (factory is ResourcesFactory) {
+                factory.lambdaApi.run(factory.lambdaCallback)
+            } else {
+                throw RuntimeException("$handler is not a factory for Lambda resources")
+            }
+        }
+    }
 }

@@ -12,18 +12,19 @@ import com.amazonaws.services.lambda.runtime.CognitoIdentity
 import com.amazonaws.services.lambda.runtime.Context
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.mockk.CapturingSlot
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.just
 import io.mockk.runs
+import io.mockk.slot
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertSame
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 import pl.wrzasq.commons.aws.runtime.HEADER_NAME_AWS_REQUEST_ID
 import pl.wrzasq.commons.aws.runtime.HEADER_NAME_CLIENT_CONTEXT
@@ -34,12 +35,12 @@ import pl.wrzasq.commons.aws.runtime.HEADER_NAME_TRACE_ID
 import pl.wrzasq.commons.aws.runtime.NativeLambdaApi
 import pl.wrzasq.commons.aws.runtime.PROPERTY_TRACE_ID
 import pl.wrzasq.commons.aws.runtime.config.LambdaRuntimeConfig
+import pl.wrzasq.commons.aws.runtime.config.ResourcesFactory
 import pl.wrzasq.commons.aws.runtime.model.LambdaRuntimeError
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.io.OutputStream
-import java.lang.RuntimeException
 import java.net.HttpURLConnection
 import java.net.URLConnection
 
@@ -86,6 +87,8 @@ class NativeLambdaApiTest {
         every { config.baseUrl } returns BASE_URL
         every { config.connectionFactory } returns connectionFactory
         every { config.errorLogger } returns errorLogger
+
+        TestFactory.provider = this
     }
 
     @Test
@@ -99,101 +102,41 @@ class NativeLambdaApiTest {
         // we need to set it upfront to make sure it's cleared in this case - we mock no header
         System.setProperty(PROPERTY_TRACE_ID, TRACE_ID)
 
-        every {
-            connectionFactory(URL_NEXT_REQUEST)
-        } returns requestConnection andThenThrows RuntimeException() // second invocation to end loop
-        every { connectionFactory(URL_RESPONSE) } returns responseConnection
-        every { errorLogger(any()) } just runs
-
-        val input = ByteArrayInputStream(CONTENT.toByteArray())
-
-        every { requestConnection.inputStream } returns input
-        every { requestConnection.getHeaderField(HEADER_NAME_AWS_REQUEST_ID) } returns AWS_REQUEST_ID
         every { requestConnection.getHeaderField(HEADER_NAME_TRACE_ID) } returns null
-        every { requestConnection.getHeaderField(HEADER_NAME_INVOKED_FUNCTION_ARN) } returns FUNCTION_ARN
         every { requestConnection.getHeaderField(HEADER_NAME_COGNITO_IDENTITY) } returns null
         every { requestConnection.getHeaderField(HEADER_NAME_CLIENT_CONTEXT) } returns null
-        every { requestConnection.getHeaderField(HEADER_NAME_DEADLINE_MS) } returns "100"
 
-        every { config.logGroupName } returns LOG_GROUP_NAME
-        every { config.logStreamName } returns ""
-        every { config.functionName } returns AWS_REQUEST_ID
-        every { config.functionVersion } returns FUNCTION_VERSION
-        every { config.memoryLimit } returns 0
+        val context = runMainTest {
+            val runtime = NativeLambdaApi(objectMapper, config)
+            runtime.run(handler)
+        }
 
-        val output = ByteArrayOutputStream()
-
-        every { responseConnection.doOutput = any() } just runs
-        every { responseConnection.requestMethod = HTTP_METHOD } just runs
-        every { responseConnection.inputStream } returns "".byteInputStream()
-        every { responseConnection.outputStream } returns output
-
-        every { handler(input, output, any()) } just runs
-
-        val runtime = NativeLambdaApi(objectMapper, config)
-        runtime.run(handler)
-
-        val context = CapturingSlot<Context>()
-
-        verify { handler(input, output, capture(context)) }
-        verify { responseConnection.requestMethod = HTTP_METHOD }
-
-        assertNull(context.captured.identity)
-        assertNull(context.captured.clientContext)
+        assertNull(context.identity)
+        assertNull(context.clientContext)
         assertNull(System.getProperty(PROPERTY_TRACE_ID))
     }
 
     @Test
     fun runWithIdentity() {
-        every {
-            connectionFactory(URL_NEXT_REQUEST)
-        } returns requestConnection andThenThrows RuntimeException() // second invocation to end loop
-        every { connectionFactory(URL_RESPONSE) } returns responseConnection
-        every { errorLogger(any()) } just runs
-
-        val input = ByteArrayInputStream(CONTENT.toByteArray())
-
         val cognitoIdentityJson = "{}"
         val clientContextJson = "{:}"
 
-        every { requestConnection.inputStream } returns input
-        every { requestConnection.getHeaderField(HEADER_NAME_AWS_REQUEST_ID) } returns AWS_REQUEST_ID
         every { requestConnection.getHeaderField(HEADER_NAME_TRACE_ID) } returns TRACE_ID
-        every { requestConnection.getHeaderField(HEADER_NAME_INVOKED_FUNCTION_ARN) } returns FUNCTION_ARN
         every { requestConnection.getHeaderField(HEADER_NAME_COGNITO_IDENTITY) } returns cognitoIdentityJson
         every { requestConnection.getHeaderField(HEADER_NAME_CLIENT_CONTEXT) } returns clientContextJson
-        every { requestConnection.getHeaderField(HEADER_NAME_DEADLINE_MS) } returns null
-
-        every { config.logGroupName } returns LOG_GROUP_NAME
-        every { config.logStreamName } returns ""
-        every { config.functionName } returns AWS_REQUEST_ID
-        every { config.functionVersion } returns FUNCTION_VERSION
-        every { config.memoryLimit } returns 0
 
         every {
             objectMapper.readValue(cognitoIdentityJson, any<TypeReference<CognitoIdentity>>())
         } returns cognitoIdentity
         every { objectMapper.readValue(clientContextJson, any<TypeReference<ClientContext>>()) } returns clientContext
 
-        val output = ByteArrayOutputStream()
+        val context = runMainTest {
+            val runtime = NativeLambdaApi(objectMapper, config)
+            runtime.run(handler)
+        }
 
-        every { responseConnection.doOutput = any() } just runs
-        every { responseConnection.requestMethod = HTTP_METHOD } just runs
-        every { responseConnection.inputStream } returns "".byteInputStream()
-        every { responseConnection.outputStream } returns output
-
-        every { handler(input, output, any()) } just runs
-
-        val runtime = NativeLambdaApi(objectMapper, config)
-        runtime.run(handler)
-
-        val context = CapturingSlot<Context>()
-
-        verify { handler(input, output, capture(context)) }
-        verify { responseConnection.requestMethod = HTTP_METHOD }
-
-        assertSame(cognitoIdentity, context.captured.identity)
-        assertSame(clientContext, context.captured.clientContext)
+        assertSame(cognitoIdentity, context.identity)
+        assertSame(clientContext, context.clientContext)
         assertEquals(TRACE_ID, System.getProperty(PROPERTY_TRACE_ID))
     }
 
@@ -263,5 +206,73 @@ class NativeLambdaApiTest {
         verify { connectionFactory(URL_NEXT_REQUEST) }
         verify { connectionFactory(URL_INIT_ERROR) }
         verify { errorLogger(any()) }
+    }
+
+    @Test
+    fun runFromFactory() {
+        every { requestConnection.getHeaderField(HEADER_NAME_TRACE_ID) } returns null
+        every { requestConnection.getHeaderField(HEADER_NAME_COGNITO_IDENTITY) } returns null
+        every { requestConnection.getHeaderField(HEADER_NAME_CLIENT_CONTEXT) } returns null
+
+        val context = runMainTest {
+            NativeLambdaApi.runFromFactory(TestFactory::class.java.name)
+        }
+
+        assertNull(context.identity)
+        assertNull(context.clientContext)
+    }
+
+    @Test
+    fun runFromFactoryNonFactoryClass() {
+        assertThrows<RuntimeException> { NativeLambdaApi.runFromFactory(this.javaClass.name) }
+    }
+
+    private fun runMainTest(runner: () -> Unit): Context {
+        every {
+            connectionFactory(URL_NEXT_REQUEST)
+        } returns requestConnection andThenThrows RuntimeException() // second invocation to end loop
+        every { connectionFactory(URL_RESPONSE) } returns responseConnection
+        every { errorLogger(any()) } just runs
+
+        val input = ByteArrayInputStream(CONTENT.toByteArray())
+
+        every { requestConnection.inputStream } returns input
+        every { requestConnection.getHeaderField(HEADER_NAME_AWS_REQUEST_ID) } returns AWS_REQUEST_ID
+        every { requestConnection.getHeaderField(HEADER_NAME_INVOKED_FUNCTION_ARN) } returns FUNCTION_ARN
+        every { requestConnection.getHeaderField(HEADER_NAME_DEADLINE_MS) } returns "100"
+
+        every { config.logGroupName } returns LOG_GROUP_NAME
+        every { config.logStreamName } returns ""
+        every { config.functionName } returns AWS_REQUEST_ID
+        every { config.functionVersion } returns FUNCTION_VERSION
+        every { config.memoryLimit } returns 0
+
+        val output = ByteArrayOutputStream()
+
+        every { responseConnection.doOutput = any() } just runs
+        every { responseConnection.requestMethod = HTTP_METHOD } just runs
+        every { responseConnection.inputStream } returns "".byteInputStream()
+        every { responseConnection.outputStream } returns output
+
+        every { handler(input, output, any()) } just runs
+
+        runner()
+
+        val context = slot<Context>()
+
+        verify { handler(input, output, capture(context)) }
+        verify { responseConnection.requestMethod = HTTP_METHOD }
+
+        return context.captured
+    }
+}
+
+class TestFactory : ResourcesFactory {
+    override val lambdaApi = NativeLambdaApi(provider.objectMapper, provider.config)
+
+    override val lambdaCallback = provider.handler::invoke
+
+    companion object {
+        lateinit var provider: NativeLambdaApiTest
     }
 }
