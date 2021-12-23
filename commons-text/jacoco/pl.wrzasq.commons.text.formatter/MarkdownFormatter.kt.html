@@ -7,17 +7,22 @@
 
 package pl.wrzasq.commons.text.formatter
 
-import org.pegdown.Extensions
-import org.pegdown.PegDownProcessor
+import org.intellij.markdown.flavours.MarkdownFlavourDescriptor
+import org.intellij.markdown.flavours.gfm.GFMFlavourDescriptor
+import org.intellij.markdown.html.HtmlGenerator
+import org.intellij.markdown.parser.MarkdownParser
 
 /**
  * Markdown format handler.
  *
- * @param markdownProcessor Markdown processor with all available extras.
+ * @param flavour Markdown flavour handler.
  */
-<span class="fc" id="L18">class MarkdownFormatter(</span>
-<span class="fc" id="L19">    private val markdownProcessor: PegDownProcessor = PegDownProcessor(Extensions.ALL)</span>
+<span class="fc" id="L20">class MarkdownFormatter(</span>
+<span class="fc" id="L21">    private val flavour: MarkdownFlavourDescriptor = GFMFlavourDescriptor()</span>
 ) : FormatterInterface {
-<span class="fc" id="L21">    override fun transform(text: String): String = markdownProcessor.markdownToHtml(text)</span>
-<span class="fc" id="L22">}</span>
+    override fun transform(text: String): String {
+<span class="fc" id="L24">        val parsedTree = MarkdownParser(flavour).buildMarkdownTreeFromString(text)</span>
+<span class="fc" id="L25">        return HtmlGenerator(text, parsedTree, flavour).generateHtml().removeSurrounding(&quot;&lt;body&gt;&quot;, &quot;&lt;/body&gt;&quot;)</span>
+    }
+<span class="fc" id="L27">}</span>
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

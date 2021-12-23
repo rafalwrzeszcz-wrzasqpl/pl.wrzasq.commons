@@ -2,7 +2,7 @@ GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_
 WrzasqPl Commons Text,pl.wrzasq.commons.text.html,Utils,0,169,0,8,0,19,0,13,0,9
 WrzasqPl Commons Text,pl.wrzasq.commons.text.html,UtilsKt,0,9,0,0,0,4,0,1,0,1
 WrzasqPl Commons Text,pl.wrzasq.commons.text.formatter,HtmlFormatter,0,8,0,0,0,2,0,2,0,2
-WrzasqPl Commons Text,pl.wrzasq.commons.text.formatter,MarkdownFormatter,0,34,0,0,0,4,0,3,0,3
+WrzasqPl Commons Text,pl.wrzasq.commons.text.formatter,MarkdownFormatter,0,56,0,0,0,5,0,3,0,3
 WrzasqPl Commons Text,pl.wrzasq.commons.text.formatter,PlainTextFormatter,0,35,0,0,0,3,0,2,0,2
 WrzasqPl Commons Text,pl.wrzasq.commons.text,Formatter,0,72,0,2,0,7,0,5,0,4
 WrzasqPl Commons Text,pl.wrzasq.commons.text,TextProcessingException,0,18,0,0,0,2,0,2,0,2

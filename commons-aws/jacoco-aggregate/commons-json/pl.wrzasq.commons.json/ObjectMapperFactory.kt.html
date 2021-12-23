@@ -8,8 +8,8 @@
 package pl.wrzasq.commons.json
 
 import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 
@@ -22,11 +22,12 @@ object ObjectMapperFactory {
      *
      * @return Object mapper to be used around the system.
      */
-<span class="fc" id="L25">    fun createObjectMapper(): ObjectMapper = ObjectMapper()</span>
-<span class="fc" id="L26">        .registerModule(JavaTimeModule())</span>
-<span class="fc" id="L27">        .registerModule(KotlinModule())</span>
-<span class="fc" id="L28">        .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)</span>
-<span class="fc" id="L29">        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)</span>
-<span class="fc" id="L30">        .configure(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE, false)</span>
+<span class="fc" id="L25">    fun createObjectMapper(): JsonMapper = JsonMapper.builder()</span>
+<span class="fc" id="L26">        .addModule(JavaTimeModule())</span>
+<span class="fc" id="L27">        .addModule(KotlinModule.Builder().build())</span>
+<span class="fc" id="L28">        .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)</span>
+<span class="fc" id="L29">        .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)</span>
+<span class="fc" id="L30">        .disable(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE)</span>
+<span class="fc" id="L31">        .build()</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
