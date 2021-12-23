@@ -38,9 +38,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.pegdown</groupId>
-            <artifactId>pegdown</artifactId>
-            <version>1.6.0</version>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>markdown-jvm</artifactId>
+            <version>0.2.4</version>
         </dependency>
     </dependencies>
 </project>

@@ -7,16 +7,21 @@
 
 package pl.wrzasq.commons.text.formatter
 
-import org.pegdown.Extensions
-import org.pegdown.PegDownProcessor
+import org.intellij.markdown.flavours.MarkdownFlavourDescriptor
+import org.intellij.markdown.flavours.gfm.GFMFlavourDescriptor
+import org.intellij.markdown.html.HtmlGenerator
+import org.intellij.markdown.parser.MarkdownParser
 
 /**
  * Markdown format handler.
  *
- * @param markdownProcessor Markdown processor with all available extras.
+ * @param flavour Markdown flavour handler.
  */
 class MarkdownFormatter(
-    private val markdownProcessor: PegDownProcessor = PegDownProcessor(Extensions.ALL)
+    private val flavour: MarkdownFlavourDescriptor = GFMFlavourDescriptor()
 ) : FormatterInterface {
-    override fun transform(text: String): String = markdownProcessor.markdownToHtml(text)
+    override fun transform(text: String): String {
+        val parsedTree = MarkdownParser(flavour).buildMarkdownTreeFromString(text)
+        return HtmlGenerator(text, parsedTree, flavour).generateHtml().removeSurrounding("<body>", "</body>")
+    }
 }
