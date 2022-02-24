@@ -2,26 +2,26 @@
  * This file is part of the pl.wrzasq.commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2020 - 2021 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2020 - 2022 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.wrzasq.commons.aws.messaging
 
-import java.io.IOException
-
-import com.fasterxml.jackson.databind.ObjectMapper
+import kotlinx.serialization.SerializationException
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 /**
  * Generic handler for JSON-serialized messages.
  *
- * @param objectMapper JSON handler.
+ * @param json JSON handler.
  * @param messageHandler Single message sender.
  * @param <ResponseType> Returned result type.
  */
 open class MessageDispatcher<ResponseType>(
-    private val objectMapper: ObjectMapper,
+    private val json: Json,
     private val messageHandler: (String) -> ResponseType
 ) {
     private val logger: Logger = LoggerFactory.getLogger(MessageDispatcher::class.java)
@@ -34,12 +34,12 @@ open class MessageDispatcher<ResponseType>(
      * @throws IllegalArgumentException When message could not be serialized.
      */
     fun send(message: Any): ResponseType = try {
-        val payload = objectMapper.writeValueAsString(message)
+        val payload = json.encodeToString(message)
         logger.info("Dispatching message {}.", payload)
         val result = messageHandler(payload)
         logger.debug("Message sent")
         result
-    } catch (error: IOException) {
+    } catch (error: SerializationException) {
         logger.error("Failed to serialize message payload.", error)
         throw IllegalArgumentException("Could not serialize message payload.", error)
     }

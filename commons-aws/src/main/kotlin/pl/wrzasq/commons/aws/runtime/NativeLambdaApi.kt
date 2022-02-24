@@ -2,26 +2,28 @@
  * This file is part of the pl.wrzasq.commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2021 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2021 - 2022 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.wrzasq.commons.aws.runtime
 
-import com.amazonaws.services.lambda.runtime.ClientContext
-import com.amazonaws.services.lambda.runtime.CognitoIdentity
 import com.amazonaws.services.lambda.runtime.Context
 import com.amazonaws.services.lambda.runtime.LambdaRuntime
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.encodeToStream
 import pl.wrzasq.commons.aws.runtime.config.EnvironmentConfig
 import pl.wrzasq.commons.aws.runtime.config.LambdaRuntimeConfig
 import pl.wrzasq.commons.aws.runtime.config.ResourcesFactory
+import pl.wrzasq.commons.aws.runtime.model.JsonClientContext
+import pl.wrzasq.commons.aws.runtime.model.JsonCognitoIdentity
 import pl.wrzasq.commons.aws.runtime.model.LambdaRuntimeError
 import java.io.InputStream
 import java.io.OutputStream
-import java.lang.Exception
-import java.lang.RuntimeException
 import java.net.HttpURLConnection
 import kotlin.reflect.full.createInstance
 
@@ -68,11 +70,12 @@ typealias LambdaCallback = (InputStream, OutputStream, Context) -> Unit
 /**
  * Native ("provided") Lambda API handler.
  *
- * @param objectMapper JSON serialization handler.
+ * @param json JSON serialization handler.
  * @param config Function configuration.
  */
+@ExperimentalSerializationApi
 class NativeLambdaApi(
-    private val objectMapper: ObjectMapper,
+    private val json: Json,
     private val config: LambdaRuntimeConfig = EnvironmentConfig()
 ) {
     /**
@@ -84,7 +87,9 @@ class NativeLambdaApi(
         try {
             while (true) {
                 val requestConnection = config.connectionFactory("${config.baseUrl}invocation/next")
-                requestConnection.getInputStream().use {
+                withContext(Dispatchers.IO) {
+                    requestConnection.getInputStream()
+                }.use {
                     val requestId = requestConnection.getHeaderField(HEADER_NAME_AWS_REQUEST_ID)
 
                     // we handle both cases to clean up previous execution
@@ -132,13 +137,14 @@ class NativeLambdaApi(
         logError(message, error)
 
         sendResponse(url) {
-            objectMapper.writeValue(
-                it,
+            json.encodeToStream(
+                LambdaRuntimeError.serializer(),
                 LambdaRuntimeError(
                     error.javaClass.name,
                     error.message ?: message,
                     error.stackTrace.map(StackTraceElement::toString)
-                )
+                ),
+                it
             )
         }
     }
@@ -156,9 +162,9 @@ class NativeLambdaApi(
         functionVersion = config.functionVersion,
         invokedFunctionArn = request.getHeaderField(HEADER_NAME_INVOKED_FUNCTION_ARN),
         cognitoIdentity = request.getHeaderField(HEADER_NAME_COGNITO_IDENTITY)
-            ?.let<String, CognitoIdentity>(objectMapper::readValue),
+            ?.let<String, JsonCognitoIdentity>(json::decodeFromString),
         clientContext = request.getHeaderField(HEADER_NAME_CLIENT_CONTEXT)
-            ?.let<String, ClientContext>(objectMapper::readValue),
+            ?.let<String, JsonClientContext>(json::decodeFromString),
         runtimeDeadlineMs = request.getHeaderField(HEADER_NAME_DEADLINE_MS)?.let(String::toLong) ?: 0,
         memoryLimitInMB = config.memoryLimit,
         logger = LambdaRuntime.getLogger()

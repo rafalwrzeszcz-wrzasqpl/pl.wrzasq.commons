@@ -2,23 +2,26 @@
  * This file is part of the pl.wrzasq.commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2021 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2021 - 2022 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.wrzasq.commons.aws.runtime
 
-import com.amazonaws.services.lambda.runtime.ClientContext
-import com.amazonaws.services.lambda.runtime.CognitoIdentity
 import com.amazonaws.services.lambda.runtime.Context
-import com.fasterxml.jackson.core.type.TypeReference
-import com.fasterxml.jackson.databind.ObjectMapper
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.just
+import io.mockk.mockkStatic
 import io.mockk.runs
 import io.mockk.slot
 import io.mockk.verify
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.SerializationStrategy
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.encodeToStream
+import kotlinx.serialization.modules.SerializersModule
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertSame
@@ -36,6 +39,8 @@ import pl.wrzasq.commons.aws.runtime.NativeLambdaApi
 import pl.wrzasq.commons.aws.runtime.PROPERTY_TRACE_ID
 import pl.wrzasq.commons.aws.runtime.config.LambdaRuntimeConfig
 import pl.wrzasq.commons.aws.runtime.config.ResourcesFactory
+import pl.wrzasq.commons.aws.runtime.model.JsonClientContext
+import pl.wrzasq.commons.aws.runtime.model.JsonCognitoIdentity
 import pl.wrzasq.commons.aws.runtime.model.LambdaRuntimeError
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
@@ -53,10 +58,14 @@ private const val URL_NEXT_REQUEST = "${BASE_URL}invocation/next"
 private const val URL_RESPONSE = "${BASE_URL}invocation/${AWS_REQUEST_ID}/response"
 private const val URL_INIT_ERROR = "${BASE_URL}init/error"
 
+@ExperimentalSerializationApi
 @ExtendWith(MockKExtension::class)
 class NativeLambdaApiTest {
     @MockK
-    lateinit var objectMapper: ObjectMapper
+    lateinit var serializerModule: SerializersModule
+
+    @MockK
+    lateinit var json: Json
 
     @MockK
     lateinit var requestConnection: HttpURLConnection
@@ -77,10 +86,10 @@ class NativeLambdaApiTest {
     lateinit var handler: (InputStream, OutputStream, Context) -> Unit
 
     @MockK
-    lateinit var cognitoIdentity: CognitoIdentity
+    lateinit var cognitoIdentity: JsonCognitoIdentity
 
     @MockK
-    lateinit var clientContext: ClientContext
+    lateinit var clientContext: JsonClientContext
 
     @BeforeEach
     fun setUp() {
@@ -94,7 +103,7 @@ class NativeLambdaApiTest {
     @Test
     fun constructor() {
         // can not test flow, but just instantiation of default values
-        NativeLambdaApi(objectMapper)
+        NativeLambdaApi(json)
     }
 
     @Test
@@ -107,7 +116,7 @@ class NativeLambdaApiTest {
         every { requestConnection.getHeaderField(HEADER_NAME_CLIENT_CONTEXT) } returns null
 
         val context = runMainTest {
-            val runtime = NativeLambdaApi(objectMapper, config)
+            val runtime = NativeLambdaApi(json, config)
             runtime.run(handler)
         }
 
@@ -125,13 +134,14 @@ class NativeLambdaApiTest {
         every { requestConnection.getHeaderField(HEADER_NAME_COGNITO_IDENTITY) } returns cognitoIdentityJson
         every { requestConnection.getHeaderField(HEADER_NAME_CLIENT_CONTEXT) } returns clientContextJson
 
+        every { json.serializersModule } returns serializerModule
         every {
-            objectMapper.readValue(cognitoIdentityJson, any<TypeReference<CognitoIdentity>>())
+            json.decodeFromString(any<KSerializer<JsonCognitoIdentity>>(), cognitoIdentityJson)
         } returns cognitoIdentity
-        every { objectMapper.readValue(clientContextJson, any<TypeReference<ClientContext>>()) } returns clientContext
+        every { json.decodeFromString(any<KSerializer<JsonClientContext>>(), clientContextJson) } returns clientContext
 
         val context = runMainTest {
-            val runtime = NativeLambdaApi(objectMapper, config)
+            val runtime = NativeLambdaApi(json, config)
             runtime.run(handler)
         }
 
@@ -157,17 +167,20 @@ class NativeLambdaApiTest {
 
         val output = ByteArrayOutputStream()
 
-        every { objectMapper.writeValue(output, any<LambdaRuntimeError>()) } just runs
+        mockkStatic("kotlinx.serialization.json.JvmStreamsKt")
+
+        every { json.serializersModule } returns serializerModule
+        every { json.encodeToStream(any<SerializationStrategy<LambdaRuntimeError>>(), any(), output) } just runs
 
         every { responseConnection.doOutput = any() } just runs
         every { responseConnection.requestMethod = HTTP_METHOD } just runs
         every { responseConnection.inputStream } returns "".byteInputStream()
         every { responseConnection.outputStream } returns output
 
-        val runtime = NativeLambdaApi(objectMapper, config)
+        val runtime = NativeLambdaApi(json, config)
         runtime.run(handler)
 
-        verify { objectMapper.writeValue(output, any<LambdaRuntimeError>()) }
+        verify { json.encodeToStream(any<SerializationStrategy<LambdaRuntimeError>>(), any(), output) }
         verify { responseConnection.requestMethod = HTTP_METHOD }
         verify { errorLogger(any()) }
     }
@@ -180,17 +193,20 @@ class NativeLambdaApiTest {
 
         val output = ByteArrayOutputStream()
 
-        every { objectMapper.writeValue(output, any<LambdaRuntimeError>()) } just runs
+        mockkStatic("kotlinx.serialization.json.JvmStreamsKt")
+
+        every { json.serializersModule } returns serializerModule
+        every { json.encodeToStream(any<SerializationStrategy<LambdaRuntimeError>>(), any(), output) } just runs
 
         every { responseConnection.doOutput = any() } just runs
         every { responseConnection.requestMethod = HTTP_METHOD } just runs
         every { responseConnection.inputStream } returns "{}".byteInputStream()
         every { responseConnection.outputStream } returns output
 
-        val runtime = NativeLambdaApi(objectMapper, config)
+        val runtime = NativeLambdaApi(json, config)
         runtime.run(handler)
 
-        verify { objectMapper.writeValue(output, any<LambdaRuntimeError>()) }
+        verify { json.encodeToStream(any<SerializationStrategy<LambdaRuntimeError>>(), any(), output) }
         verify { responseConnection.requestMethod = HTTP_METHOD }
         verify { errorLogger(any()) }
     }
@@ -200,7 +216,7 @@ class NativeLambdaApiTest {
         every { connectionFactory(any()) } throws RuntimeException()
         every { errorLogger(any()) } just runs
 
-        val runtime = NativeLambdaApi(objectMapper, config)
+        val runtime = NativeLambdaApi(json, config)
         runtime.run(handler)
 
         verify { connectionFactory(URL_NEXT_REQUEST) }
@@ -267,8 +283,9 @@ class NativeLambdaApiTest {
     }
 }
 
+@ExperimentalSerializationApi
 class TestFactory : ResourcesFactory {
-    override val lambdaApi = NativeLambdaApi(provider.objectMapper, provider.config)
+    override val lambdaApi = NativeLambdaApi(provider.json, provider.config)
 
     override val lambdaCallback = provider.handler::invoke
 

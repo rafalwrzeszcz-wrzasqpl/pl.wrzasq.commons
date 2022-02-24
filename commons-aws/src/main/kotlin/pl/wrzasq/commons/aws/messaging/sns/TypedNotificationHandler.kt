@@ -2,24 +2,25 @@
  * This file is part of the pl.wrzasq.commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2017 - 2019, 2021 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2017 - 2019, 2021 - 2022 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.wrzasq.commons.aws.messaging.sns
 
-import com.fasterxml.jackson.databind.ObjectMapper
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.json.Json
 import pl.wrzasq.commons.aws.messaging.MessageHandler
 
 /**
  * SNS notifications handler that processes typed message.
  *
- * @param objectMapper JSON handler.
+ * @param json JSON handler.
  * @param messageHandler Single message consumer.
- * @param type Message content type.
+ * @param typeSerializer Expected message type handler.
  * @param <Type> Message type.
  */
 class TypedNotificationHandler<Type>(
-    objectMapper: ObjectMapper,
+    json: Json,
     messageHandler: (Type) -> Unit,
-    type: Class<Type>
-) : SimpleNotificationHandler(MessageHandler(objectMapper, messageHandler, type)::handle)
+    typeSerializer: KSerializer<Type>
+) : SimpleNotificationHandler(MessageHandler(json, messageHandler, typeSerializer)::handle)

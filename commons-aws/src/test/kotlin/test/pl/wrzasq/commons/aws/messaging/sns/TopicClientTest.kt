@@ -2,16 +2,17 @@
  * This file is part of the pl.wrzasq.commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2017 - 2021 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2017 - 2022 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package test.pl.wrzasq.commons.aws.messaging.sns
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.slot
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertSame
 import org.junit.jupiter.api.Test
@@ -28,7 +29,7 @@ class TopicClientTest {
     lateinit var sns: SnsClient
 
     @MockK
-    lateinit var objectMapper: ObjectMapper
+    lateinit var json: Json
 
     @Test
     fun send() {
@@ -39,11 +40,11 @@ class TopicClientTest {
         val input = Any()
         val message = "{}"
         val response = PublishResponse.builder().build()
-        val client = TopicClient(objectMapper, sns, topic)
+        val client = TopicClient(json, sns, topic)
 
         val captor = slot<Consumer<PublishRequest.Builder>>()
 
-        every { objectMapper.writeValueAsString(input) } returns message
+        every { json.encodeToString(input) } returns message
         every { sns.publish(capture(captor)) } returns response
 
         assertSame(response, client.send(input))
