@@ -3,7 +3,7 @@
 # This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2017 - 2021 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2017 - 2022 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 <project
     xmlns="http://maven.apache.org/DECORATION/1.4.0"
@@ -15,8 +15,7 @@
         <menu ref="parent"/>
 
         <menu name="Guide">
-            <item name="Factory" href="guide/factory.html"/>
-            <item name="Content-Type delegation" href="guide/delegate-decoder.html"/>
+            <item name="AWS X-Ray" href="guide/xray.html"/>
         </menu>
 
         <menu ref="reports"/>
