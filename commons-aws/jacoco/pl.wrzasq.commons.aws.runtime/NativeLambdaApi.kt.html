@@ -2,26 +2,28 @@
  * This file is part of the pl.wrzasq.commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2021 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2021 - 2022 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.wrzasq.commons.aws.runtime
 
-import com.amazonaws.services.lambda.runtime.ClientContext
-import com.amazonaws.services.lambda.runtime.CognitoIdentity
 import com.amazonaws.services.lambda.runtime.Context
 import com.amazonaws.services.lambda.runtime.LambdaRuntime
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.encodeToStream
 import pl.wrzasq.commons.aws.runtime.config.EnvironmentConfig
 import pl.wrzasq.commons.aws.runtime.config.LambdaRuntimeConfig
 import pl.wrzasq.commons.aws.runtime.config.ResourcesFactory
+import pl.wrzasq.commons.aws.runtime.model.JsonClientContext
+import pl.wrzasq.commons.aws.runtime.model.JsonCognitoIdentity
 import pl.wrzasq.commons.aws.runtime.model.LambdaRuntimeError
 import java.io.InputStream
 import java.io.OutputStream
-import java.lang.Exception
-import java.lang.RuntimeException
 import java.net.HttpURLConnection
 import kotlin.reflect.full.createInstance
 
@@ -68,101 +70,105 @@ typealias LambdaCallback = (InputStream, OutputStream, Context) -&gt; Unit
 /**
  * Native (&quot;provided&quot;) Lambda API handler.
  *
- * @param objectMapper JSON serialization handler.
+ * @param json JSON serialization handler.
  * @param config Function configuration.
  */
-<span class="fc" id="L74">class NativeLambdaApi(</span>
-<span class="fc" id="L75">    private val objectMapper: ObjectMapper,</span>
-<span class="fc" id="L76">    private val config: LambdaRuntimeConfig = EnvironmentConfig()</span>
+<span class="fc" id="L76">@ExperimentalSerializationApi</span>
+<span class="fc" id="L77">class NativeLambdaApi(</span>
+<span class="fc" id="L78">    private val json: Json,</span>
+<span class="fc" id="L79">    private val config: LambdaRuntimeConfig = EnvironmentConfig()</span>
 ) {
     /**
      * Runs Lambda native handler.
      *
      * @param handler Lambda entry point.
      */
-<span class="fc" id="L83">    fun run(handler: LambdaCallback) = runBlocking {</span>
-<span class="fc" id="L84">        try {</span>
-<span class="fc" id="L85">            while (true) {</span>
-<span class="fc" id="L86">                val requestConnection = config.connectionFactory(&quot;${config.baseUrl}invocation/next&quot;)</span>
-<span class="pc" id="L87">                requestConnection.getInputStream().use {</span>
-<span class="fc" id="L88">                    val requestId = requestConnection.getHeaderField(HEADER_NAME_AWS_REQUEST_ID)</span>
+<span class="fc" id="L86">    fun run(handler: LambdaCallback) = runBlocking {</span>
+<span class="fc" id="L87">        try {</span>
+<span class="fc" id="L88">            while (true) {</span>
+<span class="fc" id="L89">                val requestConnection = config.connectionFactory(&quot;${config.baseUrl}invocation/next&quot;)</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">                withContext(Dispatchers.IO) {</span>
+<span class="pc" id="L91">                    requestConnection.getInputStream()</span>
+<span class="pc" id="L92">                }.use {</span>
+<span class="fc" id="L93">                    val requestId = requestConnection.getHeaderField(HEADER_NAME_AWS_REQUEST_ID)</span>
 
                     // we handle both cases to clean up previous execution
-<span class="fc" id="L91">                    val traceId = requestConnection.getHeaderField(HEADER_NAME_TRACE_ID)</span>
-<span class="fc bfc" id="L92" title="All 6 branches covered.">                    if (traceId.isNullOrEmpty()) {</span>
-<span class="fc" id="L93">                        System.clearProperty(PROPERTY_TRACE_ID)</span>
+<span class="fc" id="L96">                    val traceId = requestConnection.getHeaderField(HEADER_NAME_TRACE_ID)</span>
+<span class="fc bfc" id="L97" title="All 6 branches covered.">                    if (traceId.isNullOrEmpty()) {</span>
+<span class="fc" id="L98">                        System.clearProperty(PROPERTY_TRACE_ID)</span>
                     } else {
-<span class="fc" id="L95">                        System.setProperty(PROPERTY_TRACE_ID, traceId)</span>
+<span class="fc" id="L100">                        System.setProperty(PROPERTY_TRACE_ID, traceId)</span>
                     }
 
-<span class="fc" id="L98">                    try {</span>
-<span class="fc" id="L99">                        sendResponse(&quot;${config.baseUrl}invocation/${requestId}/response&quot;) { output -&gt;</span>
-<span class="fc" id="L100">                            handler(it, output, buildContext(requestId, requestConnection as HttpURLConnection))</span>
-<span class="fc" id="L101">                        }</span>
-<span class="fc" id="L102">                    } catch (error: Exception) {</span>
+<span class="fc" id="L103">                    try {</span>
+<span class="fc" id="L104">                        sendResponse(&quot;${config.baseUrl}invocation/${requestId}/response&quot;) { output -&gt;</span>
+<span class="fc" id="L105">                            handler(it, output, buildContext(requestId, requestConnection as HttpURLConnection))</span>
+<span class="fc" id="L106">                        }</span>
+<span class="fc" id="L107">                    } catch (error: Exception) {</span>
                         // TODO: handle case when Lambda handler itself returns LambdaRuntimeError
-<span class="fc" id="L104">                        sendErrorResponse(</span>
-<span class="fc" id="L105">                            &quot;${config.baseUrl}invocation/${requestId}/error&quot;,</span>
-<span class="fc" id="L106">                            &quot;Failed to run Lambda.&quot;,</span>
-<span class="fc" id="L107">                            error</span>
+<span class="fc" id="L109">                        sendErrorResponse(</span>
+<span class="fc" id="L110">                            &quot;${config.baseUrl}invocation/${requestId}/error&quot;,</span>
+<span class="fc" id="L111">                            &quot;Failed to run Lambda.&quot;,</span>
+<span class="fc" id="L112">                            error</span>
                         )
                     }
-<span class="fc" id="L110">                }</span>
+<span class="fc" id="L115">                }</span>
             }
-<span class="fc" id="L112">        } catch (error: Exception) {</span>
-<span class="fc" id="L113">            try {</span>
-<span class="fc" id="L114">                sendErrorResponse(&quot;${config.baseUrl}init/error&quot;, &quot;Failed to initialize Lambda.&quot;, error)</span>
-<span class="fc" id="L115">            } catch (innerError: Exception) {</span>
-<span class="fc" id="L116">                logError(&quot;Failed to report init error.&quot;, innerError)</span>
+<span class="fc" id="L117">        } catch (error: Exception) {</span>
+<span class="fc" id="L118">            try {</span>
+<span class="fc" id="L119">                sendErrorResponse(&quot;${config.baseUrl}init/error&quot;, &quot;Failed to initialize Lambda.&quot;, error)</span>
+<span class="fc" id="L120">            } catch (innerError: Exception) {</span>
+<span class="fc" id="L121">                logError(&quot;Failed to report init error.&quot;, innerError)</span>
             }
         }
-<span class="fc" id="L119">    }</span>
+<span class="fc" id="L124">    }</span>
 
     private fun sendResponse(url: String, handler: (OutputStream) -&gt; Unit) {
-<span class="fc" id="L122">        val responseConnection = config.connectionFactory(url) as HttpURLConnection</span>
-<span class="fc" id="L123">        responseConnection.doOutput = true</span>
-<span class="fc" id="L124">        responseConnection.requestMethod = &quot;POST&quot;</span>
-<span class="fc" id="L125">        handler(responseConnection.outputStream)</span>
-<span class="fc bfc" id="L126" title="All 2 branches covered.">        while (responseConnection.inputStream.read() != -1) {</span>
+<span class="fc" id="L127">        val responseConnection = config.connectionFactory(url) as HttpURLConnection</span>
+<span class="fc" id="L128">        responseConnection.doOutput = true</span>
+<span class="fc" id="L129">        responseConnection.requestMethod = &quot;POST&quot;</span>
+<span class="fc" id="L130">        handler(responseConnection.outputStream)</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">        while (responseConnection.inputStream.read() != -1) {</span>
             // drain
         }
-<span class="fc" id="L129">    }</span>
+<span class="fc" id="L134">    }</span>
 
     private fun sendErrorResponse(url: String, message: String, error: Exception) {
-<span class="fc" id="L132">        logError(message, error)</span>
+<span class="fc" id="L137">        logError(message, error)</span>
 
-<span class="fc" id="L134">        sendResponse(url) {</span>
-<span class="fc" id="L135">            objectMapper.writeValue(</span>
-<span class="fc" id="L136">                it,</span>
-<span class="fc" id="L137">                LambdaRuntimeError(</span>
-<span class="fc" id="L138">                    error.javaClass.name,</span>
-<span class="fc bfc" id="L139" title="All 2 branches covered.">                    error.message ?: message,</span>
-<span class="fc" id="L140">                    error.stackTrace.map(StackTraceElement::toString)</span>
-                )
+<span class="fc" id="L139">        sendResponse(url) {</span>
+<span class="fc" id="L140">            json.encodeToStream(</span>
+<span class="fc" id="L141">                LambdaRuntimeError.serializer(),</span>
+<span class="fc" id="L142">                LambdaRuntimeError(</span>
+<span class="fc" id="L143">                    error.javaClass.name,</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">                    error.message ?: message,</span>
+<span class="fc" id="L145">                    error.stackTrace.map(StackTraceElement::toString)</span>
+                ),
+<span class="fc" id="L147">                it</span>
             )
-<span class="fc" id="L143">        }</span>
-<span class="fc" id="L144">    }</span>
+<span class="fc" id="L149">        }</span>
+<span class="fc" id="L150">    }</span>
 
     private fun logError(message: String, error: Exception) {
-<span class="fc" id="L147">        config.errorLogger(message)</span>
-<span class="fc" id="L148">        config.errorLogger(error.stackTraceToString())</span>
-<span class="fc" id="L149">    }</span>
+<span class="fc" id="L153">        config.errorLogger(message)</span>
+<span class="fc" id="L154">        config.errorLogger(error.stackTraceToString())</span>
+<span class="fc" id="L155">    }</span>
 
-<span class="fc" id="L151">    private fun buildContext(awsRequestId: String, request: HttpURLConnection): Context = StaticContext(</span>
-<span class="fc" id="L152">        awsRequestId = awsRequestId,</span>
-<span class="fc" id="L153">        logGroupName = config.logGroupName,</span>
-<span class="fc" id="L154">        logStreamName = config.logStreamName,</span>
-<span class="fc" id="L155">        functionName = config.functionName,</span>
-<span class="fc" id="L156">        functionVersion = config.functionVersion,</span>
-<span class="fc" id="L157">        invokedFunctionArn = request.getHeaderField(HEADER_NAME_INVOKED_FUNCTION_ARN),</span>
-<span class="fc bfc" id="L158" title="All 2 branches covered.">        cognitoIdentity = request.getHeaderField(HEADER_NAME_COGNITO_IDENTITY)</span>
-<span class="fc" id="L159">            ?.let&lt;String, CognitoIdentity&gt;(objectMapper::readValue),</span>
-<span class="fc bfc" id="L160" title="All 2 branches covered.">        clientContext = request.getHeaderField(HEADER_NAME_CLIENT_CONTEXT)</span>
-<span class="fc" id="L161">            ?.let&lt;String, ClientContext&gt;(objectMapper::readValue),</span>
-<span class="pc bpc" id="L162" title="1 of 2 branches missed.">        runtimeDeadlineMs = request.getHeaderField(HEADER_NAME_DEADLINE_MS)?.let(String::toLong) ?: 0,</span>
-<span class="fc" id="L163">        memoryLimitInMB = config.memoryLimit,</span>
-<span class="fc" id="L164">        logger = LambdaRuntime.getLogger()</span>
-<span class="fc" id="L165">    )</span>
+<span class="fc" id="L157">    private fun buildContext(awsRequestId: String, request: HttpURLConnection): Context = StaticContext(</span>
+<span class="fc" id="L158">        awsRequestId = awsRequestId,</span>
+<span class="fc" id="L159">        logGroupName = config.logGroupName,</span>
+<span class="fc" id="L160">        logStreamName = config.logStreamName,</span>
+<span class="fc" id="L161">        functionName = config.functionName,</span>
+<span class="fc" id="L162">        functionVersion = config.functionVersion,</span>
+<span class="fc" id="L163">        invokedFunctionArn = request.getHeaderField(HEADER_NAME_INVOKED_FUNCTION_ARN),</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">        cognitoIdentity = request.getHeaderField(HEADER_NAME_COGNITO_IDENTITY)</span>
+<span class="fc" id="L165">            ?.let&lt;String, JsonCognitoIdentity&gt;(json::decodeFromString),</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">        clientContext = request.getHeaderField(HEADER_NAME_CLIENT_CONTEXT)</span>
+<span class="fc" id="L167">            ?.let&lt;String, JsonClientContext&gt;(json::decodeFromString),</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">        runtimeDeadlineMs = request.getHeaderField(HEADER_NAME_DEADLINE_MS)?.let(String::toLong) ?: 0,</span>
+<span class="fc" id="L169">        memoryLimitInMB = config.memoryLimit,</span>
+<span class="fc" id="L170">        logger = LambdaRuntime.getLogger()</span>
+<span class="fc" id="L171">    )</span>
 
     companion object {
         /**
@@ -171,13 +177,13 @@ typealias LambdaCallback = (InputStream, OutputStream, Context) -&gt; Unit
          * @param handler Factory type name.
          */
         fun runFromFactory(handler: String) {
-<span class="fc" id="L174">            val factory = Class.forName(handler).kotlin.createInstance()</span>
-<span class="fc bfc" id="L175" title="All 2 branches covered.">            if (factory is ResourcesFactory) {</span>
-<span class="fc" id="L176">                factory.lambdaApi.run(factory.lambdaCallback)</span>
+<span class="fc" id="L180">            val factory = Class.forName(handler).kotlin.createInstance()</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">            if (factory is ResourcesFactory) {</span>
+<span class="fc" id="L182">                factory.lambdaApi.run(factory.lambdaCallback)</span>
             } else {
-<span class="fc" id="L178">                throw RuntimeException(&quot;$handler is not a factory for Lambda resources&quot;)</span>
+<span class="fc" id="L184">                throw RuntimeException(&quot;$handler is not a factory for Lambda resources&quot;)</span>
             }
-<span class="fc" id="L180">        }</span>
+<span class="fc" id="L186">        }</span>
     }
-<span class="fc" id="L182">}</span>
+<span class="fc" id="L188">}</span>
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

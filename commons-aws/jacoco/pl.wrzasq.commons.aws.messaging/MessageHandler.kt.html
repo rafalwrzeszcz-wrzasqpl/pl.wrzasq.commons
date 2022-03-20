@@ -2,30 +2,31 @@
  * This file is part of the pl.wrzasq.commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2017 - 2019, 2021 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2017 - 2019, 2021 - 2022 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.wrzasq.commons.aws.messaging
 
+import kotlinx.serialization.KSerializer
 import java.io.IOException
-import com.fasterxml.jackson.databind.ObjectMapper
+import kotlinx.serialization.json.Json
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 /**
  * Generic handler for JSON-serialized messages.
  *
- * @param objectMapper JSON handler.
+ * @param json JSON handler.
  * @param messageHandler Single message consumer.
- * @param type Expected message content type.
+ * @param typeSerializer Expected message type handler.
  * @param &lt;MessageType&gt; Message type.
  */
-<span class="fc" id="L23">class MessageHandler&lt;MessageType&gt;(</span>
-<span class="fc" id="L24">    private val objectMapper: ObjectMapper,</span>
-<span class="fc" id="L25">    private val messageHandler: (MessageType) -&gt; Unit,</span>
-<span class="fc" id="L26">    private val type: Class&lt;MessageType&gt;</span>
+<span class="fc" id="L24">class MessageHandler&lt;MessageType&gt;(</span>
+<span class="fc" id="L25">    private val json: Json,</span>
+<span class="fc" id="L26">    private val messageHandler: (MessageType) -&gt; Unit,</span>
+<span class="fc" id="L27">    private val typeSerializer: KSerializer&lt;MessageType&gt;</span>
 ) {
-<span class="fc" id="L28">    private val logger: Logger = LoggerFactory.getLogger(MessageHandler::class.java)</span>
+<span class="fc" id="L29">    private val logger: Logger = LoggerFactory.getLogger(MessageHandler::class.java)</span>
 
     /**
      * Handles message conversion.
@@ -33,15 +34,15 @@ import org.slf4j.LoggerFactory
      * @param message Message content.
      */
     fun handle(message: String) {
-<span class="fc" id="L36">        logger.info(&quot;Incoming message {}.&quot;, message)</span>
-<span class="fc" id="L37">        try {</span>
-<span class="fc" id="L38">            val data = objectMapper.readValue(message, type)</span>
-<span class="fc" id="L39">            messageHandler(data)</span>
-<span class="fc" id="L40">            logger.debug(&quot;Task processed.&quot;)</span>
-<span class="fc" id="L41">        } catch (error: IOException) {</span>
-<span class="fc" id="L42">            logger.error(&quot;Failed to parse event data.&quot;, error)</span>
-<span class="fc" id="L43">            throw IllegalArgumentException(&quot;Could not parse event data.&quot;, error)</span>
+<span class="fc" id="L37">        logger.info(&quot;Incoming message {}.&quot;, message)</span>
+<span class="fc" id="L38">        try {</span>
+<span class="fc" id="L39">            val data = json.decodeFromString(typeSerializer, message)</span>
+<span class="fc" id="L40">            messageHandler(data)</span>
+<span class="fc" id="L41">            logger.debug(&quot;Task processed.&quot;)</span>
+<span class="nc" id="L42">        } catch (error: IOException) {</span>
+<span class="nc" id="L43">            logger.error(&quot;Failed to parse event data.&quot;, error)</span>
+<span class="nc" id="L44">            throw IllegalArgumentException(&quot;Could not parse event data.&quot;, error)</span>
         }
-<span class="fc" id="L45">    }</span>
+<span class="fc" id="L46">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

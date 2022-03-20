@@ -2,30 +2,29 @@
  * This file is part of the pl.wrzasq.commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2017, 2019 - 2021 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2017, 2019 - 2022 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.wrzasq.commons.aws.messaging.sns
 
-import com.fasterxml.jackson.databind.ObjectMapper
+import kotlinx.serialization.json.Json
 import pl.wrzasq.commons.aws.messaging.MessageDispatcher
-import pl.wrzasq.commons.json.ObjectMapperFactory.createObjectMapper
 import software.amazon.awssdk.services.sns.SnsClient
 import software.amazon.awssdk.services.sns.model.PublishResponse
 
 /**
  * Topic-wrapped AWS SNS client.
  *
- * @param objectMapper JSON handler.
+ * @param json JSON handler.
  * @param sns SNS client.
  * @param topicArn Destination topic ARN.
  */
-<span class="fc" id="L23">class TopicClient(</span>
-<span class="fc" id="L24">    objectMapper: ObjectMapper = createObjectMapper(),</span>
-<span class="fc" id="L25">    sns: SnsClient = SnsClient.create(),</span>
+<span class="fc" id="L22">class TopicClient(</span>
+<span class="fc" id="L23">    json: Json = Json.Default,</span>
+<span class="fc" id="L24">    sns: SnsClient = SnsClient.create(),</span>
     topicArn: String
-<span class="fc" id="L27">) : MessageDispatcher&lt;PublishResponse&gt;(</span>
-<span class="fc" id="L28">    objectMapper,</span>
-<span class="fc" id="L29">    { payload -&gt; sns.publish { it.topicArn(topicArn).message(payload) }}</span>
-<span class="fc" id="L30">)</span>
+<span class="fc" id="L26">) : MessageDispatcher&lt;PublishResponse&gt;(</span>
+<span class="fc" id="L27">    json,</span>
+<span class="fc" id="L28">    { payload -&gt; sns.publish { it.topicArn(topicArn).message(payload) }}</span>
+<span class="fc" id="L29">)</span>
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

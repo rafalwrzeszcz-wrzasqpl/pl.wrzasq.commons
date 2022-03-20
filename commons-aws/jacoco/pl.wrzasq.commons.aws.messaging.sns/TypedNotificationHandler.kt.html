@@ -2,25 +2,26 @@
  * This file is part of the pl.wrzasq.commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2017 - 2019, 2021 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2017 - 2019, 2021 - 2022 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.wrzasq.commons.aws.messaging.sns
 
-import com.fasterxml.jackson.databind.ObjectMapper
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.json.Json
 import pl.wrzasq.commons.aws.messaging.MessageHandler
 
 /**
  * SNS notifications handler that processes typed message.
  *
- * @param objectMapper JSON handler.
+ * @param json JSON handler.
  * @param messageHandler Single message consumer.
- * @param type Message content type.
+ * @param typeSerializer Expected message type handler.
  * @param &lt;Type&gt; Message type.
  */
-<span class="fc" id="L21">class TypedNotificationHandler&lt;Type&gt;(</span>
-    objectMapper: ObjectMapper,
+<span class="fc" id="L22">class TypedNotificationHandler&lt;Type&gt;(</span>
+    json: Json,
     messageHandler: (Type) -&gt; Unit,
-    type: Class&lt;Type&gt;
-<span class="fc" id="L25">) : SimpleNotificationHandler(MessageHandler(objectMapper, messageHandler, type)::handle)</span>
+    typeSerializer: KSerializer&lt;Type&gt;
+<span class="fc" id="L26">) : SimpleNotificationHandler(MessageHandler(json, messageHandler, typeSerializer)::handle)</span>
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

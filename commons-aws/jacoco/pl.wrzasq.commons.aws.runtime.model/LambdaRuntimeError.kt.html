@@ -2,10 +2,12 @@
  * This file is part of the pl.wrzasq.commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2021 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2021 - 2022 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 package pl.wrzasq.commons.aws.runtime.model
+
+import kotlinx.serialization.Serializable
 
 /**
  * Lambda error response structure.
@@ -14,9 +16,10 @@ package pl.wrzasq.commons.aws.runtime.model
  * @param errorMessage Error description.
  * @param stackTrace Debug info.
  */
-<span class="pc" id="L17">data class LambdaRuntimeError(</span>
-<span class="pc" id="L18">    val errorType: String,</span>
-<span class="pc" id="L19">    val errorMessage: String,</span>
-<span class="pc" id="L20">    val stackTrace: List&lt;String&gt; = emptyList()</span>
-<span class="nc" id="L21">)</span>
+<span class="pc bnc" id="L19" title="All 11 branches missed.">@Serializable</span>
+<span class="pc" id="L20">data class LambdaRuntimeError(</span>
+<span class="pc" id="L21">    val errorType: String,</span>
+<span class="pc" id="L22">    val errorMessage: String,</span>
+<span class="pc bnc" id="L23" title="All 4 branches missed.">    val stackTrace: List&lt;String&gt; = emptyList()</span>
+<span class="pc" id="L24">)</span>
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
