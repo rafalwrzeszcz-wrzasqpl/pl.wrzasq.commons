@@ -9,10 +9,13 @@
 name = "wrzasqpl-commons-aws"
 version = "3.0.0"
 edition = "2021"
+license = "MIT"
+description = "AWS-related utility functions for commor routines."
 repository = "https://github.com/rafalwrzeszcz-wrzasqpl/wrzasqpl-commons"
 authors = [
     "Rafał Wrzeszcz <rafal.wrzeszcz@wrzasq.pl>"
 ]
+keywords = ["aws", "lambda", "dynamodb"]
 
 [dependencies]
 aws-sdk-dynamodb = "0.28.0"
@@ -31,7 +34,7 @@ tower = "0.4.13"
 tracing = "0.1.37"
 tracing-core = "0.1.31"
 tracing-subscriber = "0.3.17"
-xray = { git = "https://github.com/rafalwrzeszcz/xray", rev = "13196756f0f08965fa82033fb5aa2770d296f85d" }
+xray-tracing = "0.0.1"
 
 [dev-dependencies]
 async-trait = "0.1.68"

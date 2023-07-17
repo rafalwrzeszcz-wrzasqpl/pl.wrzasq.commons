@@ -13,7 +13,7 @@ use std::future::Future;
 use tracing_core::dispatcher::set_global_default;
 use tracing_subscriber::layer::SubscriberExt;
 use tracing_subscriber::Registry;
-use xray::XRaySubscriber;
+use xray_tracing::XRaySubscriber;
 
 pub async fn run_lambda<PayloadType, HandlerType, FutureType, ReturnType, ErrorType>(
     func: HandlerType,

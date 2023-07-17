@@ -1897,7 +1897,7 @@ dependencies = [
  "tracing",
  "tracing-core",
  "tracing-subscriber",
- "xray",
+ "xray-tracing",
 ]
 
 [[package]]
@@ -1907,9 +1907,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4d25c75bf9ea12c4040a97f829154768bbbce366287e2dc044af160cd79a13fd"
 
 [[package]]
-name = "xray"
-version = "0.0.0"
-source = "git+https://github.com/rafalwrzeszcz/xray?rev=13196756f0f08965fa82033fb5aa2770d296f85d#13196756f0f08965fa82033fb5aa2770d296f85d"
+name = "xray-tracing"
+version = "0.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "61a96c39ef3e566d67ebe1ba24593926627ad75b60611e8efc11719a811f5986"
 dependencies = [
  "bytes",
  "http",

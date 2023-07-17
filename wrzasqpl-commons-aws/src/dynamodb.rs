@@ -20,7 +20,7 @@ use serde_dynamo::{from_item, from_items, to_attribute_value, to_item, Error as 
 use std::fmt::{Display, Formatter, Result as FormatResult};
 use thiserror::Error;
 use tracing::{Instrument, Span};
-use xray::aws_metadata;
+use xray_tracing::aws_metadata;
 
 #[derive(Error, Debug)]
 pub enum DaoError {
