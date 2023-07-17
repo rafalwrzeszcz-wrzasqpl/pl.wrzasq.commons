@@ -17,8 +17,8 @@ init-rust:
 init-cargo:
 	cargo install cargo-strip --version 0.2.3
 	cargo install cargo-udeps --version 0.1.40
-	cargo install cargo-tarpaulin --version 0.25.2
-	cargo install cargo-workspaces --version 0.2.42
+	cargo install cargo-tarpaulin --version 0.26.1
+	cargo install cargo-workspaces --version 0.2.44
 
 init-local:
 	cargo install cargo-audit --version 0.17.6
@@ -37,7 +37,7 @@ test:
 	cargo tarpaulin --all-features --out Xml --lib
 
 test-local:
-	docker run -d --rm --name dynamodb -p 8000:8000 amazon/dynamodb-local:1.20.0 -jar DynamoDBLocal.jar -inMemory
+	docker run -d --rm --name dynamodb -p 8000:8000 amazon/dynamodb-local:2.0.0
 	make test
 	docker stop dynamodb
 
