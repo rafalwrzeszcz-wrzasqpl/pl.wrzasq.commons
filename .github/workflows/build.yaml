@@ -87,16 +87,16 @@ jobs:
                     git config user.name "GitHub Actions"
                     git config user.email "office@wrzasq.pl"
             -
+                run: "cargo workspaces version patch --force '*' --yes --no-individual-tags --tag-prefix 'release-'"
+            -
+                id: "tag"
+                run: "echo version=$(git describe --abbrev=0 | sed s/release-//g) >> $GITHUB_OUTPUT"
+            -
                 run: "make build"
             -
                 run: "cargo publish -p wrzasqpl-commons-aws"
                 env:
                     CARGO_REGISTRY_TOKEN: "${{ secrets.CARGO_REGISTRY_TOKEN }}"
-            -
-                run: "cargo workspaces version patch --force '*' --yes --no-individual-tags --tag-prefix 'release-'"
-            -
-                id: "tag"
-                run: "echo version=$(git describe --abbrev=0 | sed s/release-//g) >> $GITHUB_OUTPUT"
             -
                 uses: "ad-m/github-push-action@v0.6.0"
                 with:

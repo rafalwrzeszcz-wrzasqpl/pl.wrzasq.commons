@@ -5,6 +5,7 @@
  * @copyright 2023 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
+use aws_config::load_from_env;
 use aws_sdk_dynamodb::operation::delete_item::builders::DeleteItemFluentBuilder;
 use aws_sdk_dynamodb::operation::delete_item::DeleteItemError;
 use aws_sdk_dynamodb::operation::get_item::builders::GetItemFluentBuilder;
@@ -17,6 +18,7 @@ use aws_sdk_dynamodb::Client;
 use aws_smithy_http::result::SdkError;
 use serde::{Deserialize, Serialize};
 use serde_dynamo::{from_item, from_items, to_attribute_value, to_item, Error as SerializationError};
+use std::env::{var, VarError};
 use std::fmt::{Display, Formatter, Result as FormatResult};
 use thiserror::Error;
 use tracing::{Instrument, Span};
@@ -25,6 +27,7 @@ use xray_tracing::aws_metadata;
 /// Runtime errors possible for DAO operations.
 #[derive(Error, Debug)]
 pub enum DaoError {
+    MissingConfiguration(#[from] VarError),
     DeleteItemOperation(#[from] SdkError<DeleteItemError>),
     GetItemOperation(#[from] SdkError<GetItemError>),
     PutItemOperation(#[from] SdkError<PutItemError>),
@@ -86,7 +89,7 @@ pub trait DynamoDbEntity<'serde, KeyType: Serialize>: Serialize + Deserialize<'s
     }
 }
 
-/// Representation of single DynamoDB resutls page.
+/// Representation of single DynamoDB results page.
 pub struct DynamoDbResultsPage<EntityType: Serialize, KeyType: Serialize> {
     /// Current results page.
     pub items: Vec<EntityType>,
@@ -119,6 +122,14 @@ impl DynamoDbDao {
             client: Box::new(client),
             table_name,
         }
+    }
+
+    /// Creates new DAO object from environment setup.
+    pub async fn new_from_env(table_var_name: &str) -> Result<Self, DaoError> {
+        let config = load_from_env();
+        let table_name = var(table_var_name)?;
+        let client = Client::new(&config.await);
+        Ok(Self::new(client, table_name))
     }
 
     /// Saves entity in DynamoDB table.
@@ -216,7 +227,8 @@ impl DynamoDbDao {
         DynamoDbDao::build_results_page(results)
     }
 
-    fn instrumentation(&self) -> Span {
+    // will not be public in final version, but for now a lot of functionality may need extra code in consuming projects
+    pub fn instrumentation(&self) -> Span {
         aws_metadata(
             self.client.conf().region().map(|value| value.to_string()).as_deref(),
             Some(self.table_name.as_str()),
