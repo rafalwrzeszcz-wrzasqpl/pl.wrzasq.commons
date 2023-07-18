@@ -29,7 +29,7 @@ jobs:
                     toolchain: "nightly"
                     components: "rustfmt, clippy"
             -
-                uses: "Swatinem/rust-cache@v2.5.0"
+                uses: "Swatinem/rust-cache@v2.5.1"
             -
                 run: "make init-cargo"
             -
@@ -47,7 +47,7 @@ jobs:
                 with:
                     token: "${{ secrets.GITHUB_TOKEN }}"
             -
-                uses: "LoliGothick/rustfmt-check@v0.3.2"
+                uses: "LoliGothick/rustfmt-check@v0.4.1"
                 with:
                     token: "${{ secrets.GITHUB_TOKEN }}"
                     flags: "--all"
@@ -79,7 +79,7 @@ jobs:
                 with:
                     toolchain: "nightly"
             -
-                uses: "Swatinem/rust-cache@v2.5.0"
+                uses: "Swatinem/rust-cache@v2.5.1"
             -
                 run: "make init-cargo"
             -
@@ -87,14 +87,16 @@ jobs:
                     git config user.name "GitHub Actions"
                     git config user.email "office@wrzasq.pl"
             -
+                run: "make build"
+            -
+                run: "cargo publish -p wrzasqpl-commons-aws"
+                env:
+                    CARGO_REGISTRY_TOKEN: "${{ secrets.CARGO_REGISTRY_TOKEN }}"
+            -
                 run: "cargo workspaces version patch --force '*' --yes --no-individual-tags --tag-prefix 'release-'"
             -
                 id: "tag"
                 run: "echo version=$(git describe --abbrev=0 | sed s/release-//g) >> $GITHUB_OUTPUT"
-            -
-                run: "make build"
-            -
-                run: "cargo publish -p wrzasqpl-commons-aws"
             -
                 uses: "ad-m/github-push-action@v0.6.0"
                 with:
