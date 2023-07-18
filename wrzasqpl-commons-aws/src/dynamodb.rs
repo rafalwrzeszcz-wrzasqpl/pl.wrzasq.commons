@@ -22,6 +22,7 @@ use thiserror::Error;
 use tracing::{Instrument, Span};
 use xray_tracing::aws_metadata;
 
+/// Runtime errors possible for DAO operations.
 #[derive(Error, Debug)]
 pub enum DaoError {
     DeleteItemOperation(#[from] SdkError<DeleteItemError>),
@@ -39,23 +40,44 @@ impl Display for DaoError {
 
 // models
 
+/// Trait describing single entity mapping to DynamoDB item.
 pub trait DynamoDbEntity<'serde, KeyType: Serialize>: Serialize + Deserialize<'serde> {
+    /// Returns attribute name of the hash key of the primary key.
     fn hash_key_name() -> String;
 
+    /// Returns primary key identifying this entity.
     fn build_key(&self) -> KeyType;
 
+    /// Hook allowing `PutItem` operation modification.
+    ///
+    /// It may be used for example to generate emergent properties only needed for indices.
+    ///
+    /// Default implementation simply leaves operation unmodified.
     fn handle_save(&self, request: PutItemFluentBuilder) -> PutItemFluentBuilder {
         request
     }
 
+    /// Hook allowing `GetItem` operation modification.
+    ///
+    /// It may be used for example to generate combined keys dynamically.
+    ///
+    /// Default implementation simply leaves operation unmodified.
     fn handle_load(_key: &KeyType, request: GetItemFluentBuilder) -> GetItemFluentBuilder {
         request
     }
 
+    /// Hook allowing `DeleteItem` operation modification.
+    ///
+    /// Default implementation simply leaves operation unmodified.
     fn handle_delete(_key: &KeyType, request: DeleteItemFluentBuilder) -> DeleteItemFluentBuilder {
         request
     }
 
+    /// Hook allowing `Query` operation modification.
+    ///
+    /// It may be used for example to add extra filtering.
+    ///
+    /// Default implementation simply leaves operation unmodified.
     fn handle_query<HashKeyType: Serialize>(
         _hash_key: &HashKeyType,
         request: QueryFluentBuilder,
@@ -64,19 +86,34 @@ pub trait DynamoDbEntity<'serde, KeyType: Serialize>: Serialize + Deserialize<'s
     }
 }
 
+/// Representation of single DynamoDB resutls page.
 pub struct DynamoDbResultsPage<EntityType: Serialize, KeyType: Serialize> {
+    /// Current results page.
     pub items: Vec<EntityType>,
+    /// Pagination token.
     pub last_evaluated_key: Option<KeyType>,
 }
 
 // dao
 
+/// DynamoDB DAO object.
+///
+/// This structure binds DynamoDB table name with current execution context and executes operations scoped to it.
+///
+/// All operations are typed and requires your entity type to be serializable as all data mapping is handled by
+/// `serde_dynamo` crate.
+///
+/// **Important:** Current implementation is very basic and the API is a subject to change. Plan is to use metadata
+/// and have generic struct/trait that will be dedicated to each entity type and bind most of the metadata that now
+/// requires manual assignment. Current implementation can handle multiple entity types in single instance, which most
+/// likely won't be possible in final shape.
 pub struct DynamoDbDao {
     client: Box<Client>,
     table_name: String,
 }
 
 impl DynamoDbDao {
+    /// Creates new DAO object for given DynamoDB table.
     pub fn new(client: Client, table_name: String) -> Self {
         Self {
             client: Box::new(client),
@@ -84,6 +121,7 @@ impl DynamoDbDao {
         }
     }
 
+    /// Saves entity in DynamoDB table.
     pub async fn save<'serde, KeyType: Serialize, EntityType: DynamoDbEntity<'serde, KeyType>>(
         &self,
         entity: &EntityType,
@@ -102,6 +140,7 @@ impl DynamoDbDao {
         Ok(())
     }
 
+    /// Loads entity from DynamoDB table. In case there is no matching item, `Ok(None)` is returned.
     pub async fn load<'serde, KeyType: Serialize, EntityType: DynamoDbEntity<'serde, KeyType>>(
         &self,
         key: KeyType,
@@ -122,6 +161,7 @@ impl DynamoDbDao {
         .map_err(DaoError::from)
     }
 
+    /// Deletes entity from DynamoDB table.
     pub async fn delete<'serde, KeyType: Serialize, EntityType: DynamoDbEntity<'serde, KeyType>>(
         &self,
         key: KeyType,
@@ -140,6 +180,7 @@ impl DynamoDbDao {
         Ok(())
     }
 
+    /// Deletes entity from DynamoDB table constructing key based on item reference.
     pub async fn delete_item<'serde, KeyType: Serialize, EntityType: DynamoDbEntity<'serde, KeyType>>(
         &self,
         entity: &EntityType,
@@ -147,6 +188,7 @@ impl DynamoDbDao {
         self.delete::<KeyType, EntityType>(entity.build_key()).await
     }
 
+    /// Queries table by given hash key.
     pub async fn query<
         'serde,
         KeyType: Serialize + Deserialize<'serde>,
