@@ -57,8 +57,10 @@ pub trait DynamoDbEntity<'serde>: Serialize + Deserialize<'serde> {
     ///
     /// It may be used for example to generate emergent properties only needed for indices.
     ///
+    /// This hook requires mutable reference.
+    ///
     /// Default implementation simply leaves operation unmodified.
-    fn handle_save(&self, request: PutItemFluentBuilder) -> PutItemFluentBuilder {
+    fn handle_save(&mut self, request: PutItemFluentBuilder) -> PutItemFluentBuilder {
         request
     }
 
@@ -135,14 +137,14 @@ impl DynamoDbDao {
     }
 
     /// Saves entity in DynamoDB table.
-    pub async fn save<'serde, EntityType: DynamoDbEntity<'serde>>(&self, entity: &EntityType) -> Result<(), DaoError> {
+    pub async fn save<'serde, EntityType: DynamoDbEntity<'serde>>(
+        &self,
+        entity: &mut EntityType,
+    ) -> Result<(), DaoError> {
+        let item = Some(to_item(&entity)?);
+
         entity
-            .handle_save(
-                self.client
-                    .put_item()
-                    .table_name(&self.table_name)
-                    .set_item(Some(to_item(entity)?)),
-            )
+            .handle_save(self.client.put_item().table_name(&self.table_name).set_item(item))
             .send()
             .instrument(self.instrumentation())
             .await?;
@@ -400,7 +402,7 @@ mod tests {
     async fn create_entity(ctx: &DynamoDbTestContext) -> Result<(), DaoError> {
         let save = ctx
             .dao
-            .save(&TestEntity {
+            .save(&mut TestEntity {
                 customer_id: "non-existing".into(),
                 order_id: "test0".into(),
                 total: 202,
@@ -425,7 +427,7 @@ mod tests {
     async fn update_entity(ctx: &DynamoDbTestContext) -> Result<(), DaoError> {
         let save = ctx
             .dao
-            .save(&TestEntity {
+            .save(&mut TestEntity {
                 customer_id: "wrzasq.pl".into(),
                 order_id: "123".into(),
                 total: 203,
