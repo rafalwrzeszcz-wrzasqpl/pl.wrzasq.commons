@@ -80,12 +80,25 @@ pub trait DynamoDbEntity<'serde>: Serialize + Deserialize<'serde> {
         request
     }
 
-    /// Hook allowing `Query` operation modification.
+    /// Hook allowing `Query` operation modification when executed against main table.
     ///
     /// It may be used for example to add extra filtering.
     ///
     /// Default implementation simply leaves operation unmodified.
     fn handle_query<HashKeyType: Serialize>(
+        _hash_key: &HashKeyType,
+        request: QueryFluentBuilder,
+    ) -> QueryFluentBuilder {
+        request
+    }
+
+    /// Hook allowing `Query` operation modification when executed against table index.
+    ///
+    /// It may be used for example to add extra filtering.
+    ///
+    /// Default implementation simply leaves operation unmodified.
+    fn handle_query_index<HashKeyType: Serialize>(
+        _index_name: &str,
         _hash_key: &HashKeyType,
         request: QueryFluentBuilder,
     ) -> QueryFluentBuilder {
@@ -99,6 +112,26 @@ pub struct DynamoDbResultsPage<EntityType: Serialize, KeyType: Serialize> {
     pub items: Vec<EntityType>,
     /// Pagination token.
     pub last_evaluated_key: Option<KeyType>,
+}
+
+impl<'serde, EntityType: DynamoDbEntity<'serde>, QueryKeyType: Serialize + Deserialize<'serde>> TryFrom<QueryOutput>
+    for DynamoDbResultsPage<EntityType, QueryKeyType>
+{
+    type Error = DaoError;
+
+    fn try_from(results: QueryOutput) -> Result<Self, Self::Error> {
+        Ok(Self {
+            last_evaluated_key: results
+                .last_evaluated_key
+                .map(from_item::<_, QueryKeyType>)
+                .map_or(Ok(None), |key| key.map(Some))?,
+            items: if let Some(items) = results.items {
+                from_items(items)?
+            } else {
+                vec![]
+            },
+        })
+    }
 }
 
 // dao
@@ -157,7 +190,7 @@ impl DynamoDbDao {
         &self,
         key: EntityType::Key,
     ) -> Result<Option<EntityType>, DaoError> {
-        EntityType::handle_load(
+        Ok(EntityType::handle_load(
             &key,
             self.client
                 .get_item()
@@ -169,8 +202,7 @@ impl DynamoDbDao {
         .await?
         .item
         .map(from_item::<_, EntityType>)
-        .map_or(Ok(None), |entity| entity.map(Some))
-        .map_err(DaoError::from)
+        .map_or(Ok(None), |entity| entity.map(Some))?)
     }
 
     /// Deletes entity from DynamoDB table.
@@ -206,7 +238,7 @@ impl DynamoDbDao {
         hash_key: HashKeyType,
         page_token: Option<EntityType::Key>,
     ) -> Result<DynamoDbResultsPage<EntityType, EntityType::Key>, DaoError> {
-        let results = EntityType::handle_query(
+        EntityType::handle_query(
             &hash_key,
             self.client
                 .query()
@@ -218,9 +250,39 @@ impl DynamoDbDao {
         )
         .send()
         .instrument(self.instrumentation())
-        .await?;
+        .await?
+        .try_into()
+    }
 
-        DynamoDbDao::build_results_page(results)
+    /// Queries table index by hash key.
+    pub async fn query_index<
+        'serde,
+        EntityType: DynamoDbEntity<'serde>,
+        HashKeyType: Serialize,
+        IndexKeyType: Serialize + Deserialize<'serde>,
+    >(
+        &self,
+        index_name: String,
+        hash_key_name: String,
+        hash_key: HashKeyType,
+        page_token: Option<IndexKeyType>,
+    ) -> Result<DynamoDbResultsPage<EntityType, IndexKeyType>, DaoError> {
+        EntityType::handle_query_index(
+            &index_name,
+            &hash_key,
+            self.client
+                .query()
+                .table_name(self.table_name.as_str())
+                .index_name(&index_name)
+                .key_condition_expression("#attr = :val")
+                .expression_attribute_names("#attr", hash_key_name)
+                .expression_attribute_values(":val", to_attribute_value(&hash_key)?)
+                .set_exclusive_start_key(page_token.map(to_item).map_or(Ok(None), |token| token.map(Some))?),
+        )
+        .send()
+        .instrument(self.instrumentation())
+        .await?
+        .try_into()
     }
 
     // will not be public in final version, but for now a lot of functionality may need extra code in consuming projects
@@ -229,22 +291,6 @@ impl DynamoDbDao {
             self.client.conf().region().map(|value| value.to_string()).as_deref(),
             Some(self.table_name.as_str()),
         )
-    }
-
-    fn build_results_page<'serde, QueryKeyType: Serialize + Deserialize<'serde>, EntityType: DynamoDbEntity<'serde>>(
-        results: QueryOutput,
-    ) -> Result<DynamoDbResultsPage<EntityType, QueryKeyType>, DaoError> {
-        Ok(DynamoDbResultsPage {
-            last_evaluated_key: results
-                .last_evaluated_key
-                .map(from_item::<_, QueryKeyType>)
-                .map_or(Ok(None), |key| key.map(Some))?,
-            items: if let Some(items) = results.items {
-                from_items(items)?
-            } else {
-                vec![]
-            },
-        })
     }
 }
 
@@ -262,7 +308,8 @@ mod tests {
     use aws_sdk_dynamodb::operation::query::builders::QueryFluentBuilder;
     use aws_sdk_dynamodb::types::AttributeValue::{Null, L, N, S};
     use aws_sdk_dynamodb::types::{
-        AttributeDefinition, KeySchemaElement, KeyType, ProvisionedThroughput, ScalarAttributeType,
+        AttributeDefinition, BillingMode, GlobalSecondaryIndex, KeySchemaElement, KeyType, Projection, ProjectionType,
+        ScalarAttributeType,
     };
     use aws_sdk_dynamodb::Client;
     use aws_smithy_http::result::SdkError;
@@ -287,6 +334,13 @@ mod tests {
     struct TestEntityKey {
         customer_id: String,
         order_id: String,
+    }
+
+    #[derive(Serialize, Deserialize)]
+    struct TestEntityIndexKey {
+        customer_id: String,
+        order_id: String,
+        total: u32,
     }
 
     impl DynamoDbEntity<'_> for TestEntity {
@@ -333,6 +387,12 @@ mod tests {
                         .attribute_type(ScalarAttributeType::S)
                         .build(),
                 )
+                .attribute_definitions(
+                    AttributeDefinition::builder()
+                        .attribute_name("total")
+                        .attribute_type(ScalarAttributeType::N)
+                        .build(),
+                )
                 .key_schema(
                     KeySchemaElement::builder()
                         .attribute_name("customer_id")
@@ -345,12 +405,19 @@ mod tests {
                         .key_type(KeyType::Range)
                         .build(),
                 )
-                .provisioned_throughput(
-                    ProvisionedThroughput::builder()
-                        .read_capacity_units(1000)
-                        .write_capacity_units(1000)
+                .global_secondary_indexes(
+                    GlobalSecondaryIndex::builder()
+                        .index_name("byTotal")
+                        .key_schema(
+                            KeySchemaElement::builder()
+                                .attribute_name("total")
+                                .key_type(KeyType::Hash)
+                                .build(),
+                        )
+                        .projection(Projection::builder().projection_type(ProjectionType::All).build())
                         .build(),
                 )
+                .billing_mode(BillingMode::PayPerRequest)
                 .send()
                 .await
                 .unwrap();
@@ -361,7 +428,7 @@ mod tests {
                 table_name: table_name.clone(),
             };
 
-            let (res1, res2, res3) = join!(
+            let (res1, res2, res3, res4) = join!(
                 context.create_record("wrzasq.pl".into(), "123".into(), 100, vec![], None,),
                 context.create_record(
                     "wrzasq.pl".into(),
@@ -377,12 +444,20 @@ mod tests {
                     vec!["flowmeter".into(), "cloud".into(), "support".into(),],
                     Some(2),
                 ),
+                context.create_record(
+                    "ivms.online".into(),
+                    "799".into(),
+                    100,
+                    vec!["water".into(), "sugar".into(), "yast".into(),],
+                    Some(2),
+                ),
             )
             .await;
 
             res1.unwrap();
             res2.unwrap();
             res3.unwrap();
+            res4.unwrap();
 
             context
         }
@@ -400,8 +475,7 @@ mod tests {
     #[test_context(DynamoDbTestContext)]
     #[tokio_test]
     async fn create_entity(ctx: &DynamoDbTestContext) -> Result<(), DaoError> {
-        let save = ctx
-            .dao
+        ctx.dao
             .save(&mut TestEntity {
                 customer_id: "non-existing".into(),
                 order_id: "test0".into(),
@@ -409,8 +483,7 @@ mod tests {
                 products: vec![],
                 last_update: Some(12),
             })
-            .await;
-        assert!(save.is_ok());
+            .await?;
 
         let record = ctx.load_record("non-existing".into(), "test0".into()).await?;
         assert!(record.item.is_some());
@@ -425,8 +498,7 @@ mod tests {
     #[test_context(DynamoDbTestContext)]
     #[tokio_test]
     async fn update_entity(ctx: &DynamoDbTestContext) -> Result<(), DaoError> {
-        let save = ctx
-            .dao
+        ctx.dao
             .save(&mut TestEntity {
                 customer_id: "wrzasq.pl".into(),
                 order_id: "123".into(),
@@ -434,8 +506,7 @@ mod tests {
                 products: vec![],
                 last_update: Some(13),
             })
-            .await;
-        assert!(save.is_ok());
+            .await?;
 
         let record = ctx.load_record("wrzasq.pl".into(), "123".into()).await?;
         assert!(record.item.is_some());
@@ -489,14 +560,12 @@ mod tests {
     #[test_context(DynamoDbTestContext)]
     #[tokio_test]
     async fn delete_entity(ctx: &DynamoDbTestContext) -> Result<(), DaoError> {
-        let result = ctx
-            .dao
+        ctx.dao
             .delete::<TestEntity>(TestEntityKey {
                 customer_id: "wrzasq.pl".into(),
                 order_id: "123".into(),
             })
-            .await;
-        assert!(result.is_ok());
+            .await?;
 
         let result = ctx.load_record("wrzasq.pl".into(), "123".into()).await?;
         assert!(result.item.is_none());
@@ -507,14 +576,12 @@ mod tests {
     #[test_context(DynamoDbTestContext)]
     #[tokio_test]
     async fn delete_entity_unexisting(ctx: &DynamoDbTestContext) -> Result<(), DaoError> {
-        let result = ctx
-            .dao
+        ctx.dao
             .delete::<TestEntity>(TestEntityKey {
                 customer_id: "non-existing".into(),
                 order_id: "test2".into(),
             })
-            .await;
-        assert!(result.is_ok());
+            .await?;
 
         Ok(())
     }
@@ -522,8 +589,7 @@ mod tests {
     #[test_context(DynamoDbTestContext)]
     #[tokio_test]
     async fn delete_entity_entity(ctx: &DynamoDbTestContext) -> Result<(), DaoError> {
-        let result = ctx
-            .dao
+        ctx.dao
             .delete_item(&TestEntity {
                 customer_id: "wrzasq.pl".into(),
                 order_id: "456".into(),
@@ -531,8 +597,7 @@ mod tests {
                 products: vec![],
                 last_update: None,
             })
-            .await;
-        assert!(result.is_ok());
+            .await?;
 
         let result = ctx.load_record("wrzasq.pl".into(), "456".into()).await?;
         assert!(result.item.is_none());
@@ -543,14 +608,10 @@ mod tests {
     #[test_context(DynamoDbTestContext)]
     #[tokio_test]
     async fn query_entities(ctx: &DynamoDbTestContext) -> Result<(), DaoError> {
-        let results: Result<DynamoDbResultsPage<TestEntity, TestEntityKey>, DaoError> =
-            ctx.dao.query("wrzasq.pl", None).await;
-        assert!(results.is_ok());
+        let page: DynamoDbResultsPage<TestEntity, TestEntityKey> = ctx.dao.query("wrzasq.pl", None).await?;
 
-        if let Ok(page) = results {
-            assert_eq!(2, page.items.len());
-            assert_eq!("123", page.items[0].order_id);
-        }
+        assert_eq!(2, page.items.len());
+        assert_eq!("123", page.items[0].order_id);
 
         Ok(())
     }
@@ -558,7 +619,7 @@ mod tests {
     #[test_context(DynamoDbTestContext)]
     #[tokio_test]
     async fn query_entities_page(ctx: &DynamoDbTestContext) -> Result<(), DaoError> {
-        let results: Result<DynamoDbResultsPage<TestEntity, TestEntityKey>, DaoError> = ctx
+        let page: DynamoDbResultsPage<TestEntity, TestEntityKey> = ctx
             .dao
             .query(
                 "wrzasq.pl",
@@ -567,13 +628,10 @@ mod tests {
                     order_id: "123".into(),
                 }),
             )
-            .await;
-        assert!(results.is_ok());
+            .await?;
 
-        if let Ok(page) = results {
-            assert_eq!(1, page.items.len());
-            assert_eq!("456", page.items[0].order_id);
-        }
+        assert_eq!(1, page.items.len());
+        assert_eq!("456", page.items[0].order_id);
 
         Ok(())
     }
@@ -581,14 +639,57 @@ mod tests {
     #[test_context(DynamoDbTestContext)]
     #[tokio_test]
     async fn query_entities_unexisting(ctx: &DynamoDbTestContext) -> Result<(), DaoError> {
-        let results: Result<DynamoDbResultsPage<TestEntity, TestEntityKey>, DaoError> =
-            ctx.dao.query("non-existing", None).await;
-        assert!(results.is_ok());
+        let page: DynamoDbResultsPage<TestEntity, TestEntityKey> = ctx.dao.query("non-existing", None).await?;
 
-        if let Ok(page) = results {
-            assert!(page.items.is_empty());
-            assert!(page.last_evaluated_key.is_none());
-        }
+        assert!(page.items.is_empty());
+        assert!(page.last_evaluated_key.is_none());
+
+        Ok(())
+    }
+
+    #[test_context(DynamoDbTestContext)]
+    #[tokio_test]
+    async fn query_entities_index(ctx: &DynamoDbTestContext) -> Result<(), DaoError> {
+        let page: DynamoDbResultsPage<TestEntity, TestEntityIndexKey> =
+            ctx.dao.query_index("byTotal".into(), "total".into(), 100, None).await?;
+
+        assert_eq!(2, page.items.len());
+        assert_eq!("799", page.items[0].order_id);
+
+        Ok(())
+    }
+
+    #[test_context(DynamoDbTestContext)]
+    #[tokio_test]
+    async fn query_entities_index_page(ctx: &DynamoDbTestContext) -> Result<(), DaoError> {
+        let page: DynamoDbResultsPage<TestEntity, TestEntityIndexKey> = ctx
+            .dao
+            .query_index(
+                "byTotal".into(),
+                "total".into(),
+                100,
+                Some(TestEntityIndexKey {
+                    customer_id: "ivms.online".into(),
+                    order_id: "799".into(),
+                    total: 100,
+                }),
+            )
+            .await?;
+
+        assert_eq!(1, page.items.len());
+        assert_eq!("123", page.items[0].order_id);
+
+        Ok(())
+    }
+
+    #[test_context(DynamoDbTestContext)]
+    #[tokio_test]
+    async fn query_entities_index_unexisting(ctx: &DynamoDbTestContext) -> Result<(), DaoError> {
+        let page: DynamoDbResultsPage<TestEntity, TestEntityIndexKey> =
+            ctx.dao.query_index("byTotal".into(), "total".into(), 99, None).await?;
+
+        assert!(page.items.is_empty());
+        assert!(page.last_evaluated_key.is_none());
 
         Ok(())
     }
@@ -605,8 +706,8 @@ mod tests {
             self.client
                 .put_item()
                 .table_name(self.table_name.as_str())
-                .item("customer_id", S(customer_id.to_string()))
-                .item("order_id", S(order_id.to_string()))
+                .item("customer_id", S(customer_id))
+                .item("order_id", S(order_id))
                 .item("total", N(total.to_string()))
                 .item("products", L(products.into_iter().map(S).collect()))
                 .item(
