@@ -44,12 +44,14 @@ impl Display for DaoError {
 // models
 
 /// Trait describing single entity mapping to DynamoDB item.
-pub trait DynamoDbEntity<'serde, KeyType: Serialize>: Serialize + Deserialize<'serde> {
+pub trait DynamoDbEntity<'serde>: Serialize + Deserialize<'serde> {
+    type Key: Serialize + Deserialize<'serde>;
+
     /// Returns attribute name of the hash key of the primary key.
     fn hash_key_name() -> String;
 
     /// Returns primary key identifying this entity.
-    fn build_key(&self) -> KeyType;
+    fn build_key(&self) -> Self::Key;
 
     /// Hook allowing `PutItem` operation modification.
     ///
@@ -65,14 +67,14 @@ pub trait DynamoDbEntity<'serde, KeyType: Serialize>: Serialize + Deserialize<'s
     /// It may be used for example to generate combined keys dynamically.
     ///
     /// Default implementation simply leaves operation unmodified.
-    fn handle_load(_key: &KeyType, request: GetItemFluentBuilder) -> GetItemFluentBuilder {
+    fn handle_load(_key: &Self::Key, request: GetItemFluentBuilder) -> GetItemFluentBuilder {
         request
     }
 
     /// Hook allowing `DeleteItem` operation modification.
     ///
     /// Default implementation simply leaves operation unmodified.
-    fn handle_delete(_key: &KeyType, request: DeleteItemFluentBuilder) -> DeleteItemFluentBuilder {
+    fn handle_delete(_key: &Self::Key, request: DeleteItemFluentBuilder) -> DeleteItemFluentBuilder {
         request
     }
 
@@ -133,10 +135,7 @@ impl DynamoDbDao {
     }
 
     /// Saves entity in DynamoDB table.
-    pub async fn save<'serde, KeyType: Serialize, EntityType: DynamoDbEntity<'serde, KeyType>>(
-        &self,
-        entity: &EntityType,
-    ) -> Result<(), DaoError> {
+    pub async fn save<'serde, EntityType: DynamoDbEntity<'serde>>(&self, entity: &EntityType) -> Result<(), DaoError> {
         entity
             .handle_save(
                 self.client
@@ -152,9 +151,9 @@ impl DynamoDbDao {
     }
 
     /// Loads entity from DynamoDB table. In case there is no matching item, `Ok(None)` is returned.
-    pub async fn load<'serde, KeyType: Serialize, EntityType: DynamoDbEntity<'serde, KeyType>>(
+    pub async fn load<'serde, EntityType: DynamoDbEntity<'serde>>(
         &self,
-        key: KeyType,
+        key: EntityType::Key,
     ) -> Result<Option<EntityType>, DaoError> {
         EntityType::handle_load(
             &key,
@@ -173,9 +172,9 @@ impl DynamoDbDao {
     }
 
     /// Deletes entity from DynamoDB table.
-    pub async fn delete<'serde, KeyType: Serialize, EntityType: DynamoDbEntity<'serde, KeyType>>(
+    pub async fn delete<'serde, EntityType: DynamoDbEntity<'serde>>(
         &self,
-        key: KeyType,
+        key: EntityType::Key,
     ) -> Result<(), DaoError> {
         EntityType::handle_delete(
             &key,
@@ -192,24 +191,19 @@ impl DynamoDbDao {
     }
 
     /// Deletes entity from DynamoDB table constructing key based on item reference.
-    pub async fn delete_item<'serde, KeyType: Serialize, EntityType: DynamoDbEntity<'serde, KeyType>>(
+    pub async fn delete_item<'serde, EntityType: DynamoDbEntity<'serde>>(
         &self,
         entity: &EntityType,
     ) -> Result<(), DaoError> {
-        self.delete::<KeyType, EntityType>(entity.build_key()).await
+        self.delete::<EntityType>(entity.build_key()).await
     }
 
     /// Queries table by given hash key.
-    pub async fn query<
-        'serde,
-        KeyType: Serialize + Deserialize<'serde>,
-        EntityType: DynamoDbEntity<'serde, KeyType>,
-        HashKeyType: Serialize,
-    >(
+    pub async fn query<'serde, EntityType: DynamoDbEntity<'serde>, HashKeyType: Serialize>(
         &self,
         hash_key: HashKeyType,
-        page_token: Option<KeyType>,
-    ) -> Result<DynamoDbResultsPage<EntityType, KeyType>, DaoError> {
+        page_token: Option<EntityType::Key>,
+    ) -> Result<DynamoDbResultsPage<EntityType, EntityType::Key>, DaoError> {
         let results = EntityType::handle_query(
             &hash_key,
             self.client
@@ -235,12 +229,7 @@ impl DynamoDbDao {
         )
     }
 
-    fn build_results_page<
-        'serde,
-        QueryKeyType: Serialize + Deserialize<'serde>,
-        KeyType: Serialize + Deserialize<'serde>,
-        EntityType: DynamoDbEntity<'serde, KeyType>,
-    >(
+    fn build_results_page<'serde, QueryKeyType: Serialize + Deserialize<'serde>, EntityType: DynamoDbEntity<'serde>>(
         results: QueryOutput,
     ) -> Result<DynamoDbResultsPage<EntityType, QueryKeyType>, DaoError> {
         Ok(DynamoDbResultsPage {
@@ -298,7 +287,9 @@ mod tests {
         order_id: String,
     }
 
-    impl DynamoDbEntity<'_, TestEntityKey> for TestEntity {
+    impl DynamoDbEntity<'_> for TestEntity {
+        type Key = TestEntityKey;
+
         fn hash_key_name() -> String {
             "customer_id".into()
         }
@@ -498,7 +489,7 @@ mod tests {
     async fn delete_entity(ctx: &DynamoDbTestContext) -> Result<(), DaoError> {
         let result = ctx
             .dao
-            .delete::<TestEntityKey, TestEntity>(TestEntityKey {
+            .delete::<TestEntity>(TestEntityKey {
                 customer_id: "wrzasq.pl".into(),
                 order_id: "123".into(),
             })
@@ -516,7 +507,7 @@ mod tests {
     async fn delete_entity_unexisting(ctx: &DynamoDbTestContext) -> Result<(), DaoError> {
         let result = ctx
             .dao
-            .delete::<TestEntityKey, TestEntity>(TestEntityKey {
+            .delete::<TestEntity>(TestEntityKey {
                 customer_id: "non-existing".into(),
                 order_id: "test2".into(),
             })
