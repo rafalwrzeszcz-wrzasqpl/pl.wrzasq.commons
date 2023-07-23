@@ -12,4 +12,4 @@ mod dynamodb;
 mod lambda;
 
 pub use crate::dynamodb::{DaoError, DynamoDbDao, DynamoDbEntity, DynamoDbResultsPage};
-pub use crate::lambda::run_lambda;
+pub use crate::lambda::{run_lambda, LambdaError};
