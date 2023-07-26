@@ -21,6 +21,7 @@ init-cargo:
 	cargo install cargo-workspaces --version 0.2.44
 
 init-local:
+	cargo install sccache --version 0.5.4
 	cargo install cargo-audit --version 0.17.6
 
 clean:
