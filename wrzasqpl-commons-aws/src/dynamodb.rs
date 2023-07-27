@@ -314,6 +314,7 @@ mod tests {
     use aws_sdk_dynamodb::Client;
     use aws_smithy_http::result::SdkError;
     use serde::{Deserialize, Serialize};
+    use std::env::var;
     use std::future::join;
     use std::sync::atomic::{AtomicUsize, Ordering};
     use test_context::{test_context, AsyncTestContext};
@@ -369,7 +370,9 @@ mod tests {
         async fn setup() -> DynamoDbTestContext {
             let table_name = format!("TestTable{}", NUMBER.fetch_add(1, Ordering::SeqCst));
             let config = load_from_env().await;
-            let local_config = Builder::from(&config).endpoint_url("http://localhost:8000").build();
+            let local_config = Builder::from(&config)
+                .endpoint_url(var("DYNAMODB_LOCAL_HOST").unwrap_or("http://localhost:8000".into()))
+                .build();
             let client = Client::from_conf(local_config);
 
             client

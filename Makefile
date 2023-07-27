@@ -9,21 +9,6 @@ SHELL:=bash
 
 default: build
 
-init: init-rust init-cargo
-
-init-rust:
-	curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly --component rustfmt clippy
-
-init-cargo:
-	cargo install cargo-strip --version 0.2.3
-	cargo install cargo-udeps --version 0.1.40
-	cargo install cargo-tarpaulin --version 0.26.1
-	cargo install cargo-workspaces --version 0.2.44
-
-init-local:
-	cargo install sccache --version 0.5.4
-	cargo install cargo-audit --version 0.17.6
-
 clean:
 	cargo clean
 
