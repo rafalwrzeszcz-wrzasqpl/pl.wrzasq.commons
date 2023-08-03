@@ -20,7 +20,7 @@ authors = [
 keywords = ["aws", "lambda", "dynamodb"]
 
 [dependencies]
-aws-config = "0.55.3"
+aws-config = "0.56.0"
 aws-sdk-dynamodb = "0.28.0"
 aws-smithy-http = "0.55.3"
 env_logger = "0.10.0"
@@ -38,7 +38,7 @@ xray-tracing = "0.0.1"
 
 [dev-dependencies]
 async-trait = "0.1.72"
-aws-config = "0.55.3"
+aws-config = "0.56.0"
 aws-smithy-types = "0.55.3"
 test-context = "0.1.4"
 tokio = { version = "1.29.1", features = ["macros"] }
