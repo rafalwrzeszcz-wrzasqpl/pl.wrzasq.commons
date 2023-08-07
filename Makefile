@@ -13,10 +13,6 @@ clean:
 	cargo clean
 
 build:
-	cargo build --release
-	cargo strip
-
-build-dev:
 	cargo build
 
 test:
@@ -38,4 +34,4 @@ check-local:
 doc:
 	cargo doc --no-deps
 
-full: clean build-dev test-local check check-local doc
+full: clean build test-local check check-local doc

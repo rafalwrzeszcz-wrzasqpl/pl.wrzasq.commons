@@ -15,7 +15,9 @@ use aws_sdk_dynamodb::operation::put_item::PutItemError;
 use aws_sdk_dynamodb::operation::query::builders::QueryFluentBuilder;
 use aws_sdk_dynamodb::operation::query::{QueryError, QueryOutput};
 use aws_sdk_dynamodb::Client;
+use aws_smithy_http::body::SdkBody;
 use aws_smithy_http::result::SdkError;
+use http::Response;
 use serde::{Deserialize, Serialize};
 use serde_dynamo::{from_item, from_items, to_attribute_value, to_item, Error as SerializationError};
 use std::env::{var, VarError};
@@ -28,10 +30,10 @@ use xray_tracing::aws_metadata;
 #[derive(Error, Debug)]
 pub enum DaoError {
     MissingConfiguration(#[from] VarError),
-    DeleteItemOperation(#[from] SdkError<DeleteItemError>),
-    GetItemOperation(#[from] SdkError<GetItemError>),
-    PutItemOperation(#[from] SdkError<PutItemError>),
-    QueryOperation(#[from] SdkError<QueryError>),
+    DeleteItemOperation(#[from] SdkError<DeleteItemError, Response<SdkBody>>),
+    GetItemOperation(#[from] SdkError<GetItemError, Response<SdkBody>>),
+    PutItemOperation(#[from] SdkError<PutItemError, Response<SdkBody>>),
+    QueryOperation(#[from] SdkError<QueryError, Response<SdkBody>>),
     Serialization(#[from] SerializationError),
 }
 
@@ -312,7 +314,9 @@ mod tests {
         ScalarAttributeType,
     };
     use aws_sdk_dynamodb::Client;
+    use aws_smithy_http::body::SdkBody;
     use aws_smithy_http::result::SdkError;
+    use http::Response;
     use serde::{Deserialize, Serialize};
     use std::env::var;
     use std::future::join;
@@ -705,7 +709,7 @@ mod tests {
             total: u32,
             products: Vec<String>,
             last_update: Option<u32>,
-        ) -> Result<PutItemOutput, SdkError<PutItemError>> {
+        ) -> Result<PutItemOutput, SdkError<PutItemError, Response<SdkBody>>> {
             self.client
                 .put_item()
                 .table_name(self.table_name.as_str())
@@ -725,7 +729,7 @@ mod tests {
             &self,
             customer_id: String,
             order_id: String,
-        ) -> Result<GetItemOutput, SdkError<GetItemError>> {
+        ) -> Result<GetItemOutput, SdkError<GetItemError, Response<SdkBody>>> {
             self.client
                 .get_item()
                 .table_name(self.table_name.as_str())
