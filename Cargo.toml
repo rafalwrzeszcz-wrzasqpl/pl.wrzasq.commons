@@ -10,10 +10,3 @@ members = [
     "wrzasqpl-commons-aws",
 ]
 resolver = "2"
-
-[profile.dev]
-opt-level = 0
-
-[profile.release]
-opt-level = 3
-lto = true
