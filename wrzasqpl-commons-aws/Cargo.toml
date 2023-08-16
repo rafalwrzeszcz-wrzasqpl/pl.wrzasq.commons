@@ -40,4 +40,4 @@ xray-tracing = "0.0.1"
 async-trait = "0.1.73"
 aws-smithy-types = "0.56.0"
 test-context = "0.1.4"
-tokio = { version = "1.29.1", features = ["macros"] }
+tokio = { version = "1.32.0", features = ["macros"] }
