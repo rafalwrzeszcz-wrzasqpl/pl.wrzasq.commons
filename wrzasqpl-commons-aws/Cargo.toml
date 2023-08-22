@@ -28,7 +28,7 @@ futures = "0.3.28"
 http = "0.2.9"
 lambda_runtime = "0.8.1"
 log = "0.4.20"
-serde = { version = "1.0.183", features = ["derive"] }
+serde = { version = "1.0.185", features = ["derive"] }
 serde_dynamo = { version = "4.2.4", features = ["aws-sdk-dynamodb+0_29"] }
 thiserror = "1.0.47"
 tracing = "0.1.37"
