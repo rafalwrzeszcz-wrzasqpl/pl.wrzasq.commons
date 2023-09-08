@@ -44,17 +44,7 @@ jobs:
                     AWS_SECRET_ACCESS_KEY: "dummy"
                     DYNAMODB_LOCAL_HOST: "http://dynamodb:8000"
             -
-                uses: "actions-rs/clippy-check@v1.0.7"
-                with:
-                    token: "${{ secrets.GITHUB_TOKEN }}"
-            -
-                uses: "LoliGothick/rustfmt-check@v0.4.1"
-                with:
-                    token: "${{ secrets.GITHUB_TOKEN }}"
-                    flags: "--all"
-                    args: "--config max_width=120,newline_style=Unix,edition=2021"
-            -
-                run: "cargo udeps"
+                run: "make check"
             -
                 run: "make doc"
             -
