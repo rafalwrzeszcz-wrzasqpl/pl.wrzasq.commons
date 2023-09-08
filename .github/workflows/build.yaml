@@ -23,7 +23,7 @@ jobs:
     build:
         runs-on: "ubuntu-22.04"
         container:
-            image: "rafalwrzeszczwrzasqpl/build-rust:nightly-v0.0.3"
+            image: "rafalwrzeszczwrzasqpl/build-rust:nightly-v0.0.4"
             # needed for tarpaulin
             options: "--security-opt seccomp=unconfined"
         services:
@@ -31,7 +31,7 @@ jobs:
                 image: "amazon/dynamodb-local:2.0.0"
         steps:
             -
-                uses: "actions/checkout@v3.6.0"
+                uses: "actions/checkout@v4.0.0"
             -
                 uses: "crazy-max/ghaction-github-runtime@v2.2.0"
             -
@@ -69,14 +69,14 @@ jobs:
         if: "(github.event_name == 'push') && (github.event.ref == 'refs/heads/master')"
         runs-on: "ubuntu-22.04"
         container:
-            image: "rafalwrzeszczwrzasqpl/build-rust:nightly-v0.0.3"
+            image: "rafalwrzeszczwrzasqpl/build-rust:nightly-v0.0.4"
         needs: "build"
         permissions:
             contents: "write"
             id-token: "write"
         steps:
             -
-                uses: "actions/checkout@v3.6.0"
+                uses: "actions/checkout@v4.0.0"
             -
                 uses: "crazy-max/ghaction-github-runtime@v2.2.0"
             -
