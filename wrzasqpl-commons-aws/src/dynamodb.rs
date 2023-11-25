@@ -5,7 +5,7 @@
  * @copyright 2023 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
-use aws_config::load_from_env;
+use aws_config::{load_defaults, BehaviorVersion};
 use aws_sdk_dynamodb::operation::delete_item::builders::DeleteItemFluentBuilder;
 use aws_sdk_dynamodb::operation::delete_item::DeleteItemError;
 use aws_sdk_dynamodb::operation::get_item::builders::GetItemFluentBuilder;
@@ -15,9 +15,8 @@ use aws_sdk_dynamodb::operation::put_item::PutItemError;
 use aws_sdk_dynamodb::operation::query::builders::QueryFluentBuilder;
 use aws_sdk_dynamodb::operation::query::{QueryError, QueryOutput};
 use aws_sdk_dynamodb::Client;
-use aws_smithy_http::body::SdkBody;
-use aws_smithy_http::result::SdkError;
-use http::Response;
+use aws_smithy_runtime_api::client::orchestrator::HttpResponse;
+use aws_smithy_runtime_api::client::result::SdkError;
 use serde::{Deserialize, Serialize};
 use serde_dynamo::{from_item, from_items, to_attribute_value, to_item, Error as SerializationError};
 use std::env::{var, VarError};
@@ -30,10 +29,10 @@ use xray_tracing::aws_metadata;
 #[derive(Error, Debug)]
 pub enum DaoError {
     MissingConfiguration(#[from] VarError),
-    DeleteItemOperation(#[from] SdkError<DeleteItemError, Response<SdkBody>>),
-    GetItemOperation(#[from] SdkError<GetItemError, Response<SdkBody>>),
-    PutItemOperation(#[from] SdkError<PutItemError, Response<SdkBody>>),
-    QueryOperation(#[from] SdkError<QueryError, Response<SdkBody>>),
+    DeleteItemOperation(#[from] SdkError<DeleteItemError, HttpResponse>),
+    GetItemOperation(#[from] SdkError<GetItemError, HttpResponse>),
+    PutItemOperation(#[from] SdkError<PutItemError, HttpResponse>),
+    QueryOperation(#[from] SdkError<QueryError, HttpResponse>),
     Serialization(#[from] SerializationError),
 }
 
@@ -165,7 +164,7 @@ impl DynamoDbDao {
 
     /// Creates new DAO object from environment setup.
     pub async fn new_from_env(table_var_name: &str) -> Result<Self, DaoError> {
-        let config = load_from_env();
+        let config = load_defaults(BehaviorVersion::v2023_11_09());
         let table_name = var(table_var_name)?;
         let client = Client::new(&config.await);
         Ok(Self::new(client, table_name))
@@ -290,7 +289,7 @@ impl DynamoDbDao {
     // will not be public in final version, but for now a lot of functionality may need extra code in consuming projects
     pub fn instrumentation(&self) -> Span {
         aws_metadata(
-            self.client.conf().region().map(|value| value.to_string()).as_deref(),
+            self.client.config().region().map(|value| value.to_string()).as_deref(),
             Some(self.table_name.as_str()),
         )
     }
@@ -300,23 +299,18 @@ impl DynamoDbDao {
 mod tests {
     use crate::{DaoError, DynamoDbDao, DynamoDbEntity, DynamoDbResultsPage};
     use async_trait::async_trait;
-    use aws_config::load_from_env;
+    use aws_config::{load_defaults, BehaviorVersion};
     use aws_sdk_dynamodb::config::Builder;
-    use aws_sdk_dynamodb::operation::delete_item::builders::DeleteItemFluentBuilder;
-    use aws_sdk_dynamodb::operation::get_item::builders::GetItemFluentBuilder;
     use aws_sdk_dynamodb::operation::get_item::{GetItemError, GetItemOutput};
-    use aws_sdk_dynamodb::operation::put_item::builders::PutItemFluentBuilder;
     use aws_sdk_dynamodb::operation::put_item::{PutItemError, PutItemOutput};
-    use aws_sdk_dynamodb::operation::query::builders::QueryFluentBuilder;
     use aws_sdk_dynamodb::types::AttributeValue::{Null, L, N, S};
     use aws_sdk_dynamodb::types::{
         AttributeDefinition, BillingMode, GlobalSecondaryIndex, KeySchemaElement, KeyType, Projection, ProjectionType,
         ScalarAttributeType,
     };
     use aws_sdk_dynamodb::Client;
-    use aws_smithy_http::body::SdkBody;
-    use aws_smithy_http::result::SdkError;
-    use http::Response;
+    use aws_smithy_runtime_api::client::orchestrator::HttpResponse;
+    use aws_smithy_runtime_api::client::result::SdkError;
     use serde::{Deserialize, Serialize};
     use std::env::var;
     use std::future::join;
@@ -373,7 +367,7 @@ mod tests {
     impl AsyncTestContext for DynamoDbTestContext {
         async fn setup() -> DynamoDbTestContext {
             let table_name = format!("TestTable{}", NUMBER.fetch_add(1, Ordering::SeqCst));
-            let config = load_from_env().await;
+            let config = load_defaults(BehaviorVersion::v2023_11_09()).await;
             let local_config = Builder::from(&config)
                 .endpoint_url(var("DYNAMODB_LOCAL_HOST").unwrap_or("http://localhost:8000".into()))
                 .build();
@@ -386,31 +380,36 @@ mod tests {
                     AttributeDefinition::builder()
                         .attribute_name("customer_id")
                         .attribute_type(ScalarAttributeType::S)
-                        .build(),
+                        .build()
+                        .unwrap(),
                 )
                 .attribute_definitions(
                     AttributeDefinition::builder()
                         .attribute_name("order_id")
                         .attribute_type(ScalarAttributeType::S)
-                        .build(),
+                        .build()
+                        .unwrap(),
                 )
                 .attribute_definitions(
                     AttributeDefinition::builder()
                         .attribute_name("total")
                         .attribute_type(ScalarAttributeType::N)
-                        .build(),
+                        .build()
+                        .unwrap(),
                 )
                 .key_schema(
                     KeySchemaElement::builder()
                         .attribute_name("customer_id")
                         .key_type(KeyType::Hash)
-                        .build(),
+                        .build()
+                        .unwrap(),
                 )
                 .key_schema(
                     KeySchemaElement::builder()
                         .attribute_name("order_id")
                         .key_type(KeyType::Range)
-                        .build(),
+                        .build()
+                        .unwrap(),
                 )
                 .global_secondary_indexes(
                     GlobalSecondaryIndex::builder()
@@ -419,10 +418,12 @@ mod tests {
                             KeySchemaElement::builder()
                                 .attribute_name("total")
                                 .key_type(KeyType::Hash)
-                                .build(),
+                                .build()
+                                .unwrap(),
                         )
                         .projection(Projection::builder().projection_type(ProjectionType::All).build())
-                        .build(),
+                        .build()
+                        .unwrap(),
                 )
                 .billing_mode(BillingMode::PayPerRequest)
                 .send()
@@ -709,7 +710,7 @@ mod tests {
             total: u32,
             products: Vec<String>,
             last_update: Option<u32>,
-        ) -> Result<PutItemOutput, SdkError<PutItemError, Response<SdkBody>>> {
+        ) -> Result<PutItemOutput, SdkError<PutItemError, HttpResponse>> {
             self.client
                 .put_item()
                 .table_name(self.table_name.as_str())
@@ -729,7 +730,7 @@ mod tests {
             &self,
             customer_id: String,
             order_id: String,
-        ) -> Result<GetItemOutput, SdkError<GetItemError, Response<SdkBody>>> {
+        ) -> Result<GetItemOutput, SdkError<GetItemError, HttpResponse>> {
             self.client
                 .get_item()
                 .table_name(self.table_name.as_str())

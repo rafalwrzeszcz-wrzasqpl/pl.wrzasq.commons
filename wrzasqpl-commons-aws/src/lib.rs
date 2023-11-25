@@ -6,7 +6,6 @@
  */
 
 #![feature(future_join)]
-#![feature(impl_trait_projections)]
 
 mod dynamodb;
 mod lambda;
