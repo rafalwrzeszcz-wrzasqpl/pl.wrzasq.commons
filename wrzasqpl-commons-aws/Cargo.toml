@@ -36,7 +36,7 @@ tracing-subscriber = "0.3.18"
 xray-tracing = "0.0.1"
 
 [dev-dependencies]
-async-trait = "0.1.74"
+async-trait = "0.1.75"
 aws-smithy-types = "1.1.0"
 test-context = "0.1.4"
 tokio = { version = "1.35.0", features = ["macros"] }
