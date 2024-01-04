@@ -24,11 +24,9 @@ jobs:
         runs-on: "ubuntu-22.04"
         container:
             image: "rafalwrzeszczwrzasqpl/build-rust:nightly-v0.2.0"
-            # needed for tarpaulin
-            options: "--security-opt seccomp=unconfined"
         services:
             dynamodb:
-                image: "amazon/dynamodb-local:2.1.0"
+                image: "amazon/dynamodb-local:2.2.1"
         steps:
             -
                 uses: "actions/checkout@v4.1.1"
