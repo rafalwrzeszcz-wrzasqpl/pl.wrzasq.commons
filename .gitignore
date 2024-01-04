@@ -2,7 +2,7 @@
 # This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2023 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2023 - 2024 © by Rafał Wrzeszcz - Wrzasq.pl.
 ##
 
 # IntelliJ IDE files
@@ -13,5 +13,8 @@
 /build-info.json
 /**/target
 /cobertura.xml
+/coverage.lcov
+*.profraw
+
 # log files
 /**/*.log
