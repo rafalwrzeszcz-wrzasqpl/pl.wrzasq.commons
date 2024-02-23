@@ -354,9 +354,9 @@ dependencies = [
 
 [[package]]
 name = "aws-smithy-types"
-version = "1.1.1"
+version = "1.1.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2aba8136605d14ac88f57dc3a693a9f8a4eab4a3f52bc03ff13746f0cd704e97"
+checksum = "f081da5481210523d44ffd83d9f0740320050054006c719eae0232d411f024d3"
 dependencies = [
  "base64-simd",
  "bytes",
