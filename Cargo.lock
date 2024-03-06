@@ -1970,7 +1970,7 @@ checksum = "32b752e52a2da0ddfbdbcc6fceadfeede4c939ed16d13e648833a61dfb611ed8"
 
 [[package]]
 name = "wrzasqpl-commons-aws"
-version = "3.4.5"
+version = "3.4.6"
 dependencies = [
  "aws-config",
  "aws-sdk-dynamodb",
