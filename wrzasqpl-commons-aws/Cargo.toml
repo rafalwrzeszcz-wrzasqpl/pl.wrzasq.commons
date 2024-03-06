@@ -2,7 +2,7 @@
 # This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2023 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2023 - 2024 © by Rafał Wrzeszcz - Wrzasq.pl.
 ##
 
 [package]
@@ -20,23 +20,22 @@ authors = [
 keywords = ["aws", "lambda", "dynamodb"]
 
 [dependencies]
-aws-config = "1.1.1"
-aws-sdk-dynamodb = "1.9.0"
-aws-smithy-runtime-api = "1.1.1"
-env_logger = "0.10.1"
+aws-config = "1.1.7"
+aws-sdk-dynamodb = "1.16.1"
+aws-smithy-runtime-api = "1.1.7"
+env_logger = "0.10.2"
 futures = "0.3.30"
-lambda_runtime = "0.9.0"
-log = "0.4.20"
-serde = { version = "1.0.195", features = ["derive"] }
+lambda_runtime = "0.10.0"
+log = "0.4.21"
+serde = { version = "1.0.197", features = ["derive"] }
 serde_dynamo = { version = "4.2.13", features = ["aws-sdk-dynamodb+1"] }
-thiserror = "1.0.56"
+thiserror = "1.0.57"
 tracing = "0.1.40"
 tracing-core = "0.1.32"
 tracing-subscriber = "0.3.18"
 xray-tracing = "0.0.1"
 
 [dev-dependencies]
-async-trait = "0.1.77"
-aws-smithy-types = "1.1.1"
-test-context = "0.1.4"
-tokio = { version = "1.35.1", features = ["macros"] }
+aws-smithy-types = "1.1.7"
+test-context = "0.3.0"
+tokio = { version = "1.36.0", features = ["macros"] }

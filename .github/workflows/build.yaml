@@ -23,7 +23,7 @@ jobs:
     build:
         runs-on: "ubuntu-22.04"
         container:
-            image: "rafalwrzeszczwrzasqpl/build-rust:nightly-v0.2.0"
+            image: "rafalwrzeszczwrzasqpl/build-rust:nightly-v0.2.1"
         services:
             dynamodb:
                 image: "amazon/dynamodb-local:2.2.1"
@@ -48,7 +48,7 @@ jobs:
             -
                 run: "make lcov"
             -
-                uses: "codecov/codecov-action@v3.1.4"
+                uses: "codecov/codecov-action@v4.1.0"
                 with:
                     token: "${{ vars.CODECOV_TOKEN }}"
                     flags: "unittests,rust"
@@ -59,7 +59,7 @@ jobs:
         if: "(github.event_name == 'push') && (github.event.ref == 'refs/heads/master')"
         runs-on: "ubuntu-22.04"
         container:
-            image: "rafalwrzeszczwrzasqpl/build-rust:nightly-v0.2.0"
+            image: "rafalwrzeszczwrzasqpl/build-rust:nightly-v0.2.1"
         needs: "build"
         permissions:
             contents: "write"

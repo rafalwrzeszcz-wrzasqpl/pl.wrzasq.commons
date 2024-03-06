@@ -298,7 +298,6 @@ impl DynamoDbDao {
 #[cfg(test)]
 mod tests {
     use crate::{DaoError, DynamoDbDao, DynamoDbEntity, DynamoDbResultsPage};
-    use async_trait::async_trait;
     use aws_config::{load_defaults, BehaviorVersion};
     use aws_sdk_dynamodb::config::Builder;
     use aws_sdk_dynamodb::operation::get_item::{GetItemError, GetItemOutput};
@@ -363,7 +362,6 @@ mod tests {
         table_name: String,
     }
 
-    #[async_trait]
     impl AsyncTestContext for DynamoDbTestContext {
         async fn setup() -> DynamoDbTestContext {
             let table_name = format!("TestTable{}", NUMBER.fetch_add(1, Ordering::SeqCst));
