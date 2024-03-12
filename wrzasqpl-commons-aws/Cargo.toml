@@ -36,6 +36,6 @@ tracing-subscriber = "0.3.18"
 xray-tracing = "0.0.1"
 
 [dev-dependencies]
-aws-smithy-types = "1.1.7"
+aws-smithy-types = "1.1.8"
 test-context = "0.3.0"
 tokio = { version = "1.36.0", features = ["macros"] }
