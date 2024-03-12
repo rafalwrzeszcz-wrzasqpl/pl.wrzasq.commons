@@ -29,7 +29,7 @@ jobs:
                 image: "amazon/dynamodb-local:2.2.1"
         steps:
             -
-                uses: "actions/checkout@v4.1.1"
+                uses: "actions/checkout@v4.1.2"
             -
                 uses: "crazy-max/ghaction-github-runtime@v3.0.0"
             -
@@ -66,7 +66,7 @@ jobs:
             id-token: "write"
         steps:
             -
-                uses: "actions/checkout@v4.1.1"
+                uses: "actions/checkout@v4.1.2"
             -
                 uses: "crazy-max/ghaction-github-runtime@v3.0.0"
             -
