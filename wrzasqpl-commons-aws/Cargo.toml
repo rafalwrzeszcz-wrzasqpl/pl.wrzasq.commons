@@ -20,7 +20,7 @@ authors = [
 keywords = ["aws", "lambda", "dynamodb"]
 
 [dependencies]
-aws-config = "1.1.7"
+aws-config = "1.1.8"
 aws-sdk-dynamodb = "1.16.1"
 aws-smithy-runtime-api = "1.1.7"
 env_logger = "0.10.2"
