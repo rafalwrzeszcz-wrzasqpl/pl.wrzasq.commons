@@ -24,7 +24,7 @@ test:
 	cargo test --all-features --lib
 
 test-local:
-	docker run -d --rm --name dynamodb -p 8000:8000 amazon/dynamodb-local:2.2.1
+	docker run -d --rm --name dynamodb -p 8000:8000 amazon/dynamodb-local:2.5.3
 	make test
 	docker stop dynamodb
 

@@ -21,15 +21,15 @@ env:
 
 jobs:
     build:
-        runs-on: "ubuntu-22.04"
+        runs-on: "ubuntu-24.04"
         container:
-            image: "rafalwrzeszczwrzasqpl/build-rust:nightly-v0.2.1"
+            image: "rafalwrzeszczwrzasqpl/build-rust:nightly-v0.2.2"
         services:
             dynamodb:
-                image: "amazon/dynamodb-local:2.2.1"
+                image: "amazon/dynamodb-local:2.5.3"
         steps:
             -
-                uses: "actions/checkout@v4.1.1"
+                uses: "actions/checkout@v4.2.2"
             -
                 uses: "crazy-max/ghaction-github-runtime@v3.0.0"
             -
@@ -48,7 +48,7 @@ jobs:
             -
                 run: "make lcov"
             -
-                uses: "codecov/codecov-action@v3.1.6"
+                uses: "codecov/codecov-action@v5.0.2"
                 with:
                     token: "${{ vars.CODECOV_TOKEN }}"
                     flags: "unittests,rust"
@@ -57,16 +57,16 @@ jobs:
 
     release:
         if: "(github.event_name == 'push') && (github.event.ref == 'refs/heads/master')"
-        runs-on: "ubuntu-22.04"
+        runs-on: "ubuntu-24.04"
         container:
-            image: "rafalwrzeszczwrzasqpl/build-rust:nightly-v0.2.1"
+            image: "rafalwrzeszczwrzasqpl/build-rust:nightly-v0.2.2"
         needs: "build"
         permissions:
             contents: "write"
             id-token: "write"
         steps:
             -
-                uses: "actions/checkout@v4.1.1"
+                uses: "actions/checkout@v4.2.2"
             -
                 uses: "crazy-max/ghaction-github-runtime@v3.0.0"
             -

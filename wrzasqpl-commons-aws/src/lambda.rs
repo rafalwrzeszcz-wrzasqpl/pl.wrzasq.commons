@@ -6,7 +6,7 @@
  */
 
 use env_logger::Builder;
-use lambda_runtime::{run, service_fn, Error as LambdaRuntimeError, LambdaEvent};
+use lambda_runtime::{run, service_fn, Diagnostic, Error as LambdaRuntimeError, LambdaEvent};
 use serde::{Deserialize, Serialize};
 use std::env::VarError;
 use std::fmt::{Debug, Display, Formatter, Result as FormatResult};
@@ -66,7 +66,7 @@ where
     HandlerType: Fn(LambdaEvent<PayloadType>) -> FutureType,
     FutureType: Future<Output = Result<ReturnType, ErrorType>>,
     ReturnType: Serialize,
-    ErrorType: Debug + Display,
+    ErrorType: Into<Diagnostic> + Debug + Display,
 {
     Builder::from_default_env().format_timestamp(None).init();
 
