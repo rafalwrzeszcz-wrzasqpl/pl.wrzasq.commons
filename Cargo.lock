@@ -147,9 +147,9 @@ dependencies = [
 
 [[package]]
 name = "aws-runtime"
-version = "1.5.2"
+version = "1.5.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "44f6f1124d6e19ab6daf7f2e615644305dc6cb2d706892a8a8c0b98db35de020"
+checksum = "b16d1aa50accc11a4b4d5c50f7fb81cc0cf60328259c587d0e6b0f11385bde46"
 dependencies = [
  "aws-credential-types",
  "aws-sigv4",
@@ -172,9 +172,9 @@ dependencies = [
 
 [[package]]
 name = "aws-sdk-dynamodb"
-version = "1.57.0"
+version = "1.58.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "94eddb79659f74c5cf0ba98ab93b7bda3e0120c827539e4944438f179da7c7d3"
+checksum = "676f55a6ce7b280b592356e9b8c793631561ccd46c3f1928f69113ca9b518d0f"
 dependencies = [
  "aws-credential-types",
  "aws-runtime",
