@@ -17,6 +17,7 @@ updates:
                 patterns:
                     - "aws-config"
                     - "aws-sdk-*"
+                    - "aws-smithy-*"
     -
         package-ecosystem: "github-actions"
         directory: "/"
