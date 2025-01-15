@@ -2,7 +2,7 @@
 # This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2023 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2023, 2025 © by Rafał Wrzeszcz - Wrzasq.pl.
 ##
 
 version: 2
@@ -12,6 +12,11 @@ updates:
         directory: "/"
         schedule:
             interval: "daily"
+        groups:
+            aws-sdk:
+                patterns:
+                    - "aws-config"
+                    - "aws-sdk-*"
     -
         package-ecosystem: "github-actions"
         directory: "/"
