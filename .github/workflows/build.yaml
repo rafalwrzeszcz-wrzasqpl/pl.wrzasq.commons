@@ -2,7 +2,7 @@
 # This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2023 - 2024 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2023 - 2025 © by Rafał Wrzeszcz - Wrzasq.pl.
 ##
 
 on:
@@ -22,6 +22,7 @@ env:
 jobs:
     build:
         runs-on: "ubuntu-24.04"
+        if: "(github.event_name == 'push') || (github.repository != github.event.pull_request.head.repo.full_name)"
         container:
             image: "rafalwrzeszczwrzasqpl/build-rust:nightly-v0.2.3"
         services:
