@@ -8,8 +8,7 @@
 on:
     push:
         tags-ignore: "**"
-        branches:
-            - "master"
+        branches: "**"
     pull_request:
         branches: "**"
     schedule:
