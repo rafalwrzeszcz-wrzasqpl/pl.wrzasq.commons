@@ -31,7 +31,7 @@ jobs:
             -
                 uses: "actions/checkout@v4.2.2"
             -
-                uses: "crazy-max/ghaction-github-runtime@v3.0.0"
+                uses: "crazy-max/ghaction-github-runtime@v3.1.0"
             -
                 run: "make build"
             -
@@ -68,7 +68,7 @@ jobs:
             -
                 uses: "actions/checkout@v4.2.2"
             -
-                uses: "crazy-max/ghaction-github-runtime@v3.0.0"
+                uses: "crazy-max/ghaction-github-runtime@v3.1.0"
             -
                 run: |
                     git config --global user.name "GitHub Actions"
