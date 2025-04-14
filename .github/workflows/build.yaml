@@ -48,7 +48,7 @@ jobs:
             -
                 run: "make lcov"
             -
-                uses: "codecov/codecov-action@v5.4.0"
+                uses: "codecov/codecov-action@v5.4.2"
                 with:
                     token: "${{ vars.CODECOV_TOKEN }}"
                     flags: "unittests,rust"
