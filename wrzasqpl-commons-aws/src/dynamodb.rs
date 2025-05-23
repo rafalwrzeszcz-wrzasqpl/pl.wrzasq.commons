@@ -164,7 +164,7 @@ impl DynamoDbDao {
 
     /// Creates new DAO object from environment setup.
     pub async fn new_from_env(table_var_name: &str) -> Result<Self, DaoError> {
-        let config = load_defaults(BehaviorVersion::v2024_03_28());
+        let config = load_defaults(BehaviorVersion::v2025_01_17());
         let table_name = var(table_var_name)?;
         let client = Client::new(&config.await);
         Ok(Self::new(client, table_name))
@@ -365,7 +365,7 @@ mod tests {
     impl AsyncTestContext for DynamoDbTestContext {
         async fn setup() -> DynamoDbTestContext {
             let table_name = format!("TestTable{}", NUMBER.fetch_add(1, Ordering::SeqCst));
-            let config = load_defaults(BehaviorVersion::v2024_03_28()).await;
+            let config = load_defaults(BehaviorVersion::v2025_01_17()).await;
             let local_config = Builder::from(&config)
                 .endpoint_url(var("DYNAMODB_LOCAL_HOST").unwrap_or("http://localhost:8000".into()))
                 .build();

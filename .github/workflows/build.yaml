@@ -31,6 +31,8 @@ jobs:
             -
                 uses: "actions/checkout@v4.2.2"
             -
+                uses: "mozilla-actions/sccache-action@v0.0.9"
+            -
                 uses: "crazy-max/ghaction-github-runtime@v3.1.0"
             -
                 run: "make build"
@@ -48,7 +50,7 @@ jobs:
             -
                 run: "make lcov"
             -
-                uses: "codecov/codecov-action@v5.4.0"
+                uses: "codecov/codecov-action@v5.4.3"
                 with:
                     token: "${{ vars.CODECOV_TOKEN }}"
                     flags: "unittests,rust"
@@ -67,6 +69,8 @@ jobs:
         steps:
             -
                 uses: "actions/checkout@v4.2.2"
+            -
+                uses: "mozilla-actions/sccache-action@v0.0.9"
             -
                 uses: "crazy-max/ghaction-github-runtime@v3.1.0"
             -
