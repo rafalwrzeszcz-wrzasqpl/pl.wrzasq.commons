@@ -1,9 +1,9 @@
 ##
 # File managed by Terraform.
 #
-# @copyright 2024 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2024 - 2025 © by Rafał Wrzeszcz - Wrzasq.pl.
 ##
 
 max_width = 120
 newline_style = "Unix"
-edition = "2021"
+edition = "2024"

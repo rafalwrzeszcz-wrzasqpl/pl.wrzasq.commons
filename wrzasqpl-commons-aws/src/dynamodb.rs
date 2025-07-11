@@ -2,24 +2,24 @@
  * This file is part of the pl.wrzasq.commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2023 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2023, 2025 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
-use aws_config::{load_defaults, BehaviorVersion};
-use aws_sdk_dynamodb::operation::delete_item::builders::DeleteItemFluentBuilder;
+use aws_config::{BehaviorVersion, load_defaults};
+use aws_sdk_dynamodb::Client;
 use aws_sdk_dynamodb::operation::delete_item::DeleteItemError;
-use aws_sdk_dynamodb::operation::get_item::builders::GetItemFluentBuilder;
+use aws_sdk_dynamodb::operation::delete_item::builders::DeleteItemFluentBuilder;
 use aws_sdk_dynamodb::operation::get_item::GetItemError;
-use aws_sdk_dynamodb::operation::put_item::builders::PutItemFluentBuilder;
+use aws_sdk_dynamodb::operation::get_item::builders::GetItemFluentBuilder;
 use aws_sdk_dynamodb::operation::put_item::PutItemError;
+use aws_sdk_dynamodb::operation::put_item::builders::PutItemFluentBuilder;
 use aws_sdk_dynamodb::operation::query::builders::QueryFluentBuilder;
 use aws_sdk_dynamodb::operation::query::{QueryError, QueryOutput};
-use aws_sdk_dynamodb::Client;
 use aws_smithy_runtime_api::client::orchestrator::HttpResponse;
 use aws_smithy_runtime_api::client::result::SdkError;
 use serde::{Deserialize, Serialize};
-use serde_dynamo::{from_item, from_items, to_attribute_value, to_item, Error as SerializationError};
-use std::env::{var, VarError};
+use serde_dynamo::{Error as SerializationError, from_item, from_items, to_attribute_value, to_item};
+use std::env::{VarError, var};
 use std::fmt::{Display, Formatter, Result as FormatResult};
 use thiserror::Error;
 use tracing::{Instrument, Span};
@@ -298,23 +298,23 @@ impl DynamoDbDao {
 #[cfg(test)]
 mod tests {
     use crate::{DaoError, DynamoDbDao, DynamoDbEntity, DynamoDbResultsPage};
-    use aws_config::{load_defaults, BehaviorVersion};
+    use aws_config::{BehaviorVersion, load_defaults};
+    use aws_sdk_dynamodb::Client;
     use aws_sdk_dynamodb::config::Builder;
     use aws_sdk_dynamodb::operation::get_item::{GetItemError, GetItemOutput};
     use aws_sdk_dynamodb::operation::put_item::{PutItemError, PutItemOutput};
-    use aws_sdk_dynamodb::types::AttributeValue::{Null, L, N, S};
+    use aws_sdk_dynamodb::types::AttributeValue::{L, N, Null, S};
     use aws_sdk_dynamodb::types::{
         AttributeDefinition, BillingMode, GlobalSecondaryIndex, KeySchemaElement, KeyType, Projection, ProjectionType,
         ScalarAttributeType,
     };
-    use aws_sdk_dynamodb::Client;
     use aws_smithy_runtime_api::client::orchestrator::HttpResponse;
     use aws_smithy_runtime_api::client::result::SdkError;
     use serde::{Deserialize, Serialize};
     use std::env::var;
     use std::future::join;
     use std::sync::atomic::{AtomicUsize, Ordering};
-    use test_context::{test_context, AsyncTestContext};
+    use test_context::{AsyncTestContext, test_context};
     use tokio::test as tokio_test;
 
     static NUMBER: AtomicUsize = AtomicUsize::new(0);

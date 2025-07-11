@@ -2,19 +2,19 @@
  * This file is part of the pl.wrzasq.commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2023 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2023, 2025 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 use env_logger::Builder;
-use lambda_runtime::{run, service_fn, Diagnostic, Error as LambdaRuntimeError, LambdaEvent};
+use lambda_runtime::{Diagnostic, Error as LambdaRuntimeError, LambdaEvent, run, service_fn};
 use serde::{Deserialize, Serialize};
 use std::env::VarError;
 use std::fmt::{Debug, Display, Formatter, Result as FormatResult};
 use std::future::Future;
 use thiserror::Error;
 use tracing_core::dispatcher::set_global_default;
-use tracing_subscriber::layer::SubscriberExt;
 use tracing_subscriber::Registry;
+use tracing_subscriber::layer::SubscriberExt;
 use xray_tracing::XRaySubscriber;
 
 /// Runtime errors possible for Lambda operations.
