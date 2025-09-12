@@ -7,7 +7,7 @@
 
 [package]
 name = "wrzasqpl-commons-aws"
-version = "3.5.18"
+version = "3.5.19"
 edition = "2024"
 license = "MIT"
 description = "AWS-related utility functions for commor routines."
