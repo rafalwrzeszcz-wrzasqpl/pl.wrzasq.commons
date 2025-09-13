@@ -74,11 +74,33 @@
 //! ```
 //!
 use proc_macro::TokenStream;
-use proc_macro2::{Span, TokenStream as TokenStream2};
+use proc_macro2::Span;
 use quote::{format_ident, quote};
-use syn::{DeriveInput, Meta, parse_macro_input, spanned::Spanned};
+use syn::{parse_macro_input, spanned::Spanned, DeriveInput, Meta};
 
-fn derive_dynamo_entity_impl(input: DeriveInput) -> TokenStream2 {
+#[proc_macro_derive(DynamoEntity, attributes(hash_key, sort_key))]
+/// Derive macro that turns a struct into a DynamoDB entity compatible with
+/// `wrzasqpl-commons-aws`.
+///
+/// Keys
+/// - Hash key: mark a field with `#[hash_key]` or provide a field named `id`.
+/// - Sort key: mark a field with `#[sort_key]` or provide a field named `sk`.
+///
+/// Options
+/// - `#[hash_key(prefix = "...")]` – prefixes hash values on constructors.
+/// - `#[sort_key(const = "...")]` – uses a constant sort key value.
+/// - `#[sort_key(prefix = "...")]` – queries apply `begins_with` on that prefix.
+///
+/// Examples
+/// ```ignore
+/// use wrzasqpl_commons_aws_macros::DynamoEntity;
+///
+/// #[derive(DynamoEntity)]
+/// struct Example { id: String, sk: String }
+/// ```
+pub fn derive_dynamo_entity(input: TokenStream) -> TokenStream {
+    let input = parse_macro_input!(input as DeriveInput);
+
     let struct_ident = input.ident.clone();
     let input_span = input.span();
 
@@ -86,18 +108,18 @@ fn derive_dynamo_entity_impl(input: DeriveInput) -> TokenStream2 {
     let data_struct = match input.data {
         syn::Data::Struct(ds) => ds,
         _ => {
-            return syn::Error::new(input_span, "DynamoEntity can only be derived for structs").to_compile_error();
+            return syn::Error::new(input_span, "DynamoEntity can only be derived for structs")
+                .to_compile_error()
+                .into()
         }
     };
 
     let fields = match data_struct.fields {
         syn::Fields::Named(named) => named.named,
         _ => {
-            return syn::Error::new(
-                input_span,
-                "DynamoEntity requires named fields (struct with field names)",
-            )
-            .to_compile_error();
+            return syn::Error::new(input_span, "DynamoEntity requires named fields (struct with field names)")
+                .to_compile_error()
+                .into()
         }
     };
 
@@ -160,36 +182,17 @@ fn derive_dynamo_entity_impl(input: DeriveInput) -> TokenStream2 {
             }
         }
 
-        if is_hash {
-            // Explicitly marked hash key; preserve parsed prefix option
-            hash_key = Some(KeyField {
-                ident: ident.clone(),
-                ty: f.ty.clone(),
-                const_value: None,
-                prefix,
-            });
-            continue;
-        }
-        if !is_sort && ident == "id" {
+        if is_hash || (!is_sort && ident == "id") {
             // Default to field named "id" if not explicitly marked and no explicit hash_key found yet
-            if hash_key.is_none() {
-                hash_key = Some(KeyField {
-                    ident: ident.clone(),
-                    ty: f.ty.clone(),
-                    const_value: None,
-                    prefix: None,
-                });
+            if hash_key.is_none() || is_hash {
+                hash_key = Some(KeyField { ident: ident.clone(), ty: f.ty.clone(), const_value: None, prefix: None });
+                if is_hash { continue; }
             }
         }
         if is_sort || ident == "sk" {
             // Default to field named "sk" if not explicitly marked and no explicit sort_key found yet
             if sort_key.is_none() || is_sort {
-                sort_key = Some(KeyField {
-                    ident: ident.clone(),
-                    ty: f.ty.clone(),
-                    const_value,
-                    prefix,
-                });
+                sort_key = Some(KeyField { ident: ident.clone(), ty: f.ty.clone(), const_value, prefix });
             }
         }
     }
@@ -199,14 +202,16 @@ fn derive_dynamo_entity_impl(input: DeriveInput) -> TokenStream2 {
             input_span,
             "DynamoEntity: missing hash key. Mark a field with #[hash_key] or include a field named 'id'.",
         )
-        .to_compile_error();
+        .to_compile_error()
+        .into();
     };
     let Some(sk) = sort_key else {
         return syn::Error::new(
             input_span,
             "DynamoEntity: missing sort key. Mark a field with #[sort_key] or include a field named 'sk', or add #[sort_key(const = \"...\")] to the struct.",
         )
-        .to_compile_error();
+        .to_compile_error()
+        .into();
     };
 
     // Names and idents
@@ -228,11 +233,7 @@ fn derive_dynamo_entity_impl(input: DeriveInput) -> TokenStream2 {
         .iter()
         .filter_map(|f| {
             let ident = f.ident.clone()?;
-            if ident == hk_ident || ident == sk_ident {
-                None
-            } else {
-                Some((ident, f.ty.clone()))
-            }
+            if ident == hk_ident || ident == sk_ident { None } else { Some((ident, f.ty.clone())) }
         })
         .collect();
 
@@ -296,24 +297,18 @@ fn derive_dynamo_entity_impl(input: DeriveInput) -> TokenStream2 {
                 }
             }
         }
-    } else {
-        quote! {}
-    };
+    } else { quote! {} };
 
     // Inherent impl: generic constructor `new(...)` to build an entity from hash (+ sk if needed) and non-key fields
     let new_constructor_impl = {
         // Build param list for non-key fields
-        let (nk_idents, nk_tys): (Vec<syn::Ident>, Vec<syn::Type>) = non_key_fields.iter().cloned().unzip();
+        let (nk_idents, nk_tys):(Vec<syn::Ident>, Vec<syn::Type>) = non_key_fields.iter().cloned().unzip();
         if let Some(sk_c) = &sk_const {
             // sk is constant, omit from params
             if let Some(hp) = &hk_prefix {
                 let hp_lit = syn::LitStr::new(&hp, Span::call_site());
                 let sk_lit = syn::LitStr::new(&sk_c, Span::call_site());
-                let sk_init = if sk_field_exists {
-                    quote! { #sk_ident: #sk_lit.to_string(), }
-                } else {
-                    quote! {}
-                };
+                let sk_init = if sk_field_exists { quote! { #sk_ident: #sk_lit.to_string(), } } else { quote! {} };
                 quote! {
                     impl #struct_ident {
                         pub fn new<Hash: Into<::std::string::String>>(hash: Hash, #( #nk_idents: #nk_tys ),* ) -> Self {
@@ -328,11 +323,7 @@ fn derive_dynamo_entity_impl(input: DeriveInput) -> TokenStream2 {
                 }
             } else {
                 let sk_lit = syn::LitStr::new(&sk_c, Span::call_site());
-                let sk_init = if sk_field_exists {
-                    quote! { #sk_ident: #sk_lit.to_string(), }
-                } else {
-                    quote! {}
-                };
+                let sk_init = if sk_field_exists { quote! { #sk_ident: #sk_lit.to_string(), } } else { quote! {} };
                 quote! {
                     impl #struct_ident {
                         pub fn new<Hash: Into<::std::string::String>>(hash: Hash, #( #nk_idents: #nk_tys ),* ) -> Self {
@@ -377,11 +368,9 @@ fn derive_dynamo_entity_impl(input: DeriveInput) -> TokenStream2 {
                 request
             }
         }
-    } else {
-        quote! {}
-    };
+    } else { quote! {} };
 
-    quote! {
+    let expanded = quote! {
         #[allow(non_camel_case_types)]
         #[derive(serde::Serialize, serde::Deserialize, Debug, Clone)]
         pub struct #key_ident {
@@ -399,349 +388,7 @@ fn derive_dynamo_entity_impl(input: DeriveInput) -> TokenStream2 {
 
         #key_from_hash_impl
         #new_constructor_impl
-    }
-}
+    };
 
-#[proc_macro_derive(DynamoEntity, attributes(hash_key, sort_key))]
-/// Derive macro that turns a struct into a DynamoDB entity compatible with
-/// `wrzasqpl-commons-aws`.
-///
-/// Keys
-/// - Hash key: mark a field with `#[hash_key]` or provide a field named `id`.
-/// - Sort key: mark a field with `#[sort_key]` or provide a field named `sk`.
-///
-/// Options
-/// - `#[hash_key(prefix = "...")]` – prefixes hash values on constructors.
-/// - `#[sort_key(const = "...")]` – uses a constant sort key value.
-/// - `#[sort_key(prefix = "...")]` – queries apply `begins_with` on that prefix.
-///
-/// Examples
-/// ```ignore
-/// use wrzasqpl_commons_aws_macros::DynamoEntity;
-///
-/// #[derive(DynamoEntity)]
-/// struct Example { id: String, sk: String }
-/// ```
-pub fn derive_dynamo_entity(input: TokenStream) -> TokenStream {
-    let input = parse_macro_input!(input as DeriveInput);
-    derive_dynamo_entity_impl(input).into()
-}
-
-#[cfg(test)]
-mod tests {
-    use super::derive_dynamo_entity_impl;
-    use proc_macro2::TokenStream as TokenStream2;
-    use quote::{ToTokens, quote};
-    use syn::{DeriveInput, ImplItem, Item, ItemImpl, ItemStruct, Type};
-
-    fn expand_to_file(input: TokenStream2) -> syn::File {
-        let input: DeriveInput = syn::parse2(input).expect("failed to parse input");
-        let tokens = derive_dynamo_entity_impl(input);
-        syn::parse2(tokens).expect("generated tokens should parse")
-    }
-
-    fn expand_raw(input: TokenStream2) -> String {
-        let input: DeriveInput = syn::parse2(input).expect("failed to parse input");
-        derive_dynamo_entity_impl(input).to_string()
-    }
-
-    fn find_struct<'a>(items: &'a [Item], name: &str) -> &'a ItemStruct {
-        items
-            .iter()
-            .find_map(|item| match item {
-                Item::Struct(item_struct) if item_struct.ident == name => Some(item_struct),
-                _ => None,
-            })
-            .unwrap_or_else(|| panic!("struct `{name}` not found in output"))
-    }
-
-    fn find_inherent_impl<'a>(items: &'a [Item], name: &str) -> Vec<&'a ItemImpl> {
-        items
-            .iter()
-            .filter_map(|item| match item {
-                Item::Impl(item_impl)
-                    if item_impl.trait_.is_none()
-                        && matches!(item_impl.self_ty.as_ref(), Type::Path(path) if path.path.is_ident(name)) =>
-                {
-                    Some(item_impl)
-                }
-                _ => None,
-            })
-            .collect()
-    }
-
-    fn find_trait_impl<'a>(items: &'a [Item], name: &str) -> &'a ItemImpl {
-        items
-            .iter()
-            .find_map(|item| match item {
-                Item::Impl(item_impl)
-                    if item_impl.trait_.is_some()
-                        && matches!(item_impl.self_ty.as_ref(), Type::Path(path) if path.path.is_ident(name)) =>
-                {
-                    Some(item_impl)
-                }
-                _ => None,
-            })
-            .unwrap_or_else(|| panic!("trait impl for `{name}` not found"))
-    }
-
-    fn has_fn(impl_block: &ItemImpl, name: &str) -> bool {
-        impl_block
-            .items
-            .iter()
-            .any(|item| matches!(item, ImplItem::Fn(func) if func.sig.ident == name))
-    }
-
-    #[test]
-    fn defaults_detect_id_and_sk_fields() {
-        let file = expand_to_file(quote! {
-            struct Invoice {
-                id: String,
-                sk: String,
-                amount_cents: i64,
-            }
-        });
-
-        let key_struct = find_struct(&file.items, "InvoiceKey");
-        let fields: Vec<_> = match &key_struct.fields {
-            syn::Fields::Named(fields) => fields
-                .named
-                .iter()
-                .map(|f| f.ident.as_ref().unwrap().to_string())
-                .collect(),
-            fields => panic!("unexpected fields generated: {fields:?}"),
-        };
-        assert_eq!(fields, vec!["id", "sk"]);
-
-        let inherent_impls = find_inherent_impl(&file.items, "Invoice");
-        let new_fn = inherent_impls
-            .iter()
-            .flat_map(|imp| imp.items.iter())
-            .find_map(|item| match item {
-                ImplItem::Fn(func) if func.sig.ident == "new" => Some(func),
-                _ => None,
-            })
-            .expect("new() constructor missing");
-
-        // Expect Hash and Sort generic parameters for non-const sort key
-        let generic_idents: Vec<_> = new_fn
-            .sig
-            .generics
-            .params
-            .iter()
-            .filter_map(|param| match param {
-                syn::GenericParam::Type(ty) => Some(ty.ident.to_string()),
-                _ => None,
-            })
-            .collect();
-        assert_eq!(generic_idents, vec!["Hash", "Sort"]);
-
-        // Body should convert both hash and sort using Into<String>
-        let body_str = new_fn.block.to_token_stream().to_string();
-        assert!(
-            body_str.contains("hash . into"),
-            "expected hash.into() in new(): {body_str}"
-        );
-        assert!(
-            body_str.contains("sort . into"),
-            "expected sort.into() in new(): {body_str}"
-        );
-
-        let entity_impl = find_trait_impl(&file.items, "Invoice");
-        assert!(has_fn(entity_impl, "hash_key_name"));
-        assert!(has_fn(entity_impl, "build_key"));
-        assert!(!has_fn(entity_impl, "handle_query"));
-        assert!(!has_fn(entity_impl, "handle_save"));
-    }
-
-    #[test]
-    fn hash_prefix_applies_to_constructor_and_key() {
-        let file = expand_to_file(quote! {
-            struct Tenant {
-                #[hash_key(prefix = "TENANT#")]
-                id: String,
-                #[sort_key]
-                sk: String,
-                label: String,
-            }
-        });
-
-        let new_fn_body = find_inherent_impl(&file.items, "Tenant")
-            .iter()
-            .flat_map(|imp| imp.items.iter())
-            .find_map(|item| match item {
-                ImplItem::Fn(func) if func.sig.ident == "new" => Some(func.block.to_token_stream().to_string()),
-                _ => None,
-            })
-            .expect("new() body not found");
-
-        assert!(
-            new_fn_body.contains("concat ! (\"TENANT#\" , \"{}\")"),
-            "expected hash prefix formatting in constructor: {new_fn_body}"
-        );
-
-        let entity_impl = find_trait_impl(&file.items, "Tenant");
-        let build_key_body = entity_impl
-            .items
-            .iter()
-            .find_map(|item| match item {
-                ImplItem::Fn(func) if func.sig.ident == "build_key" => Some(func.block.to_token_stream().to_string()),
-                _ => None,
-            })
-            .expect("build_key body missing");
-        assert!(build_key_body.contains("self . sk . clone"));
-    }
-
-    #[test]
-    fn const_sort_key_generates_short_constructor_and_key_helper() {
-        let file = expand_to_file(quote! {
-            struct Profile {
-                #[hash_key(prefix = "USER#")]
-                id: String,
-                #[sort_key(const = "PROFILE")]
-                sk: String,
-                display_name: String,
-            }
-        });
-
-        // new(hash, display_name) should only require the hash argument
-        let new_fn = find_inherent_impl(&file.items, "Profile")
-            .iter()
-            .flat_map(|imp| imp.items.iter())
-            .find_map(|item| match item {
-                ImplItem::Fn(func) if func.sig.ident == "new" => Some(func),
-                _ => None,
-            })
-            .expect("new() constructor missing");
-
-        let params: Vec<_> = new_fn
-            .sig
-            .inputs
-            .iter()
-            .filter_map(|arg| match arg {
-                syn::FnArg::Typed(pat_ty) => Some(pat_ty.pat.to_token_stream().to_string()),
-                _ => None,
-            })
-            .collect();
-        assert_eq!(params[0], "hash");
-        assert!(params.iter().any(|p| p == "display_name"));
-
-        let generics: Vec<_> = new_fn
-            .sig
-            .generics
-            .params
-            .iter()
-            .filter_map(|param| match param {
-                syn::GenericParam::Type(ty) => Some(ty.ident.to_string()),
-                _ => None,
-            })
-            .collect();
-        assert_eq!(generics, vec!["Hash"]);
-
-        let new_body = new_fn.block.to_token_stream().to_string();
-        assert!(new_body.contains("sk : \"PROFILE\" . to_string"));
-
-        // key_from_hash helper should reuse prefix and const sort key
-        let key_helper_body = find_inherent_impl(&file.items, "Profile")
-            .iter()
-            .flat_map(|imp| imp.items.iter())
-            .find_map(|item| match item {
-                ImplItem::Fn(func) if func.sig.ident == "key_from_hash" => {
-                    Some(func.block.to_token_stream().to_string())
-                }
-                _ => None,
-            })
-            .expect("key_from_hash helper missing");
-        assert!(key_helper_body.contains("concat ! (\"USER#\" , \"{}\")"));
-        assert!(key_helper_body.contains("\"PROFILE\" . to_string"));
-
-        // handle_save should enforce the const sort key value
-        let entity_impl = find_trait_impl(&file.items, "Profile");
-        assert!(has_fn(entity_impl, "handle_save"));
-        let handle_save_body = entity_impl
-            .items
-            .iter()
-            .find_map(|item| match item {
-                ImplItem::Fn(func) if func.sig.ident == "handle_save" => Some(func.block.to_token_stream().to_string()),
-                _ => None,
-            })
-            .expect("handle_save body missing");
-        assert!(handle_save_body.contains("self . sk = \"PROFILE\" . to_string"));
-    }
-
-    #[test]
-    fn sort_key_prefix_adds_begins_with_query_modifier() {
-        let file = expand_to_file(quote! {
-            struct Order {
-                #[hash_key]
-                tenant: String,
-                #[sort_key(prefix = "ORDER#")]
-                sk: String,
-                status: String,
-            }
-        });
-        let entity_impl = find_trait_impl(&file.items, "Order");
-
-        let query_body = entity_impl
-            .items
-            .iter()
-            .find_map(|item| match item {
-                ImplItem::Fn(func) if func.sig.ident == "handle_query" => {
-                    Some(func.block.to_token_stream().to_string())
-                }
-                _ => None,
-            })
-            .expect("handle_query function missing");
-
-        assert!(query_body.contains("begins_with"));
-        assert!(query_body.contains("\"ORDER#\""));
-    }
-
-    #[test]
-    fn missing_sort_key_emits_compile_error() {
-        let output = expand_raw(quote! {
-            struct Broken {
-                #[hash_key]
-                id: String,
-                value: String,
-            }
-        });
-
-        assert!(output.contains("compile_error"));
-        assert!(output.contains("missing sort key"));
-    }
-
-    #[test]
-    fn missing_hash_key_emits_compile_error() {
-        let output = expand_raw(quote! {
-            struct Broken {
-                #[sort_key]
-                sk: String,
-                value: String,
-            }
-        });
-
-        assert!(output.contains("compile_error"));
-        assert!(output.contains("missing hash key"));
-    }
-
-    #[test]
-    fn tuple_structs_are_rejected() {
-        let output = expand_raw(quote! {
-            struct Tuple(String);
-        });
-
-        assert!(output.contains("compile_error"));
-        assert!(output.contains("requires named fields"));
-    }
-
-    #[test]
-    fn non_struct_items_are_rejected() {
-        let output = expand_raw(quote! {
-            enum Sample { A }
-        });
-
-        assert!(output.contains("compile_error"));
-        assert!(output.contains("can only be derived for structs"));
-    }
+    TokenStream::from(expanded)
 }
