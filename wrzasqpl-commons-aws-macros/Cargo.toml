@@ -1,0 +1,20 @@
+##
+# This file is part of the pl.wrzasq.commons.
+#
+# @license http://mit-license.org/ The MIT license
+# © by Rafał Wrzeszcz - Wrzasq.pl.
+##
+
+[package]
+name = "wrzasqpl-commons-aws-macros"
+version = "0.1.0"
+edition = "2024"
+description = "Proc-macro derive utilities for wrzasqpl-commons-aws"
+
+[lib]
+proc-macro = true
+
+[dependencies]
+proc-macro2 = "1"
+quote = "1"
+syn = { version = "2", features = ["full", "extra-traits"] }

@@ -8,5 +8,6 @@
 [workspace]
 members = [
     "wrzasqpl-commons-aws",
+    "wrzasqpl-commons-aws-macros",
 ]
 resolver = "2"
