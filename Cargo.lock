@@ -2517,9 +2517,14 @@ dependencies = [
 name = "wrzasqpl-commons-aws-macros"
 version = "4.1.0"
 dependencies = [
+ "aws-config",
+ "aws-sdk-dynamodb",
  "proc-macro2",
  "quote",
+ "serde",
  "syn",
+ "tokio",
+ "wrzasqpl-commons-aws",
 ]
 
 [[package]]

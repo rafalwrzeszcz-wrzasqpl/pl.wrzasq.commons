@@ -189,11 +189,15 @@ pub fn derive_dynamo_entity(input: TokenStream) -> TokenStream {
             }
         }
 
-        if is_hash || (!is_sort && ident == "id") {
+        if is_hash {
+            // Explicitly marked hash key; preserve parsed prefix option
+            hash_key = Some(KeyField { ident: ident.clone(), ty: f.ty.clone(), const_value: None, prefix });
+            continue;
+        }
+        if !is_sort && ident == "id" {
             // Default to field named "id" if not explicitly marked and no explicit hash_key found yet
-            if hash_key.is_none() || is_hash {
+            if hash_key.is_none() {
                 hash_key = Some(KeyField { ident: ident.clone(), ty: f.ty.clone(), const_value: None, prefix: None });
-                if is_hash { continue; }
             }
         }
         if is_sort || ident == "sk" {

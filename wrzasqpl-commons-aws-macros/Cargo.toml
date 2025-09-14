@@ -24,3 +24,10 @@ proc-macro = true
 proc-macro2 = "1.0.103"
 quote = "1.0.42"
 syn = { version = "2.0.111", features = ["full", "extra-traits"] }
+
+[dev-dependencies]
+aws-config = "1.8.12"
+aws-sdk-dynamodb = "1.101.0"
+serde = { version = "1.0.228", features = ["derive"] }
+tokio = { version = "1.48.0", features = ["macros"] }
+wrzasqpl-commons-aws = { path = "../wrzasqpl-commons-aws" }
