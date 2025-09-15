@@ -2776,7 +2776,22 @@ dependencies = [
  "tracing",
  "tracing-core",
  "tracing-subscriber",
+ "wrzasqpl-commons-aws-macros",
  "xray-tracing",
+]
+
+[[package]]
+name = "wrzasqpl-commons-aws-macros"
+version = "0.1.0"
+dependencies = [
+ "aws-config",
+ "aws-sdk-dynamodb",
+ "proc-macro2",
+ "quote",
+ "serde",
+ "syn",
+ "tokio",
+ "wrzasqpl-commons-aws",
 ]
 
 [[package]]
