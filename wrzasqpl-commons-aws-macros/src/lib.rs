@@ -76,7 +76,7 @@
 use proc_macro::TokenStream;
 use proc_macro2::Span;
 use quote::{format_ident, quote};
-use syn::{parse_macro_input, spanned::Spanned, DeriveInput, Meta};
+use syn::{DeriveInput, Meta, parse_macro_input, spanned::Spanned};
 
 #[proc_macro_derive(DynamoEntity, attributes(hash_key, sort_key))]
 /// Derive macro that turns a struct into a DynamoDB entity compatible with
@@ -110,16 +110,19 @@ pub fn derive_dynamo_entity(input: TokenStream) -> TokenStream {
         _ => {
             return syn::Error::new(input_span, "DynamoEntity can only be derived for structs")
                 .to_compile_error()
-                .into()
+                .into();
         }
     };
 
     let fields = match data_struct.fields {
         syn::Fields::Named(named) => named.named,
         _ => {
-            return syn::Error::new(input_span, "DynamoEntity requires named fields (struct with field names)")
-                .to_compile_error()
-                .into()
+            return syn::Error::new(
+                input_span,
+                "DynamoEntity requires named fields (struct with field names)",
+            )
+            .to_compile_error()
+            .into();
         }
     };
 
@@ -184,19 +187,34 @@ pub fn derive_dynamo_entity(input: TokenStream) -> TokenStream {
 
         if is_hash {
             // Explicitly marked hash key; preserve parsed prefix option
-            hash_key = Some(KeyField { ident: ident.clone(), ty: f.ty.clone(), const_value: None, prefix });
+            hash_key = Some(KeyField {
+                ident: ident.clone(),
+                ty: f.ty.clone(),
+                const_value: None,
+                prefix,
+            });
             continue;
         }
         if !is_sort && ident == "id" {
             // Default to field named "id" if not explicitly marked and no explicit hash_key found yet
             if hash_key.is_none() {
-                hash_key = Some(KeyField { ident: ident.clone(), ty: f.ty.clone(), const_value: None, prefix: None });
+                hash_key = Some(KeyField {
+                    ident: ident.clone(),
+                    ty: f.ty.clone(),
+                    const_value: None,
+                    prefix: None,
+                });
             }
         }
         if is_sort || ident == "sk" {
             // Default to field named "sk" if not explicitly marked and no explicit sort_key found yet
             if sort_key.is_none() || is_sort {
-                sort_key = Some(KeyField { ident: ident.clone(), ty: f.ty.clone(), const_value, prefix });
+                sort_key = Some(KeyField {
+                    ident: ident.clone(),
+                    ty: f.ty.clone(),
+                    const_value,
+                    prefix,
+                });
             }
         }
     }
@@ -237,7 +255,11 @@ pub fn derive_dynamo_entity(input: TokenStream) -> TokenStream {
         .iter()
         .filter_map(|f| {
             let ident = f.ident.clone()?;
-            if ident == hk_ident || ident == sk_ident { None } else { Some((ident, f.ty.clone())) }
+            if ident == hk_ident || ident == sk_ident {
+                None
+            } else {
+                Some((ident, f.ty.clone()))
+            }
         })
         .collect();
 
@@ -301,18 +323,24 @@ pub fn derive_dynamo_entity(input: TokenStream) -> TokenStream {
                 }
             }
         }
-    } else { quote! {} };
+    } else {
+        quote! {}
+    };
 
     // Inherent impl: generic constructor `new(...)` to build an entity from hash (+ sk if needed) and non-key fields
     let new_constructor_impl = {
         // Build param list for non-key fields
-        let (nk_idents, nk_tys):(Vec<syn::Ident>, Vec<syn::Type>) = non_key_fields.iter().cloned().unzip();
+        let (nk_idents, nk_tys): (Vec<syn::Ident>, Vec<syn::Type>) = non_key_fields.iter().cloned().unzip();
         if let Some(sk_c) = &sk_const {
             // sk is constant, omit from params
             if let Some(hp) = &hk_prefix {
                 let hp_lit = syn::LitStr::new(&hp, Span::call_site());
                 let sk_lit = syn::LitStr::new(&sk_c, Span::call_site());
-                let sk_init = if sk_field_exists { quote! { #sk_ident: #sk_lit.to_string(), } } else { quote! {} };
+                let sk_init = if sk_field_exists {
+                    quote! { #sk_ident: #sk_lit.to_string(), }
+                } else {
+                    quote! {}
+                };
                 quote! {
                     impl #struct_ident {
                         pub fn new<Hash: Into<::std::string::String>>(hash: Hash, #( #nk_idents: #nk_tys ),* ) -> Self {
@@ -327,7 +355,11 @@ pub fn derive_dynamo_entity(input: TokenStream) -> TokenStream {
                 }
             } else {
                 let sk_lit = syn::LitStr::new(&sk_c, Span::call_site());
-                let sk_init = if sk_field_exists { quote! { #sk_ident: #sk_lit.to_string(), } } else { quote! {} };
+                let sk_init = if sk_field_exists {
+                    quote! { #sk_ident: #sk_lit.to_string(), }
+                } else {
+                    quote! {}
+                };
                 quote! {
                     impl #struct_ident {
                         pub fn new<Hash: Into<::std::string::String>>(hash: Hash, #( #nk_idents: #nk_tys ),* ) -> Self {
@@ -372,7 +404,9 @@ pub fn derive_dynamo_entity(input: TokenStream) -> TokenStream {
                 request
             }
         }
-    } else { quote! {} };
+    } else {
+        quote! {}
+    };
 
     let expanded = quote! {
         #[allow(non_camel_case_types)]
