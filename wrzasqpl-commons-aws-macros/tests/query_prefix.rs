@@ -1,6 +1,6 @@
 use aws_config::{BehaviorVersion, load_defaults};
-use aws_sdk_dynamodb::types::{AttributeDefinition, BillingMode, KeySchemaElement, KeyType, ScalarAttributeType};
 use aws_sdk_dynamodb::Client;
+use aws_sdk_dynamodb::types::{AttributeDefinition, BillingMode, KeySchemaElement, KeyType, ScalarAttributeType};
 use std::env::var;
 use std::sync::atomic::{AtomicUsize, Ordering};
 use tokio::test as tokio_test;
@@ -105,11 +105,5 @@ async fn query_applies_begins_with_prefix() {
     assert!(page.items.iter().all(|it| it.sk.starts_with("ORD#")));
 
     // Cleanup
-    client
-        .delete_table()
-        .table_name(table_name)
-        .send()
-        .await
-        .unwrap();
+    client.delete_table().table_name(table_name).send().await.unwrap();
 }
-

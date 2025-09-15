@@ -15,9 +15,9 @@ description = "Proc-macro derive utilities for wrzasqpl-commons-aws"
 proc-macro = true
 
 [dependencies]
-proc-macro2 = "1"
+proc-macro2 = { version = "1", default-features = false }
 quote = "1"
-syn = { version = "2", features = ["full", "extra-traits"] }
+syn = { version = "2", features = ["extra-traits", "full"] }
 
 [dev-dependencies]
 wrzasqpl-commons-aws = { path = "../wrzasqpl-commons-aws" }
