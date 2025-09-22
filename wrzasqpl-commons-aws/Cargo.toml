@@ -27,7 +27,7 @@ env_logger = "0.11.8"
 futures = "0.3.31"
 lambda_runtime = "0.14.4"
 log = "0.4.28"
-serde = { version = "1.0.219", features = ["derive"] }
+serde = { version = "1.0.226", features = ["derive"] }
 serde_dynamo = { version = "4.2.14", features = ["aws-sdk-dynamodb+1"] }
 thiserror = "2.0.16"
 tracing = "0.1.41"
