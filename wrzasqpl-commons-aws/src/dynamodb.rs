@@ -365,7 +365,7 @@ mod tests {
     impl AsyncTestContext for DynamoDbTestContext {
         async fn setup() -> DynamoDbTestContext {
             let table_name = format!("TestTable{}", NUMBER.fetch_add(1, Ordering::SeqCst));
-            let config = load_defaults(BehaviorVersion::v2025_01_17()).await;
+            let config = load_defaults(BehaviorVersion::v2025_08_07()).await;
             let local_config = Builder::from(&config)
                 .endpoint_url(var("DYNAMODB_LOCAL_HOST").unwrap_or("http://localhost:8000".into()))
                 .build();
