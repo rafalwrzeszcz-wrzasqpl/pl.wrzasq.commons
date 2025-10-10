@@ -164,7 +164,7 @@ impl DynamoDbDao {
 
     /// Creates new DAO object from environment setup.
     pub async fn new_from_env(table_var_name: &str) -> Result<Self, DaoError> {
-        let config = load_defaults(BehaviorVersion::v2025_01_17());
+        let config = load_defaults(BehaviorVersion::v2025_08_07());
         let table_name = var(table_var_name)?;
         let client = Client::new(&config.await);
         Ok(Self::new(client, table_name))
