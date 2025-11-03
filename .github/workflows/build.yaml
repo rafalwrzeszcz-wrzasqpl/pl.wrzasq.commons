@@ -35,8 +35,6 @@ jobs:
             -
                 uses: "crazy-max/ghaction-github-runtime@v3.1.0"
             -
-                run: "make build"
-            -
                 run: "make test"
                 env:
                     AWS_REGION: "eu-central-1"
