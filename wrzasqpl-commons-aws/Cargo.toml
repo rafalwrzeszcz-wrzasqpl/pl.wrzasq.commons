@@ -38,7 +38,7 @@ wrzasqpl-commons-aws-macros = { path = "../wrzasqpl-commons-aws-macros", optiona
 
 [dev-dependencies]
 aws-smithy-types = "1.3.3"
-test-context = "0.5.3"
+test-context = "0.5.4"
 tokio = { version = "1.48.0", features = ["macros"] }
 
 [features]
