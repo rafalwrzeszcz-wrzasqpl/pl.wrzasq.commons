@@ -25,7 +25,7 @@ aws-sdk-dynamodb = "1.98.0"
 aws-smithy-runtime-api = "1.9.2"
 env_logger = "0.11.8"
 futures = "0.3.31"
-lambda_runtime = "0.14.4"
+lambda_runtime = "1.0.1"
 log = "0.4.28"
 serde = { version = "1.0.228", features = ["derive"] }
 serde_dynamo = { version = "4.3.0", features = ["aws-sdk-dynamodb+1"] }
