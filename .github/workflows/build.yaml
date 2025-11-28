@@ -23,13 +23,13 @@ jobs:
         runs-on: "ubuntu-24.04"
         if: "(github.event_name == 'push') || (github.repository != github.event.pull_request.head.repo.full_name)"
         container:
-            image: "rafalwrzeszczwrzasqpl/build-rust:nightly-v0.4.0"
+            image: "rafalwrzeszczwrzasqpl/build-rust:nightly-v0.5.0"
         services:
             dynamodb:
                 image: "amazon/dynamodb-local:3.1.0"
         steps:
             -
-                uses: "actions/checkout@v5.0.1"
+                uses: "actions/checkout@v6.0.0"
             -
                 uses: "mozilla-actions/sccache-action@v0.0.9"
             -
@@ -59,14 +59,14 @@ jobs:
         if: "(github.event_name == 'push') && (github.event.ref == 'refs/heads/master')"
         runs-on: "ubuntu-24.04"
         container:
-            image: "rafalwrzeszczwrzasqpl/build-rust:nightly-v0.4.0"
+            image: "rafalwrzeszczwrzasqpl/build-rust:nightly-v0.5.0"
         needs: "build"
         permissions:
             contents: "write"
             id-token: "write"
         steps:
             -
-                uses: "actions/checkout@v5.0.1"
+                uses: "actions/checkout@v6.0.0"
             -
                 uses: "mozilla-actions/sccache-action@v0.0.9"
             -
@@ -77,12 +77,7 @@ jobs:
                     git config --global user.email "office@wrzasq.pl"
                     git config --global --add safe.directory "$GITHUB_WORKSPACE"
             -
-                run: "cargo workspaces version patch --force '*' --yes --no-individual-tags --tag-prefix 'release-'"
-            -
-                id: "tag"
-                run: "echo version=$(git describe --abbrev=0 | sed s/release-//g) >> $GITHUB_OUTPUT"
-            -
-                run: "cargo publish -p wrzasqpl-commons-aws"
+                run: "cargo release patch --workspace --execute --no-confirm --all-features --tag-name 'release-{{version}}' --no-push"
                 env:
                     CARGO_REGISTRY_TOKEN: "${{ secrets.CARGO_REGISTRY_TOKEN }}"
             -
