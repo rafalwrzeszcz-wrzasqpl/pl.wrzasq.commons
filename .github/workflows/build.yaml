@@ -19,7 +19,7 @@ env:
     SCCACHE_GHA_ENABLED: "true"
 
 jobs:
-    build:
+    test:
         runs-on: "ubuntu-24.04"
         if: "(github.event_name == 'push') || (github.repository != github.event.pull_request.head.repo.full_name)"
         container:
@@ -33,18 +33,12 @@ jobs:
             -
                 uses: "mozilla-actions/sccache-action@v0.0.9"
             -
-                uses: "crazy-max/ghaction-github-runtime@v3.1.0"
-            -
                 run: "make test"
                 env:
                     AWS_REGION: "eu-central-1"
                     AWS_ACCESS_KEY_ID: "dummy"
                     AWS_SECRET_ACCESS_KEY: "dummy"
                     DYNAMODB_LOCAL_HOST: "http://dynamodb:8000"
-            -
-                run: "make check"
-            -
-                run: "make doc"
             -
                 run: "make lcov"
             -
@@ -55,12 +49,41 @@ jobs:
                     fail_ci_if_error: true
                     verbose: true
 
+    lint:
+        runs-on: "ubuntu-24.04"
+        if: "(github.event_name == 'push') || (github.repository != github.event.pull_request.head.repo.full_name)"
+        container:
+            image: "rafalwrzeszczwrzasqpl/build-rust:nightly-v0.5.0"
+        steps:
+            -
+                uses: "actions/checkout@v6.0.0"
+            -
+                uses: "mozilla-actions/sccache-action@v0.0.9"
+            -
+                run: "make check"
+
+    doc:
+        runs-on: "ubuntu-24.04"
+        if: "(github.event_name == 'push') || (github.repository != github.event.pull_request.head.repo.full_name)"
+        container:
+            image: "rafalwrzeszczwrzasqpl/build-rust:nightly-v0.5.0"
+        steps:
+            -
+                uses: "actions/checkout@v6.0.0"
+            -
+                uses: "mozilla-actions/sccache-action@v0.0.9"
+            -
+                run: "make doc"
+
     release:
         if: "(github.event_name == 'push') && (github.event.ref == 'refs/heads/master')"
         runs-on: "ubuntu-24.04"
         container:
             image: "rafalwrzeszczwrzasqpl/build-rust:nightly-v0.5.0"
-        needs: "build"
+        needs:
+            - "test"
+            - "lint"
+            - "doc"
         permissions:
             contents: "write"
             id-token: "write"
@@ -69,8 +92,6 @@ jobs:
                 uses: "actions/checkout@v6.0.0"
             -
                 uses: "mozilla-actions/sccache-action@v0.0.9"
-            -
-                uses: "crazy-max/ghaction-github-runtime@v3.1.0"
             -
                 run: |
                     git config --global user.name "GitHub Actions"
