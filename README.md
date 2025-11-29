@@ -2,7 +2,7 @@
 # This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2014 - 2023 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2014 - 2023, 2025 © by Rafał Wrzeszcz - Wrzasq.pl.
 -->
 
 # WrzasqPl-Commons
@@ -24,6 +24,14 @@ wrzasqpl-commons-aws = "<latest-version>"
 
 -   [**wrzasqpl-commons-aws**](https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/wrzasqpl-commons-aws/): common
     routines for handling AWS service (mainly focusing on Lambda and DynamoDB currently).
+
+# Resources
+
+-   [Contribution guide](https://github.com/rafalwrzeszcz-wrzasqpl/.github/blob/master/CONTRIBUTING.md)
+-   [Issues tracker](https://github.com/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons/issues)
+-   [Wrzasq.pl @ GitHub](https://github.com/rafalwrzeszcz-wrzasqpl)
+-   [Wrzasq.pl @ Facebook](https://www.facebook.com/wrzasqpl)
+-   [Wrzasq.pl @ LinkedIn](https://www.linkedin.com/company/wrzasq-pl/)
 
 # Authors
 
