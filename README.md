@@ -22,7 +22,7 @@ wrzasqpl-commons-aws = "<latest-version>"
 
 # Crates
 
--   [**wrzasqpl-commons-aws**](https://rafalwrzeszcz-wrzasqpl.github.io/pl.wrzasq.commons/wrzasqpl-commons-aws/): common
+-   [**wrzasqpl-commons-aws**](https://docs.rs/wrzasqpl-commons-aws/latest/wrzasqpl_commons_aws/): common
     routines for handling AWS service (mainly focusing on Lambda and DynamoDB currently).
 
 # Resources
