@@ -82,7 +82,7 @@ fn const_sort_key_and_hash_prefix() {
     assert_eq!(key.sk, "PROFILE");
 
     // build_key returns const sort key value regardless of field contents
-    let mut p2 = Profile {
+    let p2 = Profile {
         id: "USER#zzz".into(),
         sk: "WRONG".into(),
         display_name: "X".into(),

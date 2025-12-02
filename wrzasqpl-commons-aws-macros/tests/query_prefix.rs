@@ -7,12 +7,12 @@
 
 use aws_config::{BehaviorVersion, load_defaults};
 use aws_sdk_dynamodb::Client;
+use aws_sdk_dynamodb::config::Builder;
 use aws_sdk_dynamodb::types::{AttributeDefinition, BillingMode, KeySchemaElement, KeyType, ScalarAttributeType};
 use std::env::var;
 use std::sync::atomic::{AtomicUsize, Ordering};
 use tokio::test as tokio_test;
 use wrzasqpl_commons_aws::DynamoDbDao;
-use wrzasqpl_commons_aws::DynamoDbEntity;
 use wrzasqpl_commons_aws_macros::DynamoEntity;
 
 static NUMBER: AtomicUsize = AtomicUsize::new(0);
@@ -30,8 +30,8 @@ struct PrefixedItem {
 async fn query_applies_begins_with_prefix() {
     // Setup client to DynamoDB Local
     let table_name = format!("PrefixedTest{}", NUMBER.fetch_add(1, Ordering::SeqCst));
-    let config = load_defaults(BehaviorVersion::v2025_01_17()).await;
-    let local_config = aws_sdk_dynamodb::config::Builder::from(&config)
+    let config = load_defaults(BehaviorVersion::v2025_08_07()).await;
+    let local_config = Builder::from(&config)
         .endpoint_url(var("DYNAMODB_LOCAL_HOST").unwrap_or("http://localhost:8000".into()))
         .build();
     let client = Client::from_conf(local_config);
