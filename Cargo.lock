@@ -2784,8 +2784,9 @@ dependencies = [
 name = "wrzasqpl-commons-aws-macros"
 version = "0.1.0"
 dependencies = [
- "aws-config",
  "aws-sdk-dynamodb",
+ "aws-smithy-runtime",
+ "hyper 0.14.32",
  "proc-macro2",
  "quote",
  "serde",
