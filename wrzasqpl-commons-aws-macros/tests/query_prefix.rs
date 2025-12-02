@@ -1,11 +1,14 @@
-use aws_config::{BehaviorVersion, load_defaults};
 use aws_sdk_dynamodb::Client;
+use aws_sdk_dynamodb::config::{
+    BehaviorVersion, Builder as DynamoConfigBuilder, Credentials, Region, SharedCredentialsProvider,
+};
 use aws_sdk_dynamodb::types::{AttributeDefinition, BillingMode, KeySchemaElement, KeyType, ScalarAttributeType};
+use aws_smithy_runtime::client::http::hyper_014::HyperClientBuilder;
+use hyper::client::HttpConnector;
 use std::env::var;
 use std::sync::atomic::{AtomicUsize, Ordering};
 use tokio::test as tokio_test;
 use wrzasqpl_commons_aws::DynamoDbDao;
-use wrzasqpl_commons_aws::DynamoDbEntity;
 use wrzasqpl_commons_aws_macros::DynamoEntity;
 
 static NUMBER: AtomicUsize = AtomicUsize::new(0);
@@ -23,9 +26,22 @@ struct PrefixedItem {
 async fn query_applies_begins_with_prefix() {
     // Setup client to DynamoDB Local
     let table_name = format!("PrefixedTest{}", NUMBER.fetch_add(1, Ordering::SeqCst));
-    let config = load_defaults(BehaviorVersion::v2025_01_17()).await;
-    let local_config = aws_sdk_dynamodb::config::Builder::from(&config)
-        .endpoint_url(var("DYNAMODB_LOCAL_HOST").unwrap_or("http://localhost:8000".into()))
+    let endpoint = match var("DYNAMODB_LOCAL_HOST") {
+        Ok(url) => url,
+        Err(_) => {
+            eprintln!("skipping query_applies_begins_with_prefix: DYNAMODB_LOCAL_HOST not set");
+            return;
+        }
+    };
+    let region = var("AWS_REGION").unwrap_or_else(|_| "us-east-1".into());
+    let http_connector = HttpConnector::new();
+    let http_client = HyperClientBuilder::new().build(http_connector);
+    let local_config = DynamoConfigBuilder::new()
+        .region(Region::new(region))
+        .endpoint_url(endpoint)
+        .http_client(http_client)
+        .credentials_provider(SharedCredentialsProvider::new(Credentials::for_tests()))
+        .behavior_version(BehaviorVersion::latest())
         .build();
     let client = Client::from_conf(local_config);
 
