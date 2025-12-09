@@ -18,8 +18,8 @@ description = "AWS-related utility functions for commor routines."
 keywords = ["aws", "lambda", "dynamodb"]
 
 [dependencies]
-aws-config = "1.8.11"
-aws-sdk-dynamodb = "1.100.0"
+aws-config = "1.8.12"
+aws-sdk-dynamodb = "1.101.0"
 aws-smithy-runtime-api = "1.9.2"
 env_logger = "0.11.8"
 futures = "0.3.31"
