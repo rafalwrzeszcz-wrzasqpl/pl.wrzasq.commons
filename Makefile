@@ -21,7 +21,7 @@ test:
 	CARGO_INCREMENTAL=0 \
 	RUSTFLAGS="-Cinstrument-coverage" \
 	LLVM_PROFILE_FILE="cargo-test-%p-%m.profraw" \
-	cargo test --all-features --lib
+	cargo test --all-features --lib --tests
 
 test-local:
 	docker run -d --rm --name dynamodb -p 8000:8000 amazon/dynamodb-local:3.1.0

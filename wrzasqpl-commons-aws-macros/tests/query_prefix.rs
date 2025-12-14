@@ -8,6 +8,7 @@
 use aws_config::{BehaviorVersion, load_defaults};
 use aws_sdk_dynamodb::Client;
 use aws_sdk_dynamodb::config::Builder;
+use aws_sdk_dynamodb::types::AttributeValue::{N, S};
 use aws_sdk_dynamodb::types::{AttributeDefinition, BillingMode, KeySchemaElement, KeyType, ScalarAttributeType};
 use std::env::var;
 use std::sync::atomic::{AtomicUsize, Ordering};
@@ -79,9 +80,9 @@ async fn query_applies_begins_with_prefix() {
     client
         .put_item()
         .table_name(&table_name)
-        .item("id", aws_sdk_dynamodb::types::AttributeValue::S("user1".into()))
-        .item("sk", aws_sdk_dynamodb::types::AttributeValue::S("ORD#001".into()))
-        .item("value", aws_sdk_dynamodb::types::AttributeValue::N("1".into()))
+        .item("id", S("user1".into()))
+        .item("sk", S("ORD#001".into()))
+        .item("value", N("1".into()))
         .send()
         .await
         .unwrap();
@@ -89,9 +90,9 @@ async fn query_applies_begins_with_prefix() {
     client
         .put_item()
         .table_name(&table_name)
-        .item("id", aws_sdk_dynamodb::types::AttributeValue::S("user1".into()))
-        .item("sk", aws_sdk_dynamodb::types::AttributeValue::S("ORD#XYZ".into()))
-        .item("value", aws_sdk_dynamodb::types::AttributeValue::N("2".into()))
+        .item("id", S("user1".into()))
+        .item("sk", S("ORD#XYZ".into()))
+        .item("value", N("2".into()))
         .send()
         .await
         .unwrap();
@@ -99,9 +100,9 @@ async fn query_applies_begins_with_prefix() {
     client
         .put_item()
         .table_name(&table_name)
-        .item("id", aws_sdk_dynamodb::types::AttributeValue::S("user1".into()))
-        .item("sk", aws_sdk_dynamodb::types::AttributeValue::S("OTHER#777".into()))
-        .item("value", aws_sdk_dynamodb::types::AttributeValue::N("3".into()))
+        .item("id", S("user1".into()))
+        .item("sk", S("OTHER#777".into()))
+        .item("value", N("3".into()))
         .send()
         .await
         .unwrap();

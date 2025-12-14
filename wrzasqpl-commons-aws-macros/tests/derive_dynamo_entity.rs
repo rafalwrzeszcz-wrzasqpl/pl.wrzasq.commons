@@ -5,12 +5,13 @@
  * @copyright 2025 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
+use serde::{Deserialize, Serialize};
 use wrzasqpl_commons_aws::DynamoDbEntity;
 use wrzasqpl_commons_aws_macros::DynamoEntity;
 
 #[test]
 fn derives_with_default_keys() {
-    #[derive(DynamoEntity, serde::Serialize, serde::Deserialize, Clone, Debug)]
+    #[derive(DynamoEntity, Serialize, Deserialize, Clone, Debug)]
     struct Order {
         // defaults: id -> hash key, sk -> sort key
         id: String,
@@ -37,7 +38,7 @@ fn derives_with_default_keys() {
 
 #[test]
 fn derives_with_explicit_key_attributes() {
-    #[derive(DynamoEntity, serde::Serialize, serde::Deserialize, Clone, Debug)]
+    #[derive(DynamoEntity, Serialize, Deserialize, Clone, Debug)]
     struct Record {
         #[hash_key]
         customer_id: String,
@@ -61,7 +62,7 @@ fn derives_with_explicit_key_attributes() {
 
 #[test]
 fn const_sort_key_and_hash_prefix() {
-    #[derive(DynamoEntity, serde::Serialize, serde::Deserialize, Clone, Debug)]
+    #[derive(DynamoEntity, Serialize, Deserialize, Clone, Debug)]
     struct Profile {
         #[hash_key(prefix = "USER#")]
         id: String,
