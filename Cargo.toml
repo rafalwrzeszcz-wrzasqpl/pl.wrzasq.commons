@@ -22,3 +22,6 @@ readme = "README.md"
 authors = [
     "Rafał Wrzeszcz <rafal.wrzeszcz@wrzasq.pl>"
 ]
+
+[workspace.dependencies]
+wrzasqpl-commons-aws-macros = { version = "4.1.0", path = "wrzasqpl-commons-aws-macros" }
