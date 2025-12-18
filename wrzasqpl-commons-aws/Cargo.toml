@@ -28,7 +28,7 @@ log = "0.4.29"
 serde = { version = "1.0.228", features = ["derive"] }
 serde_dynamo = { version = "4.3.0", features = ["aws-sdk-dynamodb+1"] }
 thiserror = "2.0.17"
-tracing = "0.1.43"
+tracing = "0.1.44"
 tracing-core = "0.1.36"
 tracing-subscriber = "0.3.22"
 xray-tracing = "0.0.1"
