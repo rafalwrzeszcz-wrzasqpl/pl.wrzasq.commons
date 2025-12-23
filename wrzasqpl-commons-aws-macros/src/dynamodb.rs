@@ -7,9 +7,8 @@
 
 //! Proc-macro helpers for DynamoDB entities used by `wrzasqpl-commons-aws`.
 //!
-//! This crate exposes the `DynamoEntity` derive macro which generates
-//! implementations and helpers needed to work with the `DynamoDbEntity` trait
-//! from the `wrzasqpl-commons-aws` crate.
+//! This crate exposes the `DynamoEntity` derive macro which generates implementations and helpers needed to work with
+//! the `DynamoDbEntity` trait from the `wrzasqpl-commons-aws` crate.
 //!
 //! Quick start
 //! - Put `#[derive(DynamoEntity)]` on a struct that models a DynamoDB item.
@@ -17,6 +16,7 @@
 //!   - Hash key: field marked with `#[hash_key]`, or a field named `id`.
 //!   - Sort key: field marked with `#[sort_key]`, or a field named `sk`.
 //! - Optional attribute options:
+//!   - `#[hash_key(name = "...")]`/`#[sort_key(name = "...")]` - overrides name used for DynamoDB attribute.
 //!   - `#[hash_key(prefix = "...")]` – prefixes hash values (useful to namespace keys).
 //!   - `#[sort_key(const = "...")]` – uses a constant sort key value.
 //!   - `#[sort_key(prefix = "...")]` – enables `begins_with` for queries on that prefix.
@@ -68,8 +68,8 @@
 //!
 //! #[derive(DynamoEntity, serde::Serialize, serde::Deserialize, Clone, Debug)]
 //! struct Profile {
-//!     #[hash_key(prefix = "USER#")]
-//!     id: String,
+//!     #[hash_key(prefix = "USER#", name = "profileId")]
+//!     profile_id: String,
 //!     #[sort_key(const = "PROFILE")]
 //!     sk: String, // value enforced to "PROFILE"
 //!     display_name: String,
@@ -82,8 +82,42 @@
 
 use proc_macro2::{Span, TokenStream};
 use quote::{format_ident, quote};
+use syn::meta::ParseNestedMeta;
 use syn::spanned::Spanned;
-use syn::{Data, DeriveInput, Error as SynError, Fields, Ident, LitStr, Meta, Type};
+use syn::{Data, DeriveInput, Error as SynError, Fields, Ident, LitStr, Meta, Result as SynResult, Type};
+
+// I have to admit I regret merging this Derive macro as a little pre-mature review - not sure if `prefix` and/or
+// `const` features should be part of this layer. Can be very tricky to handle all the cases of transformation between
+// persistent data and model representation. Not to mention all the possible cloning/borrow cases of custom types in
+// constructor. In next major version these two properties should be most likely dropped, unless we come out with some
+// robust implementation. I don't want partial solutions.
+
+struct KeyField {
+    ident: Ident,
+    name: Ident,
+    r#type: Type,
+    const_value: Option<String>,
+    prefix: Option<String>,
+}
+
+fn unnest_literal(nested: ParseNestedMeta) -> SynResult<Option<String>> {
+    Ok(Some(nested.value()?.parse::<LitStr>()?.value()))
+}
+
+fn build_producer(key: &KeyField, variable_neme: Ident) -> TokenStream {
+    if let Some(value) = &key.const_value {
+        let lit = LitStr::new(value, Span::call_site());
+
+        quote! { #lit.to_string() }
+    } else if let Some(prefix) = &key.prefix {
+        let lit = LitStr::new(prefix, Span::call_site());
+
+        // prefix makes sanse only if key type is Into<String> anyway
+        quote! { format!(concat!(#lit, "{}"), #variable_neme.to_string()) }
+    } else {
+        quote! { #variable_neme.clone() }
+    }
+}
 
 pub(crate) fn derive_dynamo_entity_impl(input: DeriveInput) -> TokenStream {
     let struct_ident = input.ident.clone();
@@ -107,299 +141,256 @@ pub(crate) fn derive_dynamo_entity_impl(input: DeriveInput) -> TokenStream {
     };
 
     // Discover hash_key and sort_key fields
-    struct KeyField {
-        ident: Ident,
-        ty: Type,
-        const_value: Option<String>,
-        prefix: Option<String>,
-    }
-
     let mut hash_key: Option<KeyField> = None;
     let mut sort_key: Option<KeyField> = None;
 
-    for f in fields.iter() {
-        let Some(ident) = f.ident.clone() else { continue };
+    for field in fields.iter() {
+        let Some(ident) = field.ident.clone() else { continue };
         let mut is_hash = false;
         let mut is_sort = false;
         let mut const_value: Option<String> = None;
         let mut prefix: Option<String> = None;
+        let mut name: Ident = ident.clone();
 
-        for attr in &f.attrs {
+        for attr in &field.attrs {
             let path = attr.path();
+
             if path.is_ident("hash_key") {
                 is_hash = true;
+
                 // Parse optional meta: hash_key(prefix = "...")
-                match &attr.meta {
-                    Meta::Path(_) => {}
-                    Meta::List(list) => {
-                        let _ = list.parse_nested_meta(|nested| {
-                            if nested.path.is_ident("prefix") {
-                                let s: LitStr = nested.value()?.parse()?;
-                                prefix = Some(s.value());
-                            }
-                            Ok(())
-                        });
-                    }
-                    Meta::NameValue(_) => {}
+                if let Meta::List(list) = &attr.meta {
+                    let _ = list.parse_nested_meta(|nested| {
+                        if nested.path.is_ident("prefix") {
+                            prefix = unnest_literal(nested)?;
+                        } else if nested.path.is_ident("name") {
+                            name = unnest_literal(nested)?
+                                .map(|value| Ident::new(value.as_str(), Span::call_site()))
+                                .unwrap_or(name.clone());
+                        }
+                        Ok(())
+                    });
                 }
             }
+
             if path.is_ident("sort_key") {
                 is_sort = true;
+
                 // Parse optional meta: sort_key(const = "...", prefix = "...")
-                match &attr.meta {
-                    Meta::Path(_) => {}
-                    Meta::List(list) => {
-                        let _ = list.parse_nested_meta(|nested| {
-                            if nested.path.is_ident("const") {
-                                let s: LitStr = nested.value()?.parse()?;
-                                const_value = Some(s.value());
-                            } else if nested.path.is_ident("prefix") {
-                                let s: LitStr = nested.value()?.parse()?;
-                                prefix = Some(s.value());
-                            }
-                            Ok(())
-                        });
-                    }
-                    Meta::NameValue(_) => {}
+                if let Meta::List(list) = &attr.meta {
+                    let _ = list.parse_nested_meta(|nested| {
+                        if nested.path.is_ident("const") {
+                            const_value = unnest_literal(nested)?;
+                        } else if nested.path.is_ident("prefix") {
+                            prefix = unnest_literal(nested)?;
+                        } else if nested.path.is_ident("name") {
+                            name = unnest_literal(nested)?
+                                .map(|value| Ident::new(value.as_str(), Span::call_site()))
+                                .unwrap_or(name.clone());
+                        }
+                        Ok(())
+                    });
                 }
             }
         }
 
-        if is_hash {
-            // Explicitly marked hash key; preserve parsed prefix option
+        if is_hash || (hash_key.is_none() && ident == "id") {
+            // Default to field named "id" if not explicitly marked and no explicit hash_key found yet
             hash_key = Some(KeyField {
                 ident: ident.clone(),
-                ty: f.ty.clone(),
-                const_value: None,
+                name,
+                r#type: field.ty.clone(),
+                const_value,
                 prefix,
             });
-            continue;
-        }
-        if !is_sort && ident == "id" {
-            // Default to field named "id" if not explicitly marked and no explicit hash_key found yet
-            if hash_key.is_none() {
-                hash_key = Some(KeyField {
-                    ident: ident.clone(),
-                    ty: f.ty.clone(),
-                    const_value: None,
-                    prefix: None,
-                });
-            }
-        }
-        if is_sort || ident == "sk" {
+        } else if is_sort || (sort_key.is_none() && ident == "sk") {
             // Default to field named "sk" if not explicitly marked and no explicit sort_key found yet
-            if sort_key.is_none() || is_sort {
-                sort_key = Some(KeyField {
-                    ident: ident.clone(),
-                    ty: f.ty.clone(),
-                    const_value,
-                    prefix,
-                });
-            }
+            sort_key = Some(KeyField {
+                ident: ident.clone(),
+                name,
+                r#type: field.ty.clone(),
+                const_value,
+                prefix,
+            });
         }
     }
 
-    let Some(hk) = hash_key else {
+    let Some(hash_key) = hash_key else {
         return SynError::new(
             input_span,
             "DynamoEntity: missing hash key. Mark a field with #[hash_key] or include a field named 'id'.",
         )
         .to_compile_error();
     };
-    let Some(sk) = sort_key else {
-        return SynError::new(
-            input_span,
-            "DynamoEntity: missing sort key. Mark a field with #[sort_key] or include a field named 'sk', or add #[sort_key(const = \"...\")] to the struct.",
-        )
-        .to_compile_error();
-    };
+
+    // hk - hash_key, sk - sort_key, nk - non-key
+
+    let hash_producer = build_producer(&hash_key, Ident::new("hash", Span::call_site()));
 
     // Names and idents
-    let hk_ident = hk.ident;
-    let hk_ty = hk.ty;
-    let hk_prefix = hk.prefix;
-    let hk_name_str = LitStr::new(&hk_ident.to_string(), Span::call_site());
+    let hk_ident = hash_key.ident;
+    let hk_type = hash_key.r#type;
+    let hk_name_str = LitStr::new(&hash_key.name.to_string(), Span::call_site());
 
-    let sk_ident = sk.ident;
-    let sk_ty = sk.ty;
-    let sk_prefix = sk.prefix;
-    let sk_const = sk.const_value;
-    let sk_name_str = LitStr::new(&sk_ident.to_string(), Span::call_site());
+    let mut sk_definition = quote! {};
+    let mut sk_value = quote! {};
+    let mut handle_query_impl = quote! {};
+    let mut handle_save_const_impl = quote! {};
+    let mut key_from_hash_impl = quote! {};
+    let mut new_constructor_impl = quote! {};
 
     let key_ident = format_ident!("{}Key", struct_ident);
 
-    // Non-key fields list for constructors based on parsed fields
-    let non_key_fields: Vec<(Ident, Type)> = fields
-        .iter()
-        .filter_map(|f| {
-            let ident = f.ident.clone()?;
-            if ident == hk_ident || ident == sk_ident {
-                None
-            } else {
-                Some((ident, f.ty.clone()))
-            }
-        })
-        .collect();
+    if let Some(sort_key) = sort_key {
+        let sort_producer = build_producer(&sort_key, Ident::new("sort", Span::call_site()));
 
-    let sk_field_exists = fields
-        .iter()
-        .any(|f| f.ident.as_ref().map(|i| i == &sk_ident).unwrap_or(false));
+        let sk_ident = sort_key.ident;
+        let sk_type = sort_key.r#type;
+        let sk_name_str = LitStr::new(&sort_key.name.to_string(), Span::call_site());
 
-    // sk expression (const or field)
-    let sk_expr = if let Some(c) = &sk_const {
-        let lit = LitStr::new(c, Span::call_site());
-        quote! { #lit.to_string() }
-    } else {
-        quote! { self.#sk_ident.clone() }
-    };
-
-    // Implement handle_query to add begins_with for optional sk prefix
-    let handle_query_impl = if let Some(prefix) = sk_prefix {
-        let lit = LitStr::new(prefix.as_str(), Span::call_site());
-        let sk_name_str = sk_name_str.clone();
-        quote! {
-            fn handle_query<HashKeyType: ::serde::Serialize>(
-                _hash_key: &HashKeyType,
-                request: ::wrzasqpl_commons_aws::reexports::QueryFluentBuilder,
-            ) -> ::wrzasqpl_commons_aws::reexports::QueryFluentBuilder {
-                use ::wrzasqpl_commons_aws::reexports::AttributeValue::S;
-                request
-                    .key_condition_expression("#attr = :val AND begins_with(#sk, :sk)")
-                    .expression_attribute_names("#sk", #sk_name_str)
-                    .expression_attribute_values(":sk", S(#lit.to_string()))
-            }
-        }
-    } else {
-        quote! {}
-    };
-
-    // Optional inherent impl constructor for keys when sk is const
-    let key_from_hash_impl = if let Some(sk_c) = &sk_const {
-        let sk_lit = LitStr::new(sk_c, Span::call_site());
-        if let Some(hp) = &hk_prefix {
-            let hp_lit = LitStr::new(hp, Span::call_site());
-            quote! {
-                impl #struct_ident {
-                    pub fn key_from_hash(hash: impl Into<::std::string::String>) -> #key_ident {
-                        let __h: ::std::string::String = hash.into();
-                        #key_ident {
-                            #hk_ident: format!(concat!(#hp_lit, "{}"), __h),
-                            #sk_ident: #sk_lit.to_string(),
-                        }
-                    }
-                }
-            }
+        // sk expression (const or field)
+        let sk_expr = if let Some(value) = &sort_key.const_value {
+            let lit = LitStr::new(value, Span::call_site());
+            quote! { #lit.to_string() }
         } else {
-            quote! {
+            quote! { self.#sk_ident.clone() }
+        };
+
+        // Non-key fields list for constructors based on parsed fields
+        let (nk_idents, nk_types): (Vec<Ident>, Vec<Type>) = fields
+            .iter()
+            .cloned()
+            .filter_map(|field| {
+                let ident = field.ident.clone()?;
+                if ident == hk_ident || ident == sk_ident {
+                    None
+                } else {
+                    Some((ident, field.ty.clone()))
+                }
+            })
+            .unzip();
+
+        sk_definition = quote! { pub #sk_ident: #sk_type, };
+        sk_value = quote! { #sk_ident: #sk_expr, };
+
+        // Implement handle_query to add begins_with for optional sk prefix
+        if let Some(prefix) = &sort_key.prefix {
+            let lit = LitStr::new(prefix, Span::call_site());
+            let sk_name_str = sk_name_str.clone();
+            handle_query_impl = quote! {
+                fn handle_query<HashKeyType: ::serde::Serialize>(
+                    _hash_key: &HashKeyType,
+                    request: ::wrzasqpl_commons_aws::reexports::QueryFluentBuilder,
+                ) -> ::wrzasqpl_commons_aws::reexports::QueryFluentBuilder {
+                    use ::wrzasqpl_commons_aws::reexports::AttributeValue::S;
+                    request
+                        .key_condition_expression("#attr = :val AND begins_with(#sk, :sk)")
+                        .expression_attribute_names("#sk", #sk_name_str)
+                        .expression_attribute_values(":sk", S(#lit.to_string()))
+                }
+            };
+        }
+
+        if sort_key.const_value.is_some() {
+            // When sort key is const and the struct contains the sk field, enforce it on save
+            handle_save_const_impl = quote! {
+                fn handle_save(
+                    &mut self,
+                    request: ::wrzasqpl_commons_aws::reexports::PutItemFluentBuilder,
+                ) -> ::wrzasqpl_commons_aws::reexports::PutItemFluentBuilder {
+                    self.#sk_ident = #sort_producer;
+                    request
+                }
+            };
+
+            // Optional inherent impl constructor for keys when sk is const
+            key_from_hash_impl = quote! {
                 impl #struct_ident {
-                    pub fn key_from_hash(hash: impl Into<::std::string::String>) -> #key_ident {
+                    pub fn key_from_hash(hash: #hk_type) -> #key_ident {
                         #key_ident {
-                            #hk_ident: hash.into(),
-                            #sk_ident: #sk_lit.to_string(),
+                            #hk_ident: #hash_producer,
+                            #sk_ident: #sort_producer,
                         }
                     }
                 }
-            }
-        }
-    } else {
-        quote! {}
-    };
+            };
 
-    // Inherent impl: generic constructor `new(...)` to build an entity from hash (+ sk if needed) and non-key fields
-    let new_constructor_impl = {
-        // Build param list for non-key fields
-        let (nk_idents, nk_tys): (Vec<Ident>, Vec<Type>) = non_key_fields.iter().cloned().unzip();
-        if let Some(sk_c) = &sk_const {
+            // Inherent impl: generic constructor `new(...)` to build an entity from hash (+ sk if needed) and non-key fields
             // sk is constant, omit from params
-            if let Some(hp) = &hk_prefix {
-                let hp_lit = LitStr::new(hp, Span::call_site());
-                let sk_lit = LitStr::new(sk_c, Span::call_site());
-                let sk_init = if sk_field_exists {
-                    quote! { #sk_ident: #sk_lit.to_string(), }
-                } else {
-                    quote! {}
-                };
-                quote! {
-                    impl #struct_ident {
-                        pub fn new<Hash: Into<::std::string::String>>(hash: Hash, #( #nk_idents: #nk_tys ),* ) -> Self {
-                            let __h: ::std::string::String = hash.into();
-                            Self {
-                                #hk_ident: format!(concat!(#hp_lit, "{}"), __h),
-                                #sk_init
-                                #( #nk_idents: #nk_idents ),*
-                            }
+            new_constructor_impl = quote! {
+                impl #struct_ident {
+                    pub fn new(hash: #hk_type, #( #nk_idents: #nk_types ),* ) -> Self {
+                        Self {
+                            #hk_ident: #hash_producer,
+                            #sk_ident: #sort_producer,
+                            #( #nk_idents ),*
                         }
                     }
                 }
-            } else {
-                let sk_lit = LitStr::new(sk_c, Span::call_site());
-                let sk_init = if sk_field_exists {
-                    quote! { #sk_ident: #sk_lit.to_string(), }
-                } else {
-                    quote! {}
-                };
-                quote! {
-                    impl #struct_ident {
-                        pub fn new<Hash: Into<::std::string::String>>(hash: Hash, #( #nk_idents: #nk_tys ),* ) -> Self {
-                            Self { #hk_ident: hash.into(), #sk_init #( #nk_idents: #nk_idents ),* }
-                        }
-                    }
-                }
-            }
+            };
         } else {
-            // Require sort param if not constant
-            if let Some(hp) = &hk_prefix {
-                let hp_lit = LitStr::new(hp, Span::call_site());
-                quote! {
-                    impl #struct_ident {
-                        pub fn new<Hash: Into<::std::string::String>, Sort: Into<::std::string::String>>(hash: Hash, sort: Sort, #( #nk_idents: #nk_tys ),* ) -> Self {
-                            let __h: ::std::string::String = hash.into();
-                            Self { #hk_ident: format!(concat!(#hp_lit, "{}"), __h), #sk_ident: sort.into(), #( #nk_idents: #nk_idents ),* }
+            new_constructor_impl = quote! {
+                impl #struct_ident {
+                    pub fn new(hash: #hk_type, sort: #sk_type, #( #nk_idents: #nk_types ),* ) -> Self {
+                        Self {
+                            #hk_ident: #hash_producer,
+                            #sk_ident: #sort_producer,
+                            #( #nk_idents ),*
                         }
                     }
                 }
-            } else {
-                quote! {
-                    impl #struct_ident {
-                        pub fn new<Hash: Into<::std::string::String>, Sort: Into<::std::string::String>>(hash: Hash, sort: Sort, #( #nk_idents: #nk_tys ),* ) -> Self {
-                            Self { #hk_ident: hash.into(), #sk_ident: sort.into(), #( #nk_idents: #nk_idents ),* }
-                        }
-                    }
-                }
-            }
-        }
-    };
-
-    // When sort key is const and the struct contains the sk field, enforce it on save
-    let handle_save_const_impl = if let Some(sk_value) = &sk_const
-        && sk_field_exists
-    {
-        let sk_lit = LitStr::new(sk_value, Span::call_site());
-        quote! {
-            fn handle_save(
-                &mut self,
-                request: ::wrzasqpl_commons_aws::reexports::PutItemFluentBuilder,
-            ) -> ::wrzasqpl_commons_aws::reexports::PutItemFluentBuilder {
-                self.#sk_ident = #sk_lit.to_string();
-                request
-            }
+            };
         }
     } else {
-        quote! {}
-    };
+        // Non-key fields list for constructors based on parsed fields
+        let (nk_idents, nk_types): (Vec<Ident>, Vec<Type>) = fields
+            .iter()
+            .cloned()
+            .filter_map(|field| {
+                let ident = field.ident.clone()?;
+                if ident == hk_ident {
+                    None
+                } else {
+                    Some((ident, field.ty.clone()))
+                }
+            })
+            .unzip();
+
+        // prefix can only be used if hash key is String
+        new_constructor_impl = quote! {
+            impl #struct_ident {
+                pub fn new(hash: #hk_type, #( #nk_idents: #nk_types ),* ) -> Self {
+                    Self {
+                        #hk_ident: #hash_producer,
+                        #( #nk_idents ),*
+                    }
+                }
+            }
+        };
+    }
 
     quote! {
         #[allow(non_camel_case_types)]
         #[derive(serde::Serialize, serde::Deserialize, Debug, Clone)]
         pub struct #key_ident {
-            pub #hk_ident: #hk_ty,
-            pub #sk_ident: #sk_ty,
+            pub #hk_ident: #hk_type,
+            #sk_definition
         }
 
         impl ::wrzasqpl_commons_aws::DynamoDbEntity<'_> for #struct_ident {
             type Key = #key_ident;
-            fn hash_key_name() -> ::std::string::String { #hk_name_str.to_string() }
-            fn build_key(&self) -> Self::Key { Self::Key { #hk_ident: self.#hk_ident.clone(), #sk_ident: #sk_expr } }
+
+            fn hash_key_name() -> ::std::string::String {
+                #hk_name_str.to_string()
+            }
+
+            fn build_key(&self) -> Self::Key {
+                Self::Key {
+                    #hk_ident: self.#hk_ident.clone(),
+                    #sk_value
+                }
+            }
+
             #handle_query_impl
             #handle_save_const_impl
         }
@@ -414,7 +405,7 @@ mod tests {
     use super::derive_dynamo_entity_impl;
     use proc_macro2::TokenStream;
     use quote::{ToTokens, quote};
-    use syn::{DeriveInput, Fields, File, FnArg, GenericParam, ImplItem, Item, ItemImpl, ItemStruct, Type, parse2};
+    use syn::{DeriveInput, Fields, File, FnArg, ImplItem, Item, ItemImpl, ItemStruct, Type, parse2};
 
     fn expand_to_file(input: TokenStream) -> File {
         let input: DeriveInput = parse2(input).expect("failed to parse input");
@@ -475,6 +466,34 @@ mod tests {
     }
 
     #[test]
+    fn hash_key_only() {
+        let file = expand_to_file(quote! {
+            struct Customer {
+                #[hash_key]
+                customer_id: String,
+                name: String,
+            }
+        });
+
+        let key_struct = find_struct(&file.items, "CustomerKey");
+        let fields: Vec<_> = match &key_struct.fields {
+            Fields::Named(fields) => fields
+                .named
+                .iter()
+                .map(|f| f.ident.as_ref().unwrap().to_string())
+                .collect(),
+            fields => panic!("unexpected fields generated: {fields:?}"),
+        };
+        assert_eq!(fields, vec!["customer_id"]);
+
+        let entity_impl = find_trait_impl(&file.items, "Customer");
+        assert!(has_fn(entity_impl, "hash_key_name"));
+        assert!(has_fn(entity_impl, "build_key"));
+        assert!(!has_fn(entity_impl, "handle_query"));
+        assert!(!has_fn(entity_impl, "handle_save"));
+    }
+
+    #[test]
     fn defaults_detect_id_and_sk_fields() {
         let file = expand_to_file(quote! {
             struct Invoice {
@@ -495,8 +514,7 @@ mod tests {
         };
         assert_eq!(fields, vec!["id", "sk"]);
 
-        let inherent_impls = find_inherent_impl(&file.items, "Invoice");
-        let new_fn = inherent_impls
+        find_inherent_impl(&file.items, "Invoice")
             .iter()
             .flat_map(|imp| imp.items.iter())
             .find_map(|item| match item {
@@ -504,30 +522,6 @@ mod tests {
                 _ => None,
             })
             .expect("new() constructor missing");
-
-        // Expect Hash and Sort generic parameters for non-const sort key
-        let generic_idents: Vec<_> = new_fn
-            .sig
-            .generics
-            .params
-            .iter()
-            .filter_map(|param| match param {
-                GenericParam::Type(ty) => Some(ty.ident.to_string()),
-                _ => None,
-            })
-            .collect();
-        assert_eq!(generic_idents, vec!["Hash", "Sort"]);
-
-        // Body should convert both hash and sort using Into<String>
-        let body_str = new_fn.block.to_token_stream().to_string();
-        assert!(
-            body_str.contains("hash . into"),
-            "expected hash.into() in new(): {body_str}"
-        );
-        assert!(
-            body_str.contains("sort . into"),
-            "expected sort.into() in new(): {body_str}"
-        );
 
         let entity_impl = find_trait_impl(&file.items, "Invoice");
         assert!(has_fn(entity_impl, "hash_key_name"));
@@ -608,18 +602,6 @@ mod tests {
         assert_eq!(params[0], "hash");
         assert!(params.iter().any(|p| p == "display_name"));
 
-        let generics: Vec<_> = new_fn
-            .sig
-            .generics
-            .params
-            .iter()
-            .filter_map(|param| match param {
-                GenericParam::Type(ty) => Some(ty.ident.to_string()),
-                _ => None,
-            })
-            .collect();
-        assert_eq!(generics, vec!["Hash"]);
-
         let new_body = new_fn.block.to_token_stream().to_string();
         assert!(new_body.contains("sk : \"PROFILE\" . to_string"));
 
@@ -677,20 +659,6 @@ mod tests {
 
         assert!(query_body.contains("begins_with"));
         assert!(query_body.contains("\"ORDER#\""));
-    }
-
-    #[test]
-    fn missing_sort_key_emits_compile_error() {
-        let output = expand_raw(quote! {
-            struct Broken {
-                #[hash_key]
-                id: String,
-                value: String,
-            }
-        });
-
-        assert!(output.contains("compile_error"));
-        assert!(output.contains("missing sort key"));
     }
 
     #[test]

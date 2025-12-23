@@ -6,8 +6,34 @@
  */
 
 use serde::{Deserialize, Serialize};
+use uuid::{Uuid, uuid};
 use wrzasqpl_commons_aws::DynamoDbEntity;
 use wrzasqpl_commons_aws_macros::DynamoEntity;
+
+#[test]
+fn derive_with_hash_key_only() {
+    #[derive(DynamoEntity, Serialize, Deserialize, Clone, Debug)]
+    struct Customer {
+        #[hash_key(name = "customerId")]
+        customer_id: Uuid,
+        name: String,
+    }
+
+    const CUSTOMER_ID: Uuid = uuid!("00000000-0000-0000-0000-000000000000");
+
+    // hash_key_name should be the default field name
+    assert_eq!(Customer::hash_key_name(), "customerId");
+
+    // constructor with hash + extra fields
+    let customer = Customer {
+        customer_id: CUSTOMER_ID,
+        name: "John Doe".to_string(),
+    };
+
+    // build_key should reflect instance values
+    let key = customer.build_key();
+    assert_eq!(key.customer_id, CUSTOMER_ID);
+}
 
 #[test]
 fn derives_with_default_keys() {
@@ -24,14 +50,14 @@ fn derives_with_default_keys() {
     assert_eq!(Order::hash_key_name(), "id");
 
     // constructor with hash + sort + extra fields
-    let o = Order::new("A", "B", "processing".to_string(), 5);
-    assert_eq!(o.id, "A");
-    assert_eq!(o.sk, "B");
-    assert_eq!(o.status, "processing");
-    assert_eq!(o.count, 5);
+    let order = Order::new("A".into(), "B".into(), "processing".to_string(), 5);
+    assert_eq!(order.id, "A");
+    assert_eq!(order.sk, "B");
+    assert_eq!(order.status, "processing");
+    assert_eq!(order.count, 5);
 
     // build_key should reflect instance values when sort key is not const
-    let key = o.build_key();
+    let key = order.build_key();
     assert_eq!(key.id, "A");
     assert_eq!(key.sk, "B");
 }
@@ -50,12 +76,12 @@ fn derives_with_explicit_key_attributes() {
     // explicit hash key name
     assert_eq!(Record::hash_key_name(), "customer_id");
 
-    let r = Record::new("cust-1", "ord-9", 1234);
-    assert_eq!(r.customer_id, "cust-1");
-    assert_eq!(r.order_id, "ord-9");
-    assert_eq!(r.amount_cents, 1234);
+    let record = Record::new("cust-1".into(), "ord-9".into(), 1234);
+    assert_eq!(record.customer_id, "cust-1");
+    assert_eq!(record.order_id, "ord-9");
+    assert_eq!(record.amount_cents, 1234);
 
-    let key = r.build_key();
+    let key = record.build_key();
     assert_eq!(key.customer_id, "cust-1");
     assert_eq!(key.order_id, "ord-9");
 }
@@ -72,22 +98,22 @@ fn const_sort_key_and_hash_prefix() {
     }
 
     // With const sort key, new(hash, other..) applies const to field and prefix to hash
-    let p = Profile::new("123", "Rafal".to_string());
-    assert_eq!(p.id, "USER#123");
-    assert_eq!(p.sk, "PROFILE");
-    assert_eq!(p.display_name, "Rafal");
+    let profile1 = Profile::new("123".into(), "Rafal".to_string());
+    assert_eq!(profile1.id, "USER#123");
+    assert_eq!(profile1.sk, "PROFILE");
+    assert_eq!(profile1.display_name, "Rafal");
 
     // key_from_hash helper should use the same prefix + const sort key
-    let key = Profile::key_from_hash("456");
-    assert_eq!(key.id, "USER#456");
-    assert_eq!(key.sk, "PROFILE");
+    let key1 = Profile::key_from_hash("456".into());
+    assert_eq!(key1.id, "USER#456");
+    assert_eq!(key1.sk, "PROFILE");
 
     // build_key returns const sort key value regardless of field contents
-    let p2 = Profile {
+    let profile2 = Profile {
         id: "USER#zzz".into(),
         sk: "WRONG".into(),
         display_name: "X".into(),
     };
-    let key2 = p2.build_key();
+    let key2 = profile2.build_key();
     assert_eq!(key2.sk, "PROFILE");
 }
