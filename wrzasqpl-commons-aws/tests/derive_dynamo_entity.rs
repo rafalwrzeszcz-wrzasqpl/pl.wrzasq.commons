@@ -10,8 +10,31 @@ use uuid::{Uuid, uuid};
 use wrzasqpl_commons_aws::DynamoDbEntity;
 use wrzasqpl_commons_aws_macros::DynamoEntity;
 
+const TEST_CUSTOMER_ID: Uuid = uuid!("00000000-0000-0000-0000-000000000000");
+
 #[test]
 fn derive_with_hash_key_only() {
+    #[derive(DynamoEntity, Serialize, Deserialize, Clone, Debug)]
+    #[key_attrs(serde(rename_all = "camelCase"))]
+    struct Customer {
+        #[hash_key(name = "customerId")]
+        customer_id: Uuid,
+        name: String,
+    }
+
+    // hash_key_name should be the default field name
+    assert_eq!(Customer::hash_key_name(), "customerId");
+
+    // constructor with hash + extra fields
+    let customer = Customer::new(TEST_CUSTOMER_ID, "John Doe".to_string());
+
+    // build_key should reflect instance values
+    let key = customer.build_key();
+    assert_eq!(key.customer_id, TEST_CUSTOMER_ID);
+}
+
+#[test]
+fn derive_with_hash_key_only_produces_from_impl() {
     #[derive(DynamoEntity, Serialize, Deserialize, Clone, Debug)]
     struct Customer {
         #[hash_key(name = "customerId")]
@@ -19,20 +42,11 @@ fn derive_with_hash_key_only() {
         name: String,
     }
 
-    const CUSTOMER_ID: Uuid = uuid!("00000000-0000-0000-0000-000000000000");
-
-    // hash_key_name should be the default field name
-    assert_eq!(Customer::hash_key_name(), "customerId");
-
-    // constructor with hash + extra fields
-    let customer = Customer {
-        customer_id: CUSTOMER_ID,
-        name: "John Doe".to_string(),
-    };
+    Customer::new(TEST_CUSTOMER_ID, "John Doe".to_string());
 
     // build_key should reflect instance values
-    let key = customer.build_key();
-    assert_eq!(key.customer_id, CUSTOMER_ID);
+    let key = CustomerKey::from(TEST_CUSTOMER_ID);
+    assert_eq!(key.customer_id, TEST_CUSTOMER_ID);
 }
 
 #[test]
@@ -104,7 +118,7 @@ fn const_sort_key_and_hash_prefix() {
     assert_eq!(profile1.display_name, "Rafal");
 
     // key_from_hash helper should use the same prefix + const sort key
-    let key1 = Profile::key_from_hash("456".into());
+    let key1 = ProfileKey::from("456".to_string());
     assert_eq!(key1.id, "USER#456");
     assert_eq!(key1.sk, "PROFILE");
 

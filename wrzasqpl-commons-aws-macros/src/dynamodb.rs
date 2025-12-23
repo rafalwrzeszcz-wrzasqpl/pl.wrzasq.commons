@@ -38,9 +38,10 @@
 //!
 //! Basic entity with explicit key attributes
 //! ```
+//! use serde::{Deserialize, Serialize};
 //! use wrzasqpl_commons_aws_macros::DynamoEntity;
 //!
-//! #[derive(DynamoEntity, serde::Serialize, serde::Deserialize, Clone, Debug)]
+//! #[derive(DynamoEntity, Serialize, Deserialize, Clone, Debug)]
 //! struct Order {
 //!     #[hash_key]
 //!     id: String,
@@ -52,9 +53,10 @@
 //!
 //! Using defaults (`id` for hash key, `sk` for sort key)
 //! ```
+//! use serde::{Deserialize, Serialize};
 //! use wrzasqpl_commons_aws_macros::DynamoEntity;
 //!
-//! #[derive(DynamoEntity, serde::Serialize, serde::Deserialize, Clone, Debug)]
+//! #[derive(DynamoEntity, Serialize, Deserialize, Clone, Debug)]
 //! struct Invoice {
 //!     id: String, // used as hash key by default
 //!     sk: String, // used as sort key by default
@@ -64,9 +66,10 @@
 //!
 //! Constant sort key and hash prefix
 //! ```
+//! use serde::{Deserialize, Serialize};
 //! use wrzasqpl_commons_aws_macros::DynamoEntity;
 //!
-//! #[derive(DynamoEntity, serde::Serialize, serde::Deserialize, Clone, Debug)]
+//! #[derive(DynamoEntity, Serialize, Deserialize, Clone, Debug)]
 //! struct Profile {
 //!     #[hash_key(prefix = "USER#", name = "profileId")]
 //!     profile_id: String,
@@ -77,7 +80,7 @@
 //!
 //! // With const sort key, the macro provides:
 //! // - Profile::new(hash, display_name)
-//! // - Profile::key_from_hash(hash) -> ProfileKey
+//! // - ProfileKey::from(hash) -> ProfileKey
 //! ```
 
 use proc_macro2::{Span, TokenStream};
@@ -124,27 +127,23 @@ pub(crate) fn derive_dynamo_entity_impl(input: DeriveInput) -> TokenStream {
     let input_span = input.span();
 
     // Only support named-field structs
-    let data_struct = match input.data {
-        Data::Struct(ds) => ds,
-        _ => return SynError::new(input_span, "DynamoEntity can only be derived for structs").to_compile_error(),
+    let Data::Struct(data_struct) = input.data else {
+        return SynError::new(input_span, "DynamoEntity can only be derived for structs").to_compile_error();
     };
 
-    let fields = match data_struct.fields {
-        Fields::Named(named) => named.named,
-        _ => {
-            return SynError::new(
-                input_span,
-                "DynamoEntity requires named fields (struct with field names)",
-            )
-            .to_compile_error();
-        }
+    let Fields::Named(fields) = data_struct.fields else {
+        return SynError::new(
+            input_span,
+            "DynamoEntity requires named fields (struct with field names)",
+        )
+        .to_compile_error();
     };
 
     // Discover hash_key and sort_key fields
     let mut hash_key: Option<KeyField> = None;
     let mut sort_key: Option<KeyField> = None;
 
-    for field in fields.iter() {
+    for field in fields.named.iter() {
         let Some(ident) = field.ident.clone() else { continue };
         let mut is_hash = false;
         let mut is_sort = false;
@@ -197,7 +196,7 @@ pub(crate) fn derive_dynamo_entity_impl(input: DeriveInput) -> TokenStream {
         if is_hash || (hash_key.is_none() && ident == "id") {
             // Default to field named "id" if not explicitly marked and no explicit hash_key found yet
             hash_key = Some(KeyField {
-                ident: ident.clone(),
+                ident,
                 name,
                 r#type: field.ty.clone(),
                 const_value,
@@ -206,7 +205,7 @@ pub(crate) fn derive_dynamo_entity_impl(input: DeriveInput) -> TokenStream {
         } else if is_sort || (sort_key.is_none() && ident == "sk") {
             // Default to field named "sk" if not explicitly marked and no explicit sort_key found yet
             sort_key = Some(KeyField {
-                ident: ident.clone(),
+                ident,
                 name,
                 r#type: field.ty.clone(),
                 const_value,
@@ -222,6 +221,16 @@ pub(crate) fn derive_dynamo_entity_impl(input: DeriveInput) -> TokenStream {
         )
         .to_compile_error();
     };
+
+    // Parse key_attrs from derive macro attributes
+    let mut key_attrs = Vec::new();
+    for attr in &input.attrs {
+        if attr.path().is_ident("key_attrs")
+            && let Meta::List(list) = &attr.meta
+        {
+            key_attrs.push(list.tokens.clone());
+        }
+    }
 
     // hk - hash_key, sk - sort_key, nk - non-key
 
@@ -258,6 +267,7 @@ pub(crate) fn derive_dynamo_entity_impl(input: DeriveInput) -> TokenStream {
 
         // Non-key fields list for constructors based on parsed fields
         let (nk_idents, nk_types): (Vec<Ident>, Vec<Type>) = fields
+            .named
             .iter()
             .cloned()
             .filter_map(|field| {
@@ -305,9 +315,9 @@ pub(crate) fn derive_dynamo_entity_impl(input: DeriveInput) -> TokenStream {
 
             // Optional inherent impl constructor for keys when sk is const
             key_from_hash_impl = quote! {
-                impl #struct_ident {
-                    pub fn key_from_hash(hash: #hk_type) -> #key_ident {
-                        #key_ident {
+                impl From<#hk_type> for #key_ident {
+                    fn from(hash: #hk_type) -> Self {
+                        Self {
                             #hk_ident: #hash_producer,
                             #sk_ident: #sort_producer,
                         }
@@ -344,6 +354,7 @@ pub(crate) fn derive_dynamo_entity_impl(input: DeriveInput) -> TokenStream {
     } else {
         // Non-key fields list for constructors based on parsed fields
         let (nk_idents, nk_types): (Vec<Ident>, Vec<Type>) = fields
+            .named
             .iter()
             .cloned()
             .filter_map(|field| {
@@ -355,6 +366,17 @@ pub(crate) fn derive_dynamo_entity_impl(input: DeriveInput) -> TokenStream {
                 }
             })
             .unzip();
+
+        // for hash-only keys we can always implement From<>
+        key_from_hash_impl = quote! {
+            impl From<#hk_type> for #key_ident {
+                fn from(hash: #hk_type) -> Self {
+                    Self {
+                        #hk_ident: #hash_producer,
+                    }
+                }
+            }
+        };
 
         // prefix can only be used if hash key is String
         new_constructor_impl = quote! {
@@ -372,6 +394,7 @@ pub(crate) fn derive_dynamo_entity_impl(input: DeriveInput) -> TokenStream {
     quote! {
         #[allow(non_camel_case_types)]
         #[derive(serde::Serialize, serde::Deserialize, Debug, Clone)]
+        #(#[#key_attrs])*
         pub struct #key_ident {
             pub #hk_ident: #hk_type,
             #sk_definition
@@ -606,16 +629,14 @@ mod tests {
         assert!(new_body.contains("sk : \"PROFILE\" . to_string"));
 
         // key_from_hash helper should reuse prefix and const sort key
-        let key_helper_body = find_inherent_impl(&file.items, "Profile")
+        let key_helper_body = find_trait_impl(&file.items, "ProfileKey")
+            .items
             .iter()
-            .flat_map(|imp| imp.items.iter())
             .find_map(|item| match item {
-                ImplItem::Fn(func) if func.sig.ident == "key_from_hash" => {
-                    Some(func.block.to_token_stream().to_string())
-                }
+                ImplItem::Fn(func) if func.sig.ident == "from" => Some(func.block.to_token_stream().to_string()),
                 _ => None,
             })
-            .expect("key_from_hash helper missing");
+            .expect("From impl for key type missing");
         assert!(key_helper_body.contains("concat ! (\"USER#\" , \"{}\")"));
         assert!(key_helper_body.contains("\"PROFILE\" . to_string"));
 

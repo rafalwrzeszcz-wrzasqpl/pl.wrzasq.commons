@@ -12,7 +12,7 @@ use crate::dynamodb::derive_dynamo_entity_impl;
 use proc_macro::TokenStream;
 use syn::{DeriveInput, parse_macro_input};
 
-#[proc_macro_derive(DynamoEntity, attributes(hash_key, sort_key))]
+#[proc_macro_derive(DynamoEntity, attributes(hash_key, sort_key, key_attrs))]
 /// Derive macro that turns a struct into a DynamoDB entity compatible with
 /// `wrzasqpl-commons-aws`.
 ///
@@ -30,7 +30,10 @@ use syn::{DeriveInput, parse_macro_input};
 /// use wrzasqpl_commons_aws_macros::DynamoEntity;
 ///
 /// #[derive(DynamoEntity)]
-/// struct Example { id: String, sk: String }
+/// struct Example {
+///     id: String,
+///     sk: String,
+/// }
 /// ```
 pub fn derive_dynamo_entity(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
