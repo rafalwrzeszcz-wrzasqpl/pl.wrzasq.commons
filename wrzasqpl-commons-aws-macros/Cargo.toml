@@ -21,6 +21,6 @@ keywords = ["aws", "lambda", "dynamodb"]
 proc-macro = true
 
 [dependencies]
-proc-macro2 = { version = "1.0.104", default-features = false }
+proc-macro2 = { version = "1.0.105", default-features = false }
 quote = "1.0.42"
 syn = { version = "2.0.113", features = ["full", "extra-traits"] }
