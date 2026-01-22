@@ -13,7 +13,7 @@ members = [
 resolver = "3"
 
 [workspace.package]
-version = "4.2.11"
+version = "4.2.12"
 edition = "2024"
 license = "MIT"
 repository = "https://github.com/rafalwrzeszcz-wrzasqpl/pl.wrzasq.commons"
@@ -24,4 +24,4 @@ authors = [
 ]
 
 [workspace.dependencies]
-wrzasqpl-commons-aws-macros = { version = "4.2.11", path = "wrzasqpl-commons-aws-macros" }
+wrzasqpl-commons-aws-macros = { version = "4.2.12", path = "wrzasqpl-commons-aws-macros" }
