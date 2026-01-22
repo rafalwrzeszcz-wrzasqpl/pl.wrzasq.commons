@@ -29,7 +29,7 @@ jobs:
                 image: "amazon/dynamodb-local:3.1.0"
         steps:
             -
-                uses: "actions/checkout@v6.0.1"
+                uses: "actions/checkout@v6.0.2"
             -
                 uses: "mozilla-actions/sccache-action@v0.0.9"
             -
@@ -56,7 +56,7 @@ jobs:
             image: "rafalwrzeszczwrzasqpl/build-rust:nightly-v0.5.0"
         steps:
             -
-                uses: "actions/checkout@v6.0.1"
+                uses: "actions/checkout@v6.0.2"
             -
                 uses: "mozilla-actions/sccache-action@v0.0.9"
             -
@@ -69,7 +69,7 @@ jobs:
             image: "rafalwrzeszczwrzasqpl/build-rust:nightly-v0.5.0"
         steps:
             -
-                uses: "actions/checkout@v6.0.1"
+                uses: "actions/checkout@v6.0.2"
             -
                 uses: "mozilla-actions/sccache-action@v0.0.9"
             -
@@ -89,7 +89,7 @@ jobs:
             id-token: "write"
         steps:
             -
-                uses: "actions/checkout@v6.0.1"
+                uses: "actions/checkout@v6.0.2"
             -
                 uses: "mozilla-actions/sccache-action@v0.0.9"
             -
