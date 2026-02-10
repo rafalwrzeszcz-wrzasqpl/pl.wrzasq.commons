@@ -2,7 +2,7 @@
 # This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2023 - 2025 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2023 - 2026 © by Rafał Wrzeszcz - Wrzasq.pl.
 ##
 
 [package]
@@ -21,16 +21,14 @@ keywords = ["aws", "lambda", "dynamodb"]
 aws-config = "1.8.13"
 aws-sdk-dynamodb = "1.104.0"
 aws-smithy-runtime-api = "1.11.3"
-env_logger = "0.11.8"
 futures = "0.3.31"
 lambda_runtime = "1.0.2"
-log = "0.4.29"
 serde = { version = "1.0.228", features = ["derive"] }
 serde_dynamo = { version = "4.3.0", features = ["aws-sdk-dynamodb+1"] }
 thiserror = "2.0.18"
 tracing = "0.1.44"
 tracing-core = "0.1.36"
-tracing-subscriber = "0.3.22"
+tracing-subscriber = { version = "0.3.22", features = ["env-filter", "json"] }
 xray-tracing = "0.0.1"
 wrzasqpl-commons-aws-macros = { workspace = true, optional = true }
 

@@ -2,7 +2,7 @@
  * This file is part of the pl.wrzasq.commons.
  *
  * @license http://mit-license.org/ The MIT license
- * @copyright 2025 © by Rafał Wrzeszcz - Wrzasq.pl.
+ * @copyright 2025 - 2026 © by Rafał Wrzeszcz - Wrzasq.pl.
  */
 
 use aws_config::{BehaviorVersion, load_defaults};
@@ -31,7 +31,7 @@ struct PrefixedItem {
 async fn query_applies_begins_with_prefix() {
     // Setup client to DynamoDB Local
     let table_name = format!("PrefixedTest{}", NUMBER.fetch_add(1, Ordering::SeqCst));
-    let config = load_defaults(BehaviorVersion::v2025_08_07()).await;
+    let config = load_defaults(BehaviorVersion::v2026_01_12()).await;
     let local_config = Builder::from(&config)
         .endpoint_url(var("DYNAMODB_LOCAL_HOST").unwrap_or("http://localhost:8000".into()))
         .build();
