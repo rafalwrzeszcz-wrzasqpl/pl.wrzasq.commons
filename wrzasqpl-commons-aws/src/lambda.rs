@@ -67,16 +67,20 @@ where
     ReturnType: Serialize,
     ErrorType: Into<Diagnostic> + Debug + Display,
 {
-    fmt()
+    let logger = fmt::layer()
         .json()
-        .with_env_filter(EnvFilter::from_default_env())
         .with_current_span(false)
         .with_ansi(false)
         .without_time()
-        .with_target(false)
-        .init();
+        .with_target(false);
 
-    set_global_default(Registry::default().with(XRaySubscriber::default()).into())?;
+    set_global_default(
+        Registry::default()
+            .with(logger)
+            .with(XRaySubscriber::default())
+            .with(EnvFilter::from_default_env())
+            .into(),
+    )?;
 
     run(service_fn(func)).await
 }
