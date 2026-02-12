@@ -13,7 +13,7 @@ use std::future::Future;
 use thiserror::Error;
 use tracing_core::dispatcher::set_global_default;
 use tracing_subscriber::layer::SubscriberExt;
-use tracing_subscriber::{EnvFilter, Registry, fmt};
+use tracing_subscriber::{EnvFilter, Layer, Registry, fmt};
 use xray_tracing::XRaySubscriber;
 
 /// Runtime errors possible for Lambda operations.
@@ -72,15 +72,10 @@ where
         .with_current_span(false)
         .with_ansi(false)
         .without_time()
-        .with_target(false);
+        .with_target(false)
+        .with_filter(EnvFilter::from_default_env());
 
-    set_global_default(
-        Registry::default()
-            .with(logger)
-            .with(XRaySubscriber::default())
-            .with(EnvFilter::from_default_env())
-            .into(),
-    )?;
+    set_global_default(Registry::default().with(logger).with(XRaySubscriber::default()).into())?;
 
     run(service_fn(func)).await
 }
