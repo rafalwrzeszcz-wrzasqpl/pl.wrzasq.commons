@@ -19,7 +19,7 @@ keywords = ["aws", "lambda", "dynamodb"]
 
 [dependencies]
 aws-config = "1.8.15"
-aws-sdk-dynamodb = "1.109.0"
+aws-sdk-dynamodb = "1.110.0"
 aws-smithy-runtime-api = "1.11.6"
 futures = "0.3.32"
 lambda_runtime = "1.1.2"
