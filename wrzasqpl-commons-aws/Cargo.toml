@@ -36,7 +36,7 @@ wrzasqpl-commons-aws-macros = { workspace = true, optional = true }
 aws-smithy-types = "1.4.7"
 test-context = "0.5.5"
 tokio = { version = "1.50.0", features = ["macros"] }
-uuid = { version = "1.22.0", features = ["serde"] }
+uuid = { version = "1.23.1", features = ["serde"] }
 wrzasqpl-commons-aws-macros = { workspace = true }
 
 [features]
