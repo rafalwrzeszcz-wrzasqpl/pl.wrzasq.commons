@@ -31,7 +31,7 @@ jobs:
             -
                 uses: "actions/checkout@v6.0.2"
             -
-                uses: "mozilla-actions/sccache-action@v0.0.9"
+                uses: "mozilla-actions/sccache-action@v0.0.10"
             -
                 run: "make test"
                 env:
@@ -58,7 +58,7 @@ jobs:
             -
                 uses: "actions/checkout@v6.0.2"
             -
-                uses: "mozilla-actions/sccache-action@v0.0.9"
+                uses: "mozilla-actions/sccache-action@v0.0.10"
             -
                 run: "make check"
 
@@ -71,7 +71,7 @@ jobs:
             -
                 uses: "actions/checkout@v6.0.2"
             -
-                uses: "mozilla-actions/sccache-action@v0.0.9"
+                uses: "mozilla-actions/sccache-action@v0.0.10"
             -
                 run: "make doc"
 
@@ -91,7 +91,7 @@ jobs:
             -
                 uses: "actions/checkout@v6.0.2"
             -
-                uses: "mozilla-actions/sccache-action@v0.0.9"
+                uses: "mozilla-actions/sccache-action@v0.0.10"
             -
                 run: |
                     git config --global user.name "GitHub Actions"
