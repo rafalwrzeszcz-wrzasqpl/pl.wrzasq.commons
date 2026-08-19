@@ -2,7 +2,7 @@
 # This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2025 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2025 - 2026 © by Rafał Wrzeszcz - Wrzasq.pl.
 ##
 
 [package]
@@ -21,6 +21,6 @@ keywords = ["aws", "lambda", "dynamodb"]
 proc-macro = true
 
 [dependencies]
-proc-macro2 = { version = "1.0.106", default-features = false }
-quote = "1.0.45"
-syn = { version = "2.0.117", features = ["full", "extra-traits"] }
+proc-macro2 = { version = "1.0.107", default-features = false }
+quote = "1.0.47"
+syn = { version = "3.0.3", features = ["full", "extra-traits"] }

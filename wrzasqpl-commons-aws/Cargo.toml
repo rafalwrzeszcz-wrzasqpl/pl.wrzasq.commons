@@ -18,14 +18,14 @@ description = "AWS-related utility functions for commor routines."
 keywords = ["aws", "lambda", "dynamodb"]
 
 [dependencies]
-aws-config = "1.8.15"
-aws-sdk-dynamodb = "1.110.0"
-aws-smithy-runtime-api = "1.11.6"
-futures = "0.3.32"
-lambda_runtime = "1.1.2"
-serde = { version = "1.0.228", features = ["derive"] }
+aws-config = "1.10.1"
+aws-sdk-dynamodb = "1.121.0"
+aws-smithy-runtime-api = "1.14.0"
+futures = "0.3.34"
+lambda_runtime = "1.3.0"
+serde = { version = "1.0.229", features = ["derive"] }
 serde_dynamo = { version = "4.3.0", features = ["aws-sdk-dynamodb+1"] }
-thiserror = "2.0.18"
+thiserror = "2.0.20"
 tracing = "0.1.44"
 tracing-core = "0.1.36"
 tracing-subscriber = { version = "0.3.23", features = ["env-filter", "json"] }
@@ -33,10 +33,10 @@ xray-tracing = "0.0.1"
 wrzasqpl-commons-aws-macros = { workspace = true, optional = true }
 
 [dev-dependencies]
-aws-smithy-types = "1.4.7"
-test-context = "0.5.5"
-tokio = { version = "1.50.0", features = ["macros"] }
-uuid = { version = "1.22.0", features = ["serde"] }
+aws-smithy-types = "1.6.2"
+test-context = "0.5.8"
+tokio = { version = "1.53.1", features = ["macros"] }
+uuid = { version = "1.24.1", features = ["serde"] }
 wrzasqpl-commons-aws-macros = { workspace = true }
 
 [features]

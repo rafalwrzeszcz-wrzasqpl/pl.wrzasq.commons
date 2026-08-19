@@ -2,7 +2,7 @@
 # This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2023 - 2025 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2023 - 2026 © by Rafał Wrzeszcz - Wrzasq.pl.
 ##
 
 on:
@@ -23,15 +23,15 @@ jobs:
         runs-on: "ubuntu-24.04"
         if: "(github.event_name == 'push') || (github.repository != github.event.pull_request.head.repo.full_name)"
         container:
-            image: "rafalwrzeszczwrzasqpl/build-rust:nightly-v0.5.0"
+            image: "rafalwrzeszczwrzasqpl/build-rust:nightly-v0.6.0"
         services:
             dynamodb:
-                image: "amazon/dynamodb-local:3.1.0"
+                image: "amazon/dynamodb-local:3.3.1"
         steps:
             -
-                uses: "actions/checkout@v6.0.2"
+                uses: "actions/checkout@v7.0.1"
             -
-                uses: "mozilla-actions/sccache-action@v0.0.9"
+                uses: "mozilla-actions/sccache-action@v0.0.11"
             -
                 run: "make test"
                 env:
@@ -42,7 +42,7 @@ jobs:
             -
                 run: "make lcov"
             -
-                uses: "codecov/codecov-action@v6.0.0"
+                uses: "codecov/codecov-action@v7.0.0"
                 with:
                     token: "${{ vars.CODECOV_TOKEN }}"
                     flags: "unittests,rust"
@@ -53,12 +53,12 @@ jobs:
         runs-on: "ubuntu-24.04"
         if: "(github.event_name == 'push') || (github.repository != github.event.pull_request.head.repo.full_name)"
         container:
-            image: "rafalwrzeszczwrzasqpl/build-rust:nightly-v0.5.0"
+            image: "rafalwrzeszczwrzasqpl/build-rust:nightly-v0.6.0"
         steps:
             -
-                uses: "actions/checkout@v6.0.2"
+                uses: "actions/checkout@v7.0.1"
             -
-                uses: "mozilla-actions/sccache-action@v0.0.9"
+                uses: "mozilla-actions/sccache-action@v0.0.11"
             -
                 run: "make check"
 
@@ -66,12 +66,12 @@ jobs:
         runs-on: "ubuntu-24.04"
         if: "(github.event_name == 'push') || (github.repository != github.event.pull_request.head.repo.full_name)"
         container:
-            image: "rafalwrzeszczwrzasqpl/build-rust:nightly-v0.5.0"
+            image: "rafalwrzeszczwrzasqpl/build-rust:nightly-v0.6.0"
         steps:
             -
-                uses: "actions/checkout@v6.0.2"
+                uses: "actions/checkout@v7.0.1"
             -
-                uses: "mozilla-actions/sccache-action@v0.0.9"
+                uses: "mozilla-actions/sccache-action@v0.0.11"
             -
                 run: "make doc"
 
@@ -79,7 +79,7 @@ jobs:
         if: "(github.event_name == 'push') && (github.event.ref == 'refs/heads/master')"
         runs-on: "ubuntu-24.04"
         container:
-            image: "rafalwrzeszczwrzasqpl/build-rust:nightly-v0.5.0"
+            image: "rafalwrzeszczwrzasqpl/build-rust:nightly-v0.6.0"
         needs:
             - "test"
             - "lint"
@@ -89,9 +89,9 @@ jobs:
             id-token: "write"
         steps:
             -
-                uses: "actions/checkout@v6.0.2"
+                uses: "actions/checkout@v7.0.1"
             -
-                uses: "mozilla-actions/sccache-action@v0.0.9"
+                uses: "mozilla-actions/sccache-action@v0.0.11"
             -
                 run: |
                     git config --global user.name "GitHub Actions"
@@ -102,7 +102,7 @@ jobs:
                 env:
                     CARGO_REGISTRY_TOKEN: "${{ secrets.CARGO_REGISTRY_TOKEN }}"
             -
-                uses: "ad-m/github-push-action@v1.0.0"
+                uses: "ad-m/github-push-action@v1.3.0"
                 with:
                     github_token: "${{ secrets.GITHUB_TOKEN }}"
                     branch: "${{ github.ref }}"

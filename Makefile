@@ -2,7 +2,7 @@
 # This file is part of the pl.wrzasq.commons.
 #
 # @license http://mit-license.org/ The MIT license
-# @copyright 2023 - 2025 © by Rafał Wrzeszcz - Wrzasq.pl.
+# @copyright 2023 - 2026 © by Rafał Wrzeszcz - Wrzasq.pl.
 ##
 
 SHELL:=bash
@@ -24,7 +24,7 @@ test:
 	cargo test --all-features --lib --tests
 
 test-local:
-	docker run -d --rm --name dynamodb -p 8000:8000 amazon/dynamodb-local:3.1.0
+	docker run -d --rm --name dynamodb -p 8000:8000 amazon/dynamodb-local:3.3.1
 	make test
 	docker stop dynamodb
 
