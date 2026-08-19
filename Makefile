@@ -44,7 +44,7 @@ fix:
 
 lcov:
 	grcov . \
-		--binary-path ./target/debug/deps/ \
+		--binary-path ./target/debug/build/ \
 		-s . \
 		-t lcov \
 		--branch \
@@ -55,7 +55,7 @@ lcov:
 
 coverage:
 	grcov . \
-		--binary-path ./target/debug/deps/ \
+		--binary-path ./target/debug/build/ \
 		-s . \
 		-t html \
 		--branch \
