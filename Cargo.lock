@@ -2380,7 +2380,7 @@ checksum = "3ad82d2a33cdc9674dc7465672f271e096168fcdbe0f799d9e6db8c5892679dc"
 
 [[package]]
 name = "wrzasqpl-commons-aws"
-version = "4.2.70"
+version = "4.2.71"
 dependencies = [
  "aws-config",
  "aws-sdk-dynamodb",
@@ -2403,7 +2403,7 @@ dependencies = [
 
 [[package]]
 name = "wrzasqpl-commons-aws-macros"
-version = "4.2.70"
+version = "4.2.71"
 dependencies = [
  "proc-macro2",
  "quote",
